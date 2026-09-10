@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MB Blood Bank — Code Viewer</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,"Hind Siliguri",sans-serif;
+  background:#f4f6fa;
+  color:#172033;
+  padding:20px;
+}
+
+.container{
+  width:min(1100px,100%);
+  margin:auto;
+}
+
+.header{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.header h1{
+  color:#d90429;
+  font-size:32px;
+}
+
+.header p{
+  color:#64748b;
+  margin-top:8px;
+}
+
+/* FILE BOX */
+
+.file-box{
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 15px 40px rgba(15,23,42,.08);
+  margin-bottom:25px;
+}
+
+.file-header{
+  padding:17px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  cursor:pointer;
+  background:linear-gradient(135deg,#fff,#fff5f7);
+  border-bottom:1px solid #eee;
+}
+
+.file-name{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:18px;
+  font-weight:bold;
+}
+
+.file-icon{
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#d90429;
+  color:white;
+}
+
+.arrow{
+  font-size:22px;
+  color:#d90429;
+  transition:.3s;
+}
+
+.file-box.open .arrow{
+  transform:rotate(180deg);
+}
+
+/* CODE */
+
+.code-area{
+  display:none;
+  background:#101522;
+  position:relative;
+}
+
+.file-box.open .code-area{
+  display:block;
+}
+
+.code-toolbar{
+  display:flex;
+  gap:10px;
+  padding:12px;
+  background:#171d2b;
+  border-bottom:1px solid #303747;
+}
+
+.tool-btn{
+  border:0;
+  border-radius:9px;
+  padding:9px 14px;
+  cursor:pointer;
+  font-weight:bold;
+  color:white;
+  background:#d90429;
+}
+
+.tool-btn:hover{
+  opacity:.9;
+}
+
+.code{
+  margin:0;
+  padding:20px;
+  overflow:auto;
+  max-height:550px;
+  color:#e5e7eb;
+  font-family:monospace;
+  font-size:13px;
+  line-height:1.65;
+  white-space:pre;
+}
+
+/* PREVIEW */
+
+.preview-title{
+  margin:30px 0 15px;
+  font-size:24px;
+  font-weight:bold;
+}
+
+.preview-box{
+  background:white;
+  border-radius:20px;
+  overflow:hidden;
+  border:1px solid #e5e7eb;
+  box-shadow:0 15px 40px rgba(15,23,42,.08);
+}
+
+.preview-header{
+  padding:14px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#fff;
+  border-bottom:1px solid #eee;
+}
+
+.preview-header strong{
+  color:#d90429;
+}
+
+.live-dot{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:#16a34a;
+  font-size:14px;
+  font-weight:bold;
+}
+
+.live-dot span{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#16a34a;
+  animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+  0%{opacity:1}
+  50%{opacity:.3}
+  100%{opacity:1}
+}
+
+iframe{
+  width:100%;
+  height:700px;
+  border:0;
+  display:block;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+  body{
+    padding:10px;
+  }
+
+  .header h1{
+    font-size:25px;
+  }
+
+  .file-header{
+    padding:14px;
+  }
+
+  .code{
+    font-size:11px;
+    padding:15px;
+  }
+
+  iframe{
+    height:650px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+
+    <h1>🩸 MB Blood Bank</h1>
+
+    <p>
+      Code Viewer + Live Preview
+    </p>
+
+  </div>
+
+
+  <!-- ==================================================
+       INDEX.HTML FILE
+  =================================================== -->
+
+  <div class="file-box open" id="fileBox">
+
+    <div class="file-header" onclick="toggleCode()">
+
+      <div class="file-name">
+
+        <div class="file-icon">
+          📄
+        </div>
+
+        <span>index.html</span>
+
+      </div>
+
+      <div class="arrow">
+        ▼
+      </div>
+
+    </div>
+
+
+    <div class="code-area">
+
+      <div class="code-toolbar">
+
+        <button
+          class="tool-btn"
+          onclick="copyCode(event)">
+          📋 Copy Code
+        </button>
+
+        <button
+          class="tool-btn"
+          onclick="downloadCode(event)">
+          💾 Download
+        </button>
+
+      </div>
+
+
+      <pre
+        class="code"
+        id="codeDisplay"></pre>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==================================================
+       LIVE PREVIEW
+  =================================================== -->
+
+  <div class="preview-title">
+    👁️ Live Preview
+  </div>
+
+
+  <div class="preview-box">
+
+    <div class="preview-header">
+
+      <strong>
+        🩸 index.html Preview
+      </strong>
+
+      <div class="live-dot">
+        <span></span>
+        LIVE
+      </div>
+
+    </div>
+
+
+    <iframe
+      id="preview"
+      title="Live Preview">
+    </iframe>
+
+  </div>
+
+</div>
+
+
+<!-- ====================================================
+     ACTUAL INDEX.HTML CODE
+===================================================== -->
+
+<script>
+
+const indexHTML = `<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>MB Blood Bank</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+body{
+
+font-family:Arial,sans-serif;
+
+background:
+radial-gradient(
+circle at 10% 10%,
+#ffd6de,
+transparent 30%
+),
+
+linear-gradient(
+135deg,
+#ffffff,
+#f7f9fc
+);
+
+color:#172033;
+
+min-height:100vh;
+
+overflow-x:hidden;
+
+}
+
+.container{
+
+width:min(1100px,92%);
+
+margin:auto;
+
+}
+
+header{
+
+background:
+rgba(255,255,255,.85);
+
+backdrop-filter:
+blur(18px);
+
+border-bottom:
+1px solid #eee;
+
+position:sticky;
+
+top:0;
+
+z-index:10;
+
+}
+
+nav{
+
+height:70px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+}
+
+.logo{
+
+font-size:22px;
+
+font-weight:800;
+
+color:#d90429;
+
+}
+
+.logo span{
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+width:40px;
+
+height:40px;
+
+border-radius:12px;
+
+background:
+linear-gradient(
+135deg,
+#ff1744,
+#b50021
+);
+
+color:white;
+
+margin-right:8px;
+
+}
+
+.hero{
+
+padding:80px 0;
+
+position:relative;
+
+}
+
+.hero h1{
+
+font-size:
+clamp(38px,7vw,70px);
+
+line-height:1.05;
+
+font-weight:800;
+
+}
+
+.hero h1 span{
+
+color:#d90429;
+
+}
+
+.hero p{
+
+margin-top:20px;
+
+color:#64748b;
+
+font-size:18px;
+
+line-height:1.8;
+
+max-width:650px;
+
+}
+
+.buttons{
+
+display:flex;
+
+gap:12px;
+
+margin-top:28px;
+
+flex-wrap:wrap;
+
+}
+
+.btn{
+
+padding:14px 22px;
+
+border-radius:14px;
+
+border:0;
+
+font-size:16px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+.primary{
+
+background:
+linear-gradient(
+135deg,
+#ff1744,
+#b50021
+);
+
+color:white;
+
+box-shadow:
+0 15px 35px
+rgba(217,4,41,.22);
+
+}
+
+.secondary{
+
+background:white;
+
+color:#d90429;
+
+border:1px solid #fecdd3;
+
+}
+
+.drop{
+
+position:absolute;
+
+right:10%;
+
+top:90px;
+
+width:120px;
+
+height:120px;
+
+background:
+linear-gradient(
+145deg,
+#ff1744,
+#d90429,
+#a9001e
+);
+
+border-radius:
+60% 60% 65% 65%;
+
+transform:rotate(45deg);
+
+box-shadow:
+0 25px 50px
+rgba(217,4,41,.25);
+
+animation:float 4s ease-in-out infinite;
+
+}
+
+@keyframes float{
+
+0%,100%{
+
+transform:
+rotate(45deg)
+translateY(0);
+
+}
+
+50%{
+
+transform:
+rotate(45deg)
+translateY(-18px);
+
+}
+
+}
+
+section{
+
+padding:55px 0;
+
+}
+
+.title{
+
+text-align:center;
+
+margin-bottom:30px;
+
+}
+
+.title h2{
+
+font-size:36px;
+
+}
+
+.title span{
+
+color:#d90429;
+
+}
+
+.card{
+
+background:
+rgba(255,255,255,.9);
+
+border:
+1px solid #e5e7eb;
+
+border-radius:22px;
+
+padding:25px;
+
+box-shadow:
+0 20px 50px
+rgba(15,23,42,.08);
+
+}
+
+.grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(3,1fr);
+
+gap:20px;
+
+}
+
+.group{
+
+text-align:center;
+
+padding:25px;
+
+}
+
+.blood{
+
+width:60px;
+
+height:60px;
+
+border-radius:50%;
+
+margin:auto;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+background:
+linear-gradient(
+145deg,
+#ff1744,
+#d90429
+);
+
+color:white;
+
+font-size:19px;
+
+font-weight:bold;
+
+box-shadow:
+0 12px 25px
+rgba(217,4,41,.2);
+
+}
+
+.group h3{
+
+margin-top:15px;
+
+}
+
+.group p{
+
+color:#64748b;
+
+margin-top:5px;
+
+}
+
+footer{
+
+margin-top:50px;
+
+padding:30px;
+
+text-align:center;
+
+background:white;
+
+border-top:1px solid #eee;
+
+color:#64748b;
+
+}
+
+footer strong{
+
+color:#d90429;
+
+}
+
+@media(max-width:700px){
+
+.hero{
+
+padding:55px 0;
+
+}
+
+.hero h1{
+
+font-size:42px;
+
+}
+
+.drop{
+
+width:75px;
+
+height:75px;
+
+right:5%;
+
+top:50px;
+
+opacity:.7;
+
+}
+
+.grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<header>
+
+<div class="container">
+
+<nav>
+
+<div class="logo">
+
+<span>🩸</span>
+
+MB Blood Bank
+
+</div>
+
+<div>
+
+❤️ মানবতার জন্য
+
+</div>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<section class="hero">
+
+<div class="container">
+
+<h1>
+
+এক ব্যাগ রক্ত
+
+<br>
+
+<span>বাঁচাতে পারে একটি জীবন</span>
+
+</h1>
+
+<p>
+
+আপনার আশেপাশের রক্তদাতা খুঁজে নিন।
+নিজেও রক্তদাতা হিসেবে নিবন্ধন করুন
+এবং জরুরি সময়ে মানুষের পাশে দাঁড়ান।
+
+</p>
+
+<div class="buttons">
+
+<button
+class="btn primary"
+onclick="alert('রক্তদাতা খোঁজার সিস্টেম চালু হবে')">
+
+🩸 রক্তদাতা খুঁজুন
+
+</button>
+
+<button
+class="btn secondary"
+onclick="alert('রক্তদাতা রেজিস্ট্রেশন চালু হবে')">
+
+❤️ রক্তদাতা হোন
+
+</button>
+
+</div>
+
+<div class="drop"></div>
+
+</div>
+
+</section>
+
+
+<section>
+
+<div class="container">
+
+<div class="title">
+
+<h2>
+
+🩸 <span>রক্তের গ্রুপ</span>
+
+</h2>
+
+<p>
+
+আপনার প্রয়োজনীয় রক্তের গ্রুপ নির্বাচন করুন
+
+</p>
+
+</div>
+
+
+<div class="grid">
+
+
+<div class="card group">
+
+<div class="blood">
+
+A+
+
+</div>
+
+<h3>A Positive</h3>
+
+<p>রক্তদাতা খুঁজুন</p>
+
+</div>
+
+
+<div class="card group">
+
+<div class="blood">
+
+B+
+
+</div>
+
+<h3>B Positive</h3>
+
+<p>রক্তদাতা খুঁজুন</p>
+
+</div>
+
+
+<div class="card group">
+
+<div class="blood">
+
+O+
+
+</div>
+
+<h3>O Positive</h3>
+
+<p>রক্তদাতা খুঁজুন</p>
+
+</div>
+
+
+<div class="card group">
+
+<div class="blood">
+
+AB+
+
+</div>
+
+<h3>AB Positive</h3>
+
+<p>রক্তদাতা খুঁজুন</p>
+
+</div>
+
+
+<div class="card group">
+
+<div class="blood">
+
+A-
+
+</div>
+
+<h3>A Negative</h3>
+
+<p>রক্তদাতা খুঁজুন</p>
+
+</div>
+
+
+<div class="card group">
+
+<div class="blood">
+
+O-
+
+</div>
+
+<h3>O Negative</h3>
+
+<p>রক্তদাতা খুঁজুন</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<p>
+
+© 2026
+
+<strong>MB Blood Bank</strong>
+
+— একজন দাতা, একটি জীবন ❤️
+
+</p>
+
+</footer>
+
+
+</body>
+
+</html>`;
+
+
+/* ====================================================
+   SHOW CODE
+===================================================== */
+
+document.getElementById(
+  "codeDisplay"
+).textContent = indexHTML;
+
+
+/* ====================================================
+   LIVE PREVIEW
+===================================================== */
+
+const preview =
+document.getElementById("preview");
+
+preview.srcdoc = indexHTML;
+
+
+/* ====================================================
+   OPEN / CLOSE CODE
+===================================================== */
+
+function toggleCode(){
+
+  document
+    .getElementById("fileBox")
+    .classList.toggle("open");
+
+}
+
+
+/* ====================================================
+   COPY
+===================================================== */
+
+function copyCode(event){
+
+  event.stopPropagation();
+
+  navigator.clipboard.writeText(indexHTML)
+  .then(()=>{
+
+    alert("✅ index.html কোড কপি হয়েছে!");
+
+  })
+  .catch(()=>{
+
+    alert("কপি করা যায়নি।");
+
+  });
+
+}
+
+
+/* ====================================================
+   DOWNLOAD
+===================================================== */
+
+function downloadCode(event){
+
+  event.stopPropagation();
+
+  const blob =
+    new Blob(
+      [indexHTML],
+      {type:"text/html"}
+    );
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const a =
+    document.createElement("a");
+
+  a.href = url;
+
+  a.download = "index.html";
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  a.remove();
+
+  URL.revokeObjectURL(url);
+
+}
+
+</script>
+
+</body>
+</html>
