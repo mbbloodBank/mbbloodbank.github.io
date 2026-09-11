@@ -2,279 +2,710 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MB Blood Bank</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MB Blood Bank | Donate Blood Save Life</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
+
 body{
-font-family:Arial,"Noto Sans Bengali",sans-serif;
-background:
-radial-gradient(circle at 20% 10%,#3b0610,transparent 35%),
-radial-gradient(circle at 90% 80%,#280711,transparent 35%),
-#07070b;
+font-family:'Hind Siliguri',Arial,sans-serif;
+background:#050509;
 color:#fff;
-min-height:100vh;
+overflow-x:hidden;
 }
+
+/* LIQUID BACKGROUND */
+body:before,
+body:after{
+content:"";
+position:fixed;
+width:500px;
+height:500px;
+border-radius:50%;
+filter:blur(100px);
+opacity:.22;
+z-index:-2;
+animation:float 10s infinite alternate ease-in-out;
+}
+body:before{
+background:#ff003d;
+top:-180px;
+left:-180px;
+}
+body:after{
+background:#7b0020;
+right:-200px;
+bottom:-200px;
+animation-delay:3s;
+}
+
+@keyframes float{
+from{transform:translate(0,0) scale(1)}
+to{transform:translate(80px,50px) scale(1.2)}
+}
+
+/* PARTICLES */
+.particle{
+position:fixed;
+width:5px;
+height:5px;
+background:#ff1744;
+border-radius:50%;
+opacity:.5;
+z-index:-1;
+animation:up 9s linear infinite;
+}
+@keyframes up{
+0%{transform:translateY(100vh);opacity:0}
+20%{opacity:.7}
+100%{transform:translateY(-100vh);opacity:0}
+}
+
+/* HEADER */
 header{
-position:sticky;
+height:76px;
+position:fixed;
 top:0;
+left:0;
+right:0;
 z-index:1000;
-background:rgba(10,5,8,.75);
-backdrop-filter:blur(18px);
-border-bottom:1px solid rgba(255,255,255,.08);
-padding:15px 20px;
 display:flex;
-justify-content:space-between;
 align-items:center;
+justify-content:space-between;
+padding:0 5%;
+background:rgba(5,5,9,.55);
+border-bottom:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(25px);
+-webkit-backdrop-filter:blur(25px);
 }
+
 .logo{
-font-size:23px;
-font-weight:900;
-color:#ff304f;
+font-size:25px;
+font-weight:700;
+letter-spacing:.5px;
 }
-.logo span{color:white}
+.logo b{color:#ff1744}
+
 .menuBtn{
-width:48px;height:48px;border:0;border-radius:15px;
-background:linear-gradient(135deg,#ff1744,#8b001d);
-color:white;font-size:24px;cursor:pointer;
-box-shadow:0 8px 25px rgba(255,0,50,.25);
+width:48px;
+height:48px;
+border:1px solid rgba(255,255,255,.12);
+border-radius:16px;
+background:linear-gradient(145deg,#ff1744,#750018);
+color:white;
+font-size:23px;
+cursor:pointer;
+box-shadow:
+0 8px 25px rgba(255,0,55,.3),
+inset 0 1px rgba(255,255,255,.25);
+transition:.3s;
 }
+.menuBtn:hover{
+transform:rotate(5deg) scale(1.08);
+}
+
+/* SIDE MENU */
 .sideMenu{
 position:fixed;
-right:-310px;
+right:-340px;
 top:0;
-width:290px;
+width:320px;
 height:100vh;
-z-index:2000;
-background:rgba(15,7,11,.96);
-backdrop-filter:blur(25px);
-border-left:1px solid rgba(255,255,255,.1);
-padding:80px 20px 20px;
-transition:.35s;
+z-index:3000;
+padding:90px 22px 25px;
+background:rgba(10,6,10,.88);
+border-left:1px solid rgba(255,255,255,.12);
+backdrop-filter:blur(35px);
+transition:.45s cubic-bezier(.77,0,.18,1);
+box-shadow:-20px 0 70px rgba(0,0,0,.4);
 }
 .sideMenu.open{right:0}
+
 .closeBtn{
 position:absolute;
-right:18px;top:18px;
-background:#ff1744;color:#fff;border:0;
-width:42px;height:42px;border-radius:12px;
+top:20px;
+right:20px;
+width:42px;
+height:42px;
+border:0;
+border-radius:13px;
+background:#ff1744;
+color:#fff;
+font-size:25px;
+cursor:pointer;
+}
+
+.sideMenu h3{
 font-size:22px;
+margin-bottom:20px;
+color:#ff5472;
 }
+
 .sideMenu a{
-display:block;
-padding:15px;
-margin:8px 0;
-border-radius:14px;
-background:rgba(255,255,255,.05);
-color:#fff;text-decoration:none;
+display:flex;
+align-items:center;
+gap:12px;
+padding:15px 17px;
+margin:9px 0;
+border-radius:16px;
+color:#eee;
+text-decoration:none;
+background:rgba(255,255,255,.045);
+border:1px solid rgba(255,255,255,.05);
+transition:.3s;
 }
-.sideMenu a:hover{background:#a90025}
+.sideMenu a:hover{
+background:rgba(255,23,68,.15);
+border-color:rgba(255,23,68,.35);
+transform:translateX(-5px);
+}
+
+/* HERO */
 .hero{
-padding:80px 20px;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
 text-align:center;
-max-width:1100px;
-margin:auto;
+padding:120px 20px 70px;
+position:relative;
 }
-.badge{
-display:inline-block;
-padding:8px 16px;
+
+.heroContent{
+max-width:900px;
+}
+
+.heroBadge{
+display:inline-flex;
+align-items:center;
+gap:8px;
+padding:9px 17px;
 border-radius:50px;
-background:rgba(255,30,70,.12);
-border:1px solid rgba(255,50,80,.3);
-color:#ff6680;
-margin-bottom:18px;
+background:rgba(255,23,68,.09);
+border:1px solid rgba(255,23,68,.3);
+color:#ff6b83;
+margin-bottom:25px;
+box-shadow:0 0 30px rgba(255,23,68,.1);
 }
+
 .hero h1{
-font-size:clamp(42px,8vw,78px);
-line-height:1;
-margin-bottom:18px;
+font-size:clamp(50px,10vw,100px);
+line-height:.95;
+font-weight:700;
+letter-spacing:-3px;
 }
-.hero h1 span{color:#ff1744}
+.hero h1 span{
+color:#ff1744;
+text-shadow:0 0 35px rgba(255,23,68,.35);
+}
+
 .hero p{
-color:#c8c8c8;
-max-width:700px;
-margin:auto;
-line-height:1.8;
+font-size:18px;
+line-height:1.9;
+color:#aaa;
+max-width:680px;
+margin:25px auto;
 }
-.buttons{
-margin-top:30px;
+
+.heroButtons{
 display:flex;
 justify-content:center;
-gap:12px;
+gap:14px;
 flex-wrap:wrap;
+margin-top:28px;
 }
+
 .btn{
-border:0;padding:14px 22px;border-radius:14px;
-font-weight:bold;cursor:pointer;text-decoration:none;
+padding:15px 25px;
+border-radius:16px;
+text-decoration:none;
+font-weight:600;
+border:1px solid rgba(255,255,255,.1);
 display:inline-block;
+transition:.3s;
+cursor:pointer;
 }
-.btnRed{background:#ff1744;color:white}
-.btnDark{background:rgba(255,255,255,.07);color:white;border:1px solid rgba(255,255,255,.1)}
-.container{max-width:1150px;margin:auto;padding:20px}
-section{padding:55px 0}
-.title{text-align:center;margin-bottom:30px}
-.title h2{font-size:34px}
-.title p{color:#aaa;margin-top:8px}
-.grid{
+
+.btnRed{
+color:#fff;
+background:linear-gradient(135deg,#ff1744,#950020);
+box-shadow:0 12px 35px rgba(255,23,68,.25);
+}
+.btnDark{
+color:#fff;
+background:rgba(255,255,255,.06);
+backdrop-filter:blur(15px);
+}
+.btn:hover{
+transform:translateY(-4px);
+}
+
+/* 3D BLOOD DROP */
+.bloodDrop{
+position:absolute;
+width:130px;
+height:160px;
+right:8%;
+top:25%;
+filter:drop-shadow(0 20px 35px rgba(255,0,50,.35));
+animation:dropFloat 4s ease-in-out infinite;
+}
+
+.dropShape{
+width:100%;
+height:100%;
+background:linear-gradient(145deg,#ff405f,#b00025 60%,#59000f);
+border-radius:60% 60% 70% 70% / 55% 55% 85% 85%;
+transform:rotate(45deg) scale(.75);
+box-shadow:
+inset 20px 15px 30px rgba(255,255,255,.18),
+inset -20px -20px 35px rgba(0,0,0,.3),
+0 20px 50px rgba(255,0,40,.25);
+}
+
+@keyframes dropFloat{
+0%,100%{transform:translateY(0) rotate(-5deg)}
+50%{transform:translateY(-20px) rotate(5deg)}
+}
+
+/* COMMON */
+.container{
+width:min(1150px,92%);
+margin:auto;
+}
+
+section{
+padding:90px 0;
+}
+
+.sectionTitle{
+text-align:center;
+margin-bottom:42px;
+}
+
+.sectionTitle .mini{
+color:#ff405f;
+font-size:14px;
+font-weight:600;
+letter-spacing:2px;
+text-transform:uppercase;
+}
+
+.sectionTitle h2{
+font-size:38px;
+margin:7px 0;
+}
+
+.sectionTitle p{
+color:#888;
+}
+
+/* GLASS CARD */
+.glass{
+background:linear-gradient(
+145deg,
+rgba(255,255,255,.075),
+rgba(255,255,255,.025)
+);
+border:1px solid rgba(255,255,255,.1);
+border-radius:28px;
+backdrop-filter:blur(22px);
+-webkit-backdrop-filter:blur(22px);
+box-shadow:
+0 25px 70px rgba(0,0,0,.25),
+inset 0 1px rgba(255,255,255,.08);
+}
+
+/* STATS */
+.stats{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+grid-template-columns:repeat(4,1fr);
 gap:18px;
 }
-.card{
-background:rgba(255,255,255,.055);
-border:1px solid rgba(255,255,255,.08);
-border-radius:24px;
-padding:25px;
-backdrop-filter:blur(15px);
-box-shadow:0 20px 60px rgba(0,0,0,.25);
+
+.stat{
+padding:28px;
+text-align:center;
+position:relative;
+overflow:hidden;
 }
-.stat{text-align:center}
-.stat strong{display:block;font-size:38px;color:#ff1744}
-.stat span{color:#aaa}
-.formBox{
-max-width:900px;
-margin:auto;
-background:rgba(255,255,255,.055);
-border:1px solid rgba(255,255,255,.08);
-padding:25px;
-border-radius:25px;
+.stat:after{
+content:"";
+position:absolute;
+width:100px;
+height:100px;
+border-radius:50%;
+background:#ff1744;
+filter:blur(55px);
+opacity:.12;
+right:-30px;
+top:-30px;
 }
-.formGrid{
+
+.statIcon{
+font-size:30px;
+margin-bottom:8px;
+}
+.stat strong{
+display:block;
+font-size:40px;
+color:#ff3154;
+}
+.stat span{
+color:#999;
+}
+
+/* SEARCH */
+.searchCard{
+padding:30px;
+}
+
+.searchGrid{
 display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:15px;
+grid-template-columns:repeat(4,1fr);
+gap:13px;
 }
-label{display:block;color:#ccc;margin-bottom:7px}
+
 input,select,textarea{
 width:100%;
-padding:14px;
-border-radius:13px;
+padding:14px 15px;
+border-radius:15px;
 border:1px solid rgba(255,255,255,.1);
-background:#130d11;
-color:white;
+background:rgba(0,0,0,.28);
+color:#fff;
+font-family:inherit;
 outline:none;
+transition:.25s;
 }
-textarea{min-height:120px;resize:vertical}
-.full{grid-column:1/-1}
-button.submit{
+
+select option{
+background:#170b0e;
+color:#fff;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+border-color:#ff3154;
+box-shadow:0 0 0 3px rgba(255,23,68,.08);
+}
+
+textarea{
+min-height:120px;
+resize:vertical;
+}
+
+.searchButton{
+margin-top:15px;
 width:100%;
 padding:15px;
 border:0;
-border-radius:14px;
-background:linear-gradient(135deg,#ff1744,#a00025);
-color:white;font-size:16px;font-weight:bold;
+border-radius:15px;
+background:linear-gradient(135deg,#ff1744,#8f001f);
+color:#fff;
+font-size:16px;
+font-family:inherit;
+font-weight:600;
 cursor:pointer;
+box-shadow:0 10px 30px rgba(255,23,68,.2);
 }
-.searchBox{
+
+/* DONOR */
+.donorGrid{
 display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:18px;
+margin-top:20px;
 }
+
 .donor{
+padding:22px;
 display:flex;
-align-items:center;
 gap:15px;
+align-items:center;
 }
-.blood{
-width:60px;height:60px;
-border-radius:18px;
-background:#ff1744;
+
+.bloodBadge{
+width:68px;
+height:68px;
+flex-shrink:0;
+border-radius:22px;
 display:flex;
 align-items:center;
 justify-content:center;
-font-weight:bold;
-font-size:17px;
+background:linear-gradient(145deg,#ff3154,#8d001e);
+font-size:18px;
+font-weight:700;
+box-shadow:0 12px 30px rgba(255,23,68,.2);
 }
-.donor small{color:#aaa}
-footer{
-padding:40px 20px;
-text-align:center;
+
+.donor h3{
+margin-bottom:4px;
+}
+
+.donor p{
+font-size:14px;
 color:#999;
-border-top:1px solid rgba(255,255,255,.07);
+line-height:1.7;
 }
-@media(max-width:700px){
-.formGrid,.searchBox{grid-template-columns:1fr}
+
+/* FORM */
+.formCard{
+max-width:950px;
+margin:auto;
+padding:32px;
+}
+
+.formGrid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:17px;
+}
+
+.formGroup label{
+display:block;
+margin-bottom:7px;
+color:#bbb;
+font-size:14px;
+}
+
+.full{
+grid-column:1/-1;
+}
+
+.submitBtn{
+width:100%;
+padding:16px;
+border:0;
+border-radius:16px;
+background:linear-gradient(135deg,#ff1744,#85001d);
+color:#fff;
+font-family:inherit;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+box-shadow:0 12px 35px rgba(255,23,68,.2);
+}
+
+/* EMERGENCY */
+.emergency{
+position:relative;
+overflow:hidden;
+}
+.emergency:before{
+content:"";
+position:absolute;
+width:250px;
+height:250px;
+background:#ff1744;
+filter:blur(100px);
+opacity:.1;
+right:-80px;
+top:-80px;
+}
+
+.emergencyTitle{
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:25px;
+}
+.emergencyIcon{
+width:52px;
+height:52px;
+border-radius:17px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#ff1744;
+font-size:25px;
+box-shadow:0 8px 25px rgba(255,23,68,.3);
+}
+
+/* CONTACT */
+.contactGrid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:16px;
+}
+
+.contactCard{
+padding:25px;
+text-align:center;
+}
+.contactCard .icon{
+font-size:30px;
+margin-bottom:12px;
+}
+.contactCard h3{
+margin-bottom:6px;
+}
+.contactCard p{
+color:#999;
+font-size:14px;
+}
+
+/* FOOTER */
+footer{
+padding:45px 20px;
+text-align:center;
+border-top:1px solid rgba(255,255,255,.07);
+color:#777;
+}
+footer b{color:#ff3154}
+
+/* MOBILE */
+@media(max-width:900px){
+.stats{grid-template-columns:repeat(2,1fr)}
+.contactGrid{grid-template-columns:repeat(2,1fr)}
+.searchGrid{grid-template-columns:repeat(2,1fr)}
+.bloodDrop{opacity:.18;right:0}
+}
+
+@media(max-width:600px){
+header{padding:0 18px}
+.logo{font-size:21px}
+section{padding:65px 0}
+.hero h1{font-size:52px;letter-spacing:-2px}
+.hero p{font-size:15px}
+.stats,
+.searchGrid,
+.formGrid,
+.contactGrid{
+grid-template-columns:1fr;
+}
+.formCard,.searchCard{padding:20px}
+.sideMenu{width:290px}
 .full{grid-column:auto}
-.hero{padding:55px 15px}
 }
 </style>
 </head>
 
 <body>
 
+<!-- Floating particles -->
+<div class="particle" style="left:10%;animation-delay:0s"></div>
+<div class="particle" style="left:25%;animation-delay:3s"></div>
+<div class="particle" style="left:45%;animation-delay:1s"></div>
+<div class="particle" style="left:65%;animation-delay:5s"></div>
+<div class="particle" style="left:82%;animation-delay:2s"></div>
+
 <header>
-<div class="logo">🩸 MB <span>Blood Bank</span></div>
+<div class="logo">🩸 MB <b>Blood Bank</b></div>
 <button class="menuBtn" onclick="openMenu()">☰</button>
 </header>
 
-<!-- RIGHT SIDE MENU -->
+<!-- RIGHT MENU -->
 <div class="sideMenu" id="sideMenu">
 <button class="closeBtn" onclick="closeMenu()">×</button>
 
+<h3>MB Blood Bank</h3>
+
 <a href="#home" onclick="closeMenu()">🏠 হোম</a>
 <a href="#search" onclick="closeMenu()">🩸 রক্তদাতা খুঁজুন</a>
-<a href="#register" onclick="closeMenu()">📝 রক্তদাতা নিবন্ধন</a>
+<a href="#register" onclick="closeMenu()">📝 Donor Registration</a>
 <a href="#request" onclick="closeMenu()">🚨 জরুরি রক্তের আবেদন</a>
 <a href="#stats" onclick="closeMenu()">📊 পরিসংখ্যান</a>
 <a href="#contact" onclick="closeMenu()">📞 যোগাযোগ</a>
 </div>
 
+<!-- HERO -->
 <section id="home" class="hero">
-<div class="badge">❤️ রক্ত দিন • জীবন বাঁচান</div>
+
+<div class="bloodDrop">
+<div class="dropShape"></div>
+</div>
+
+<div class="heroContent">
+
+<div class="heroBadge">
+❤️ রক্ত দিন • জীবন বাঁচান
+</div>
+
 <h1>MB <span>Blood Bank</span></h1>
+
 <p>
-আপনার কাছাকাছি রক্তদাতা খুঁজুন, রক্তদাতা হিসেবে নিবন্ধন করুন
-এবং জরুরি প্রয়োজনে রক্তের আবেদন পাঠান।
+আপনার কাছাকাছি রক্তদাতা খুঁজে নিন।
+রক্তদাতা হিসেবে নিবন্ধন করুন এবং জরুরি প্রয়োজনে
+সহজেই রক্তের আবেদন পাঠান।
 </p>
 
-<div class="buttons">
+<div class="heroButtons">
 <a href="#search" class="btn btnRed">🩸 রক্তদাতা খুঁজুন</a>
 <a href="#register" class="btn btnDark">📝 Donor Registration</a>
 </div>
+
+</div>
 </section>
 
+<!-- STATS -->
 <section id="stats">
 <div class="container">
-<div class="title">
-<h2>📊 MB Blood Bank</h2>
-<p>আমাদের লোকেশন ও রক্ত ব্যবস্থাপনা</p>
+
+<div class="sectionTitle">
+<div class="mini">Our Network</div>
+<h2>রক্তের সেবায় আমাদের নেটওয়ার্ক</h2>
+<p>বাংলাদেশের প্রতিটি অঞ্চলে রক্তদাতা খুঁজে পাওয়ার লক্ষ্য</p>
 </div>
 
-<div class="grid">
-<div class="card stat">
-<strong>৮</strong><span>বিভাগ</span>
+<div class="stats">
+
+<div class="glass stat">
+<div class="statIcon">🏢</div>
+<strong>৮</strong>
+<span>বিভাগ</span>
 </div>
-<div class="card stat">
-<strong>৬৪</strong><span>জেলা</span>
+
+<div class="glass stat">
+<div class="statIcon">📍</div>
+<strong>৬৪</strong>
+<span>জেলা</span>
 </div>
-<div class="card stat">
-<strong>৪৯৯</strong><span>উপজেলা</span>
+
+<div class="glass stat">
+<div class="statIcon">🏘️</div>
+<strong>৪৯৯</strong>
+<span>উপজেলা</span>
 </div>
-<div class="card stat">
-<strong id="donorCount">0</strong><span>Active Donor</span>
+
+<div class="glass stat">
+<div class="statIcon">❤️</div>
+<strong id="donorCount">0</strong>
+<span>Active Donor</span>
 </div>
+
 </div>
 </div>
 </section>
 
+<!-- SEARCH -->
 <section id="search">
 <div class="container">
-<div class="title">
+
+<div class="sectionTitle">
+<div class="mini">Find Donor</div>
 <h2>🩸 রক্তদাতা খুঁজুন</h2>
-<p>রক্তের গ্রুপ ও এলাকার মাধ্যমে খুঁজুন</p>
+<p>রক্তের গ্রুপ ও এলাকার মাধ্যমে দ্রুত Donor খুঁজুন</p>
 </div>
 
-<div class="card">
-<div class="searchBox">
+<div class="glass searchCard">
+
+<div class="searchGrid">
 
 <select id="searchBlood">
-<option value="">রক্তের গ্রুপ</option>
-<option>A+</option><option>A-</option>
-<option>B+</option><option>B-</option>
-<option>AB+</option><option>AB-</option>
-<option>O+</option><option>O-</option>
+<option value="">🩸 রক্তের গ্রুপ</option>
+<option>A+</option>
+<option>A-</option>
+<option>B+</option>
+<option>B-</option>
+<option>AB+</option>
+<option>AB-</option>
+<option>O+</option>
+<option>O-</option>
 </select>
 
 <select id="searchDivision">
@@ -291,37 +722,44 @@ border-top:1px solid rgba(255,255,255,.07);
 
 </div>
 
-<br>
-<button class="submit" onclick="searchDonors()">🔎 Donor Search</button>
+<button class="searchButton" onclick="searchDonors()">
+🔎 Donor Search
+</button>
+
 </div>
 
-<br>
-<div id="donorResults" class="grid"></div>
+<div id="donorResults" class="donorGrid"></div>
+
 </div>
 </section>
 
+<!-- REGISTRATION -->
 <section id="register">
 <div class="container">
-<div class="title">
+
+<div class="sectionTitle">
+<div class="mini">Become A Donor</div>
 <h2>📝 রক্তদাতা নিবন্ধন</h2>
-<p>নিবন্ধনের পর আপনার আবেদন Pending থাকবে। Admin অনুমোদনের পর আপনি Active হবেন।</p>
+<p>নিবন্ধনের পর Admin অনুমোদন করলে আপনার প্রোফাইল Active হবে</p>
 </div>
 
-<div class="formBox">
+<div class="glass formCard">
+
 <form id="donorForm">
+
 <div class="formGrid">
 
-<div>
+<div class="formGroup">
 <label>পূর্ণ নাম *</label>
-<input id="dName" required>
+<input id="dName" placeholder="আপনার নাম লিখুন" required>
 </div>
 
-<div>
+<div class="formGroup">
 <label>মোবাইল নম্বর *</label>
-<input id="dPhone" required>
+<input id="dPhone" placeholder="01XXXXXXXXX" required>
 </div>
 
-<div>
+<div class="formGroup">
 <label>রক্তের গ্রুপ *</label>
 <select id="dBlood" required>
 <option value="">নির্বাচন করুন</option>
@@ -332,59 +770,68 @@ border-top:1px solid rgba(255,255,255,.07);
 </select>
 </div>
 
-<div>
+<div class="formGroup">
 <label>বিভাগ *</label>
 <select id="dDivision" required></select>
 </div>
 
-<div>
+<div class="formGroup">
 <label>জেলা *</label>
 <select id="dDistrict" required></select>
 </div>
 
-<div>
+<div class="formGroup">
 <label>উপজেলা *</label>
 <select id="dUpazila" required></select>
 </div>
 
-<div class="full">
+<div class="formGroup full">
 <label>ঠিকানা</label>
-<textarea id="dAddress"></textarea>
+<textarea id="dAddress" placeholder="আপনার বিস্তারিত ঠিকানা"></textarea>
 </div>
 
 <div class="full">
-<button class="submit">📝 নিবন্ধন পাঠান</button>
+<button class="submitBtn">
+📝 নিবন্ধন পাঠান
+</button>
 </div>
 
 </div>
 </form>
+
 </div>
 </div>
 </section>
 
+<!-- EMERGENCY -->
 <section id="request">
 <div class="container">
-<div class="title">
-<h2>🚨 জরুরি রক্তের আবেদন</h2>
-<p>রক্তের প্রয়োজন হলে আবেদন পাঠান</p>
+
+<div class="glass formCard emergency">
+
+<div class="emergencyTitle">
+<div class="emergencyIcon">🚨</div>
+<div>
+<h2>জরুরি রক্তের আবেদন</h2>
+<p style="color:#888">প্রয়োজনে দ্রুত রক্তের আবেদন পাঠান</p>
+</div>
 </div>
 
-<div class="formBox">
 <form id="requestForm">
 
 <div class="formGrid">
 
-<div>
+<div class="formGroup">
 <label>রোগীর নাম *</label>
 <input id="pName" required>
 </div>
 
-<div>
+<div class="formGroup">
 <label>যোগাযোগ নম্বর *</label>
 <input id="pPhone" required>
 </div>
 
-<div>
+<div class="formGroup">
 <label>রক্তের গ্রুপ *</label>
 <select id="pBlood" required>
 <option value="">নির্বাচন করুন</option>
@@ -395,37 +842,37 @@ border-top:1px solid rgba(255,255,255,.07);
 </select>
 </div>
 
-<div>
+<div class="formGroup">
 <label>কত ব্যাগ *</label>
 <input id="pBags" type="number" min="1" required>
 </div>
 
-<div>
+<div class="formGroup">
 <label>বিভাগ *</label>
 <select id="pDivision" required></select>
 </div>
 
-<div>
+<div class="formGroup">
 <label>জেলা *</label>
 <select id="pDistrict" required></select>
 </div>
 
-<div>
+<div class="formGroup">
 <label>উপজেলা *</label>
 <select id="pUpazila" required></select>
 </div>
 
-<div>
+<div class="formGroup">
 <label>হাসপাতাল / স্থান *</label>
 <input id="pHospital" required>
 </div>
 
-<div>
+<div class="formGroup">
 <label>প্রয়োজনের তারিখ *</label>
 <input id="pDate" type="date" required>
 </div>
 
-<div>
+<div class="formGroup">
 <label>জরুরিতার মাত্রা</label>
 <select id="pUrgency">
 <option>অতি জরুরি</option>
@@ -434,62 +881,75 @@ border-top:1px solid rgba(255,255,255,.07);
 </select>
 </div>
 
-<div class="full">
+<div class="formGroup full">
 <label>অতিরিক্ত তথ্য</label>
 <textarea id="pInfo"></textarea>
 </div>
 
 <div class="full">
-<button class="submit">🚨 Request পাঠান</button>
+<button class="submitBtn">
+🚨 Request পাঠান
+</button>
 </div>
 
 </div>
 </form>
+
 </div>
 </div>
 </section>
 
+<!-- CONTACT -->
 <section id="contact">
 <div class="container">
-<div class="title">
+
+<div class="sectionTitle">
+<div class="mini">Contact Us</div>
 <h2>📞 যোগাযোগ</h2>
+<p>রক্তদাতা ও রক্তের প্রয়োজনে আমাদের সাথে যোগাযোগ করুন</p>
 </div>
 
-<div class="grid">
-<div class="card">
-<h3>📱 ফোন</h3><br>
+<div class="contactGrid">
+
+<div class="glass contactCard">
+<div class="icon">📱</div>
+<h3>Phone</h3>
 <p>017XXXXXXXX</p>
 </div>
 
-<div class="card">
-<h3>📧 Email</h3><br>
+<div class="glass contactCard">
+<div class="icon">📧</div>
+<h3>Email</h3>
 <p>mbbloodbank@gmail.com</p>
 </div>
 
-<div class="card">
-<h3>💬 SMS</h3><br>
-<p>রক্তের প্রয়োজন হলে আমাদের জানান।</p>
+<div class="glass contactCard">
+<div class="icon">💬</div>
+<h3>SMS</h3>
+<p>রক্তের প্রয়োজন হলে জানান</p>
 </div>
 
-<div class="card">
-<h3>📍 ঠিকানা</h3><br>
-<p>বাংলাদেশ</p>
+<div class="glass contactCard">
+<div class="icon">📍</div>
+<h3>Address</h3>
+<p>Bangladesh</p>
 </div>
+
 </div>
 </div>
 </section>
 
 <footer>
-© 2026 MB Blood Bank — Donate Blood, Save Life ❤️
+© 2026 <b>MB Blood Bank</b> — Donate Blood, Save Life ❤️
 </footer>
 
 <script>
 
-/* =========================
-   BANGLADESH LOCATION DATA
-========================= */
+/* =============================
+   LOCATION DATA
+============================= */
 
-const locations = {
+const locations={
 
 "ঢাকা বিভাগ":[
 "ঢাকা","ফরিদপুর","গাজীপুর","গোপালগঞ্জ","কিশোরগঞ্জ",
@@ -529,33 +989,17 @@ const locations = {
 "বরিশাল বিভাগ":[
 "বরগুনা","বরিশাল","ভোলা","ঝালকাঠি","পটুয়াখালী","পিরোজপুর"
 ]
-
 };
 
-/*
-=========================================================
-IMPORTANT
-=========================================================
-সরকারি জাতীয় পোর্টালের বর্তমান হেডারে ৪৯৯ উপজেলা দেখানো হয়।
-কিন্তু বিস্তারিত উপজেলা প্রশাসনিক তালিকার সংখ্যায় বিভিন্ন
-সরকারি পেজে ৪৯৫ দেখা যায়।
+const upazilas={};
 
-এখানে কোনো উপজেলা বানিয়ে যোগ করা হয়নি।
-আপনার যাচাইকৃত ৪৯৯-item master list পাওয়া গেলে এই object-এ
-বিভাগ > জেলা > উপজেলা হিসেবে বসানো যাবে।
-=========================================================
-*/
-
-const upazilas = {};
-
-/* Demo/known upazila entries */
 Object.keys(locations).forEach(div=>{
 locations[div].forEach(dist=>{
 upazilas[dist]=[];
 });
 });
 
-/* কিছু উদাহরণ */
+/* Existing verified examples */
 upazilas["ঢাকা"]=[
 "ধামরাই","দোহার","কেরানীগঞ্জ","নবাবগঞ্জ","সাভার"
 ];
@@ -565,8 +1009,8 @@ upazilas["গাজীপুর"]=[
 ];
 
 upazilas["রংপুর"]=[
-"গংগাচড়া","বদরগঞ্জ","কাউনিয়া","মিঠাপুকুর","পীরগাছা",
-"পীরগঞ্জ","রংপুর সদর","তারাগঞ্জ"
+"গংগাচড়া","বদরগঞ্জ","কাউনিয়া","মিঠাপুকুর",
+"পীরগাছা","পীরগঞ্জ","রংপুর সদর","তারাগঞ্জ"
 ];
 
 upazilas["যশোর"]=[
@@ -574,53 +1018,63 @@ upazilas["যশোর"]=[
 "কেশবপুর","মনিরামপুর","শার্শা","যশোর সদর"
 ];
 
+/* =============================
+   DROPDOWN
+============================= */
+
 function fillDivisions(id){
+
 const el=document.getElementById(id);
+
 el.innerHTML='<option value="">বিভাগ নির্বাচন</option>';
 
-Object.keys(locations).forEach(div=>{
-let o=document.createElement("option");
-o.value=div;
-o.textContent=div;
-el.appendChild(o);
+Object.keys(locations).forEach(x=>{
+let option=document.createElement("option");
+option.value=x;
+option.textContent=x;
+el.appendChild(option);
 });
 }
 
+["searchDivision","dDivision","pDivision"]
+.forEach(fillDivisions);
+
 function fillDistrict(divId,distId,upId){
-const div=document.getElementById(divId);
-const dist=document.getElementById(distId);
-const up=document.getElementById(upId);
+
+let div=document.getElementById(divId);
+let dist=document.getElementById(distId);
+let up=document.getElementById(upId);
 
 dist.innerHTML='<option value="">জেলা নির্বাচন</option>';
 up.innerHTML='<option value="">উপজেলা নির্বাচন</option>';
 
-(locations[div.value]||[]).forEach(d=>{
-let o=document.createElement("option");
-o.value=d;
-o.textContent=d+" জেলা";
-dist.appendChild(o);
+(locations[div.value]||[]).forEach(x=>{
+let option=document.createElement("option");
+option.value=x;
+option.textContent=x+" জেলা";
+dist.appendChild(option);
 });
 }
 
 function fillUpazila(distId,upId){
-const dist=document.getElementById(distId);
-const up=document.getElementById(upId);
+
+let dist=document.getElementById(distId);
+let up=document.getElementById(upId);
 
 up.innerHTML='<option value="">উপজেলা নির্বাচন</option>';
 
 (upazilas[dist.value]||[]).forEach(x=>{
-let o=document.createElement("option");
-o.value=x;
-o.textContent=x;
-up.appendChild(o);
+let option=document.createElement("option");
+option.value=x;
+option.textContent=x;
+up.appendChild(option);
 });
 }
-
-["searchDivision","dDivision","pDivision"].forEach(fillDivisions);
 
 document.getElementById("searchDivision").onchange=()=>{
 fillDistrict("searchDivision","searchDistrict","searchUpazila");
 };
+
 document.getElementById("searchDistrict").onchange=()=>{
 fillUpazila("searchDistrict","searchUpazila");
 };
@@ -628,6 +1082,7 @@ fillUpazila("searchDistrict","searchUpazila");
 document.getElementById("dDivision").onchange=()=>{
 fillDistrict("dDivision","dDistrict","dUpazila");
 };
+
 document.getElementById("dDistrict").onchange=()=>{
 fillUpazila("dDistrict","dUpazila");
 };
@@ -635,19 +1090,23 @@ fillUpazila("dDistrict","dUpazila");
 document.getElementById("pDivision").onchange=()=>{
 fillDistrict("pDivision","pDistrict","pUpazila");
 };
+
 document.getElementById("pDistrict").onchange=()=>{
 fillUpazila("pDistrict","pUpazila");
 };
 
 /* MENU */
+
 function openMenu(){
 document.getElementById("sideMenu").classList.add("open");
 }
+
 function closeMenu(){
 document.getElementById("sideMenu").classList.remove("open");
 }
 
-/* DONOR DATA */
+/* DONOR */
+
 function getDonors(){
 return JSON.parse(localStorage.getItem("mbDonors")||"[]");
 }
@@ -657,6 +1116,7 @@ localStorage.setItem("mbDonors",JSON.stringify(data));
 }
 
 document.getElementById("donorForm").addEventListener("submit",e=>{
+
 e.preventDefault();
 
 let donors=getDonors();
@@ -675,9 +1135,15 @@ status:"Pending"
 
 saveDonors(donors);
 
-alert("আপনার Donor Registration সফল হয়েছে। এখন এটি Pending অবস্থায় আছে। Admin অনুমোদনের পর Active হবে।");
+alert(
+"✅ Registration সফল হয়েছে!\n\n"+
+"আপনার আবেদন এখন Pending অবস্থায় আছে।\n"+
+"Admin অনুমোদনের পর আপনি Active Donor হিসেবে দেখা যাবেন।"
+);
 
 e.target.reset();
+
+updateCount();
 });
 
 function searchDonors(){
@@ -697,40 +1163,65 @@ let result=donors.filter(x=>
 );
 
 let box=document.getElementById("donorResults");
+
 box.innerHTML="";
 
 if(!result.length){
-box.innerHTML='<div class="card">❌ কোনো Active Donor পাওয়া যায়নি।</div>';
+
+box.innerHTML=`
+<div class="glass donor">
+<div class="bloodBadge">!</div>
+<div>
+<h3>কোনো Donor পাওয়া যায়নি</h3>
+<p>আপনার দেওয়া এলাকার জন্য বর্তমানে Active Donor নেই।</p>
+</div>
+</div>`;
+
 return;
 }
 
 result.forEach(x=>{
+
 box.innerHTML+=`
-<div class="card donor">
-<div class="blood">${x.blood}</div>
+
+<div class="glass donor">
+
+<div class="bloodBadge">${x.blood}</div>
+
 <div>
 <h3>${x.name}</h3>
-<small>📍 ${x.district}, ${x.upazila}</small><br>
-<small>📞 ${x.phone}</small>
+<p>
+📍 ${x.district}, ${x.upazila}<br>
+📞 ${x.phone}
+</p>
 </div>
-</div>`;
+
+</div>
+
+`;
+
 });
 }
 
 function updateCount(){
+
 document.getElementById("donorCount").textContent=
 getDonors().filter(x=>x.status==="Approved").length;
 }
+
 updateCount();
 
 /* BLOOD REQUEST */
+
 document.getElementById("requestForm").addEventListener("submit",e=>{
+
 e.preventDefault();
 
 let requests=
 JSON.parse(localStorage.getItem("mbRequests")||"[]");
 
 requests.push({
+
 id:Date.now(),
 patient:pName.value,
 phone:pPhone.value,
@@ -744,13 +1235,21 @@ date:pDate.value,
 urgency:pUrgency.value,
 info:pInfo.value,
 status:"Pending"
+
 });
 
-localStorage.setItem("mbRequests",JSON.stringify(requests));
+localStorage.setItem(
+"mbRequests",
+JSON.stringify(requests)
+);
 
-alert("জরুরি রক্তের আবেদন পাঠানো হয়েছে। Admin যাচাই করার পর ব্যবস্থা নেওয়া হবে।");
+alert(
+"🚨 Blood Request সফলভাবে পাঠানো হয়েছে!\n\n"+
+"Admin আপনার Request যাচাই করবেন।"
+);
 
 e.target.reset();
+
 });
 
 </script>
