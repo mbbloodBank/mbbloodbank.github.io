@@ -1,1 +1,743 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>MB“Blood Bank” Admin</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial,"Noto Sans Bengali",sans-serif
+}
+
+body{
+background:
+radial-gradient(circle at 10% 10%,#ff174455,transparent 30%),
+radial-gradient(circle at 90% 80%,#ff174455,transparent 30%),
+linear-gradient(135deg,#080808,#250306,#080808);
+color:white;
+min-height:100vh
+}
+
+.login{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px
+}
+
+.loginBox{
+width:100%;
+max-width:400px;
+padding:30px;
+border-radius:25px;
+background:#ffffff0c;
+border:1px solid #ffffff20;
+backdrop-filter:blur(20px);
+box-shadow:0 25px 60px #000
+}
+
+.loginBox h1{
+text-align:center;
+margin-bottom:10px
+}
+
+.loginBox p{
+text-align:center;
+color:#aaa;
+margin-bottom:25px
+}
+
+input{
+width:100%;
+padding:14px;
+margin-bottom:15px;
+border-radius:12px;
+border:1px solid #ffffff20;
+background:#080808;
+color:white;
+outline:none
+}
+
+button{
+border:0;
+padding:11px 18px;
+border-radius:25px;
+background:linear-gradient(135deg,#ff2020,#920000);
+color:white;
+font-weight:bold;
+cursor:pointer
+}
+
+.loginBox button{
+width:100%
+}
+
+.error{
+color:#ff6868;
+margin-top:15px;
+text-align:center
+}
+
+.dashboard{
+display:none
+}
+
+header{
+padding:15px 20px;
+background:#100406dd;
+backdrop-filter:blur(20px);
+border-bottom:1px solid #ffffff18
+}
+
+.head{
+max-width:1400px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center
+}
+
+.logo{
+color:#ff4141;
+font-weight:bold;
+font-size:21px
+}
+
+.logo span{color:#fff}
+
+.container{
+max-width:1400px;
+margin:auto;
+padding:20px
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+margin-bottom:25px
+}
+
+.stat{
+padding:25px;
+text-align:center;
+border-radius:20px;
+background:#ffffff0c;
+border:1px solid #ffffff15
+}
+
+.stat h2{
+font-size:34px;
+color:#ff4444
+}
+
+.stat p{color:#aaa}
+
+.card{
+background:#ffffff0b;
+border:1px solid #ffffff15;
+border-radius:22px;
+padding:20px;
+margin-bottom:25px;
+overflow-x:auto
+}
+
+.card h2{
+margin-bottom:18px
+}
+
+table{
+width:100%;
+min-width:850px;
+border-collapse:collapse
+}
+
+th,td{
+padding:12px;
+border-bottom:1px solid #ffffff15;
+text-align:left
+}
+
+th{color:#ff5050}
+
+.badge{
+padding:5px 10px;
+border-radius:20px;
+font-size:12px
+}
+
+.pending{
+background:#ff980033;
+color:#ffbb55
+}
+
+.approved{
+background:#00ff7733;
+color:#50ff9b
+}
+
+.rejected{
+background:#ff000033;
+color:#ff7777
+}
+
+.action{
+display:flex;
+gap:5px;
+flex-wrap:wrap
+}
+
+.small{
+padding:7px 10px;
+font-size:12px
+}
+
+.green{background:#008a43}
+.red{background:#980000}
+.gray{background:#555}
+
+@media(max-width:800px){
+
+.stats{
+grid-template-columns:repeat(2,1fr)
+}
+
+.container{
+padding:12px
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- LOGIN -->
+
+<div class="login" id="login">
+
+<div class="loginBox">
+
+<h1>🔐 Admin Login</h1>
+
+<p>MB“Blood Bank”</p>
+
+<input
+id="email"
+type="email"
+placeholder="Admin Email"
+>
+
+<input
+id="password"
+type="password"
+placeholder="Password"
+>
+
+<button onclick="login()">
+Login
+</button>
+
+<div id="loginMsg"></div>
+
+</div>
+
+</div>
+
+
+<!-- DASHBOARD -->
+
+<div class="dashboard" id="dashboard">
+
+<header>
+
+<div class="head">
+
+<div class="logo">
+🩸 MB<span>“Blood Bank” Admin</span>
+</div>
+
+<button class="gray" onclick="logout()">
+Logout
+</button>
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+
+<div class="stats">
+
+<div class="stat">
+<h2 id="total">0</h2>
+<p>Total Donors</p>
+</div>
+
+<div class="stat">
+<h2 id="pending">0</h2>
+<p>Pending</p>
+</div>
+
+<div class="stat">
+<h2 id="approved">0</h2>
+<p>Approved</p>
+</div>
+
+<div class="stat">
+<h2 id="requestCount">0</h2>
+<p>Requests</p>
+</div>
+
+</div>
+
+
+<!-- DONOR -->
+
+<div class="card">
+
+<h2>👤 Donor Management</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Blood</th>
+<th>Phone</th>
+<th>Location</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="donors"></tbody>
+
+</table>
+
+</div>
+
+
+<!-- REQUEST -->
+
+<div class="card">
+
+<h2>🚨 Emergency Requests</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Patient</th>
+<th>Blood</th>
+<th>Phone</th>
+<th>Hospital</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="requests"></tbody>
+
+</table>
+
+</div>
+
+
+</div>
+</div>
+
+
+<script>
+
+
+/*
+==========================================
+ADMIN LOGIN
+==========================================
+
+ডেমো Admin:
+
+Email:
+admin@mbbloodbank.com
+
+Password:
+123456
+
+গুরুত্বপূর্ণ:
+এটি LocalStorage ভিত্তিক Demo Admin।
+Production security-এর জন্য backend authentication দরকার।
+*/
+
+
+const ADMIN_EMAIL="admin@mbbloodbank.com";
+const ADMIN_PASSWORD="123456";
+
+
+function login(){
+
+let email=
+document.getElementById("email").value.trim();
+
+let password=
+document.getElementById("password").value;
+
+
+if(
+email===ADMIN_EMAIL &&
+password===ADMIN_PASSWORD
+){
+
+sessionStorage.setItem(
+"mb_admin",
+"true"
+);
+
+showDashboard();
+
+}else{
+
+document.getElementById("loginMsg")
+.innerHTML=
+"<p class='error'>❌ Email অথবা Password ভুল।</p>";
+
+}
+
+}
+
+
+function showDashboard(){
+
+if(
+sessionStorage.getItem("mb_admin")!=="true"
+)return;
+
+document.getElementById("login")
+.style.display="none";
+
+document.getElementById("dashboard")
+.style.display="block";
+
+loadDonors();
+loadRequests();
+
+}
+
+
+function logout(){
+
+sessionStorage.removeItem("mb_admin");
+
+location.reload();
+
+}
+
+
+/* =========================
+   DONORS
+   ========================= */
+
+function loadDonors(){
+
+let donors=JSON.parse(
+localStorage.getItem("mb_donors")||"[]"
+);
+
+let table=
+document.getElementById("donors");
+
+table.innerHTML="";
+
+let pending=0;
+let approved=0;
+
+donors.forEach(d=>{
+
+if(d.status==="pending")pending++;
+if(d.status==="approved")approved++;
+
+table.innerHTML+=`
+
+<tr>
+
+<td>${safe(d.name)}</td>
+
+<td><b>${safe(d.blood)}</b></td>
+
+<td>${safe(d.phone)}</td>
+
+<td>
+${safe(d.division)}
+/
+${safe(d.district)}
+/
+${safe(d.upazila)}
+</td>
+
+<td>
+<span class="badge ${safe(d.status)}">
+${safe(d.status)}
+</span>
+</td>
+
+<td>
+
+<div class="action">
+
+<button
+class="small green"
+onclick="approve(${d.id})">
+Approve
+</button>
+
+<button
+class="small red"
+onclick="reject(${d.id})">
+Reject
+</button>
+
+<button
+class="small red"
+onclick="removeDonor(${d.id})">
+Delete
+</button>
+
+</div>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+document.getElementById("total")
+.textContent=donors.length;
+
+document.getElementById("pending")
+.textContent=pending;
+
+document.getElementById("approved")
+.textContent=approved;
+
+}
+
+
+function approve(id){
+
+changeDonorStatus(id,"approved");
+
+}
+
+
+function reject(id){
+
+changeDonorStatus(id,"rejected");
+
+}
+
+
+function changeDonorStatus(id,status){
+
+let donors=JSON.parse(
+localStorage.getItem("mb_donors")||"[]"
+);
+
+let d=donors.find(x=>x.id==id);
+
+if(d){
+d.status=status;
+}
+
+localStorage.setItem(
+"mb_donors",
+JSON.stringify(donors)
+);
+
+loadDonors();
+
+}
+
+
+function removeDonor(id){
+
+if(!confirm("এই Donor Delete করবেন?"))
+return;
+
+let donors=JSON.parse(
+localStorage.getItem("mb_donors")||"[]"
+);
+
+donors=donors.filter(x=>x.id!=id);
+
+localStorage.setItem(
+"mb_donors",
+JSON.stringify(donors)
+);
+
+loadDonors();
+
+}
+
+
+/* =========================
+   REQUESTS
+   ========================= */
+
+function loadRequests(){
+
+let requests=JSON.parse(
+localStorage.getItem("mb_requests")||"[]"
+);
+
+let table=
+document.getElementById("requests");
+
+table.innerHTML="";
+
+requests.forEach(r=>{
+
+table.innerHTML+=`
+
+<tr>
+
+<td>${safe(r.patient)}</td>
+
+<td><b>${safe(r.blood)}</b></td>
+
+<td>${safe(r.phone)}</td>
+
+<td>${safe(r.hospital)}</td>
+
+<td>
+<span class="badge ${safe(r.status)}">
+${safe(r.status)}
+</span>
+</td>
+
+<td>
+
+<div class="action">
+
+<button
+class="small green"
+onclick="approveRequest(${r.id})">
+Approve
+</button>
+
+<button
+class="small red"
+onclick="rejectRequest(${r.id})">
+Reject
+</button>
+
+<button
+class="small red"
+onclick="removeRequest(${r.id})">
+Delete
+</button>
+
+</div>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+document.getElementById("requestCount")
+.textContent=requests.length;
+
+}
+
+
+function approveRequest(id){
+
+changeRequestStatus(id,"approved");
+
+}
+
+
+function rejectRequest(id){
+
+changeRequestStatus(id,"rejected");
+
+}
+
+
+function changeRequestStatus(id,status){
+
+let requests=JSON.parse(
+localStorage.getItem("mb_requests")||"[]"
+);
+
+let r=requests.find(x=>x.id==id);
+
+if(r){
+r.status=status;
+}
+
+localStorage.setItem(
+"mb_requests",
+JSON.stringify(requests)
+);
+
+loadRequests();
+
+}
+
+
+function removeRequest(id){
+
+if(!confirm("এই Request Delete করবেন?"))
+return;
+
+let requests=JSON.parse(
+localStorage.getItem("mb_requests")||"[]"
+);
+
+requests=requests.filter(x=>x.id!=id);
+
+localStorage.setItem(
+"mb_requests",
+JSON.stringify(requests)
+);
+
+loadRequests();
+
+}
+
+
+function safe(v){
+
+return String(v||"")
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
+
+showDashboard();
+
+</script>
+
+</body>
+</html>
