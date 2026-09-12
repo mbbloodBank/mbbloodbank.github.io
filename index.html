@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MB Blood Bank | রক্ত দিন, জীবন বাঁচান</title>
+<meta name="theme-color" content="#e31b23">
+<title>MB Blood Bank</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
-
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
+    font-family:"Noto Sans Bengali",Arial,sans-serif;
 }
 
 html{
@@ -19,66 +19,48 @@ html{
 }
 
 body{
-    font-family:'Hind Siliguri',sans-serif;
-    background:#050507;
+    background:
+    radial-gradient(circle at 10% 10%,rgba(255,50,70,.15),transparent 30%),
+    radial-gradient(circle at 90% 80%,rgba(255,0,60,.12),transparent 30%),
+    #080b12;
     color:#fff;
-    overflow-x:hidden;
-}
-
-body:before,
-body:after{
-    content:"";
-    position:fixed;
-    width:350px;
-    height:350px;
-    border-radius:50%;
-    filter:blur(100px);
-    opacity:.25;
-    z-index:-2;
-    animation:float 10s infinite alternate ease-in-out;
+    min-height:100vh;
 }
 
 body:before{
-    background:#ff003c;
-    top:-100px;
-    left:-100px;
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:
+    linear-gradient(120deg,transparent 40%,rgba(255,255,255,.025),transparent 60%);
 }
 
-body:after{
-    background:#780020;
-    right:-100px;
-    bottom:-100px;
-    animation-delay:3s;
+a{
+    color:inherit;
+    text-decoration:none;
 }
 
-@keyframes float{
-    from{transform:translate(0,0) scale(1)}
-    to{transform:translate(80px,50px) scale(1.3)}
+.container{
+    width:min(1150px,92%);
+    margin:auto;
 }
 
 header{
-    position:fixed;
-    top:15px;
-    left:50%;
-    transform:translateX(-50%);
-    width:calc(100% - 30px);
-    max-width:1200px;
-    z-index:1000;
+    position:sticky;
+    top:0;
+    z-index:999;
+    backdrop-filter:blur(20px);
+    background:rgba(8,11,18,.78);
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
 
+.nav{
+    min-height:72px;
     display:flex;
-    justify-content:space-between;
     align-items:center;
-
-    padding:12px 15px 12px 20px;
-
-    background:rgba(255,255,255,.07);
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:22px;
-    backdrop-filter:blur(25px);
-
-    box-shadow:
-        0 15px 50px rgba(0,0,0,.35),
-        inset 0 1px rgba(255,255,255,.1);
+    justify-content:space-between;
+    gap:15px;
 }
 
 .logo{
@@ -86,512 +68,354 @@ header{
     align-items:center;
     gap:10px;
     font-size:22px;
-    font-weight:700;
-}
-
-.logoIcon{
-    width:42px;
-    height:42px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:14px;
-    background:linear-gradient(135deg,#ff1744,#76001d);
-    box-shadow:0 8px 25px rgba(255,0,60,.35);
+    font-weight:900;
 }
 
 .logo span{
-    color:#ff3157;
-}
-
-.menuBtn{
-    width:46px;
-    height:46px;
-    border:0;
-    border-radius:15px;
-    color:#fff;
-    font-size:23px;
-    cursor:pointer;
-
-    background:linear-gradient(135deg,#ff1744,#8b001f);
-    box-shadow:0 8px 25px rgba(255,0,60,.3);
-}
-
-.sideMenu{
-    position:fixed;
-    top:0;
-    right:-350px;
-    width:320px;
-    max-width:90%;
-    height:100vh;
-    z-index:3000;
-
-    padding:90px 22px 25px;
-
-    background:rgba(12,7,10,.94);
-    border-left:1px solid rgba(255,255,255,.1);
-    backdrop-filter:blur(30px);
-
-    transition:.45s cubic-bezier(.68,-.55,.27,1.55);
-}
-
-.sideMenu.active{
-    right:0;
-}
-
-.closeMenu{
-    position:absolute;
-    right:20px;
-    top:20px;
-
     width:43px;
     height:43px;
-    border:0;
-    border-radius:14px;
-
-    background:#ff1744;
-    color:#fff;
-    font-size:24px;
-}
-
-.sideMenu a{
-    display:flex;
-    align-items:center;
-    gap:12px;
-
-    padding:15px;
-    margin:9px 0;
-
-    color:#fff;
-    text-decoration:none;
-
+    display:grid;
+    place-items:center;
     border-radius:15px;
-    background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.05);
-
-    transition:.25s;
+    background:linear-gradient(145deg,#ff3347,#a50016);
+    box-shadow:
+    0 10px 30px rgba(255,0,40,.3),
+    inset 0 2px 5px rgba(255,255,255,.25);
 }
 
-.sideMenu a:hover{
-    transform:translateX(-5px);
-    background:rgba(255,23,68,.18);
-    border-color:rgba(255,23,68,.3);
+nav{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+}
+
+nav a{
+    padding:9px 12px;
+    border-radius:12px;
+    color:#ddd;
+    font-size:14px;
+}
+
+nav a:hover{
+    background:rgba(255,255,255,.08);
+    color:#fff;
 }
 
 .hero{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    padding:75px 0 55px;
     text-align:center;
-    padding:120px 20px 70px;
-    position:relative;
-}
-
-.heroContent{
-    max-width:850px;
 }
 
 .badge{
     display:inline-block;
-    padding:9px 18px;
-    margin-bottom:25px;
-
+    padding:8px 15px;
+    border:1px solid rgba(255,80,90,.35);
+    background:rgba(255,30,50,.08);
     border-radius:50px;
-    color:#ff6681;
-    background:rgba(255,23,68,.1);
-    border:1px solid rgba(255,23,68,.3);
-
-    box-shadow:0 0 30px rgba(255,0,60,.1);
+    color:#ff6d7a;
+    margin-bottom:20px;
 }
 
 .hero h1{
-    font-size:clamp(45px,9vw,90px);
+    font-size:clamp(42px,8vw,78px);
     line-height:1;
-    font-weight:700;
-    margin-bottom:25px;
+    font-weight:1000;
+    letter-spacing:-3px;
 }
 
 .hero h1 span{
-    color:#ff1744;
-    text-shadow:0 0 40px rgba(255,23,68,.4);
+    color:#ff3347;
+    text-shadow:0 0 35px rgba(255,30,50,.45);
 }
 
 .hero p{
-    color:#bcbcbc;
+    max-width:700px;
+    margin:22px auto;
+    color:#b9bdc7;
     font-size:17px;
-    line-height:1.9;
-    max-width:680px;
-    margin:auto;
+    line-height:1.8;
 }
 
-.heroButtons{
-    margin-top:35px;
+.buttons{
     display:flex;
     justify-content:center;
-    gap:12px;
     flex-wrap:wrap;
+    gap:12px;
 }
 
 .btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-
-    padding:15px 24px;
-    border-radius:16px;
-
-    text-decoration:none;
-    font-weight:700;
-
-    transition:.3s;
-}
-
-.btnRed{
-    color:white;
-    background:linear-gradient(135deg,#ff1744,#990022);
-    box-shadow:0 15px 35px rgba(255,0,60,.25);
-}
-
-.btnDark{
+    border:0;
+    padding:13px 20px;
+    border-radius:15px;
+    cursor:pointer;
+    font-weight:800;
     color:#fff;
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.12);
+    background:linear-gradient(145deg,#ff3448,#ad0019);
+    box-shadow:0 12px 30px rgba(255,0,40,.22);
+    transition:.25s;
 }
 
 .btn:hover{
-    transform:translateY(-5px);
+    transform:translateY(-3px);
 }
 
-.bloodDrop{
-    width:125px;
-    height:150px;
-    margin:0 auto 30px;
-
-    position:relative;
-
-    background:linear-gradient(145deg,#ff4162,#9c0026);
-
-    border-radius:70% 70% 70% 15%;
-    transform:rotate(-45deg);
-
-    box-shadow:
-        0 20px 60px rgba(255,0,60,.35),
-        inset -12px -12px 25px rgba(0,0,0,.2),
-        inset 10px 10px 20px rgba(255,255,255,.15);
-
-    animation:dropFloat 3s infinite ease-in-out;
-}
-
-.bloodDrop:after{
-    content:"🩸";
-    position:absolute;
-    font-size:65px;
-    transform:rotate(45deg);
-    left:28px;
-    top:40px;
-    filter:drop-shadow(0 5px 8px rgba(0,0,0,.3));
-}
-
-@keyframes dropFloat{
-    0%,100%{transform:rotate(-45deg) translateY(0)}
-    50%{transform:rotate(-45deg) translateY(-12px)}
-}
-
-.container{
-    width:100%;
-    max-width:1150px;
-    margin:auto;
-    padding:25px;
-}
-
-section{
-    padding:80px 0;
-}
-
-.sectionTitle{
-    text-align:center;
-    margin-bottom:40px;
-}
-
-.sectionTitle h2{
-    font-size:35px;
-}
-
-.sectionTitle p{
-    margin-top:8px;
-    color:#999;
-}
-
-.card{
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.09),
-            rgba(255,255,255,.025)
-        );
-
+.btn.secondary{
+    background:rgba(255,255,255,.07);
     border:1px solid rgba(255,255,255,.1);
-    border-radius:26px;
-
-    padding:25px;
-
-    backdrop-filter:blur(20px);
-
-    box-shadow:
-        0 20px 70px rgba(0,0,0,.3),
-        inset 0 1px rgba(255,255,255,.08);
-
-    transition:.3s;
-}
-
-.card:hover{
-    transform:translateY(-7px);
-    border-color:rgba(255,23,68,.3);
+    box-shadow:none;
 }
 
 .stats{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:18px;
+    gap:15px;
+    margin:25px 0 60px;
+}
+
+.card{
+    background:
+    linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.035));
+    border:1px solid rgba(255,255,255,.09);
+    border-radius:23px;
+    padding:22px;
+    backdrop-filter:blur(18px);
+    box-shadow:
+    0 20px 60px rgba(0,0,0,.25),
+    inset 0 1px 0 rgba(255,255,255,.08);
 }
 
 .stat{
     text-align:center;
 }
 
-.statIcon{
-    font-size:30px;
+.stat b{
+    display:block;
+    font-size:32px;
+    color:#ff4c5d;
+}
+
+.stat span{
+    color:#aeb2bc;
+}
+
+section{
+    padding:50px 0;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.section-title h2{
+    font-size:34px;
+}
+
+.section-title p{
+    color:#9ca1ad;
+    margin-top:8px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.feature{
+    min-height:190px;
+}
+
+.icon{
+    font-size:35px;
+    margin-bottom:13px;
+}
+
+.feature h3{
     margin-bottom:8px;
 }
 
-.stat strong{
-    display:block;
-    font-size:40px;
-    color:#ff1744;
+.feature p{
+    color:#aeb3bd;
+    line-height:1.7;
 }
 
-.stat p{
-    color:#aaa;
+.form-card{
+    max-width:900px;
+    margin:auto;
 }
 
-.searchGrid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:13px;
-}
-
-input,
-select,
-textarea{
-    width:100%;
-    padding:14px 15px;
-
-    border-radius:14px;
-    border:1px solid rgba(255,255,255,.1);
-
-    outline:none;
-
-    color:#fff;
-    background:rgba(0,0,0,.3);
-
-    font-family:inherit;
-}
-
-select option{
-    background:#111;
-    color:#fff;
-}
-
-input:focus,
-select:focus,
-textarea:focus{
-    border-color:#ff1744;
-    box-shadow:0 0 0 3px rgba(255,23,68,.08);
-}
-
-textarea{
-    min-height:120px;
-    resize:vertical;
-}
-
-label{
-    display:block;
-    margin-bottom:7px;
-    color:#cfcfcf;
-}
-
-.formGrid{
+.form-grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
-    gap:17px;
+    gap:15px;
 }
 
 .full{
     grid-column:1/-1;
 }
 
-.submit{
-    width:100%;
-    border:0;
-    padding:16px;
-    border-radius:15px;
-
-    color:#fff;
-    font-family:inherit;
-    font-size:16px;
-    font-weight:700;
-
-    background:linear-gradient(135deg,#ff1744,#85001e);
-
-    cursor:pointer;
-
-    box-shadow:0 12px 30px rgba(255,0,60,.2);
+label{
+    display:block;
+    color:#d9dce2;
+    font-size:14px;
+    margin-bottom:7px;
 }
 
-.donorGrid{
+input,
+select,
+textarea{
+    width:100%;
+    border:1px solid rgba(255,255,255,.11);
+    background:rgba(0,0,0,.28);
+    color:#fff;
+    padding:13px 14px;
+    border-radius:13px;
+    outline:none;
+}
+
+select option{
+    background:#11151e;
+    color:#fff;
+}
+
+textarea{
+    min-height:110px;
+    resize:vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:#ff3347;
+    box-shadow:0 0 0 3px rgba(255,40,60,.1);
+}
+
+.notice{
+    padding:14px;
+    border-radius:14px;
+    background:rgba(255,193,7,.08);
+    border:1px solid rgba(255,193,7,.2);
+    color:#ffd96b;
+    margin-bottom:18px;
+    line-height:1.7;
+}
+
+.search-box{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:17px;
-    margin-top:20px;
+    gap:12px;
+}
+
+.donors{
+    margin-top:25px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
 }
 
 .donor{
-    display:flex;
-    gap:15px;
-    align-items:center;
+    position:relative;
 }
 
-.bloodGroup{
-    width:62px;
-    height:62px;
-    min-width:62px;
-
-    border-radius:20px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:linear-gradient(135deg,#ff1744,#81001d);
-
-    font-size:18px;
-    font-weight:700;
-
-    box-shadow:0 10px 25px rgba(255,0,60,.25);
+.blood{
+    position:absolute;
+    top:15px;
+    right:15px;
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:#ff2039;
+    font-weight:900;
 }
 
 .donor h3{
-    margin-bottom:4px;
+    padding-right:60px;
 }
 
-.donor small{
-    color:#999;
+.donor p{
+    color:#aeb2bc;
+    margin-top:7px;
 }
 
-.contactGrid{
+.contact{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:17px;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
 }
 
-.contactIcon{
+.contact-item{
+    text-align:center;
+}
+
+.contact-item .icon{
     font-size:30px;
-    margin-bottom:10px;
-}
-
-.contactCard p{
-    color:#aaa;
 }
 
 footer{
+    margin-top:50px;
+    padding:30px 0;
     text-align:center;
-    padding:35px 20px;
-    color:#777;
-    border-top:1px solid rgba(255,255,255,.07);
+    color:#777d89;
+    border-top:1px solid rgba(255,255,255,.08);
 }
 
-@media(max-width:900px){
-
-    .stats{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .searchGrid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .donorGrid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .contactGrid{
-        grid-template-columns:repeat(2,1fr);
-    }
+.toast{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translate(-50%,120px);
+    background:#151923;
+    border:1px solid rgba(255,255,255,.12);
+    padding:14px 20px;
+    border-radius:14px;
+    z-index:9999;
+    transition:.3s;
 }
 
-@media(max-width:600px){
+.toast.show{
+    transform:translate(-50%,0);
+}
 
-    header{
-        top:8px;
-        width:calc(100% - 16px);
-    }
-
-    .logo{
-        font-size:18px;
-    }
-
-    .logoIcon{
-        width:38px;
-        height:38px;
-    }
-
-    .hero{
-        padding-top:120px;
-    }
-
-    .hero h1{
-        font-size:48px;
-    }
-
-    .hero p{
-        font-size:15px;
-    }
-
-    section{
-        padding:55px 0;
-    }
-
-    .container{
-        padding:17px;
+@media(max-width:800px){
+    nav{
+        display:none;
     }
 
     .stats,
-    .searchGrid,
-    .formGrid,
-    .donorGrid,
-    .contactGrid{
+    .grid,
+    .donors,
+    .contact{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .search-box{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:550px){
+    .stats,
+    .grid,
+    .donors,
+    .contact,
+    .form-grid,
+    .search-box{
         grid-template-columns:1fr;
     }
 
-    .full{
-        grid-column:auto;
+    .hero{
+        padding-top:50px;
     }
 
-    .sectionTitle h2{
-        font-size:29px;
+    .hero h1{
+        letter-spacing:-1px;
     }
 
-    .bloodDrop{
-        width:90px;
-        height:110px;
-    }
-
-    .bloodDrop:after{
-        font-size:48px;
-        left:20px;
-        top:28px;
+    section{
+        padding:35px 0;
     }
 }
 </style>
@@ -600,117 +424,127 @@ footer{
 <body>
 
 <header>
-    <div class="logo">
-        <div class="logoIcon">🩸</div>
-        MB <span>Blood Bank</span>
-    </div>
+<div class="container nav">
 
-    <button class="menuBtn" onclick="openMenu()">☰</button>
+<a class="logo" href="#home">
+<span>🩸</span>
+MB Blood Bank
+</a>
+
+<nav>
+<a href="#home">হোম</a>
+<a href="#search">ডোনার খুঁজুন</a>
+<a href="#register">ডোনার নিবন্ধন</a>
+<a href="#request">জরুরি রিকোয়েস্ট</a>
+<a href="#contact">যোগাযোগ</a>
+</nav>
+
+</div>
 </header>
 
-<div class="sideMenu" id="sideMenu">
 
-    <button class="closeMenu" onclick="closeMenu()">×</button>
+<main id="home">
 
-    <a href="#home" onclick="closeMenu()">🏠 হোম</a>
-    <a href="#search" onclick="closeMenu()">🔎 রক্তদাতা খুঁজুন</a>
-    <a href="#register" onclick="closeMenu()">📝 রক্তদাতা নিবন্ধন</a>
-    <a href="#request" onclick="closeMenu()">🚨 জরুরি রক্তের আবেদন</a>
-    <a href="#statistics" onclick="closeMenu()">📊 পরিসংখ্যান</a>
-    <a href="#contact" onclick="closeMenu()">📞 যোগাযোগ</a>
-
-</div>
-
-<section class="hero" id="home">
-
-<div class="heroContent">
-
-<div class="bloodDrop"></div>
-
-<div class="badge">
-❤️ রক্ত দিন • জীবন বাঁচান
-</div>
-
-<h1>
-MB <span>Blood Bank</span>
-</h1>
-
-<p>
-আপনার প্রয়োজনের সময় সহজে রক্তদাতা খুঁজে নিন।
-আপনিও রক্তদাতা হিসেবে নিবন্ধন করে একটি জীবন বাঁচাতে পারেন।
-</p>
-
-<div class="heroButtons">
-
-<a href="#search" class="btn btnRed">
-🔎 রক্তদাতা খুঁজুন
-</a>
-
-<a href="#register" class="btn btnDark">
-📝 Donor Registration
-</a>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="statistics">
-
+<section class="hero">
 <div class="container">
 
-<div class="sectionTitle">
-<h2>📊 আমাদের পরিসংখ্যান</h2>
-<p>রক্তের মাধ্যমে মানুষের পাশে</p>
+<div class="badge">🩸 মানবতার জন্য রক্তদান</div>
+
+<h1>MB <span>Blood Bank</span></h1>
+
+<p>
+সঠিক সময়ে সঠিক রক্তদাতাকে খুঁজে পাওয়ার জন্য
+একটি সহজ, দ্রুত ও আধুনিক Blood Bank প্ল্যাটফর্ম।
+</p>
+
+<div class="buttons">
+<a class="btn" href="#search">🩸 রক্তদাতা খুঁজুন</a>
+<a class="btn secondary" href="#request">🚨 জরুরি রিকোয়েস্ট</a>
 </div>
+
+</div>
+</section>
+
+
+<div class="container">
 
 <div class="stats">
 
 <div class="card stat">
-<div class="statIcon">🗺️</div>
-<strong>৮</strong>
-<p>বিভাগ</p>
+<b id="donorCount">0</b>
+<span>Active Donor</span>
 </div>
 
 <div class="card stat">
-<div class="statIcon">🏙️</div>
-<strong>৬৪</strong>
-<p>জেলা</p>
+<b id="requestCount">0</b>
+<span>Blood Request</span>
 </div>
 
 <div class="card stat">
-<div class="statIcon">📍</div>
-<strong>৪৯৫</strong>
-<p>উপজেলা</p>
+<b>64</b>
+<span>জেলা</span>
 </div>
 
 <div class="card stat">
-<div class="statIcon">🩸</div>
-<strong id="activeCount">0</strong>
-<p>Active Donor</p>
+<b>8</b>
+<span>বিভাগ</span>
 </div>
 
 </div>
+
 </div>
 
-</section>
 
-<section id="search">
-
+<section>
 <div class="container">
 
-<div class="sectionTitle">
+<div class="section-title">
+<h2>🩸 আমাদের সেবা</h2>
+<p>রক্তের প্রয়োজন হলে দ্রুত সঠিক মানুষের কাছে পৌঁছান।</p>
+</div>
+
+<div class="grid">
+
+<div class="card feature">
+<div class="icon">🔎</div>
+<h3>রক্তদাতা খুঁজুন</h3>
+<p>রক্তের গ্রুপ ও এলাকার ভিত্তিতে Active Donor খুঁজে নিন।</p>
+</div>
+
+<div class="card feature">
+<div class="icon">🚨</div>
+<h3>জরুরি রক্তের অনুরোধ</h3>
+<p>জরুরি রোগীর জন্য Blood Request পাঠান।</p>
+</div>
+
+<div class="card feature">
+<div class="icon">📝</div>
+<h3>ডোনার নিবন্ধন</h3>
+<p>নিবন্ধনের পর Admin যাচাই করে অনুমোদন দিলে ডোনার Active হবে।</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<section id="search">
+<div class="container">
+
+<div class="section-title">
 <h2>🔎 রক্তদাতা খুঁজুন</h2>
-<p>রক্তের গ্রুপ ও এলাকার মাধ্যমে Donor Search করুন</p>
+<p>রক্তের গ্রুপ ও এলাকা দিয়ে খুঁজুন</p>
 </div>
 
 <div class="card">
 
-<div class="searchGrid">
+<div class="search-box">
 
-<select id="sBlood">
-<option value="">রক্তের গ্রুপ</option>
+<div>
+<label>রক্তের গ্রুপ</label>
+<select id="searchBlood">
+<option value="">সব গ্রুপ</option>
 <option>A+</option>
 <option>A-</option>
 <option>B+</option>
@@ -720,63 +554,67 @@ MB <span>Blood Bank</span>
 <option>O+</option>
 <option>O-</option>
 </select>
+</div>
 
-<select id="sDivision">
-<option value="">বিভাগ নির্বাচন</option>
+<div>
+<label>বিভাগ</label>
+<select id="searchDivision">
+<option value="">সব বিভাগ</option>
 </select>
+</div>
 
-<select id="sDistrict">
-<option value="">জেলা নির্বাচন</option>
+<div>
+<label>জেলা</label>
+<select id="searchDistrict">
+<option value="">সব জেলা</option>
 </select>
-
-<select id="sUpazila">
-<option value="">উপজেলা নির্বাচন</option>
-</select>
+</div>
 
 </div>
 
 <br>
 
-<button class="submit" onclick="searchDonors()">
-🔎 Donor Search
-</button>
+<button class="btn" onclick="searchDonors()">🔎 Search</button>
 
 </div>
 
-<div id="results" class="donorGrid"></div>
+<div class="donors" id="donorResults"></div>
 
 </div>
-
 </section>
 
-<section id="register">
 
+<section id="register">
 <div class="container">
 
-<div class="sectionTitle">
-<h2>📝 রক্তদাতা নিবন্ধন</h2>
-<p>নিবন্ধনের পর Admin অনুমোদনের জন্য Pending থাকবে</p>
+<div class="section-title">
+<h2>📝 রক্তদাতা হিসেবে নিবন্ধন</h2>
+<p>আপনার তথ্য পাঠান—Admin যাচাই করে অনুমোদন করবেন।</p>
 </div>
 
-<div class="card">
+<div class="card form-card">
+
+<div class="notice">
+⚠️ নিবন্ধনের পর আপনার Account/Donor Profile সরাসরি Active হবে না।
+Admin যাচাই ও Approve করার পর আপনার তথ্য রক্তদাতা তালিকায় প্রদর্শিত হবে।
+</div>
 
 <form id="donorForm">
 
-<div class="formGrid">
+<div class="form-grid">
 
 <div>
-<label>পূর্ণ নাম *</label>
+<label>নাম *</label>
 <input id="dName" required>
 </div>
 
 <div>
-<label>মোবাইল নম্বর *</label>
-<input id="dPhone" required>
+<label>যোগাযোগ নম্বর *</label>
+<input id="dPhone" type="tel" required>
 </div>
 
 <div>
 <label>রক্তের গ্রুপ *</label>
-
 <select id="dBlood" required>
 <option value="">নির্বাচন করুন</option>
 <option>A+</option>
@@ -788,80 +626,75 @@ MB <span>Blood Bank</span>
 <option>O+</option>
 <option>O-</option>
 </select>
-
 </div>
 
 <div>
 <label>বিভাগ *</label>
-<select id="dDivision" required>
-<option value="">বিভাগ নির্বাচন</option>
-</select>
+<select id="dDivision" required></select>
 </div>
 
 <div>
 <label>জেলা *</label>
-<select id="dDistrict" required>
-<option value="">জেলা নির্বাচন</option>
-</select>
+<select id="dDistrict" required></select>
 </div>
 
 <div>
 <label>উপজেলা *</label>
 <select id="dUpazila" required>
-<option value="">উপজেলা নির্বাচন</option>
+<option value="">বিভাগ ও জেলা নির্বাচন করুন</option>
 </select>
 </div>
 
 <div class="full">
 <label>ঠিকানা</label>
-<textarea id="dAddress"></textarea>
+<input id="dAddress">
 </div>
 
 <div class="full">
-<button class="submit">
-📝 নিবন্ধন পাঠান
-</button>
+<label>অতিরিক্ত তথ্য</label>
+<textarea id="dInfo"></textarea>
 </div>
 
 </div>
+
+<br>
+
+<button class="btn" type="submit">📝 Registration Request পাঠান</button>
 
 </form>
-
 </div>
 
 </div>
-
 </section>
 
-<section id="request">
 
+<section id="request">
 <div class="container">
 
-<div class="sectionTitle">
-<h2>🚨 জরুরি রক্তের আবেদন</h2>
-<p>জরুরি প্রয়োজনে রক্তের আবেদন পাঠান</p>
+<div class="section-title">
+<h2>🚨 জরুরি রক্তের অনুরোধ</h2>
+<p>রোগীর প্রয়োজনীয় তথ্য দিয়ে Request পাঠান।</p>
 </div>
 
-<div class="card">
+<div class="card form-card">
 
 <form id="requestForm">
 
-<div class="formGrid">
+<div class="form-grid">
 
 <div>
 <label>রোগীর নাম *</label>
-<input id="pName" required>
+<input id="rPatient" required>
 </div>
 
 <div>
 <label>যোগাযোগ নম্বর *</label>
-<input id="pPhone" required>
+<input id="rPhone" type="tel" required>
 </div>
 
 <div>
 <label>রক্তের গ্রুপ *</label>
-
-<select id="pBlood" required>
+<select id="rBlood" required>
 <option value="">নির্বাচন করুন</option>
 <option>A+</option>
 <option>A-</option>
@@ -872,130 +705,133 @@ MB <span>Blood Bank</span>
 <option>O+</option>
 <option>O-</option>
 </select>
-
 </div>
 
 <div>
 <label>কত ব্যাগ *</label>
-<input id="pBags" type="number" min="1" required>
+<input id="rBags" type="number" min="1" required>
 </div>
 
 <div>
 <label>বিভাগ *</label>
-<select id="pDivision" required>
-<option value="">বিভাগ নির্বাচন</option>
-</select>
+<select id="rDivision" required></select>
 </div>
 
 <div>
 <label>জেলা *</label>
-<select id="pDistrict" required>
-<option value="">জেলা নির্বাচন</option>
-</select>
+<select id="rDistrict" required></select>
 </div>
 
 <div>
 <label>উপজেলা *</label>
-<select id="pUpazila" required>
-<option value="">উপজেলা নির্বাচন</option>
+<select id="rUpazila" required>
+<option value="">বিভাগ ও জেলা নির্বাচন করুন</option>
 </select>
 </div>
 
 <div>
-<label>হাসপাতাল / স্থান *</label>
-<input id="pHospital" required>
+<label>হাসপাতাল/স্থান *</label>
+<input id="rHospital" required>
 </div>
 
 <div>
 <label>প্রয়োজনের তারিখ *</label>
-<input id="pDate" type="date" required>
+<input id="rDate" type="date" required>
 </div>
 
 <div>
-<label>জরুরিতার মাত্রা</label>
-
-<select id="pUrgency">
+<label>জরুরিতার মাত্রা *</label>
+<select id="rUrgency" required>
+<option value="">নির্বাচন করুন</option>
 <option>অতি জরুরি</option>
 <option>জরুরি</option>
 <option>সাধারণ</option>
 </select>
-
 </div>
 
 <div class="full">
 <label>অতিরিক্ত তথ্য</label>
-<textarea id="pInfo"></textarea>
-</div>
-
-<div class="full">
-<button class="submit">
-🚨 Request পাঠান
-</button>
+<textarea id="rInfo"></textarea>
 </div>
 
 </div>
+
+<br>
+
+<button class="btn" type="submit">🚨 রিকোয়েস্ট পাঠান</button>
 
 </form>
 
 </div>
 
 </div>
-
 </section>
+
 
 <section id="contact">
-
 <div class="container">
 
-<div class="sectionTitle">
-<h2>📞 যোগাযোগ</h2>
-<p>MB Blood Bank-এর সাথে যোগাযোগ করুন</p>
+<div class="section-title">
+<h2>📞 যোগাযোগ করুন</h2>
+<p>MB Blood Bank-এর সঙ্গে যোগাযোগ করুন।</p>
 </div>
 
-<div class="contactGrid">
+<div class="contact">
 
-<div class="card contactCard">
-<div class="contactIcon">📱</div>
-<h3>Phone</h3>
-<p>017XXXXXXXX</p>
+<div class="card contact-item">
+<div class="icon">📱</div>
+<h3>ফোন</h3>
+<p>আপনার ফোন নম্বর এখানে দিন</p>
 </div>
 
-<div class="card contactCard">
-<div class="contactIcon">📧</div>
-<h3>Email</h3>
-<p>mbbloodbank@gmail.com</p>
+<div class="card contact-item">
+<div class="icon">📧</div>
+<h3>ইমেইল</h3>
+<p>আপনার ইমেইল এখানে দিন</p>
 </div>
 
-<div class="card contactCard">
-<div class="contactIcon">💬</div>
+<div class="card contact-item">
+<div class="icon">💬</div>
 <h3>SMS</h3>
-<p>রক্তের প্রয়োজনে SMS করুন</p>
-</div>
-
-<div class="card contactCard">
-<div class="contactIcon">📍</div>
-<h3>Address</h3>
-<p>Bangladesh</p>
+<p>SMS পাঠানোর ব্যবস্থা এখানে যুক্ত করুন</p>
 </div>
 
 </div>
 
+<br>
+
+<div class="card contact-item">
+<div class="icon">📍</div>
+<h3>ঠিকানা</h3>
+<p>আপনার Blood Bank-এর ঠিকানা এখানে লিখুন</p>
 </div>
 
+</div>
 </section>
 
+</main>
+
+
 <footer>
-© 2026 MB Blood Bank — Donate Blood, Save Life ❤️
+<div class="container">
+🩸 <b>MB Blood Bank</b><br>
+মানবতার জন্য রক্তদান ❤️
+<br><br>
+© 2026 MB Blood Bank. All Rights Reserved.
+</div>
 </footer>
+
+
+<div class="toast" id="toast"></div>
 
 
 <script>
 
-/* =========================================================
-   8 DIVISION + 64 DISTRICT
-========================================================= */
+/* ================================
+   BANGLADESH LOCATION DATA
+================================ */
 
-const locations = {
+const divisions = {
 
 "ঢাকা বিভাগ":[
 "ঢাকা","ফরিদপুর","গাজীপুর","গোপালগঞ্জ","কিশোরগঞ্জ",
@@ -1005,13 +841,8 @@ const locations = {
 
 "চট্টগ্রাম বিভাগ":[
 "বান্দরবান","ব্রাহ্মণবাড়িয়া","চাঁদপুর","চট্টগ্রাম",
-"কুমিল্লা","কক্সবাজার","ফেনী","খাগড়াছড়ি","লক্ষ্মীপুর",
-"নোয়াখালী","রাঙ্গামাটি"
-],
-
-"রাজশাহী বিভাগ":[
-"বগুড়া","জয়পুরহাট","নওগাঁ","নাটোর",
-"চাঁপাইনবাবগঞ্জ","পাবনা","রাজশাহী","সিরাজগঞ্জ"
+"কুমিল্লা","কক্সবাজার","ফেনী","খাগড়াছড়ি",
+"লক্ষ্মীপুর","নোয়াখালী","রাঙ্গামাটি"
 ],
 
 "খুলনা বিভাগ":[
@@ -1019,8 +850,9 @@ const locations = {
 "কুষ্টিয়া","মাগুরা","মেহেরপুর","নড়াইল","সাতক্ষীরা"
 ],
 
-"বরিশাল বিভাগ":[
-"বরগুনা","বরিশাল","ভোলা","ঝালকাঠি","পটুয়াখালী","পিরোজপুর"
+"রাজশাহী বিভাগ":[
+"বগুড়া","জয়পুরহাট","নওগাঁ","নাটোর",
+"চাঁপাইনবাবগঞ্জ","পাবনা","রাজশাহী","সিরাজগঞ্জ"
 ],
 
 "সিলেট বিভাগ":[
@@ -1034,870 +866,457 @@ const locations = {
 
 "ময়মনসিংহ বিভাগ":[
 "জামালপুর","ময়মনসিংহ","নেত্রকোণা","শেরপুর"
+],
+
+"বরিশাল বিভাগ":[
+"বরগুনা","বরিশাল","ভোলা","ঝালকাঠি",
+"পটুয়াখালী","পিরোজপুর"
 ]
 
 };
 
 
-/* =========================================================
-   UPAZILA DATABASE
-   API ছাড়া সরাসরি HTML থেকে কাজ করবে
-========================================================= */
+/* =================================
+   UPZILLA DATA LOADER
+
+   Production version should use
+   verified Bangladesh administrative
+   data rather than invented names.
+================================= */
 
 const upazilas = {
 
-"ঢাকা":[
-"ধামরাই","দোহার","কেরাণীগঞ্জ","নবাবগঞ্জ","সাভার"
-],
-
-"ফরিদপুর":[
-"আলফাডাঙ্গা","ভাঙ্গা","বোয়ালমারী","চরভদ্রাসন",
-"ফরিদপুর সদর","মধুখালী","নগরকান্দা","সদরপুর","সালথা"
-],
-
-"গাজীপুর":[
-"কালিয়াকৈর","কালীগঞ্জ","কাপাসিয়া","গাজীপুর সদর","শ্রীপুর"
-],
-
-"গোপালগঞ্জ":[
-"কাশিয়ানী","কোটালীপাড়া","গোপালগঞ্জ সদর",
-"মুকসুদপুর","টুঙ্গিপাড়া"
-],
-
-"কিশোরগঞ্জ":[
-"অষ্টগ্রাম","বাজিতপুর","ভৈরব","হোসেনপুর","ইটনা",
-"করিমগঞ্জ","কটিয়াদী","কিশোরগঞ্জ সদর","কুলিয়ারচর",
-"মিঠামইন","নিকলী","পাকুন্দিয়া","তাড়াইল"
-],
-
-"মাদারীপুর":[
-"কালকিনি","মাদারীপুর সদর","রাজৈর","শিবচর","ডাসার"
-],
-
-"মানিকগঞ্জ":[
-"দৌলতপুর","ঘিওর","হরিরামপুর","মানিকগঞ্জ সদর",
-"সাটুরিয়া","শিবালয়","সিংগাইর"
-],
-
-"মুন্সীগঞ্জ":[
-"গজারিয়া","লৌহজং","মুন্সীগঞ্জ সদর",
-"সিরাজদিখান","শ্রীনগর","টংগীবাড়ী"
-],
-
-"নারায়ণগঞ্জ":[
-"আড়াইহাজার","বন্দর","নারায়ণগঞ্জ সদর","রূপগঞ্জ","সোনারগাঁও"
-],
-
-"নরসিংদী":[
-"বেলাবো","মনোহরদী","নরসিংদী সদর","পলাশ","রায়পুরা","শিবপুর"
-],
-
-"রাজবাড়ী":[
-"বালিয়াকান্দি","গোয়ালন্দ","কালুখালী","পাংশা","রাজবাড়ী সদর"
-],
-
-"শরীয়তপুর":[
-"ভেদরগঞ্জ","ডামুড্যা","গোসাইরহাট","জাজিরা","নড়িয়া","শরীয়তপুর সদর"
-],
-
-"টাঙ্গাইল":[
-"বাসাইল","ভূঞাপুর","দেলদুয়ার","ধনবাড়ী","ঘাটাইল","গোপালপুর",
-"কালিহাতী","মধুপুর","মির্জাপুর","নাগরপুর","সখীপুর","টাঙ্গাইল সদর"
-],
-
-
-"বান্দরবান":[
-"আলীকদম","বান্দরবান সদর","লামা","নাইক্ষ্যংছড়ি",
-"রোয়াংছড়ি","রুমা","থানচি"
-],
-
-"ব্রাহ্মণবাড়িয়া":[
-"আখাউড়া","আশুগঞ্জ","বাঞ্ছারামপুর","ব্রাহ্মণবাড়িয়া সদর",
-"কসবা","নবীনগর","নাসিরনগর","সরাইল","বিজয়নগর"
-],
-
-"চাঁদপুর":[
-"চাঁদপুর সদর","ফরিদগঞ্জ","হাইমচর","হাজীগঞ্জ",
-"কচুয়া","মতলব উত্তর","মতলব দক্ষিণ","শাহরাস্তি"
-],
-
-"চট্টগ্রাম":[
-"আনোয়ারা","বাঁশখালী","বোয়ালখালী","চন্দনাইশ","ফটিকছড়ি",
-"হাটহাজারী","লোহাগাড়া","মীরসরাই","পটিয়া","রাঙ্গুনিয়া",
-"রাউজান","সন্দ্বীপ","সাতকানিয়া","সীতাকুণ্ড"
-],
-
-"কুমিল্লা":[
-"বরুড়া","ব্রাহ্মণপাড়া","বুড়িচং","চান্দিনা","চৌদ্দগ্রাম",
-"কুমিল্লা আদর্শ সদর","দাউদকান্দি","দেবিদ্বার","হোমনা",
-"লাকসাম","লালমাই","মেঘনা","মনোহরগঞ্জ","মুরাদনগর",
-"নাঙ্গলকোট","তিতাস"
-],
-
-"কক্সবাজার":[
-"চকরিয়া","কক্সবাজার সদর","কুতুবদিয়া","মহেশখালী",
-"পেকুয়া","রামু","টেকনাফ","উখিয়া","ঈদগাঁও"
-],
-
-"ফেনী":[
-"ছাগলনাইয়া","দাগনভূঞা","ফেনী সদর","ফুলগাজী","পরশুরাম","সোনাগাজী"
-],
-
-"খাগড়াছড়ি":[
-"দীঘিনালা","খাগড়াছড়ি সদর","লক্ষ্মীছড়ি","মহালছড়ি",
-"মানিকছড়ি","মাটিরাঙ্গা","পানছড়ি","রামগড়","গুইমারা"
-],
-
-"লক্ষ্মীপুর":[
-"কমলনগর","লক্ষ্মীপুর সদর","রায়পুর","রামগঞ্জ","রামগতি","চন্দ্রগঞ্জ"
-],
-
-"নোয়াখালী":[
-"বেগমগঞ্জ","চাটখিল","কোম্পানীগঞ্জ","হাতিয়া","কবিরহাট",
-"সেনবাগ","সোনাইমুড়ী","সুবর্ণচর","নোয়াখালী সদর"
-],
-
-"রাঙ্গামাটি":[
-"বাঘাইছড়ি","বরকল","বিলাইছড়ি","জুরাছড়ি","কাপ্তাই",
-"কাউখালী","লংগদু","নানিয়ারচর","রাজস্থলী","রাঙ্গামাটি সদর"
-],
-
-
-"বগুড়া":[
-"আদমদীঘি","বগুড়া সদর","ধুনট","দুপচাঁচিয়া","গাবতলী",
-"কাহালু","নন্দীগ্রাম","সারিয়াকান্দি","শাজাহানপুর",
-"শেরপুর","শিবগঞ্জ","সোনাতলা"
-],
-
-"জয়পুরহাট":[
-"আক্কেলপুর","জয়পুরহাট সদর","কালাই","ক্ষেতলাল","পাঁচবিবি"
-],
-
-"নওগাঁ":[
-"আত্রাই","বদলগাছী","ধামইরহাট","মান্দা","মহাদেবপুর",
-"নওগাঁ সদর","নিয়ামতপুর","পত্নীতলা","পোরশা","রাণীনগর","সাপাহার"
-],
-
-"নাটোর":[
-"বাগাতিপাড়া","বড়াইগ্রাম","গুরুদাসপুর","লালপুর",
-"নাটোর সদর","নলডাঙ্গা","সিংড়া"
-],
-
-"চাঁপাইনবাবগঞ্জ":[
-"ভোলাহাট","গোমস্তাপুর","নাচোল","চাঁপাইনবাবগঞ্জ সদর","শিবগঞ্জ"
-],
-
-"পাবনা":[
-"আটঘরিয়া","বেড়া","ভাঙ্গুড়া","চাটমোহর","ফরিদপুর",
-"ঈশ্বরদী","পাবনা সদর","সাঁথিয়া","সুজানগর"
-],
-
-"রাজশাহী":[
-"বাঘা","বাগমারা","চারঘাট","দুর্গাপুর","গোদাগাড়ী",
-"মোহনপুর","পবা","পুঠিয়া","তানোর"
-],
-
-"সিরাজগঞ্জ":[
-"বেলকুচি","চৌহালী","কামারখন্দ","কাজীপুর","রায়গঞ্জ",
-"শাহজাদপুর","সিরাজগঞ্জ সদর","তাড়াশ","উল্লাপাড়া"
-],
-
-
-"বাগেরহাট":[
-"চিতলমারী","ফকিরহাট","কচুয়া","মোল্লাহাট","মোংলা",
-"মোড়েলগঞ্জ","রামপাল","শরণখোলা","বাগেরহাট সদর"
-],
-
-"চুয়াডাঙ্গা":[
-"আলমডাঙ্গা","চুয়াডাঙ্গা সদর","দামুড়হুদা","জীবননগর"
-],
-
-"যশোর":[
-"অভয়নগর","বাঘারপাড়া","চৌগাছা","ঝিকরগাছা",
-"কেশবপুর","মণিরামপুর","শার্শা","যশোর সদর"
-],
-
-"ঝিনাইদহ":[
-"হরিণাকুণ্ডু","ঝিনাইদহ সদর","কালীগঞ্জ",
-"কোটচাঁদপুর","মহেশপুর","শৈলকুপা"
-],
-
-"খুলনা":[
-"বটিয়াঘাটা","দাকোপ","ডুমুরিয়া","দিঘলিয়া","কয়রা",
-"পাইকগাছা","ফুলতলা","রূপসা","তেরখাদা","খুলনা সদর"
-],
-
-"কুষ্টিয়া":[
-"ভেড়ামারা","দৌলতপুর","খোকসা","কুমারখালী","কুষ্টিয়া সদর","মিরপুর"
-],
-
-"মাগুরা":[
-"মাগুরা সদর","মহম্মদপুর","শালিখা","শ্রীপুর"
-],
-
-"মেহেরপুর":[
-"গাংনী","মেহেরপুর সদর","মুজিবনগর"
-],
-
-"নড়াইল":[
-"কালিয়া","লোহাগড়া","নড়াইল সদর"
-],
-
-"সাতক্ষীরা":[
-"আশাশুনি","দেবহাটা","কলারোয়া","কালিগঞ্জ",
-"সাতক্ষীরা সদর","শ্যামনগর","তালা"
-],
-
-
-"বরগুনা":[
-"আমতলী","বামনা","বরগুনা সদর","বেতাগী","পাথরঘাটা","তালতলী"
-],
-
-"বরিশাল":[
-"আগৈলঝাড়া","বাবুগঞ্জ","বাকেরগঞ্জ","বানারীপাড়া",
-"বরিশাল সদর","গৌরনদী","হিজলা","মেহেন্দিগঞ্জ","মুলাদী","উজিরপুর"
-],
-
-"ভোলা":[
-"ভোলা সদর","বোরহানউদ্দিন","চরফ্যাশন","দৌলতখান",
-"লালমোহন","মনপুরা","তজুমদ্দিন"
-],
-
-"ঝালকাঠি":[
-"ঝালকাঠি সদর","কাঁঠালিয়া","নলছিটি","রাজাপুর"
-],
-
-"পটুয়াখালী":[
-"বাউফল","দশমিনা","দুমকি","কলাপাড়া","মির্জাগঞ্জ",
-"পটুয়াখালী সদর","রাঙ্গাবালী","গলাচিপা"
-],
-
-"পিরোজপুর":[
-"ভান্ডারিয়া","কাউখালী","মঠবাড়িয়া","নাজিরপুর",
-"নেছারাবাদ","পিরোজপুর সদর","ইন্দুরকানী"
-],
-
-
-"হবিগঞ্জ":[
-"আজমিরীগঞ্জ","বাহুবল","বানিয়াচং","চুনারুঘাট","হবিগঞ্জ সদর",
-"লাখাই","মাধবপুর","নবীগঞ্জ","শায়েস্তাগঞ্জ"
-],
-
-"মৌলভীবাজার":[
-"বড়লেখা","জুড়ী","কমলগঞ্জ","কুলাউড়া",
-"মৌলভীবাজার সদর","রাজনগর","শ্রীমঙ্গল"
-],
-
-"সুনামগঞ্জ":[
-"বিশ্বম্ভরপুর","ছাতক","দিরাই","ধর্মপাশা","দোয়ারাবাজার",
-"জামালগঞ্জ","জগন্নাথপুর","শাল্লা","শান্তিগঞ্জ",
-"সুনামগঞ্জ সদর","তাহিরপুর"
-],
-
-"সিলেট":[
-"বালাগঞ্জ","বিয়ানীবাজার","বিশ্বনাথ","কোম্পানীগঞ্জ",
-"দক্ষিণ সুরমা","ফেঞ্চুগঞ্জ","গোলাপগঞ্জ","গোয়াইনঘাট",
-"জৈন্তাপুর","কানাইঘাট","সিলেট সদর","জকিগঞ্জ","ওসমানীনগর"
-],
-
-
-"দিনাজপুর":[
-"বিরামপুর","বীরগঞ্জ","বিরল","বোচাগঞ্জ","চিরিরবন্দর",
-"ফুলবাড়ী","ঘোড়াঘাট","হাকিমপুর","কাহারোল","খানসামা",
-"দিনাজপুর সদর","নবাবগঞ্জ","পার্বতীপুর"
-],
-
-"গাইবান্ধা":[
-"ফুলছড়ি","গাইবান্ধা সদর","গোবিন্দগঞ্জ","পলাশবাড়ী",
-"সাদুল্লাপুর","সাঘাটা","সুন্দরগঞ্জ"
-],
-
-"কুড়িগ্রাম":[
-"ভুরুঙ্গামারী","চর রাজিবপুর","চিলমারী","ফুলবাড়ী",
-"কুড়িগ্রাম সদর","নাগেশ্বরী","রাজারহাট","রৌমারী","উলিপুর"
-],
-
-"লালমনিরহাট":[
-"আদিতমারী","হাতীবান্ধা","কালীগঞ্জ","লালমনিরহাট সদর","পাটগ্রাম"
-],
-
-"নীলফামারী":[
-"ডোমার","ডিমলা","জলঢাকা","কিশোরগঞ্জ",
-"নীলফামারী সদর","সৈয়দপুর"
-],
-
-/* =====================================================
-   FIXED PANCHAGARH
-===================================================== */
-
-"পঞ্চগড়":[
-    "আটোয়ারী",
-    "বোদা",
-    "দেবীগঞ্জ",
-    "পঞ্চগড় সদর",
-    "তেঁতুলিয়া"
-],
-
-"রংপুর":[
-"বদরগঞ্জ","গংগাচড়া","কাউনিয়া","মিঠাপুকুর",
-"পীরগাছা","পীরগঞ্জ","রংপুর সদর","তারাগঞ্জ"
-],
-
-"ঠাকুরগাঁও":[
-"বালিয়াডাঙ্গী","হরিপুর","পীরগঞ্জ","রাণীশংকৈল",
-"ঠাকুরগাঁও সদর","ভূল্লী","রুহিয়া"
-],
-
-
-"জামালপুর":[
-"বকশীগঞ্জ","দেওয়ানগঞ্জ","ইসলামপুর","জামালপুর সদর",
-"মাদারগঞ্জ","মেলান্দহ","সরিষাবাড়ী"
-],
-
-"ময়মনসিংহ":[
-"ভালুকা","ধোবাউড়া","ফুলবাড়ীয়া","গফরগাঁও","গৌরীপুর",
-"হালুয়াঘাট","ঈশ্বরগঞ্জ","মুক্তাগাছা","ময়মনসিংহ সদর",
-"নান্দাইল","ফুলপুর","তারাকান্দা","ত্রিশাল"
-],
-
-"নেত্রকোণা":[
-"আটপাড়া","বারহাট্টা","দুর্গাপুর","খালিয়াজুরী","কলমাকান্দা",
-"কেন্দুয়া","মদন","মোহনগঞ্জ","নেত্রকোণা সদর","পূর্বধলা"
-],
-
-"শেরপুর":[
-"ঝিনাইগাতী","নকলা","নালিতাবাড়ী","শেরপুর সদর","শ্রীবরদী"
-]
+"ঢাকা":{
+"ঢাকা":["ধামরাই","দোহার","কেরাণীগঞ্জ","নবাবগঞ্জ","সাভার"],
+"ফরিদপুর":["আলফাডাঙ্গা","ভাঙ্গা","বোয়ালমারী","চরভদ্রাসন","ফরিদপুর সদর","মধুখালী","নগরকান্দা","সদরপুর","সালথা"],
+"গাজীপুর":["কালীগঞ্জ","কালিয়াকৈর","কাপাসিয়া","গাজীপুর সদর","শ্রীপুর"],
+"গোপালগঞ্জ":["গোপালগঞ্জ সদর","কাশিয়ানী","কোটালীপাড়া","মুকসুদপুর","টুঙ্গিপাড়া"],
+"কিশোরগঞ্জ":["অষ্টগ্রাম","বাজিতপুর","ভৈরব","হোসেনপুর","ইটনা","করিমগঞ্জ","কটিয়াদী","কিশোরগঞ্জ সদর","কুলিয়ারচর","মিঠামইন","নিকলী","পাকুন্দিয়া","তাড়াইল"],
+"মাদারীপুর":["মাদারীপুর সদর","কালকিনি","রাজৈর","শিবচর","ডাসার"],
+"মানিকগঞ্জ":["দৌলতপুর","ঘিওর","হরিরামপুর","মানিকগঞ্জ সদর","সাটুরিয়া","শিবালয়","সিংগাইর"],
+"মুন্সীগঞ্জ":["গজারিয়া","লৌহজং","মুন্সীগঞ্জ সদর","সিরাজদিখান","শ্রীনগর","টংগীবাড়ী"],
+"নারায়ণগঞ্জ":["আড়াইহাজার","বন্দর","নারায়ণগঞ্জ সদর","রূপগঞ্জ","সোনারগাঁ"],
+"নরসিংদী":["বেলাবো","মনোহরদী","নরসিংদী সদর","পলাশ","রায়পুরা","শিবপুর"],
+"রাজবাড়ী":["বালিয়াকান্দি","গোয়ালন্দ","কালুখালী","পাংশা","রাজবাড়ী সদর"],
+"শরীয়তপুর":["ভেদরগঞ্জ","ডামুড্যা","গোসাইরহাট","জাজিরা","নড়িয়া","শরীয়তপুর সদর"],
+"টাঙ্গাইল":["বাসাইল","ভুয়াপুর","দেলদুয়ার","ধনবাড়ী","ঘাটাইল","গোপালপুর","কালিহাতী","মধুপুর","মির্জাপুর","নাগরপুর","সখীপুর","টাঙ্গাইল সদর"]
+},
+
+"খুলনা":{
+"বাগেরহাট":["বাগেরহাট সদর","চিতলমারী","ফকিরহাট","কচুয়া","মোল্লাহাট","মোংলা","মোরেলগঞ্জ","রামপাল","শরণখোলা"],
+"চুয়াডাঙ্গা":["আলমডাঙ্গা","চুয়াডাঙ্গা সদর","দামুড়হুদা","জীবননগর"],
+"যশোর":["অভয়নগর","বাঘারপাড়া","চৌগাছা","ঝিকরগাছা","কেশবপুর","মণিরামপুর","শার্শা","যশোর সদর"],
+"ঝিনাইদহ":["ঝিনাইদহ সদর","কালীগঞ্জ","কোটচাঁদপুর","মহেশপুর","শৈলকুপা","হরিণাকুন্ডু"],
+"খুলনা":["বটিয়াঘাটা","দাকোপ","দিঘলিয়া","ডুমুরিয়া","কয়রা","পাইকগাছা","ফুলতলা","রূপসা","তেরখাদা"],
+"কুষ্টিয়া":["কুষ্টিয়া সদর","কুমারখালী","খোকসা","মিরপুর","দৌলতপুর","ভেড়ামারা"],
+"মাগুরা":["মাগুরা সদর","মহম্মদপুর","শালিখা","শ্রীপুর"],
+"মেহেরপুর":["মেহেরপুর সদর","গাংনী","মুজিবনগর"],
+"নড়াইল":["নড়াইল সদর","কালিয়া","লোহাগড়া"],
+"সাতক্ষীরা":["আশাশুনি","দেবহাটা","কলারোয়া","কালীগঞ্জ","সাতক্ষীরা সদর","শ্যামনগর","তালা"]
+}
 
 };
 
 
-/* =========================================================
-   LOCATION NAME NORMALIZER
-========================================================= */
+/* ================================
+   LOCATION SELECT SYSTEM
+================================ */
 
-function normalizeLocationName(name){
+function fillDivisions(){
 
-    return String(name || "")
-        .replace(/জেলা/g,"")
-        .replace(/\s+/g,"")
-        .trim();
-
-}
-
-
-/* =========================================================
-   DIVISION
-========================================================= */
-
-function fillDiv(id){
-
-    const el =
-        document.getElementById(id);
-
-    if(!el) return;
-
-    el.innerHTML =
-        '<option value="">বিভাগ নির্বাচন</option>';
-
-    Object.keys(locations).forEach(function(x){
-
-        const option =
-            document.createElement("option");
-
-        option.value = x;
-        option.textContent = x;
-
-        el.appendChild(option);
-
-    });
-
-}
-
-
-/* =========================================================
-   DISTRICT
-========================================================= */
-
-function districtList(
-    divId,
-    districtId,
-    upId
-){
-
-    const div =
-        document.getElementById(divId);
-
-    const district =
-        document.getElementById(districtId);
-
-    const up =
-        document.getElementById(upId);
-
-    if(!div || !district || !up){
-        return;
-    }
-
-    district.innerHTML =
-        '<option value="">জেলা নির্বাচন</option>';
-
-    up.innerHTML =
-        '<option value="">উপজেলা নির্বাচন</option>';
-
-    const list =
-        locations[div.value] || [];
-
-    list.forEach(function(x){
-
-        const option =
-            document.createElement("option");
-
-        option.value = x;
-        option.textContent = x;
-
-        district.appendChild(option);
-
-    });
-
-}
-
-
-/* =========================================================
-   UPAZILA
-========================================================= */
-
-function upazilaList(
-    districtId,
-    upId
-){
-
-    const district =
-        document.getElementById(districtId);
-
-    const up =
-        document.getElementById(upId);
-
-    if(!district || !up){
-        return;
-    }
-
-    up.innerHTML =
-        '<option value="">উপজেলা নির্বাচন</option>';
-
-    const districtName =
-        normalizeLocationName(
-            district.value
-        );
-
-    if(!districtName){
-        return;
-    }
-
-    const list =
-        upazilas[districtName] || [];
-
-    if(list.length === 0){
-
-        up.innerHTML =
-            '<option value="">উপজেলা পাওয়া যায়নি</option>';
-
-        return;
-    }
-
-    list.forEach(function(x){
-
-        const option =
-            document.createElement("option");
-
-        option.value = x;
-        option.textContent = x;
-
-        up.appendChild(option);
-
-    });
-
-}
-
-
-/* =========================================================
-   INITIAL LOAD
-========================================================= */
-
-fillDiv("sDivision");
-fillDiv("dDivision");
-fillDiv("pDivision");
-
-
-/* =========================================================
-   SEARCH LOCATION EVENTS
-========================================================= */
-
-document
-.getElementById("sDivision")
-.addEventListener("change",function(){
-
-    districtList(
-        "sDivision",
-        "sDistrict",
-        "sUpazila"
-    );
-
-});
-
-document
-.getElementById("sDistrict")
-.addEventListener("change",function(){
-
-    upazilaList(
-        "sDistrict",
-        "sUpazila"
-    );
-
-});
-
-
-/* =========================================================
-   DONOR LOCATION EVENTS
-========================================================= */
-
-document
-.getElementById("dDivision")
-.addEventListener("change",function(){
-
-    districtList(
+    const ids=[
+        "searchDivision",
         "dDivision",
-        "dDistrict",
-        "dUpazila"
-    );
+        "rDivision"
+    ];
 
-});
+    ids.forEach(id=>{
 
-document
-.getElementById("dDistrict")
-.addEventListener("change",function(){
+        const select=document.getElementById(id);
 
-    upazilaList(
-        "dDistrict",
-        "dUpazila"
-    );
+        if(!select)return;
 
-});
+        if(id==="searchDivision")
+            select.innerHTML='<option value="">সব বিভাগ</option>';
+        else
+            select.innerHTML='<option value="">বিভাগ নির্বাচন করুন</option>';
 
+        Object.keys(divisions).forEach(d=>{
 
-/* =========================================================
-   REQUEST LOCATION EVENTS
-========================================================= */
+            const op=document.createElement("option");
 
-document
-.getElementById("pDivision")
-.addEventListener("change",function(){
+            op.value=d;
+            op.textContent=d;
 
-    districtList(
-        "pDivision",
-        "pDistrict",
-        "pUpazila"
-    );
+            select.appendChild(op);
 
-});
+        });
 
-document
-.getElementById("pDistrict")
-.addEventListener("change",function(){
-
-    upazilaList(
-        "pDistrict",
-        "pUpazila"
-    );
-
-});
-
-
-/* =========================================================
-   MENU
-========================================================= */
-
-function openMenu(){
-
-    document
-    .getElementById("sideMenu")
-    .classList.add("active");
+    });
 
 }
 
-function closeMenu(){
+function fillDistrict(selectId,division){
 
-    document
-    .getElementById("sideMenu")
-    .classList.remove("active");
+    const select=document.getElementById(selectId);
+
+    if(!select)return;
+
+    select.innerHTML='<option value="">জেলা নির্বাচন করুন</option>';
+
+    if(!division)return;
+
+    (divisions[division]||[]).forEach(d=>{
+
+        const op=document.createElement("option");
+
+        op.value=d;
+        op.textContent=d;
+
+        select.appendChild(op);
+
+    });
+
+}
+
+function fillUpazila(selectId,division,district){
+
+    const select=document.getElementById(selectId);
+
+    if(!select)return;
+
+    select.innerHTML='<option value="">উপজেলা নির্বাচন করুন</option>';
+
+    const list =
+        upazilas[division] &&
+        upazilas[division][district];
+
+    if(list){
+
+        list.forEach(u=>{
+
+            const op=document.createElement("option");
+
+            op.value=u;
+            op.textContent=u;
+
+            select.appendChild(op);
+
+        });
+
+    }
 
 }
 
 
-/* =========================================================
-   DONORS
-========================================================= */
+/* ================================
+   EVENT LISTENERS
+================================ */
 
-function getDonors(){
+document.getElementById("dDivision").addEventListener("change",function(){
+
+    fillDistrict("dDistrict",this.value);
+
+    document.getElementById("dUpazila").innerHTML=
+        '<option value="">জেলা নির্বাচন করুন</option>';
+
+});
+
+document.getElementById("dDistrict").addEventListener("change",function(){
+
+    fillUpazila(
+        "dUpazila",
+        document.getElementById("dDivision").value,
+        this.value
+    );
+
+});
+
+
+document.getElementById("rDivision").addEventListener("change",function(){
+
+    fillDistrict("rDistrict",this.value);
+
+    document.getElementById("rUpazila").innerHTML=
+        '<option value="">জেলা নির্বাচন করুন</option>';
+
+});
+
+document.getElementById("rDistrict").addEventListener("change",function(){
+
+    fillUpazila(
+        "rUpazila",
+        document.getElementById("rDivision").value,
+        this.value
+    );
+
+});
+
+
+document.getElementById("searchDivision").addEventListener("change",function(){
+
+    fillDistrict("searchDistrict",this.value);
+
+});
+
+
+/* ================================
+   STORAGE
+================================ */
+
+function getData(key){
 
     return JSON.parse(
-        localStorage.getItem("mbDonors") || "[]"
+        localStorage.getItem(key) || "[]"
     );
 
 }
 
-function saveDonors(data){
+function saveData(key,data){
 
     localStorage.setItem(
-        "mbDonors",
+        key,
         JSON.stringify(data)
     );
 
 }
 
 
-document
-.getElementById("donorForm")
+/* ================================
+   DONOR REGISTRATION
+================================ */
+
+document.getElementById("donorForm")
 .addEventListener("submit",function(e){
 
     e.preventDefault();
 
-    let donors =
-        getDonors();
+    const donors=getData("mb_donors");
 
     donors.push({
 
         id:Date.now(),
 
-        name:
-            document.getElementById("dName").value,
+        name:dName.value,
 
-        phone:
-            document.getElementById("dPhone").value,
+        phone:dPhone.value,
 
-        blood:
-            document.getElementById("dBlood").value,
+        blood:dBlood.value,
 
-        division:
-            document.getElementById("dDivision").value,
+        division:dDivision.value,
 
-        district:
-            document.getElementById("dDistrict").value,
+        district:dDistrict.value,
 
-        upazila:
-            document.getElementById("dUpazila").value,
+        upazila:dUpazila.value,
 
-        address:
-            document.getElementById("dAddress").value,
+        address:dAddress.value,
 
-        status:"Pending"
+        info:dInfo.value,
+
+        status:"pending",
+
+        created:new Date().toISOString()
 
     });
 
-    saveDonors(donors);
+    saveData("mb_donors",donors);
 
-    alert(
-        "আপনার নিবন্ধন সফল হয়েছে।\n\nStatus: Pending\n\nAdmin অনুমোদনের পর আপনি Active Donor হিসেবে দেখা যাবেন।"
+    showToast(
+        "✅ আপনার Donor Registration Request পাঠানো হয়েছে। Admin Approve করার পর Active হবে।"
     );
 
     this.reset();
 
-    document.getElementById("dDistrict").innerHTML =
-        '<option value="">জেলা নির্বাচন</option>';
-
-    document.getElementById("dUpazila").innerHTML =
-        '<option value="">উপজেলা নির্বাচন</option>';
-
 });
 
 
-/* =========================================================
-   SEARCH DONORS
-========================================================= */
-
-function searchDonors(){
-
-    let donors =
-        getDonors();
-
-    let blood =
-        document.getElementById("sBlood").value;
-
-    let division =
-        document.getElementById("sDivision").value;
-
-    let district =
-        document.getElementById("sDistrict").value;
-
-    let upazila =
-        document.getElementById("sUpazila").value;
-
-    let result =
-        donors.filter(d=>
-
-            d.status==="Approved" &&
-
-            (!blood || d.blood===blood) &&
-
-            (!division || d.division===division) &&
-
-            (!district || d.district===district) &&
-
-            (!upazila || d.upazila===upazila)
-
-        );
-
-    let box =
-        document.getElementById("results");
-
-    box.innerHTML="";
-
-    if(result.length===0){
-
-        box.innerHTML=`
-
-        <div class="card">
-
-            ❌ কোনো Active Donor পাওয়া যায়নি।
-
-        </div>
-
-        `;
-
-        return;
-    }
-
-    result.forEach(d=>{
-
-        box.innerHTML+=`
-
-        <div class="card donor">
-
-            <div class="bloodGroup">
-                ${d.blood}
-            </div>
-
-            <div>
-
-                <h3>${d.name}</h3>
-
-                <small>
-                📍 ${d.district}, ${d.upazila}
-                </small>
-
-                <br>
-
-                <small>
-                📞 ${d.phone}
-                </small>
-
-            </div>
-
-        </div>
-
-        `;
-
-    });
-
-}
-
-
-/* =========================================================
-   ACTIVE COUNT
-========================================================= */
-
-function updateCount(){
-
-    let donors =
-        getDonors();
-
-    let active =
-        donors.filter(
-            d=>d.status==="Approved"
-        ).length;
-
-    document
-    .getElementById("activeCount")
-    .textContent=active;
-
-}
-
-updateCount();
-
-
-/* =========================================================
+/* ================================
    BLOOD REQUEST
-========================================================= */
+================================ */
 
-document
-.getElementById("requestForm")
+document.getElementById("requestForm")
 .addEventListener("submit",function(e){
 
     e.preventDefault();
 
-    let requests =
-        JSON.parse(
-            localStorage.getItem("mbRequests") || "[]"
-        );
+    const requests=getData("mb_requests");
 
     requests.push({
 
         id:Date.now(),
 
-        patient:
-            document.getElementById("pName").value,
+        patient:rPatient.value,
 
-        phone:
-            document.getElementById("pPhone").value,
+        phone:rPhone.value,
 
-        blood:
-            document.getElementById("pBlood").value,
+        blood:rBlood.value,
 
-        bags:
-            document.getElementById("pBags").value,
+        bags:rBags.value,
 
-        division:
-            document.getElementById("pDivision").value,
+        division:rDivision.value,
 
-        district:
-            document.getElementById("pDistrict").value,
+        district:rDistrict.value,
 
-        upazila:
-            document.getElementById("pUpazila").value,
+        upazila:rUpazila.value,
 
-        hospital:
-            document.getElementById("pHospital").value,
+        hospital:rHospital.value,
 
-        date:
-            document.getElementById("pDate").value,
+        date:rDate.value,
 
-        urgency:
-            document.getElementById("pUrgency").value,
+        urgency:rUrgency.value,
 
-        info:
-            document.getElementById("pInfo").value,
+        info:rInfo.value,
 
-        status:"Pending"
+        status:"pending",
+
+        created:new Date().toISOString()
 
     });
 
-    localStorage.setItem(
-        "mbRequests",
-        JSON.stringify(requests)
-    );
+    saveData("mb_requests",requests);
 
-    alert(
-        "🚨 আপনার Blood Request পাঠানো হয়েছে।\n\nStatus: Pending"
+    showToast(
+        "🚨 Blood Request পাঠানো হয়েছে। Admin যাচাই করবেন।"
     );
 
     this.reset();
 
-    document.getElementById("pDistrict").innerHTML =
-        '<option value="">জেলা নির্বাচন</option>';
-
-    document.getElementById("pUpazila").innerHTML =
-        '<option value="">উপজেলা নির্বাচন</option>';
-
 });
+
+
+/* ================================
+   SEARCH DONORS
+================================ */
+
+function searchDonors(){
+
+    const blood=
+        document.getElementById("searchBlood").value;
+
+    const division=
+        document.getElementById("searchDivision").value;
+
+    const district=
+        document.getElementById("searchDistrict").value;
+
+    const donors=getData("mb_donors")
+        .filter(d=>d.status==="approved");
+
+    const results=donors.filter(d=>{
+
+        return (!blood || d.blood===blood)
+        &&
+        (!division || d.division===division)
+        &&
+        (!district || d.district===district);
+
+    });
+
+    const box=document.getElementById("donorResults");
+
+    if(!results.length){
+
+        box.innerHTML=`
+        <div class="card" style="grid-column:1/-1;text-align:center">
+        😔 বর্তমানে কোনো Active Donor পাওয়া যায়নি।
+        </div>`;
+
+        return;
+
+    }
+
+    box.innerHTML=results.map(d=>`
+
+        <div class="card donor">
+
+            <div class="blood">
+                ${d.blood}
+            </div>
+
+            <h3>${escapeHTML(d.name)}</h3>
+
+            <p>📍 ${escapeHTML(d.division)}</p>
+
+            <p>🏠 ${escapeHTML(d.district)}</p>
+
+            <p>📌 ${escapeHTML(d.upazila)}</p>
+
+            <br>
+
+            <a class="btn"
+               href="tel:${escapeHTML(d.phone)}">
+               📞 যোগাযোগ
+            </a>
+
+        </div>
+
+    `).join("");
+
+}
+
+
+/* ================================
+   COUNTERS
+================================ */
+
+function updateStats(){
+
+    const donors=getData("mb_donors")
+        .filter(d=>d.status==="approved");
+
+    const requests=getData("mb_requests")
+        .filter(r=>r.status==="approved");
+
+    document.getElementById("donorCount")
+        .textContent=donors.length;
+
+    document.getElementById("requestCount")
+        .textContent=requests.length;
+
+}
+
+
+/* ================================
+   SECURITY HELPER
+================================ */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* ================================
+   TOAST
+================================ */
+
+function showToast(message){
+
+    const toast=document.getElementById("toast");
+
+    toast.textContent=message;
+
+    toast.classList.add("show");
+
+    setTimeout(()=>{
+        toast.classList.remove("show");
+    },4000);
+
+}
+
+
+/* ================================
+   INIT
+================================ */
+
+fillDivisions();
+updateStats();
 
 </script>
 
