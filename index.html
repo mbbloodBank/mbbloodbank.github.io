@@ -165,6 +165,8 @@ h1{
     border-radius:14px;
     font:600 16px 'Hind Siliguri';
     cursor:pointer;
+    text-decoration:none;
+    display:inline-block;
 }
 
 .primary{
@@ -310,11 +312,49 @@ textarea{
     font-weight:bold;
 }
 
+/* CONTACT SECTION STYLES */
+.contact-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.contact-card{
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:20px;
+    padding:20px;
+    text-align:center;
+    backdrop-filter:blur(18px);
+}
+
+.contact-icon{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.contact-card h3{
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+.contact-card p{
+    color:#aaa;
+    font-size:14px;
+    word-break:break-all;
+}
+
 footer{
     text-align:center;
     padding:35px;
     border-top:1px solid rgba(255,255,255,.1);
     color:#aaa;
+}
+
+@media(max-width:900px){
+    .contact-grid{
+        grid-template-columns:1fr 1fr;
+    }
 }
 
 @media(max-width:800px){
@@ -337,6 +377,10 @@ footer{
     .stats{
         grid-template-columns:1fr 1fr 1fr;
     }
+    
+    .contact-grid{
+        grid-template-columns:1fr;
+    }
 }
 </style>
 </head>
@@ -355,7 +399,7 @@ footer{
 </div>
 </header>
 
-<!-- PUBLIC MENU: এখানে Admin নেই -->
+<!-- PUBLIC MENU -->
 <div class="menu" id="menu">
 
 <button class="close" onclick="closeMenu()">✕</button>
@@ -844,40 +888,35 @@ Blood Request
 <div class="container">
 
 <div class="title">
-<h2>📞 যোগাযোগ করুন</h2>
+<h2>📞 যোগাযোগ</h2>
+<p style="color:#aaa;margin-top:5px;">MB Blood Bank-এর সাথে যোগাযোগ করুন</p>
 </div>
 
-<div class="card">
+<div class="contact-grid">
 
-<h3>📱 ফোন / SMS</h3>
+<div class="contact-card">
+<div class="contact-icon">📱</div>
+<h3>Phone</h3>
+<p>017XXXXXXXX</p>
+</div>
 
-<p style="color:#aaa;margin:10px 0;">
-Phone: 01XXXXXXXXX
-</p>
+<div class="contact-card">
+<div class="contact-icon">✉️</div>
+<h3>Email</h3>
+<p>mbbloodbank@gmail.com</p>
+</div>
 
-<a class="btn primary" href="tel:+8801XXXXXXXXX">
-📞 কল করুন
-</a>
+<div class="contact-card">
+<div class="contact-icon">💬</div>
+<h3>SMS</h3>
+<p>রক্তের প্রয়োজনে SMS করুন</p>
+</div>
 
-<a class="btn secondary" href="sms:+8801XXXXXXXXX">
-💬 SMS পাঠান
-</a>
-
-<hr style="margin:25px 0;border-color:#333;">
-
-<h3>✉️ Email</h3>
-
-<p style="color:#aaa;">
-mbbloodbank@gmail.com
-</p>
-
-<hr style="margin:25px 0;border-color:#333;">
-
-<h3>📍 ঠিকানা</h3>
-
-<p style="color:#aaa;">
-Bangladesh
-</p>
+<div class="contact-card">
+<div class="contact-icon">📍</div>
+<h3>Address</h3>
+<p>Bangladesh</p>
+</div>
 
 </div>
 
@@ -888,541 +927,216 @@ Bangladesh
 
 <footer>
 
-© 2026 MB Blood Bank 🩸
+© 2026 MB Blood Bank — Donate Blood, Save Life ❤️
 
 </footer>
 
 
 <script>
 
-/* =====================================================
-   BANGLADESH LOCATION DATA
-   8 DIVISIONS
-   64 DISTRICTS
-   495 UPAZILAS
-   ===================================================== */
-
 const LOCATION_API =
 "https://raw.githubusercontent.com/open-admin-data/bangladesh-administrative-divisions/main/data/hierarchy.json";
 
 let locations = [];
 
-
-/* LOAD ALL LOCATIONS */
-
 async function loadLocations(){
-
     try{
-
         const response = await fetch(LOCATION_API);
-
         const json = await response.json();
-
         locations = json.data || [];
 
         setupDivision("searchDivision");
         setupDivision("donorDivision");
         setupDivision("requestDivision");
-
     }
-
     catch(error){
-
         console.log(error);
-
-        alert(
-        "লোকেশন ডেটা লোড হয়নি। Internet চালু করে আবার চেষ্টা করুন।"
-        );
-
+        alert("লোকেশন ডেটা লোড হয়নি। Internet চালু করে আবার চেষ্টা করুন।");
     }
-
 }
-
-
-/* DIVISION */
 
 function setupDivision(id){
-
     const select = document.getElementById(id);
-
     locations.forEach(division=>{
-
-        const option =
-        document.createElement("option");
-
-        option.value =
-        division.name.local;
-
-        option.textContent =
-        division.name.local;
-
+        const option = document.createElement("option");
+        option.value = division.name.local;
+        option.textContent = division.name.local;
         select.appendChild(option);
-
     });
-
 
     select.addEventListener("change",function(){
-
         updateDistrict(id);
-
     });
-
 }
 
-
-/* DISTRICT */
-
 function updateDistrict(divisionId){
-
     let districtId;
     let upazilaId;
 
     if(divisionId==="searchDivision"){
-
         districtId="searchDistrict";
         upazilaId="searchUpazila";
-
     }
-
     if(divisionId==="donorDivision"){
-
         districtId="donorDistrict";
         upazilaId="donorUpazila";
-
     }
-
     if(divisionId==="requestDivision"){
-
         districtId="requestDistrict";
         upazilaId="requestUpazila";
-
     }
 
+    const division = locations.find(x=>x.name.local===document.getElementById(divisionId).value);
+    const districtSelect = document.getElementById(districtId);
+    const upazilaSelect = document.getElementById(upazilaId);
 
-    const division =
-    locations.find(
-        x=>x.name.local===
-        document.getElementById(divisionId).value
-    );
-
-
-    const districtSelect =
-    document.getElementById(districtId);
-
-
-    const upazilaSelect =
-    document.getElementById(upazilaId);
-
-
-    districtSelect.innerHTML =
-    '<option value="">জেলা নির্বাচন করুন</option>';
-
-    upazilaSelect.innerHTML =
-    '<option value="">উপজেলা নির্বাচন করুন</option>';
-
+    districtSelect.innerHTML = '<option value="">জেলা নির্বাচন করুন</option>';
+    upazilaSelect.innerHTML = '<option value="">উপজেলা নির্বাচন করুন</option>';
 
     if(!division) return;
 
-
     division.district.forEach(district=>{
-
-        const option =
-        document.createElement("option");
-
-        option.value =
-        district.name.local;
-
-        option.textContent =
-        district.name.local;
-
+        const option = document.createElement("option");
+        option.value = district.name.local;
+        option.textContent = district.name.local;
         districtSelect.appendChild(option);
-
     });
 
-
     districtSelect.onchange=function(){
-
-        updateUpazila(
-            divisionId,
-            districtId,
-            upazilaId
-        );
-
+        updateUpazila(divisionId, districtId, upazilaId);
     };
-
 }
 
+function updateUpazila(divisionId, districtId, upazilaId){
+    const division = locations.find(x=>x.name.local===document.getElementById(divisionId).value);
+    const district = division.district.find(x=>x.name.local===document.getElementById(districtId).value);
+    const upazilaSelect = document.getElementById(upazilaId);
 
-/* =====================================================
-   IMPORTANT:
-   উপজেলা dropdown-এ শুধুমাত্র সেই জেলার সব উপজেলা থাকবে।
-   কোনো "সব উপজেলা", Search বা অতিরিক্ত option থাকবে না।
-   ===================================================== */
-
-function updateUpazila(
-    divisionId,
-    districtId,
-    upazilaId
-){
-
-    const division =
-    locations.find(
-        x=>x.name.local===
-        document.getElementById(divisionId).value
-    );
-
-
-    const district =
-    division.district.find(
-        x=>x.name.local===
-        document.getElementById(districtId).value
-    );
-
-
-    const upazilaSelect =
-    document.getElementById(upazilaId);
-
-
-    upazilaSelect.innerHTML =
-    '<option value="">উপজেলা নির্বাচন করুন</option>';
-
+    upazilaSelect.innerHTML = '<option value="">উপজেলা নির্বাচন করুন</option>';
 
     if(!district) return;
 
-
-    /*
-       এখানে district-এর সব উপজেলা
-       সরাসরি dropdown-এ যোগ হচ্ছে।
-    */
-
     district.upazila.forEach(upazila=>{
-
-        const option =
-        document.createElement("option");
-
-        option.value =
-        upazila.name.local;
-
-        option.textContent =
-        upazila.name.local;
-
+        const option = document.createElement("option");
+        option.value = upazila.name.local;
+        option.textContent = upazila.name.local;
         upazilaSelect.appendChild(option);
-
     });
-
 }
-
-
-/* DONOR REGISTER */
 
 function registerDonor(){
-
     const donor={
-
         id:Date.now(),
-
-        name:
-        document.getElementById("donorName").value,
-
-        phone:
-        document.getElementById("donorPhone").value,
-
-        blood:
-        document.getElementById("donorBlood").value,
-
-        division:
-        document.getElementById("donorDivision").value,
-
-        district:
-        document.getElementById("donorDistrict").value,
-
-        upazila:
-        document.getElementById("donorUpazila").value,
-
-        info:
-        document.getElementById("donorInfo").value,
-
+        name:document.getElementById("donorName").value,
+        phone:document.getElementById("donorPhone").value,
+        blood:document.getElementById("donorBlood").value,
+        division:document.getElementById("donorDivision").value,
+        district:document.getElementById("donorDistrict").value,
+        upazila:document.getElementById("donorUpazila").value,
+        info:document.getElementById("donorInfo").value,
         status:"pending"
-
     };
 
-
-    if(
-        !donor.name ||
-        !donor.phone ||
-        !donor.blood ||
-        !donor.division ||
-        !donor.district ||
-        !donor.upazila
-    ){
-
+    if(!donor.name||!donor.phone||!donor.blood||!donor.division||!donor.district||!donor.upazila){
         alert("সব * তথ্য পূরণ করুন।");
-
         return;
-
     }
 
-
-    const donors =
-    JSON.parse(
-        localStorage.getItem("mb_donors") || "[]"
-    );
-
-
+    const donors = JSON.parse(localStorage.getItem("mb_donors") || "[]");
     donors.push(donor);
+    localStorage.setItem("mb_donors", JSON.stringify(donors));
 
-
-    localStorage.setItem(
-        "mb_donors",
-        JSON.stringify(donors)
-    );
-
-
-    alert(
-    "আপনার নিবন্ধন Pending অবস্থায় পাঠানো হয়েছে। Admin Approved করার পর Active হবে।"
-    );
-
+    alert("আপনার নিবন্ধন Pending অবস্থায় পাঠানো হয়েছে। Admin Approved করার পর Active হবে।");
     updateStats();
-
 }
-
-
-/* BLOOD REQUEST */
 
 function sendRequest(){
-
     const request={
-
         id:Date.now(),
-
-        patient:
-        document.getElementById("patientName").value,
-
-        phone:
-        document.getElementById("patientPhone").value,
-
-        blood:
-        document.getElementById("requestBlood").value,
-
-        bags:
-        document.getElementById("bags").value,
-
-        division:
-        document.getElementById("requestDivision").value,
-
-        district:
-        document.getElementById("requestDistrict").value,
-
-        upazila:
-        document.getElementById("requestUpazila").value,
-
-        hospital:
-        document.getElementById("hospital").value,
-
-        date:
-        document.getElementById("needDate").value,
-
-        urgency:
-        document.getElementById("urgency").value,
-
-        info:
-        document.getElementById("requestInfo").value,
-
+        patient:document.getElementById("patientName").value,
+        phone:document.getElementById("patientPhone").value,
+        blood:document.getElementById("requestBlood").value,
+        bags:document.getElementById("bags").value,
+        division:document.getElementById("requestDivision").value,
+        district:document.getElementById("requestDistrict").value,
+        upazila:document.getElementById("requestUpazila").value,
+        hospital:document.getElementById("hospital").value,
+        date:document.getElementById("needDate").value,
+        urgency:document.getElementById("urgency").value,
+        info:document.getElementById("requestInfo").value,
         status:"pending"
-
     };
 
-
-    if(
-        !request.patient ||
-        !request.phone ||
-        !request.blood ||
-        !request.division ||
-        !request.district ||
-        !request.upazila ||
-        !request.hospital ||
-        !request.date
-    ){
-
+    if(!request.patient||!request.phone||!request.blood||!request.division||!request.district||!request.upazila||!request.hospital||!request.date){
         alert("সব * তথ্য পূরণ করুন।");
-
         return;
-
     }
 
-
-    const requests =
-    JSON.parse(
-        localStorage.getItem("mb_requests") || "[]"
-    );
-
-
+    const requests = JSON.parse(localStorage.getItem("mb_requests") || "[]");
     requests.push(request);
+    localStorage.setItem("mb_requests", JSON.stringify(requests));
 
-
-    localStorage.setItem(
-        "mb_requests",
-        JSON.stringify(requests)
-    );
-
-
-    alert(
-    "আপনার Blood Request Admin-এর কাছে পাঠানো হয়েছে।"
-    );
-
+    alert("আপনার Blood Request Admin-এর কাছে পাঠানো হয়েছে।");
     updateStats();
-
 }
 
-
-/* DONOR SEARCH */
-
 function searchDonor(){
-
-    const blood =
-    document.getElementById("searchBlood").value;
-
-    const division =
-    document.getElementById("searchDivision").value;
-
-    const district =
-    document.getElementById("searchDistrict").value;
-
-    const upazila =
-    document.getElementById("searchUpazila").value;
-
+    const blood = document.getElementById("searchBlood").value;
+    const division = document.getElementById("searchDivision").value;
+    const district = document.getElementById("searchDistrict").value;
+    const upazila = document.getElementById("searchUpazila").value;
 
     if(!blood||!division||!district||!upazila){
-
-        alert(
-        "Blood Group, বিভাগ, জেলা ও উপজেলা নির্বাচন করুন।"
-        );
-
+        alert("Blood Group, বিভাগ, জেলা ও উপজেলা নির্বাচন করুন।");
         return;
-
     }
 
-
-    const donors =
-    JSON.parse(
-        localStorage.getItem("mb_donors") || "[]"
-    );
-
-
-    const result =
-    donors.filter(d=>
-
+    const donors = JSON.parse(localStorage.getItem("mb_donors") || "[]");
+    const result = donors.filter(d=>
         d.status==="approved" &&
         d.blood===blood &&
         d.division===division &&
         d.district===district &&
         d.upazila===upazila
-
     );
 
-
-    const box =
-    document.getElementById("searchResult");
-
+    const box = document.getElementById("searchResult");
 
     if(result.length===0){
-
-        box.innerHTML=
-        '<div class="notice">এই এলাকায় Approved Donor পাওয়া যায়নি।</div>';
-
+        box.innerHTML='<div class="notice">এই এলাকায় Approved Donor পাওয়া যায়নি।</div>';
         return;
-
     }
 
-
-    box.innerHTML =
-    result.map(d=>`
-
+    box.innerHTML = result.map(d=>`
         <div class="donor">
-
             <div>
-
-                <span class="blood">
-                ${d.blood}
-                </span>
-
-                <strong>
-                ${d.name}
-                </strong>
-
-                <p style="color:#aaa">
-                ${d.division} •
-                ${d.district} •
-                ${d.upazila}
-                </p>
-
+                <span class="blood">${d.blood}</span>
+                <strong>${d.name}</strong>
+                <p style="color:#aaa">${d.division} • ${d.district} • ${d.upazila}</p>
             </div>
-
-            <a
-            class="btn primary"
-            href="tel:${d.phone}">
-            📞 যোগাযোগ
-            </a>
-
+            <a class="btn primary" href="tel:${d.phone}">📞 যোগাযোগ</a>
         </div>
-
     `).join("");
-
 }
-
-
-/* STATISTICS */
 
 function updateStats(){
+    const donors = JSON.parse(localStorage.getItem("mb_donors") || "[]");
+    const requests = JSON.parse(localStorage.getItem("mb_requests") || "[]");
 
-    const donors =
-    JSON.parse(
-        localStorage.getItem("mb_donors") || "[]"
-    );
-
-    const requests =
-    JSON.parse(
-        localStorage.getItem("mb_requests") || "[]"
-    );
-
-
-    document.getElementById("approved").textContent =
-    donors.filter(x=>x.status==="approved").length;
-
-
-    document.getElementById("pending").textContent =
-    donors.filter(x=>x.status==="pending").length;
-
-
-    document.getElementById("requests").textContent =
-    requests.length;
-
+    document.getElementById("approved").textContent = donors.filter(x=>x.status==="approved").length;
+    document.getElementById("pending").textContent = donors.filter(x=>x.status==="pending").length;
+    document.getElementById("requests").textContent = requests.length;
 }
 
-
-/* MENU */
-
 function openMenu(){
-
-    document
-    .getElementById("menu")
-    .classList.add("active");
-
+    document.getElementById("menu").classList.add("active");
 }
 
 function closeMenu(){
-
-    document
-    .getElementById("menu")
-    .classList.remove("active");
-
+    document.getElementById("menu").classList.remove("active");
 }
 
-
-/* START */
-
 loadLocations();
-
 updateStats();
 
 </script>
