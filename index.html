@@ -312,7 +312,7 @@ textarea{
     font-weight:bold;
 }
 
-/* CONTACT SECTION STYLES */
+/* নতুন যোগাযোগ সেকশনের ডিজাইন (ছবির মতো) */
 .contact-grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -320,22 +320,24 @@ textarea{
 }
 
 .contact-card{
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
     border-radius:20px;
     padding:20px;
-    text-align:center;
-    backdrop-filter:blur(18px);
+    text-align:left;
+    backdrop-filter:blur(15px);
 }
 
-.contact-icon{
-    font-size:30px;
-    margin-bottom:10px;
+.contact-card .icon{
+    font-size:24px;
+    margin-bottom:12px;
+    display:block;
 }
 
 .contact-card h3{
-    font-size:18px;
-    margin-bottom:8px;
+    font-size:17px;
+    margin-bottom:6px;
+    color:#fff;
 }
 
 .contact-card p{
@@ -353,14 +355,14 @@ footer{
 
 @media(max-width:900px){
     .contact-grid{
-        grid-template-columns:1fr 1fr;
+        grid-template-columns:repeat(2,1fr);
     }
 }
 
-@media(max-width:800px){
-
+@media(max-width:600px){
     .hero-grid,
-    .row{
+    .row,
+    .contact-grid{
         grid-template-columns:1fr;
     }
 
@@ -375,11 +377,7 @@ footer{
     }
 
     .stats{
-        grid-template-columns:1fr 1fr 1fr;
-    }
-    
-    .contact-grid{
-        grid-template-columns:1fr;
+        grid-template-columns:repeat(3,1fr);
     }
 }
 </style>
@@ -399,7 +397,6 @@ footer{
 </div>
 </header>
 
-<!-- PUBLIC MENU -->
 <div class="menu" id="menu">
 
 <button class="close" onclick="closeMenu()">✕</button>
@@ -883,6 +880,7 @@ Blood Request
 </section>
 
 
+<!-- যোগাযোগ সেকশন (ছবির মতো চার কলামের সুন্দর কার্ড ডিজাইন) -->
 <section id="contact">
 
 <div class="container">
@@ -895,25 +893,25 @@ Blood Request
 <div class="contact-grid">
 
 <div class="contact-card">
-<div class="contact-icon">📱</div>
+<span class="icon">📱</span>
 <h3>Phone</h3>
 <p>017XXXXXXXX</p>
 </div>
 
 <div class="contact-card">
-<div class="contact-icon">✉️</div>
+<span class="icon">✉️</span>
 <h3>Email</h3>
 <p>mbbloodbank@gmail.com</p>
 </div>
 
 <div class="contact-card">
-<div class="contact-icon">💬</div>
+<span class="icon">💬</span>
 <h3>SMS</h3>
 <p>রক্তের প্রয়োজনে SMS করুন</p>
 </div>
 
 <div class="contact-card">
-<div class="contact-icon">📍</div>
+<span class="icon">📍</span>
 <h3>Address</h3>
 <p>Bangladesh</p>
 </div>
@@ -944,7 +942,6 @@ async function loadLocations(){
         const response = await fetch(LOCATION_API);
         const json = await response.json();
         locations = json.data || [];
-
         setupDivision("searchDivision");
         setupDivision("donorDivision");
         setupDivision("requestDivision");
@@ -963,7 +960,6 @@ function setupDivision(id){
         option.textContent = division.name.local;
         select.appendChild(option);
     });
-
     select.addEventListener("change",function(){
         updateDistrict(id);
     });
@@ -1037,7 +1033,7 @@ function registerDonor(){
         status:"pending"
     };
 
-    if(!donor.name||!donor.phone||!donor.blood||!donor.division||!donor.district||!donor.upazila){
+    if(!donor.name || !donor.phone || !donor.blood || !donor.division || !donor.district || !donor.upazila){
         alert("সব * তথ্য পূরণ করুন।");
         return;
     }
@@ -1067,7 +1063,7 @@ function sendRequest(){
         status:"pending"
     };
 
-    if(!request.patient||!request.phone||!request.blood||!request.division||!request.district||!request.upazila||!request.hospital||!request.date){
+    if(!request.patient || !request.phone || !request.blood || !request.division || !request.district || !request.upazila || !request.hospital || !request.date){
         alert("সব * তথ্য পূরণ করুন।");
         return;
     }
@@ -1086,7 +1082,7 @@ function searchDonor(){
     const district = document.getElementById("searchDistrict").value;
     const upazila = document.getElementById("searchUpazila").value;
 
-    if(!blood||!division||!district||!upazila){
+    if(!blood || !division || !district || !upazila){
         alert("Blood Group, বিভাগ, জেলা ও উপজেলা নির্বাচন করুন।");
         return;
     }
@@ -1103,7 +1099,7 @@ function searchDonor(){
     const box = document.getElementById("searchResult");
 
     if(result.length===0){
-        box.innerHTML='<div class="notice">এই এলাকায় Approved Donor পাওয়া যায়নি।</div>';
+        box.innerHTML = '<div class="notice">এই এলাকায় Approved Donor পাওয়া যায়নি।</div>';
         return;
     }
 
