@@ -2,1707 +2,2143 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>MB Blood Bank | Admin Panel</title>
+<title>MB Blood Bank | Admin Control</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
 
 :root{
-    --pink:#ff2f92;
-    --purple:#7c3aed;
-    --violet:#a855f7;
-    --dark:#12091f;
-    --card:rgba(255,255,255,.10);
-    --border:rgba(255,255,255,.18);
-    --white:#fff;
+ --purple:#4b168f;
+ --purple2:#7b2cbf;
+ --pink:#e91e72;
+ --pink2:#ff4c9a;
+ --bg:#fce9fb;
+ --text:#35135e;
+ --line:rgba(75,22,143,.18);
+ --shadow:0 20px 55px rgba(84,22,125,.18);
+}
+
+*{
+ box-sizing:border-box;
+ margin:0;
+ padding:0;
 }
 
 body{
-    font-family:"Poppins","Noto Sans Bengali",sans-serif;
-    min-height:100vh;
-    color:#fff;
-    background:
-        radial-gradient(circle at 10% 10%,rgba(255,47,146,.35),transparent 30%),
-        radial-gradient(circle at 90% 15%,rgba(124,58,237,.40),transparent 30%),
-        radial-gradient(circle at 50% 100%,rgba(168,85,247,.25),transparent 35%),
-        #10071c;
-    overflow-x:hidden;
+ font-family:"Noto Sans Bengali",Poppins,sans-serif;
+ color:white;
+ min-height:100vh;
+ background:
+ radial-gradient(circle at 10% 10%,rgba(255,76,154,.35),transparent 30%),
+ radial-gradient(circle at 90% 20%,rgba(123,44,191,.4),transparent 32%),
+ radial-gradient(circle at 50% 100%,rgba(233,30,114,.25),transparent 35%),
+ #170923;
+ overflow-x:hidden;
 }
 
-/* LIQUID BACKGROUND */
-
-.liquid{
-    position:fixed;
-    border-radius:50%;
-    filter:blur(5px);
-    opacity:.45;
-    pointer-events:none;
-    z-index:-1;
+button,input,select,textarea{
+ font-family:inherit;
 }
 
-.liquid.one{
-    width:300px;
-    height:300px;
-    background:#ff2f92;
-    top:-100px;
-    left:-100px;
-    animation:float1 9s infinite alternate ease-in-out;
+button{
+ cursor:pointer;
 }
 
-.liquid.two{
-    width:350px;
-    height:350px;
-    background:#7c3aed;
-    right:-150px;
-    top:25%;
-    animation:float2 11s infinite alternate ease-in-out;
+.glass{
+ background:rgba(255,255,255,.09);
+ border:1px solid rgba(255,255,255,.17);
+ box-shadow:
+ 0 20px 55px rgba(0,0,0,.25),
+ inset 0 1px rgba(255,255,255,.13);
+ backdrop-filter:blur(20px);
+ -webkit-backdrop-filter:blur(20px);
 }
 
-.liquid.three{
-    width:280px;
-    height:280px;
-    background:#ec4899;
-    bottom:-100px;
-    left:35%;
-    animation:float3 10s infinite alternate ease-in-out;
+/* LIQUID */
+
+.blob{
+ position:fixed;
+ border-radius:50%;
+ pointer-events:none;
+ filter:blur(3px);
+ opacity:.35;
+ z-index:-1;
 }
 
-@keyframes float1{
-    to{transform:translate(120px,100px) scale(1.2);}
+.blob1{
+ width:320px;
+ height:320px;
+ background:#ff2f92;
+ top:-120px;
+ left:-100px;
+ animation:move1 9s infinite alternate;
 }
 
-@keyframes float2{
-    to{transform:translate(-100px,100px) scale(1.15);}
+.blob2{
+ width:380px;
+ height:380px;
+ background:#7b2cbf;
+ right:-160px;
+ top:25%;
+ animation:move2 11s infinite alternate;
 }
 
-@keyframes float3{
-    to{transform:translate(80px,-100px) scale(1.25);}
+.blob3{
+ width:300px;
+ height:300px;
+ background:#ff4c9a;
+ bottom:-150px;
+ left:35%;
+ animation:move3 10s infinite alternate;
 }
+
+@keyframes move1{
+ to{
+  transform:translate(130px,100px) scale(1.2);
+ }
+}
+
+@keyframes move2{
+ to{
+  transform:translate(-100px,100px) scale(1.15);
+ }
+}
+
+@keyframes move3{
+ to{
+  transform:translate(100px,-90px) scale(1.2);
+ }
+}
+
 
 /* LOGIN */
 
-.login-wrapper{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:25px;
+.login-page{
+ min-height:100vh;
+ display:grid;
+ place-items:center;
+ padding:20px;
 }
 
-.login-card{
-    width:430px;
-    padding:38px 32px;
-    border:1px solid var(--border);
-    border-radius:35px;
-    background:rgba(255,255,255,.09);
-    backdrop-filter:blur(25px);
-    box-shadow:
-        0 30px 80px rgba(0,0,0,.45),
-        inset 0 1px rgba(255,255,255,.2);
-    transform-style:preserve-3d;
-    animation:cardIn .8s ease;
+.login-box{
+ width:min(440px,100%);
+ padding:35px;
+ border-radius:35px;
+ text-align:center;
+ animation:loginIn .8s ease;
 }
 
-@keyframes cardIn{
-    from{
-        opacity:0;
-        transform:translateY(50px) rotateX(12deg);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0) rotateX(0);
-    }
+@keyframes loginIn{
+ from{
+  opacity:0;
+  transform:translateY(40px) rotateX(10deg);
+ }
+ to{
+  opacity:1;
+  transform:translateY(0);
+ }
 }
 
 .logo{
-    width:85px;
-    height:85px;
-    margin:auto;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    border-radius:28px;
-    font-size:42px;
-    background:linear-gradient(135deg,#ff2f92,#7c3aed);
-    box-shadow:
-        0 15px 35px rgba(255,47,146,.35),
-        inset 0 2px 4px rgba(255,255,255,.4);
-    transform:rotate(-5deg);
+ width:88px;
+ height:88px;
+ margin:auto;
+ display:grid;
+ place-items:center;
+ border-radius:28px;
+ font-size:42px;
+ background:linear-gradient(145deg,var(--purple),var(--pink));
+ box-shadow:
+ 0 18px 35px rgba(233,30,114,.35),
+ inset 0 2px 4px rgba(255,255,255,.4);
+ transform:rotate(-6deg);
 }
 
-.login-card h1{
-    text-align:center;
-    margin-top:20px;
-    font-size:27px;
+.login-box h1{
+ margin-top:22px;
+ font-size:28px;
 }
 
-.subtitle{
-    text-align:center;
-    opacity:.7;
-    margin:6px 0 30px;
+.login-sub{
+ opacity:.65;
+ margin:5px 0 30px;
 }
 
-.input-box{
-    margin-bottom:18px;
+.form-group{
+ text-align:left;
+ margin-bottom:17px;
 }
 
-.input-box label{
-    display:block;
-    margin-bottom:8px;
-    font-size:14px;
-    opacity:.85;
+.form-group label{
+ display:block;
+ margin-bottom:7px;
+ font-size:13px;
+ opacity:.75;
 }
 
-.input-box input{
-    width:100%;
-    padding:15px 17px;
-    border-radius:17px;
-    border:1px solid rgba(255,255,255,.15);
-    outline:none;
-    background:rgba(0,0,0,.18);
-    color:white;
-    font-size:15px;
+.form-group input,
+.form-group select,
+.form-group textarea{
+ width:100%;
+ padding:14px;
+ border-radius:15px;
+ border:1px solid rgba(255,255,255,.15);
+ outline:none;
+ color:white;
+ background:rgba(0,0,0,.2);
 }
 
-.input-box input:focus{
-    border-color:#ff2f92;
-    box-shadow:0 0 20px rgba(255,47,146,.15);
+.form-group select option{
+ background:#241132;
 }
 
-.login-btn{
-    width:100%;
-    border:0;
-    padding:16px;
-    border-radius:18px;
-    color:#fff;
-    font-size:16px;
-    font-weight:700;
-    cursor:pointer;
-    background:linear-gradient(135deg,#ff2f92,#7c3aed);
-    box-shadow:0 12px 30px rgba(255,47,146,.25);
-    transition:.3s;
+.login-btn,
+.primary-btn{
+ width:100%;
+ border:0;
+ padding:15px;
+ border-radius:16px;
+ color:white;
+ font-weight:800;
+ background:linear-gradient(135deg,var(--purple),var(--pink));
+ box-shadow:0 12px 30px rgba(233,30,114,.25);
+ transition:.25s;
 }
 
-.login-btn:hover{
-    transform:translateY(-3px);
-    box-shadow:0 18px 40px rgba(255,47,146,.4);
+.login-btn:hover,
+.primary-btn:hover{
+ transform:translateY(-3px);
+ box-shadow:0 18px 40px rgba(233,30,114,.35);
 }
 
-.login-error{
-    display:none;
-    text-align:center;
-    margin-top:15px;
-    padding:10px;
-    border-radius:12px;
-    background:rgba(255,0,70,.15);
-    color:#ff9bbd;
+.error{
+ display:none;
+ margin-top:14px;
+ padding:10px;
+ border-radius:12px;
+ background:rgba(255,0,80,.15);
+ color:#ff9abb;
 }
+
 
 /* ADMIN */
 
-#adminPanel{
-    display:none;
+#admin{
+ display:none;
 }
 
 .topbar{
-    position:sticky;
-    top:0;
-    z-index:100;
-    padding:15px 25px;
-    border-bottom:1px solid rgba(255,255,255,.12);
-    background:rgba(15,5,27,.72);
-    backdrop-filter:blur(20px);
+ position:sticky;
+ top:0;
+ z-index:100;
+ background:rgba(17,5,29,.78);
+ border-bottom:1px solid rgba(255,255,255,.12);
+ backdrop-filter:blur(20px);
 }
 
 .topbar-inner{
-    max-width:1400px;
-    margin:auto;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:15px;
+ width:min(1400px,94%);
+ min-height:76px;
+ margin:auto;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
 }
 
 .brand{
-    display:flex;
-    align-items:center;
-    gap:12px;
+ display:flex;
+ align-items:center;
+ gap:12px;
 }
 
 .brand-icon{
-    width:48px;
-    height:48px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:15px;
-    background:linear-gradient(135deg,#ff2f92,#7c3aed);
-    font-size:23px;
-    box-shadow:0 8px 25px rgba(255,47,146,.25);
+ width:48px;
+ height:48px;
+ display:grid;
+ place-items:center;
+ border-radius:16px;
+ background:linear-gradient(145deg,var(--purple),var(--pink));
+ font-size:23px;
 }
 
 .brand h2{
-    font-size:18px;
+ font-size:18px;
 }
 
 .brand small{
-    display:block;
-    opacity:.55;
-    font-size:11px;
+ display:block;
+ font-size:10px;
+ opacity:.55;
+ letter-spacing:1px;
 }
 
 .logout{
-    border:1px solid rgba(255,255,255,.15);
-    background:rgba(255,255,255,.08);
-    color:#fff;
-    padding:10px 17px;
-    border-radius:13px;
-    cursor:pointer;
-    font-weight:600;
+ border:1px solid rgba(255,255,255,.15);
+ background:rgba(255,255,255,.08);
+ color:white;
+ padding:10px 16px;
+ border-radius:13px;
+ font-weight:700;
 }
+
+
+/* MAIN */
 
 .container{
-    max-width:1400px;
-    margin:auto;
-    padding:30px 25px 60px;
+ width:min(1400px,94%);
+ margin:auto;
+ padding:30px 0 60px;
 }
 
-.welcome{
-    padding:28px;
-    border-radius:28px;
-    background:linear-gradient(
-        135deg,
-        rgba(255,47,146,.18),
-        rgba(124,58,237,.18)
-    );
-    border:1px solid rgba(255,255,255,.12);
-    box-shadow:0 20px 60px rgba(0,0,0,.2);
-    margin-bottom:25px;
+.hero{
+ padding:28px;
+ border-radius:28px;
+ margin-bottom:22px;
+ background:
+ linear-gradient(
+ 135deg,
+ rgba(255,47,146,.17),
+ rgba(123,44,191,.17)
+ );
 }
 
-.welcome h1{
-    font-size:30px;
+.hero h1{
+ font-size:30px;
 }
 
-.welcome p{
-    opacity:.65;
-    margin-top:5px;
+.hero p{
+ opacity:.6;
+ margin-top:5px;
 }
+
 
 /* STATS */
 
 .stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:18px;
-    margin-bottom:28px;
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:17px;
+ margin-bottom:24px;
 }
 
 .stat{
-    position:relative;
-    overflow:hidden;
-    padding:24px;
-    min-height:150px;
-    border-radius:25px;
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.13);
-    backdrop-filter:blur(20px);
-    transition:.35s;
+ min-height:145px;
+ padding:23px;
+ border-radius:24px;
+ transition:.3s;
 }
 
 .stat:hover{
-    transform:translateY(-7px) rotateX(3deg);
-    box-shadow:0 20px 45px rgba(0,0,0,.25);
+ transform:translateY(-6px);
 }
 
 .stat-icon{
-    font-size:30px;
+ font-size:28px;
 }
 
-.stat h3{
-    font-size:34px;
-    margin-top:10px;
+.stat strong{
+ display:block;
+ font-size:34px;
+ margin-top:7px;
 }
 
-.stat p{
-    opacity:.6;
-    font-size:14px;
+.stat span{
+ opacity:.55;
+ font-size:13px;
 }
 
-.stat::after{
-    content:"";
-    position:absolute;
-    width:90px;
-    height:90px;
-    border-radius:50%;
-    right:-30px;
-    bottom:-30px;
-    background:rgba(255,47,146,.2);
-}
 
-/* NAV TABS */
+/* TABS */
 
 .tabs{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-bottom:22px;
+ display:flex;
+ flex-wrap:wrap;
+ gap:9px;
+ margin-bottom:20px;
 }
 
 .tab{
-    border:1px solid rgba(255,255,255,.13);
-    background:rgba(255,255,255,.07);
-    color:white;
-    padding:12px 18px;
-    border-radius:14px;
-    cursor:pointer;
-    font-weight:600;
-    transition:.25s;
+ border:1px solid rgba(255,255,255,.14);
+ color:white;
+ background:rgba(255,255,255,.07);
+ padding:12px 16px;
+ border-radius:14px;
+ font-weight:700;
 }
 
-.tab:hover,
-.tab.active{
-    background:linear-gradient(135deg,#ff2f92,#7c3aed);
-    transform:translateY(-2px);
+.tab.active,
+.tab:hover{
+ background:linear-gradient(135deg,var(--purple),var(--pink));
 }
 
-/* CONTENT */
+
+/* SECTIONS */
 
 .section{
-    display:none;
+ display:none;
 }
 
 .section.active{
-    display:block;
+ display:block;
 }
 
 .panel{
-    background:rgba(255,255,255,.075);
-    border:1px solid rgba(255,255,255,.13);
-    border-radius:25px;
-    padding:23px;
-    backdrop-filter:blur(20px);
-    overflow:hidden;
+ padding:22px;
+ border-radius:25px;
+ overflow:hidden;
 }
 
-.panel-title{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:15px;
-    margin-bottom:20px;
+.panel-head{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:15px;
+ margin-bottom:20px;
 }
 
-.panel-title h2{
-    font-size:20px;
+.panel-head h2{
+ font-size:20px;
 }
 
 .search{
-    width:250px;
-    max-width:100%;
-    padding:12px 15px;
-    border-radius:13px;
-    border:1px solid rgba(255,255,255,.12);
-    outline:none;
-    color:white;
-    background:rgba(0,0,0,.18);
+ width:260px;
+ max-width:100%;
+ padding:12px 14px;
+ border-radius:13px;
+ border:1px solid rgba(255,255,255,.14);
+ outline:none;
+ color:white;
+ background:rgba(0,0,0,.18);
 }
+
 
 /* TABLE */
 
 .table-wrap{
-    overflow-x:auto;
+ overflow-x:auto;
 }
 
 table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:850px;
+ width:100%;
+ border-collapse:collapse;
+ min-width:900px;
 }
 
 th,
 td{
-    padding:14px 12px;
-    border-bottom:1px solid rgba(255,255,255,.08);
-    text-align:left;
-    font-size:13px;
+ padding:13px 10px;
+ text-align:left;
+ border-bottom:1px solid rgba(255,255,255,.08);
+ font-size:12px;
 }
 
 th{
-    color:#ff9dcc;
-    font-size:12px;
-    text-transform:uppercase;
-}
-
-.badge{
-    display:inline-block;
-    padding:5px 10px;
-    border-radius:20px;
-    font-size:11px;
-    font-weight:700;
-}
-
-.pending{
-    background:rgba(255,190,0,.14);
-    color:#ffd45c;
-}
-
-.approved{
-    background:rgba(0,255,160,.12);
-    color:#6effc5;
-}
-
-.rejected{
-    background:rgba(255,0,80,.13);
-    color:#ff7a9d;
+ color:#ff9bc6;
+ font-size:11px;
 }
 
 .actions{
-    display:flex;
-    gap:6px;
-    flex-wrap:wrap;
+ display:flex;
+ gap:6px;
+ flex-wrap:wrap;
 }
 
-.btn{
-    border:0;
-    color:white;
-    padding:8px 11px;
-    border-radius:10px;
-    cursor:pointer;
-    font-size:11px;
-    font-weight:700;
+.action{
+ border:0;
+ padding:7px 10px;
+ border-radius:9px;
+ color:white;
+ font-size:11px;
+ font-weight:700;
 }
 
-.btn-green{
-    background:#059669;
+.approve{
+ background:#059669;
 }
 
-.btn-red{
-    background:#dc174f;
+.reject{
+ background:#d51d50;
 }
 
-.btn-blue{
-    background:#5b5bd6;
+.edit{
+ background:#6948d8;
 }
 
-.btn-pink{
-    background:#e72f91;
+.delete{
+ background:#a90043;
 }
 
-/* FORM */
-
-.form-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:16px;
+.pending{
+ background:#b77900;
 }
 
-.field label{
-    display:block;
-    margin-bottom:7px;
-    font-size:13px;
-    opacity:.7;
+.badge{
+ display:inline-block;
+ padding:5px 9px;
+ border-radius:20px;
+ font-size:10px;
+ font-weight:800;
 }
 
-.field input,
-.field select,
-.field textarea{
-    width:100%;
-    padding:13px;
-    border-radius:13px;
-    border:1px solid rgba(255,255,255,.12);
-    background:rgba(0,0,0,.17);
-    color:#fff;
-    outline:none;
-    font-family:inherit;
+.badge-pending{
+ background:rgba(255,193,7,.15);
+ color:#ffd75d;
 }
 
-.field select option{
-    background:#24132f;
+.badge-approved{
+ background:rgba(0,255,170,.13);
+ color:#67ffc7;
 }
 
-.field textarea{
-    min-height:100px;
-    resize:vertical;
+.badge-rejected{
+ background:rgba(255,0,80,.13);
+ color:#ff82a4;
 }
 
-.full{
-    grid-column:1/-1;
-}
-
-.save-btn{
-    border:0;
-    padding:14px 22px;
-    border-radius:14px;
-    background:linear-gradient(135deg,#ff2f92,#7c3aed);
-    color:#fff;
-    font-weight:700;
-    cursor:pointer;
-}
 
 /* EMPTY */
 
 .empty{
-    text-align:center;
-    padding:40px;
-    opacity:.55;
+ text-align:center;
+ padding:40px;
+ opacity:.55;
 }
 
-/* MOBILE */
 
-@media(max-width:900px){
-    .stats{
-        grid-template-columns:repeat(2,1fr);
-    }
+/* FORM */
+
+.form-grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:16px;
+}
+
+.form-group.full{
+ grid-column:1/-1;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+ .stats{
+  grid-template-columns:repeat(2,1fr);
+ }
+
 }
 
 @media(max-width:600px){
-    .container{
-        padding:20px 13px 40px;
-    }
 
-    .topbar{
-        padding:12px;
-    }
+ .container{
+  width:94%;
+ }
 
-    .brand h2{
-        font-size:15px;
-    }
+ .hero{
+  padding:20px;
+ }
 
-    .welcome{
-        padding:20px;
-    }
+ .hero h1{
+  font-size:23px;
+ }
 
-    .welcome h1{
-        font-size:23px;
-    }
+ .stats{
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+ }
 
-    .stats{
-        grid-template-columns:1fr 1fr;
-        gap:10px;
-    }
+ .stat{
+  padding:16px;
+  min-height:120px;
+ }
 
-    .stat{
-        min-height:125px;
-        padding:16px;
-    }
+ .stat strong{
+  font-size:28px;
+ }
 
-    .stat h3{
-        font-size:27px;
-    }
+ .panel{
+  padding:15px;
+ }
 
-    .form-grid{
-        grid-template-columns:1fr;
-    }
+ .panel-head{
+  align-items:flex-start;
+  flex-direction:column;
+ }
 
-    .full{
-        grid-column:auto;
-    }
+ .form-grid{
+  grid-template-columns:1fr;
+ }
 
-    .panel{
-        padding:15px;
-    }
+ .form-group.full{
+  grid-column:auto;
+ }
 
-    .panel-title{
-        align-items:flex-start;
-        flex-direction:column;
-    }
+ .brand h2{
+  font-size:15px;
+ }
+
 }
+
 </style>
 </head>
 
 <body>
 
-<div class="liquid one"></div>
-<div class="liquid two"></div>
-<div class="liquid three"></div>
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
 
-<!-- LOGIN -->
 
-<div class="login-wrapper" id="loginPage">
+<!-- ================= LOGIN ================= -->
 
-    <div class="login-card">
+<div class="login-page" id="loginPage">
 
-        <div class="logo">🩸</div>
+<div class="login-box glass">
 
-        <h1>MB Blood Bank</h1>
+<div class="logo">
+🩸
+</div>
 
-        <div class="subtitle">
-            🔐 Secure Admin Control Center
-        </div>
+<h1>MB Blood Bank</h1>
 
-        <div class="input-box">
-            <label>📧 Admin Gmail</label>
-            <input
-                type="email"
-                id="gmail"
-                placeholder="Enter admin Gmail"
-            >
-        </div>
+<p class="login-sub">
+Secure Admin Control Center
+</p>
 
-        <div class="input-box">
-            <label>🔑 Password</label>
-            <input
-                type="password"
-                id="password"
-                placeholder="Enter password"
-            >
-        </div>
+<div class="form-group">
 
-        <button class="login-btn" onclick="login()">
-            🚀 Login to Admin
-        </button>
+<label>📧 Admin Gmail</label>
 
-        <div class="login-error" id="loginError">
-            ❌ Gmail অথবা Password ভুল!
-        </div>
+<input
+type="email"
+id="adminEmail"
+placeholder="Admin Gmail"
+>
 
-    </div>
+</div>
+
+<div class="form-group">
+
+<label>🔐 Password</label>
+
+<input
+type="password"
+id="adminPassword"
+placeholder="Password"
+>
+
+</div>
+
+<button class="login-btn" onclick="login()">
+🚀 Admin Login
+</button>
+
+<div class="error" id="loginError">
+❌ Gmail অথবা Password ভুল!
+</div>
+
+</div>
+
 </div>
 
 
-<!-- ADMIN PANEL -->
+<!-- ================= ADMIN ================= -->
 
-<div id="adminPanel">
+<div id="admin">
 
-    <header class="topbar">
+<header class="topbar">
 
-        <div class="topbar-inner">
+<div class="topbar-inner">
 
-            <div class="brand">
+<div class="brand">
 
-                <div class="brand-icon">🩸</div>
+<div class="brand-icon">
+🩸
+</div>
 
-                <div>
-                    <h2>MB Blood Bank</h2>
-                    <small>ADMIN CONTROL CENTER</small>
-                </div>
+<div>
+<h2>MB Blood Bank</h2>
+<small>ADMIN CONTROL CENTER</small>
+</div>
 
-            </div>
+</div>
 
-            <button class="logout" onclick="logout()">
-                🚪 Logout
-            </button>
+<button class="logout" onclick="logout()">
+🚪 Logout
+</button>
 
-        </div>
+</div>
 
-    </header>
+</header>
 
 
-    <main class="container">
+<main class="container">
 
-        <div class="welcome">
 
-            <h1>👋 Welcome, Admin</h1>
+<div class="hero glass">
 
-            <p>
-                MB Blood Bank-এর সকল Donor এবং Blood Request এখান থেকে পরিচালনা করুন।
-            </p>
+<h1>
+👋 MB Blood Bank Admin Dashboard
+</h1>
 
-        </div>
+<p>
+Donor, Blood Request এবং Website Data এখান থেকে পরিচালনা করুন।
+</p>
 
+</div>
 
-        <!-- STATS -->
 
-        <div class="stats">
+<!-- STATS -->
 
-            <div class="stat">
-                <div class="stat-icon">🩸</div>
-                <h3 id="approvedCount">0</h3>
-                <p>Approved Donor</p>
-            </div>
+<div class="stats">
 
-            <div class="stat">
-                <div class="stat-icon">⏳</div>
-                <h3 id="pendingCount">0</h3>
-                <p>Pending Donor</p>
-            </div>
+<div class="stat glass">
 
-            <div class="stat">
-                <div class="stat-icon">🚨</div>
-                <h3 id="requestCount">0</h3>
-                <p>Blood Requests</p>
-            </div>
+<div class="stat-icon">
+🩸
+</div>
 
-            <div class="stat">
-                <div class="stat-icon">⚡</div>
-                <h3 id="pendingRequestCount">0</h3>
-                <p>Pending Requests</p>
-            </div>
+<strong id="approvedCount">
+0
+</strong>
 
-        </div>
+<span>
+Approved Donor
+</span>
 
+</div>
 
-        <!-- TABS -->
 
-        <div class="tabs">
+<div class="stat glass">
 
-            <button class="tab active"
-                onclick="openTab('pendingDonors',this)">
-                ⏳ Pending Donor
-            </button>
+<div class="stat-icon">
+⏳
+</div>
 
-            <button class="tab"
-                onclick="openTab('donors',this)">
-                🩸 Donor List
-            </button>
+<strong id="pendingCount">
+0
+</strong>
 
-            <button class="tab"
-                onclick="openTab('requests',this)">
-                🚨 Blood Requests
-            </button>
+<span>
+Pending Donor
+</span>
 
-            <button class="tab"
-                onclick="openTab('addDonor',this)">
-                ➕ Add Donor
-            </button>
+</div>
 
-        </div>
 
+<div class="stat glass">
 
-        <!-- PENDING DONORS -->
+<div class="stat-icon">
+🚨
+</div>
 
-        <section class="section active" id="pendingDonors">
+<strong id="requestCount">
+0
+</strong>
 
-            <div class="panel">
+<span>
+Blood Requests
+</span>
 
-                <div class="panel-title">
+</div>
 
-                    <h2>⏳ Donor Approval Requests</h2>
 
-                    <input
-                        class="search"
-                        placeholder="🔎 Search donor..."
-                        oninput="searchTable(this,'pendingTable')"
-                    >
+<div class="stat glass">
 
-                </div>
+<div class="stat-icon">
+⚡
+</div>
 
-                <div class="table-wrap">
+<strong id="pendingRequestCount">
+0
+</strong>
 
-                    <table id="pendingTable">
+<span>
+Pending Requests
+</span>
 
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Blood</th>
-                            <th>Division</th>
-                            <th>District</th>
-                            <th>Upazila</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
+</div>
 
-                        <tbody id="pendingBody"></tbody>
+</div>
 
-                    </table>
 
-                </div>
+<!-- TABS -->
 
-            </div>
+<div class="tabs">
 
-        </section>
+<button
+class="tab active"
+onclick="openTab('pendingDonors',this)">
+⏳ Pending Donor
+</button>
 
+<button
+class="tab"
+onclick="openTab('donors',this)">
+🩸 Approved Donor
+</button>
 
-        <!-- DONORS -->
+<button
+class="tab"
+onclick="openTab('requests',this)">
+🚨 Blood Requests
+</button>
 
-        <section class="section" id="donors">
+<button
+class="tab"
+onclick="openTab('addDonor',this)">
+➕ Add Donor
+</button>
 
-            <div class="panel">
+</div>
 
-                <div class="panel-title">
 
-                    <h2>🩸 Approved Donor List</h2>
+<!-- ================= PENDING DONOR ================= -->
 
-                    <input
-                        class="search"
-                        placeholder="🔎 Search..."
-                        oninput="searchTable(this,'donorTable')"
-                    >
+<section
+id="pendingDonors"
+class="section active">
 
-                </div>
+<div class="panel glass">
 
-                <div class="table-wrap">
+<div class="panel-head">
 
-                    <table id="donorTable">
+<h2>
+⏳ Pending Donor Approval
+</h2>
 
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Blood</th>
-                            <th>Division</th>
-                            <th>District</th>
-                            <th>Upazila</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
+<input
+class="search"
+placeholder="🔎 Search..."
+oninput="searchTable(this,'pendingTable')"
+>
 
-                        <tbody id="donorBody"></tbody>
+</div>
 
-                    </table>
+<div class="table-wrap">
 
-                </div>
+<table id="pendingTable">
 
-            </div>
+<thead>
 
-        </section>
+<tr>
 
+<th>Name</th>
+<th>Phone</th>
+<th>Blood</th>
+<th>Division</th>
+<th>District</th>
+<th>Upazila</th>
+<th>Last Donation</th>
+<th>Action</th>
 
-        <!-- REQUESTS -->
+</tr>
 
-        <section class="section" id="requests">
+</thead>
 
-            <div class="panel">
+<tbody id="pendingBody"></tbody>
 
-                <div class="panel-title">
+</table>
 
-                    <h2>🚨 Blood Request Management</h2>
+</div>
 
-                    <input
-                        class="search"
-                        placeholder="🔎 Search..."
-                        oninput="searchTable(this,'requestTable')"
-                    >
+</div>
 
-                </div>
+</section>
 
-                <div class="table-wrap">
 
-                    <table id="requestTable">
+<!-- ================= APPROVED DONORS ================= -->
 
-                        <thead>
-                        <tr>
-                            <th>Patient</th>
-                            <th>Phone</th>
-                            <th>Blood</th>
-                            <th>Bags</th>
-                            <th>Hospital</th>
-                            <th>Date</th>
-                            <th>Urgency</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
+<section
+id="donors"
+class="section">
 
-                        <tbody id="requestBody"></tbody>
+<div class="panel glass">
 
-                    </table>
+<div class="panel-head">
 
-                </div>
+<h2>
+🩸 Approved Donor List
+</h2>
 
-            </div>
+<input
+class="search"
+placeholder="🔎 Search donor..."
+oninput="searchTable(this,'donorTable')"
+>
 
-        </section>
+</div>
 
+<div class="table-wrap">
 
-        <!-- ADD DONOR -->
+<table id="donorTable">
 
-        <section class="section" id="addDonor">
+<thead>
 
-            <div class="panel">
+<tr>
 
-                <div class="panel-title">
-                    <h2>➕ নতুন Donor যোগ করুন</h2>
-                </div>
+<th>Name</th>
+<th>Phone</th>
+<th>Blood</th>
+<th>Division</th>
+<th>District</th>
+<th>Upazila</th>
+<th>Status</th>
+<th>Action</th>
 
-                <form onsubmit="addDonor(event)">
+</tr>
 
-                    <div class="form-grid">
+</thead>
 
-                        <div class="field">
-                            <label>Donor Name</label>
-                            <input id="dName" required>
-                        </div>
+<tbody id="donorBody"></tbody>
 
-                        <div class="field">
-                            <label>Phone Number</label>
-                            <input id="dPhone" required>
-                        </div>
+</table>
 
-                        <div class="field">
-                            <label>Blood Group</label>
+</div>
 
-                            <select id="dBlood" required>
+</div>
 
-                                <option value="">Select Blood</option>
-                                <option>A+</option>
-                                <option>A-</option>
-                                <option>B+</option>
-                                <option>B-</option>
-                                <option>AB+</option>
-                                <option>AB-</option>
-                                <option>O+</option>
-                                <option>O-</option>
+</section>
 
-                            </select>
 
-                        </div>
+<!-- ================= REQUEST ================= -->
 
-                        <div class="field">
-                            <label>Division</label>
-                            <input id="dDivision" required>
-                        </div>
+<section
+id="requests"
+class="section">
 
-                        <div class="field">
-                            <label>District</label>
-                            <input id="dDistrict" required>
-                        </div>
+<div class="panel glass">
 
-                        <div class="field">
-                            <label>Upazila</label>
-                            <input id="dUpazila" required>
-                        </div>
+<div class="panel-head">
 
-                        <div class="field">
-                            <label>Last Blood Donation</label>
-                            <input type="date" id="dLast">
-                        </div>
+<h2>
+🚨 Blood Request Management
+</h2>
 
-                        <div class="field full">
+<input
+class="search"
+placeholder="🔎 Search request..."
+oninput="searchTable(this,'requestTable')"
+>
 
-                            <button class="save-btn">
-                                💾 Save Donor
-                            </button>
+</div>
 
-                        </div>
+<div class="table-wrap">
 
-                    </div>
+<table id="requestTable">
 
-                </form>
+<thead>
 
-            </div>
+<tr>
 
-        </section>
+<th>Patient</th>
+<th>Phone</th>
+<th>Blood</th>
+<th>Bags</th>
+<th>Hospital</th>
+<th>Division</th>
+<th>District</th>
+<th>Upazila</th>
+<th>Date</th>
+<th>Urgency</th>
+<th>Status</th>
+<th>Action</th>
 
-    </main>
+</tr>
+
+</thead>
+
+<tbody id="requestBody"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= ADD DONOR ================= -->
+
+<section
+id="addDonor"
+class="section">
+
+<div class="panel glass">
+
+<div class="panel-head">
+
+<h2>
+➕ Admin থেকে Donor যোগ করুন
+</h2>
+
+</div>
+
+<form id="addDonorForm">
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>Donor Name</label>
+
+<input id="newName" required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Phone</label>
+
+<input id="newPhone" required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Blood Group</label>
+
+<select id="newBlood" required>
+
+<option value="">
+Select Blood
+</option>
+
+<option>A+</option>
+<option>A-</option>
+<option>B+</option>
+<option>B-</option>
+<option>AB+</option>
+<option>AB-</option>
+<option>O+</option>
+<option>O-</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Last Donation</label>
+
+<input
+type="date"
+id="newLast"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Division</label>
+
+<input
+id="newDivision"
+required
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>District</label>
+
+<input
+id="newDistrict"
+required
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Upazila</label>
+
+<input
+id="newUpazila"
+required
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Additional Information</label>
+
+<input id="newInfo">
+
+</div>
+
+
+<div class="form-group full">
+
+<button
+class="primary-btn"
+type="submit">
+
+💾 Save Approved Donor
+
+</button>
+
+</div>
+
+</div>
+
+</form>
+
+</div>
+
+</section>
+
+
+</main>
 
 </div>
 
 
 <script>
 
-/* ===========================
+/* =========================================
    ADMIN LOGIN
-=========================== */
+========================================= */
 
-const ADMIN_GMAIL = "mbbloodbank@gmail.com";
-const ADMIN_PASSWORD = "MB@2026#Admin";
+const ADMIN_GMAIL =
+"mbbloodbank@gmail.com";
+
+const ADMIN_PASSWORD =
+"MB@2026#Admin";
 
 
 function login(){
 
-    const gmail =
-        document.getElementById("gmail").value.trim();
+ const email =
+ document.getElementById("adminEmail").value.trim();
 
-    const password =
-        document.getElementById("password").value;
+ const password =
+ document.getElementById("adminPassword").value;
 
-    if(
-        gmail === ADMIN_GMAIL &&
-        password === ADMIN_PASSWORD
-    ){
 
-        sessionStorage.setItem(
-            "mbbb_admin_login",
-            "true"
-        );
+ if(
+ email===ADMIN_GMAIL &&
+ password===ADMIN_PASSWORD
+ ){
 
-        document.getElementById("loginPage").style.display="none";
+  sessionStorage.setItem(
+   "mbbb_admin_login",
+   "true"
+  );
 
-        document.getElementById("adminPanel").style.display="block";
+  document.getElementById("loginPage")
+   .style.display="none";
 
-        renderAll();
+  document.getElementById("admin")
+   .style.display="block";
 
-    }else{
+  renderAll();
 
-        document.getElementById("loginError").style.display="block";
+ }else{
 
-    }
+  document.getElementById("loginError")
+   .style.display="block";
+
+ }
 
 }
 
 
 function logout(){
 
-    sessionStorage.removeItem("mbbb_admin_login");
+ sessionStorage.removeItem(
+  "mbbb_admin_login"
+ );
 
-    location.reload();
-
-}
-
-
-/* ===========================
-   TAB SYSTEM
-=========================== */
-
-function openTab(id,button){
-
-    document
-        .querySelectorAll(".section")
-        .forEach(x=>x.classList.remove("active"));
-
-    document
-        .querySelectorAll(".tab")
-        .forEach(x=>x.classList.remove("active"));
-
-    document
-        .getElementById(id)
-        .classList.add("active");
-
-    button.classList.add("active");
-
-    renderAll();
+ location.reload();
 
 }
 
 
-/* ===========================
-   STORAGE
-=========================== */
+/* =========================================
+   SAME STORAGE AS YOUR INDEX.HTML
+========================================= */
 
-function getDonors(){
+function getData(name){
 
-    return JSON.parse(
-        localStorage.getItem("mbbb_donors") || "[]"
-    );
+ try{
 
-}
+  return JSON.parse(
+   localStorage.getItem(
+    "mbbb_"+name
+   )
+  ) || [];
 
-function saveDonors(data){
+ }catch(e){
 
-    localStorage.setItem(
-        "mbbb_donors",
-        JSON.stringify(data)
-    );
+  return [];
 
-}
-
-
-function getRequests(){
-
-    return JSON.parse(
-        localStorage.getItem("mbbb_requests") || "[]"
-    );
-
-}
-
-function saveRequests(data){
-
-    localStorage.setItem(
-        "mbbb_requests",
-        JSON.stringify(data)
-    );
+ }
 
 }
 
 
-/* ===========================
-   DASHBOARD
-=========================== */
+function saveData(name,data){
+
+ localStorage.setItem(
+  "mbbb_"+name,
+  JSON.stringify(data)
+ );
+
+}
+
+
+/* =========================================
+   TAB
+========================================= */
+
+function openTab(id,btn){
+
+ document
+ .querySelectorAll(".section")
+ .forEach(x=>{
+  x.classList.remove("active");
+ });
+
+ document
+ .querySelectorAll(".tab")
+ .forEach(x=>{
+  x.classList.remove("active");
+ });
+
+ document
+ .getElementById(id)
+ .classList.add("active");
+
+ btn.classList.add("active");
+
+ renderAll();
+
+}
+
+
+/* =========================================
+   RENDER EVERYTHING
+========================================= */
 
 function renderAll(){
 
-    const donors = getDonors();
+ const pending =
+ getData("pendingDonors");
 
-    const requests = getRequests();
+ const approved =
+ getData("approvedDonors");
 
-    const approved =
-        donors.filter(d=>d.status==="approved").length;
-
-    const pending =
-        donors.filter(d=>d.status==="pending").length;
-
-    const pendingRequests =
-        requests.filter(r=>r.status==="pending").length;
+ const requests =
+ getData("requests");
 
 
-    document.getElementById("approvedCount").textContent =
-        approved;
-
-    document.getElementById("pendingCount").textContent =
-        pending;
-
-    document.getElementById("requestCount").textContent =
-        requests.length;
-
-    document.getElementById("pendingRequestCount").textContent =
-        pendingRequests;
+ document.getElementById("pendingCount")
+ .textContent=pending.length;
 
 
-    renderPending();
+ document.getElementById("approvedCount")
+ .textContent=approved.length;
 
-    renderDonors();
 
-    renderRequests();
+ document.getElementById("requestCount")
+ .textContent=requests.length;
+
+
+ document.getElementById("pendingRequestCount")
+ .textContent=
+ requests.filter(
+  r=>(r.status||"pending")==="pending"
+ ).length;
+
+
+ renderPending();
+
+ renderApproved();
+
+ renderRequests();
 
 }
 
 
-/* ===========================
+/* =========================================
    PENDING DONORS
-=========================== */
+========================================= */
 
 function renderPending(){
 
-    const donors =
-        getDonors().filter(
-            d=>d.status==="pending"
-        );
+ const data =
+ getData("pendingDonors");
 
-    const body =
-        document.getElementById("pendingBody");
-
-    if(!donors.length){
-
-        body.innerHTML=`
-        <tr>
-            <td colspan="7">
-                <div class="empty">
-                    🎉 কোনো Pending Donor নেই
-                </div>
-            </td>
-        </tr>`;
-
-        return;
-    }
+ const body =
+ document.getElementById("pendingBody");
 
 
-    body.innerHTML = donors.map(d=>`
+ if(!data.length){
 
-        <tr>
+  body.innerHTML=`
 
-            <td>${safe(d.name)}</td>
+  <tr>
 
-            <td>${safe(d.phone)}</td>
+  <td colspan="8">
 
-            <td>
-                <strong>${safe(d.blood)}</strong>
-            </td>
+  <div class="empty">
+  🎉 কোনো Pending Donor নেই
+  </div>
 
-            <td>${safe(d.division)}</td>
+  </td>
 
-            <td>${safe(d.district)}</td>
+  </tr>
 
-            <td>${safe(d.upazila)}</td>
+  `;
 
-            <td>
+  return;
 
-                <div class="actions">
+ }
 
-                    <button
-                        class="btn btn-green"
-                        onclick="approveDonor('${d.id}')">
-                        ✓ Approve
-                    </button>
 
-                    <button
-                        class="btn btn-red"
-                        onclick="rejectDonor('${d.id}')">
-                        ✕ Reject
-                    </button>
+ body.innerHTML=data.map(d=>`
 
-                </div>
+ <tr>
 
-            </td>
+ <td>${esc(d.name)}</td>
 
-        </tr>
+ <td>${esc(d.phone)}</td>
 
-    `).join("");
+ <td><b>${esc(d.blood)}</b></td>
+
+ <td>${esc(d.division)}</td>
+
+ <td>${esc(d.district)}</td>
+
+ <td>${esc(d.upazila)}</td>
+
+ <td>
+ ${esc(d.lastDonation || "তথ্য নেই")}
+ </td>
+
+ <td>
+
+ <div class="actions">
+
+ <button
+ class="action approve"
+ onclick="approveDonor('${esc(d.id)}')">
+
+ ✓ Approve
+
+ </button>
+
+ <button
+ class="action reject"
+ onclick="rejectDonor('${esc(d.id)}')">
+
+ ✕ Reject
+
+ </button>
+
+ </div>
+
+ </td>
+
+ </tr>
+
+ `).join("");
 
 }
 
 
-/* ===========================
+/* =========================================
    APPROVE DONOR
-=========================== */
+========================================= */
 
 function approveDonor(id){
 
-    const donors=getDonors();
+ let pending =
+ getData("pendingDonors");
 
-    const donor=donors.find(d=>d.id===id);
+ let approved =
+ getData("approvedDonors");
 
-    if(!donor)return;
 
-    donor.status="approved";
+ const index =
+ pending.findIndex(
+  d=>String(d.id)===String(id)
+ );
 
-    saveDonors(donors);
 
-    renderAll();
+ if(index===-1)return;
 
-    alert("✅ Donor Approved হয়েছে।");
+
+ const donor =
+ pending[index];
+
+
+ donor.status="approved";
+
+
+ approved.push(donor);
+
+
+ pending.splice(index,1);
+
+
+ saveData(
+  "pendingDonors",
+  pending
+ );
+
+
+ saveData(
+  "approvedDonors",
+  approved
+ );
+
+
+ renderAll();
+
+
+ alert(
+  "✅ Donor Approved হয়েছে। এখন Public Donor Search-এ দেখা যাবে।"
+ );
 
 }
 
 
-/* ===========================
+/* =========================================
    REJECT DONOR
-=========================== */
+========================================= */
 
 function rejectDonor(id){
 
-    if(!confirm("এই Donor Reject করবেন?")) return;
+ if(
+ !confirm(
+  "এই Donor Registration Reject করবেন?"
+ )
+ )return;
 
-    let donors=getDonors();
 
-    donors=donors.filter(d=>d.id!==id);
+ let pending =
+ getData("pendingDonors");
 
-    saveDonors(donors);
 
-    renderAll();
+ pending =
+ pending.filter(
+  d=>String(d.id)!==String(id)
+ );
+
+
+ saveData(
+  "pendingDonors",
+  pending
+ );
+
+
+ renderAll();
 
 }
 
 
-/* ===========================
+/* =========================================
    APPROVED DONORS
-=========================== */
+========================================= */
 
-function renderDonors(){
+function renderApproved(){
 
-    const donors =
-        getDonors().filter(
-            d=>d.status==="approved"
-        );
+ const data =
+ getData("approvedDonors");
 
-    const body =
-        document.getElementById("donorBody");
+ const body =
+ document.getElementById("donorBody");
 
 
-    if(!donors.length){
+ if(!data.length){
 
-        body.innerHTML=`
-        <tr>
-            <td colspan="8">
-                <div class="empty">
-                    🩸 এখনো কোনো Approved Donor নেই
-                </div>
-            </td>
-        </tr>`;
+  body.innerHTML=`
 
-        return;
+  <tr>
 
-    }
+  <td colspan="8">
+
+  <div class="empty">
+  🩸 এখনো কোনো Approved Donor নেই
+  </div>
+
+  </td>
+
+  </tr>
+
+  `;
+
+  return;
+
+ }
 
 
-    body.innerHTML=donors.map(d=>`
+ body.innerHTML=data.map(d=>`
 
-        <tr>
+ <tr>
 
-            <td>${safe(d.name)}</td>
+ <td>${esc(d.name)}</td>
 
-            <td>${safe(d.phone)}</td>
+ <td>${esc(d.phone)}</td>
 
-            <td>
-                <strong>${safe(d.blood)}</strong>
-            </td>
+ <td><b>${esc(d.blood)}</b></td>
 
-            <td>${safe(d.division)}</td>
+ <td>${esc(d.division)}</td>
 
-            <td>${safe(d.district)}</td>
+ <td>${esc(d.district)}</td>
 
-            <td>${safe(d.upazila)}</td>
+ <td>${esc(d.upazila)}</td>
 
-            <td>
-                <span class="badge approved">
-                    APPROVED
-                </span>
-            </td>
+ <td>
 
-            <td>
+ <span class="badge badge-approved">
+ APPROVED
+ </span>
 
-                <div class="actions">
+ </td>
 
-                    <button
-                        class="btn btn-blue"
-                        onclick="editDonor('${d.id}')">
-                        ✏ Edit
-                    </button>
+ <td>
 
-                    <button
-                        class="btn btn-red"
-                        onclick="deleteDonor('${d.id}')">
-                        🗑 Delete
-                    </button>
+ <div class="actions">
 
-                </div>
+ <button
+ class="action edit"
+ onclick="editDonor('${esc(d.id)}')">
 
-            </td>
+ ✏ Edit
 
-        </tr>
+ </button>
 
-    `).join("");
+ <button
+ class="action delete"
+ onclick="deleteDonor('${esc(d.id)}')">
+
+ 🗑 Delete
+
+ </button>
+
+ </div>
+
+ </td>
+
+ </tr>
+
+ `).join("");
 
 }
 
 
-/* ===========================
+/* =========================================
    EDIT DONOR
-=========================== */
+========================================= */
 
 function editDonor(id){
 
-    const donors=getDonors();
-
-    const d=donors.find(x=>x.id===id);
-
-    if(!d)return;
+ let donors =
+ getData("approvedDonors");
 
 
-    const name=prompt("Donor Name:",d.name);
-
-    if(name===null)return;
-
-
-    const phone=prompt("Phone:",d.phone);
-
-    if(phone===null)return;
+ const d =
+ donors.find(
+  x=>String(x.id)===String(id)
+ );
 
 
-    const blood=prompt("Blood Group:",d.blood);
-
-    if(blood===null)return;
+ if(!d)return;
 
 
-    const division=prompt("Division:",d.division);
+ const name =
+ prompt(
+  "Donor Name:",
+  d.name
+ );
 
-    if(division===null)return;
-
-
-    const district=prompt("District:",d.district);
-
-    if(district===null)return;
-
-
-    const upazila=prompt("Upazila:",d.upazila);
-
-    if(upazila===null)return;
+ if(name===null)return;
 
 
-    d.name=name.trim();
-    d.phone=phone.trim();
-    d.blood=blood.trim();
-    d.division=division.trim();
-    d.district=district.trim();
-    d.upazila=upazila.trim();
+ const phone =
+ prompt(
+  "Phone Number:",
+  d.phone
+ );
+
+ if(phone===null)return;
 
 
-    saveDonors(donors);
+ const blood =
+ prompt(
+  "Blood Group:",
+  d.blood
+ );
 
-    renderAll();
+ if(blood===null)return;
 
-    alert("✅ Donor information updated.");
+
+ const division =
+ prompt(
+  "Division:",
+  d.division
+ );
+
+ if(division===null)return;
+
+
+ const district =
+ prompt(
+  "District:",
+  d.district
+ );
+
+ if(district===null)return;
+
+
+ const upazila =
+ prompt(
+  "Upazila:",
+  d.upazila
+ );
+
+ if(upazila===null)return;
+
+
+ d.name=name.trim();
+ d.phone=phone.trim();
+ d.blood=blood.trim();
+ d.division=division.trim();
+ d.district=district.trim();
+ d.upazila=upazila.trim();
+
+
+ saveData(
+  "approvedDonors",
+  donors
+ );
+
+
+ renderAll();
+
+
+ alert(
+  "✅ Donor information updated হয়েছে।"
+ );
 
 }
 
 
-/* ===========================
+/* =========================================
    DELETE DONOR
-=========================== */
+========================================= */
 
 function deleteDonor(id){
 
-    if(!confirm("এই Donor Delete করবেন?"))return;
+ if(
+ !confirm(
+  "এই Approved Donor Delete করবেন?"
+ )
+ )return;
 
-    let donors=getDonors();
 
-    donors=donors.filter(d=>d.id!==id);
+ let donors =
+ getData("approvedDonors");
 
-    saveDonors(donors);
 
-    renderAll();
+ donors =
+ donors.filter(
+  d=>String(d.id)!==String(id)
+ );
+
+
+ saveData(
+  "approvedDonors",
+  donors
+ );
+
+
+ renderAll();
 
 }
 
 
-/* ===========================
+/* =========================================
    BLOOD REQUESTS
-=========================== */
+========================================= */
 
 function renderRequests(){
 
-    const requests=getRequests();
+ const data =
+ getData("requests");
 
-    const body=
-        document.getElementById("requestBody");
-
-
-    if(!requests.length){
-
-        body.innerHTML=`
-        <tr>
-            <td colspan="9">
-                <div class="empty">
-                    🚨 কোনো Blood Request নেই
-                </div>
-            </td>
-        </tr>`;
-
-        return;
-
-    }
+ const body =
+ document.getElementById("requestBody");
 
 
-    body.innerHTML=requests.map(r=>`
+ if(!data.length){
 
-        <tr>
+  body.innerHTML=`
 
-            <td>${safe(r.patient)}</td>
+  <tr>
 
-            <td>${safe(r.phone)}</td>
+  <td colspan="12">
 
-            <td>
-                <strong>${safe(r.blood)}</strong>
-            </td>
+  <div class="empty">
+  🚨 কোনো Blood Request নেই
+  </div>
 
-            <td>${safe(r.bags)}</td>
+  </td>
 
-            <td>${safe(r.hospital)}</td>
+  </tr>
 
-            <td>${safe(r.date)}</td>
+  `;
 
-            <td>${safe(r.urgency)}</td>
+  return;
 
-            <td>
+ }
 
-                <span class="badge ${
-                    r.status==="approved"
-                    ?"approved"
-                    :r.status==="rejected"
-                    ?"rejected"
-                    :"pending"
-                }">
 
-                    ${safe((r.status||"pending").toUpperCase())}
+ body.innerHTML=data.map(r=>{
 
-                </span>
+  const status =
+  r.status || "pending";
 
-            </td>
 
-            <td>
+  return`
 
-                <div class="actions">
+  <tr>
 
-                    ${
-                    r.status!=="approved"
-                    ?`
-                    <button
-                        class="btn btn-green"
-                        onclick="requestStatus('${r.id}','approved')">
-                        ✓ Approve
-                    </button>
-                    `:""
-                    }
+  <td>${esc(r.patient)}</td>
 
-                    ${
-                    r.status!=="rejected"
-                    ?`
-                    <button
-                        class="btn btn-red"
-                        onclick="requestStatus('${r.id}','rejected')">
-                        ✕ Reject
-                    </button>
-                    `:""
-                    }
+  <td>${esc(r.phone)}</td>
 
-                    <button
-                        class="btn btn-blue"
-                        onclick="requestStatus('${r.id}','pending')">
-                        ↻ Pending
-                    </button>
+  <td><b>${esc(r.blood)}</b></td>
 
-                    <button
-                        class="btn btn-red"
-                        onclick="deleteRequest('${r.id}')">
-                        🗑
-                    </button>
+  <td>${esc(r.bags)}</td>
 
-                </div>
+  <td>${esc(r.hospital)}</td>
 
-            </td>
+  <td>${esc(r.division)}</td>
 
-        </tr>
+  <td>${esc(r.district)}</td>
 
-    `).join("");
+  <td>${esc(r.upazila)}</td>
+
+  <td>${esc(r.date)}</td>
+
+  <td>${esc(r.urgency)}</td>
+
+  <td>
+
+  <span class="badge ${
+   status==="approved"
+   ?"badge-approved"
+   :
+   status==="rejected"
+   ?"badge-rejected"
+   :
+   "badge-pending"
+  }">
+
+  ${esc(status.toUpperCase())}
+
+  </span>
+
+  </td>
+
+  <td>
+
+  <div class="actions">
+
+  ${
+   status!=="approved"
+   ?
+   `<button
+   class="action approve"
+   onclick="requestStatus('${esc(r.id)}','approved')">
+   ✓ Approve
+   </button>`
+   :""
+  }
+
+  ${
+   status!=="rejected"
+   ?
+   `<button
+   class="action reject"
+   onclick="requestStatus('${esc(r.id)}','rejected')">
+   ✕ Reject
+   </button>`
+   :""
+  }
+
+  <button
+  class="action pending"
+  onclick="requestStatus('${esc(r.id)}','pending')">
+  ↻ Pending
+  </button>
+
+  <button
+  class="action edit"
+  onclick="editRequest('${esc(r.id)}')">
+  ✏ Edit
+  </button>
+
+  <button
+  class="action delete"
+  onclick="deleteRequest('${esc(r.id)}')">
+  🗑
+  </button>
+
+  </div>
+
+  </td>
+
+  </tr>
+
+  `;
+
+ }).join("");
 
 }
 
 
-/* ===========================
+/* =========================================
    REQUEST STATUS
-=========================== */
+========================================= */
 
 function requestStatus(id,status){
 
-    const requests=getRequests();
+ let requests =
+ getData("requests");
 
-    const r=requests.find(x=>x.id===id);
 
-    if(!r)return;
+ const r =
+ requests.find(
+  x=>String(x.id)===String(id)
+ );
 
-    r.status=status;
 
-    saveRequests(requests);
+ if(!r)return;
 
-    renderAll();
+
+ r.status=status;
+
+
+ saveData(
+  "requests",
+  requests
+ );
+
+
+ renderAll();
 
 }
 
 
-/* ===========================
+/* =========================================
+   EDIT REQUEST
+========================================= */
+
+function editRequest(id){
+
+ let requests =
+ getData("requests");
+
+
+ const r =
+ requests.find(
+  x=>String(x.id)===String(id)
+ );
+
+
+ if(!r)return;
+
+
+ const patient =
+ prompt(
+  "Patient Name:",
+  r.patient
+ );
+
+ if(patient===null)return;
+
+
+ const phone =
+ prompt(
+  "Phone:",
+  r.phone
+ );
+
+ if(phone===null)return;
+
+
+ const blood =
+ prompt(
+  "Blood Group:",
+  r.blood
+ );
+
+ if(blood===null)return;
+
+
+ const bags =
+ prompt(
+  "Number of Bags:",
+  r.bags
+ );
+
+ if(bags===null)return;
+
+
+ const hospital =
+ prompt(
+  "Hospital / Place:",
+  r.hospital
+ );
+
+ if(hospital===null)return;
+
+
+ const date =
+ prompt(
+  "Required Date:",
+  r.date
+ );
+
+ if(date===null)return;
+
+
+ r.patient=patient.trim();
+ r.phone=phone.trim();
+ r.blood=blood.trim();
+ r.bags=bags.trim();
+ r.hospital=hospital.trim();
+ r.date=date.trim();
+
+
+ saveData(
+  "requests",
+  requests
+ );
+
+
+ renderAll();
+
+
+ alert(
+  "✅ Blood Request updated হয়েছে।"
+ );
+
+}
+
+
+/* =========================================
    DELETE REQUEST
-=========================== */
+========================================= */
 
 function deleteRequest(id){
 
-    if(!confirm("এই Blood Request Delete করবেন?"))return;
-
-    let requests=getRequests();
-
-    requests=requests.filter(r=>r.id!==id);
-
-    saveRequests(requests);
-
-    renderAll();
-
-}
+ if(
+ !confirm(
+  "এই Blood Request Delete করবেন?"
+ )
+ )return;
 
 
-/* ===========================
-   ADD DONOR
-=========================== */
-
-function addDonor(event){
-
-    event.preventDefault();
+ let requests =
+ getData("requests");
 
 
-    const donor={
-
-        id:
-            Date.now().toString(),
-
-        name:
-            document.getElementById("dName").value.trim(),
-
-        phone:
-            document.getElementById("dPhone").value.trim(),
-
-        blood:
-            document.getElementById("dBlood").value,
-
-        division:
-            document.getElementById("dDivision").value.trim(),
-
-        district:
-            document.getElementById("dDistrict").value.trim(),
-
-        upazila:
-            document.getElementById("dUpazila").value.trim(),
-
-        lastDonation:
-            document.getElementById("dLast").value,
-
-        status:
-            "approved",
-
-        createdAt:
-            new Date().toISOString()
-
-    };
+ requests =
+ requests.filter(
+  r=>String(r.id)!==String(id)
+ );
 
 
-    const donors=getDonors();
+ saveData(
+  "requests",
+  requests
+ );
 
-    donors.push(donor);
 
-    saveDonors(donors);
-
-
-    event.target.reset();
-
-    renderAll();
-
-    alert("✅ Donor সফলভাবে যোগ হয়েছে।");
+ renderAll();
 
 }
 
 
-/* ===========================
+/* =========================================
+   ADD DONOR FROM ADMIN
+========================================= */
+
+document
+.getElementById("addDonorForm")
+.addEventListener(
+ "submit",
+ function(e){
+
+  e.preventDefault();
+
+
+  const donor={
+
+   id:"D"+Date.now(),
+
+   name:
+   document.getElementById("newName")
+   .value.trim(),
+
+   phone:
+   document.getElementById("newPhone")
+   .value.trim(),
+
+   blood:
+   document.getElementById("newBlood")
+   .value,
+
+   lastDonation:
+   document.getElementById("newLast")
+   .value,
+
+   division:
+   document.getElementById("newDivision")
+   .value.trim(),
+
+   divisionEn:"",
+
+   district:
+   document.getElementById("newDistrict")
+   .value.trim(),
+
+   districtEn:"",
+
+   upazila:
+   document.getElementById("newUpazila")
+   .value.trim(),
+
+   upazilaEn:"",
+
+   info:
+   document.getElementById("newInfo")
+   .value.trim(),
+
+   status:"approved",
+
+   createdAt:
+   new Date().toISOString()
+
+  };
+
+
+  const donors =
+  getData("approvedDonors");
+
+
+  donors.push(donor);
+
+
+  saveData(
+   "approvedDonors",
+   donors
+  );
+
+
+  this.reset();
+
+
+  renderAll();
+
+
+  alert(
+   "✅ Approved Donor সফলভাবে যোগ হয়েছে।"
+  );
+
+ }
+);
+
+
+/* =========================================
    SEARCH
-=========================== */
+========================================= */
 
 function searchTable(input,tableId){
 
-    const value=
-        input.value.toLowerCase();
-
-    const rows=
-        document
-        .getElementById(tableId)
-        .querySelectorAll("tbody tr");
+ const value =
+ input.value.toLowerCase();
 
 
-    rows.forEach(row=>{
-
-        row.style.display =
-            row.innerText
-            .toLowerCase()
-            .includes(value)
-            ? ""
-            : "none";
-
-    });
-
-}
+ const rows =
+ document
+ .getElementById(tableId)
+ .querySelectorAll("tbody tr");
 
 
-/* ===========================
-   SECURITY DISPLAY HELPER
-=========================== */
+ rows.forEach(row=>{
 
-function safe(value){
+  row.style.display =
+  row.innerText
+  .toLowerCase()
+  .includes(value)
+  ?
+  ""
+  :
+  "none";
 
-    if(value===undefined || value===null)
-        return "";
-
-    return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+ });
 
 }
 
 
-/* ===========================
+/* =========================================
+   ESCAPE
+========================================= */
+
+function esc(value){
+
+ if(value===undefined ||
+    value===null)
+ return "";
+
+ return String(value)
+ .replace(/&/g,"&amp;")
+ .replace(/</g,"&lt;")
+ .replace(/>/g,"&gt;")
+ .replace(/"/g,"&quot;")
+ .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================
    AUTO LOGIN
-=========================== */
+========================================= */
 
 if(
-    sessionStorage.getItem("mbbb_admin_login")
-    === "true"
+ sessionStorage.getItem(
+  "mbbb_admin_login"
+ )==="true"
 ){
 
-    document.getElementById("loginPage")
-        .style.display="none";
+ document.getElementById("loginPage")
+ .style.display="none";
 
-    document.getElementById("adminPanel")
-        .style.display="block";
+ document.getElementById("admin")
+ .style.display="block";
 
-    renderAll();
+ renderAll();
 
 }
 
