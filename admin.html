@@ -1,2335 +1,315 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>MB Blood Bank | Unique Admin Panel</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - MB Blood Bank</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #d32f2f;
+            --primary-dark: #b71c1c;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --text-color: #333;
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Hind Siliguri', sans-serif;
+        }
 
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
+        body {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb, #90caf9);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-body{
-font-family:"Noto Sans Bengali",Poppins,sans-serif;
-min-height:100vh;color:#32103f;
-background:
-radial-gradient(circle at 10% 10%,#fff 0 8%,transparent 30%),
-radial-gradient(circle at 90% 90%,#ffd9ed,transparent 28%),
-linear-gradient(135deg,#fcecff,#e8dcff,#fff0f7);
-}
+        .login-container, .admin-dashboard {
+            max-width: 900px;
+            margin: 40px auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
 
-.glass{
-background:rgba(255,255,255,.70);
-border:1px solid rgba(255,255,255,.85);
-backdrop-filter:blur(22px);
--webkit-backdrop-filter:blur(22px);
-box-shadow:0 25px 70px rgba(72,15,100,.16);
-}
+        h2 {
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-.login{
-width:min(460px,92%);
-margin:7vh auto;
-padding:30px;
-border-radius:30px;
-}
+        .form-group {
+            margin-bottom: 15px;
+        }
 
-.logo{
-width:70px;height:70px;margin:auto;
-display:grid;place-items:center;
-border-radius:24px;
-color:white;font-size:32px;
-background:linear-gradient(145deg,#651b9a,#e72b72);
-box-shadow:inset 5px 5px 10px #ffffff55,
-12px 18px 35px #641b9a40;
-}
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
 
-h1,h2{font-weight:900}
-.login h1{text-align:center;margin:18px 0 5px}
-.center{text-align:center}
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(0,0,0,0.15);
+            border-radius: 12px;
+            background: #fff;
+            font-size: 1rem;
+            outline: none;
+        }
 
-input,select,textarea{
-width:100%;
-padding:13px;
-border-radius:15px;
-border:1px solid #7b269733;
-background:#ffffffdd;
-outline:none;
-font:inherit;
-color:#32103f;
-}
+        .btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
 
-textarea{min-height:100px}
+        .btn:hover {
+            background: var(--primary-dark);
+        }
 
-label{
-display:block;
-font-weight:900;
-margin:13px 0 6px;
-}
+        .table-responsive {
+            overflow-x: auto;
+            margin-top: 15px;
+        }
 
-input:focus,select:focus,textarea:focus{
-border-color:#8d28b6;
-box-shadow:0 0 0 4px #8d28b61a;
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
 
-.btn{
-border:0;
-padding:11px 15px;
-border-radius:14px;
-font-weight:900;
-cursor:pointer;
-transition:.2s;
-}
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95rem;
+        }
 
-.btn:hover{transform:translateY(-2px)}
+        th {
+            background: var(--primary);
+            color: #fff;
+        }
 
-.primary{
-background:linear-gradient(135deg,#641b98,#df286d);
-color:#fff;
-}
+        .action-btns {
+            display: flex;
+            gap: 8px;
+        }
 
-.green{
-background:linear-gradient(135deg,#08763e,#2bb96d);
-color:#fff;
-}
+        .btn-approve {
+            background: #2e7d32;
+            color: #fff;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
 
-.red{
-background:linear-gradient(135deg,#ad1717,#ef5350);
-color:#fff;
-}
+        .btn-reject {
+            background: #c62828;
+            color: #fff;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
 
-.yellow{
-background:linear-gradient(135deg,#bd7300,#f0ad25);
-color:#fff;
-}
-
-.white{
-background:#fff;
-color:#641b98;
-border:1px solid #75269333;
-}
-
-.note{
-padding:15px;
-border-radius:17px;
-background:#fff1f5;
-border:1px solid #df477344;
-font-weight:700;
-line-height:1.7;
-margin:15px 0;
-}
-
-.hidden{display:none!important}
-
-header{
-position:sticky;
-top:0;
-z-index:50;
-padding:12px 0;
-background:#ffffffb8;
-backdrop-filter:blur(20px);
-border-bottom:1px solid #76249320;
-}
-
-.container{
-width:min(1300px,94%);
-margin:auto;
-}
-
-.head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:15px;
-}
-
-.brand{
-display:flex;
-align-items:center;
-gap:12px;
-font-weight:900;
-font-size:21px;
-}
-
-.miniLogo{
-width:48px;height:48px;
-display:grid;place-items:center;
-border-radius:16px;
-color:white;
-background:linear-gradient(145deg,#631c98,#df286e);
-}
-
-main{padding:25px 0 60px}
-
-.dashboard{
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:14px;
-margin-bottom:20px;
-}
-
-.card{
-padding:20px;
-border-radius:23px;
-}
-
-.statNumber{
-font-family:Poppins;
-font-size:32px;
-font-weight:900;
-color:#701e98;
-}
-
-.statIcon{
-font-size:25px;
-margin-bottom:7px;
-}
-
-.layout{
-display:grid;
-grid-template-columns:245px 1fr;
-gap:18px;
-}
-
-.sidebar{
-padding:14px;
-border-radius:25px;
-height:max-content;
-position:sticky;
-top:90px;
-}
-
-.sideBtn{
-width:100%;
-border:0;
-background:transparent;
-padding:14px;
-margin:3px 0;
-border-radius:15px;
-text-align:left;
-font:inherit;
-font-weight:900;
-color:#3b1547;
-cursor:pointer;
-}
-
-.sideBtn:hover,
-.sideBtn.active{
-background:linear-gradient(135deg,#691e99,#d92970);
-color:#fff;
-box-shadow:0 10px 25px #671e9930;
-}
-
-.content{
-padding:22px;
-border-radius:27px;
-min-width:0;
-}
-
-.toolbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:10px;
-flex-wrap:wrap;
-margin-bottom:17px;
-}
-
-.filters{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:10px;
-margin-bottom:17px;
-}
-
-.tableWrap{
-overflow:auto;
-border-radius:18px;
-}
-
-table{
-width:100%;
-min-width:1050px;
-border-collapse:collapse;
-}
-
-th,td{
-padding:12px;
-border-bottom:1px solid #75249320;
-text-align:left;
-vertical-align:top;
-}
-
-th{
-background:#fff4ff;
-font-weight:900;
-}
-
-.status{
-display:inline-block;
-padding:6px 10px;
-border-radius:30px;
-font-size:12px;
-font-weight:900;
-}
-
-.pending{background:#fff0c9;color:#986000}
-.approved{background:#dcf8e8;color:#08743d}
-.rejected{background:#ffe0e0;color:#a71919}
-
-.actions{
-display:flex;
-flex-wrap:wrap;
-gap:5px;
-}
-
-.modal{
-position:fixed;
-inset:0;
-z-index:100;
-display:none;
-align-items:center;
-justify-content:center;
-padding:15px;
-background:#280738aa;
-backdrop-filter:blur(9px);
-}
-
-.modal.show{display:flex}
-
-.modalBox{
-width:min(720px,100%);
-max-height:92vh;
-overflow:auto;
-padding:25px;
-border-radius:28px;
-position:relative;
-}
-
-.close{
-position:absolute;
-right:12px;
-top:12px;
-width:40px;height:40px;
-border:0;
-border-radius:50%;
-background:white;
-font-size:23px;
-cursor:pointer;
-}
-
-.formGrid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:4px 14px;
-}
-
-.full{grid-column:1/-1}
-
-.locationGrid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:12px;
-}
-
-.toast{
-position:fixed;
-bottom:20px;
-left:50%;
-transform:translate(-50%,30px);
-opacity:0;
-z-index:200;
-padding:14px 20px;
-border-radius:16px;
-background:#35103f;
-color:#fff;
-font-weight:800;
-transition:.25s;
-}
-
-.toast.show{
-opacity:1;
-transform:translate(-50%,0);
-}
-
-@media(max-width:1000px){
-.dashboard{grid-template-columns:repeat(3,1fr)}
-.layout{grid-template-columns:1fr}
-.sidebar{position:static;display:grid;grid-template-columns:repeat(2,1fr);gap:5px}
-}
-
-@media(max-width:650px){
-.dashboard{grid-template-columns:repeat(2,1fr)}
-.filters,.formGrid,.locationGrid{grid-template-columns:1fr}
-.sidebar{grid-template-columns:1fr}
-.brand{font-size:17px}
-.content{padding:14px}
-}
-</style>
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- LOGIN -->
-<section id="loginPage">
-
-<div class="login glass">
-
-<div class="logo">
-<i class="fa-solid fa-droplet"></i>
-</div>
-
-<h1>MB Blood Bank</h1>
-<p class="center">🔐 Unique Admin Panel</p>
-
-<div class="note">
-⚠️ এই Panel শুধুমাত্র অনুমোদিত Admin-এর জন্য।
-Public Website থেকে Admin Panel দেখানো হবে না।
-</div>
-
-<form id="loginForm">
-
-<label>Admin Gmail</label>
-<input id="loginEmail" type="email"
-placeholder="Admin Gmail" required>
-
-<label>Password</label>
-<input id="loginPassword" type="password"
-placeholder="Admin Password" required>
-
-<button class="btn primary"
-style="width:100%;margin-top:15px">
-🔐 Admin Login
-</button>
-
-<p id="loginError"
-style="color:#b71940;font-weight:800;margin-top:12px">
-</p>
-
-</form>
-</div>
-</section>
-
-
-<!-- ADMIN -->
-<section id="adminPage" class="hidden">
-
-<header>
-
-<div class="container head">
-
-<div class="brand">
-
-<div class="miniLogo">
-<i class="fa-solid fa-droplet"></i>
-</div>
-
-<span>MB Blood Bank — Admin Control</span>
-
-</div>
-
-<button class="btn white" onclick="logout()">
-🚪 Logout
-</button>
-
-</div>
-</header>
-
-
-<main class="container">
-
-<div class="dashboard">
-
-<div class="glass card">
-<div class="statIcon">📝</div>
-<div class="statNumber" id="pendingDonors">0</div>
-Pending Donor
-</div>
-
-<div class="glass card">
-<div class="statIcon">✅</div>
-<div class="statNumber" id="approvedDonors">0</div>
-Approved Donor
-</div>
-
-<div class="glass card">
-<div class="statIcon">❌</div>
-<div class="statNumber" id="rejectedDonors">0</div>
-Rejected Donor
-</div>
-
-<div class="glass card">
-<div class="statIcon">🚨</div>
-<div class="statNumber" id="allRequests">0</div>
-Blood Request
-</div>
-
-<div class="glass card">
-<div class="statIcon">🩸</div>
-<div class="statNumber" id="totalDonors">0</div>
-Total Donor
-</div>
-
-</div>
-
-
-<div class="layout">
-
-<!-- SIDEBAR -->
-
-<aside class="glass sidebar">
-
-<button class="sideBtn active"
-data-page="dashboard">
-📊 Dashboard
-</button>
-
-<button class="sideBtn"
-data-page="pending">
-📝 Pending Donor
-</button>
-
-<button class="sideBtn"
-data-page="approved">
-✅ Approved Donor
-</button>
-
-<button class="sideBtn"
-data-page="rejected">
-❌ Rejected Donor
-</button>
-
-<button class="sideBtn"
-data-page="requests">
-🚨 Blood Requests
-</button>
-
-<button class="sideBtn"
-data-page="addDonor">
-➕ Donor Add
-</button>
-
-<button class="sideBtn"
-data-page="addRequest">
-➕ Blood Request Add
-</button>
-
-<button class="sideBtn"
-data-page="search">
-🔎 Search / Filter
-</button>
-
-<button class="sideBtn"
-data-page="locations">
-📍 Location Information
-</button>
-
-</aside>
-
-
-<!-- CONTENT -->
-
-<section class="glass content">
-
-<div id="content"></div>
-
-</section>
-
-</div>
-
-</main>
-
-</section>
-
-
-<!-- EDIT MODAL -->
-
-<div id="modal" class="modal">
-
-<div class="modalBox glass">
-
-<button class="close"
-onclick="closeModal()">×</button>
-
-<div id="modalContent"></div>
-
-</div>
-
-</div>
-
-
-<div id="toast" class="toast"></div>
-
-
-<script type="module">
-
-import {
-initializeApp
-}
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-
-import {
-getAuth,
-signInWithEmailAndPassword,
-onAuthStateChanged,
-signOut
-}
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-
-import {
-getFirestore,
-collection,
-getDocs,
-doc,
-addDoc,
-updateDoc,
-deleteDoc
-}
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-
-
-/* =====================================================
- FIREBASE
-===================================================== */
-
-const firebaseConfig={
-
-apiKey:"PASTE_YOUR_FIREBASE_API_KEY",
-
-authDomain:"PASTE_YOUR_PROJECT.firebaseapp.com",
-
-projectId:"PASTE_YOUR_PROJECT_ID",
-
-storageBucket:"PASTE_YOUR_PROJECT.firebasestorage.app",
-
-messagingSenderId:"PASTE_YOUR_SENDER_ID",
-
-appId:"PASTE_YOUR_APP_ID"
-
-};
-
-
-/* নিজের Admin Gmail এখানে বসাবে */
-
-const ADMIN_EMAIL=
-"PASTE_ADMIN_GMAIL_HERE";
-
-
-const firebaseReady=
-!firebaseConfig.apiKey.startsWith("PASTE_");
-
-
-let auth=null;
-let db=null;
-
-if(firebaseReady){
-
-const app=initializeApp(firebaseConfig);
-
-auth=getAuth(app);
-
-db=getFirestore(app);
-
-}
-
-
-const groups=[
-"A+","A-","B+","B-",
-"AB+","AB-","O+","O-"
-];
-
-
-let donors=[];
-let requests=[];
-let currentPage="dashboard";
-
-const GEO_URL=
-"https://raw.githubusercontent.com/open-admin-data/bangladesh-administrative-divisions/main/data/hierarchy.json";
-
-let geo=[];
-
-
-const $=id=>document.getElementById(id);
-
-
-function esc(v){
-
-return String(v??"")
-.replace(/[&<>"']/g,m=>({
-
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
-
-}[m]));
-
-}
-
-
-function toast(msg){
-
-$("toast").textContent=msg;
-
-$("toast").classList.add("show");
-
-setTimeout(()=>{
-$("toast").classList.remove("show");
-},2500);
-
-}
-
-
-/* =====================================================
- LOCATION
-===================================================== */
-
-async function loadGeo(){
-
-const res=await fetch(GEO_URL);
-
-const json=await res.json();
-
-const source=
-Array.isArray(json)?json:(json.data||[]);
-
-geo=source.map(div=>({
-
-en:div.name?.en||div.name,
-bn:div.name?.local||div.name?.en||div.name,
-
-districts:
-(div.district||div.districts||div.children||[])
-.map(d=>({
-
-en:d.name?.en||d.name,
-bn:d.name?.local||d.name?.en||d.name,
-
-upazilas:
-(d.upazila||d.upazilas||d.children||[])
-.map(u=>({
-
-en:u.name?.en||u.name,
-bn:u.name?.local||u.name?.en||u.name
-
-}))
-
-}))
-
-}));
-
-const d=geo.reduce(
-(a,x)=>a+x.districts.length,0);
-
-const u=geo.reduce(
-(a,x)=>a+x.districts.reduce(
-(b,y)=>b+y.upazilas.length,0),0);
-
-if(geo.length!==8||d!==64||u!==495){
-
-throw new Error("Location data is not 8/64/495");
-
-}
-
-}
-
-
-/* =====================================================
- DATA
-===================================================== */
-
-async function loadData(){
-
-if(db){
-
-const ds=await getDocs(
-collection(db,"donors")
-);
-
-donors=ds.docs.map(
-x=>({id:x.id,...x.data()})
-);
-
-const rs=await getDocs(
-collection(db,"requests")
-);
-
-requests=rs.docs.map(
-x=>({id:x.id,...x.data()})
-);
-
-}else{
-
-donors=JSON.parse(
-localStorage.getItem("mb_demo_donors")||"[]");
-
-requests=JSON.parse(
-localStorage.getItem("mb_demo_requests")||"[]");
-
-}
-
-updateStats();
-
-render();
-
-}
-
-
-function updateStats(){
-
-$("pendingDonors").textContent=
-donors.filter(x=>x.status==="pending").length;
-
-$("approvedDonors").textContent=
-donors.filter(x=>x.status==="approved").length;
-
-$("rejectedDonors").textContent=
-donors.filter(x=>x.status==="rejected").length;
-
-$("allRequests").textContent=requests.length;
-
-$("totalDonors").textContent=donors.length;
-
-}
-
-
-/* =====================================================
- SIDEBAR
-===================================================== */
-
-document.querySelectorAll(".sideBtn")
-.forEach(btn=>{
-
-btn.onclick=()=>{
-
-document.querySelectorAll(".sideBtn")
-.forEach(x=>x.classList.remove("active"));
-
-btn.classList.add("active");
-
-currentPage=btn.dataset.page;
-
-render();
-
-};
-
-});
-
-
-/* =====================================================
- RENDER
-===================================================== */
-
-function render(){
-
-if(currentPage==="dashboard")
-dashboard();
-
-else if(
-["pending","approved","rejected"].includes(currentPage)
-)
-donorList(currentPage);
-
-else if(currentPage==="requests")
-requestList();
-
-else if(currentPage==="addDonor")
-addDonorPage();
-
-else if(currentPage==="addRequest")
-addRequestPage();
-
-else if(currentPage==="search")
-searchPage();
-
-else if(currentPage==="locations")
-locationPage();
-
-}
-
-
-/* =====================================================
- DASHBOARD
-===================================================== */
-
-function dashboard(){
-
-$("content").innerHTML=`
-
-<div class="toolbar">
-
-<h2>📊 Admin Dashboard</h2>
-
-<button class="btn white"
-onclick="loadData()">
-↻ Refresh
-</button>
-
-</div>
-
-<div class="note">
-
-✨ <b>MB Blood Bank Control Center</b><br>
-
-এখান থেকে Donor Registration,
-Blood Request, Approve, Reject,
-Edit, Add এবং Delete—সবকিছু পরিচালনা করা যাবে।
-
-</div>
-
-<div class="formGrid">
-
-<div class="glass card">
-
-<h3>📝 Pending Donor</h3>
-
-<p style="margin-top:10px">
-Admin যাচাইয়ের অপেক্ষায় থাকা Donor:
-<b>${donors.filter(x=>x.status==="pending").length}</b>
-</p>
-
-</div>
-
-<div class="glass card">
-
-<h3>🚨 Blood Request</h3>
-
-<p style="margin-top:10px">
-মোট Request:
-<b>${requests.length}</b>
-</p>
-
-</div>
-
-<div class="glass card">
-
-<h3>👤 Active Donor</h3>
-
-<p style="margin-top:10px">
-Approved Donor:
-<b>${donors.filter(x=>x.status==="approved").length}</b>
-</p>
-
-</div>
-
-<div class="glass card">
-
-<h3>📍 Location</h3>
-
-<p style="margin-top:10px">
-8 Division • 64 District • 495 Upazila
-</p>
-
-</div>
-
-</div>
-`;
-
-}
-
-
-/* =====================================================
- DONOR LIST
-===================================================== */
-
-function donorList(status){
-
-const list=donors.filter(
-x=>x.status===status);
-
-$("content").innerHTML=`
-
-<div class="toolbar">
-
-<h2>
-${status==="pending"?"📝 Pending Donor":
-status==="approved"?"✅ Approved Donor":
-"❌ Rejected Donor"}
-</h2>
-
-<button class="btn primary"
-onclick="addDonorPage()">
-➕ Add Donor
-</button>
-
-</div>
-
-<div class="tableWrap">
-
-<table>
-
-<thead>
-<tr>
-<th>Unique ID</th>
-<th>Donor</th>
-<th>Blood</th>
-<th>Location</th>
-<th>Contact</th>
-<th>Status</th>
-<th>Control</th>
-</tr>
-</thead>
-
-<tbody>
-
-${list.length?list.map(d=>`
-
-<tr>
-
-<td>
-<b>${esc(d.donorCode||"MB-DB-"+d.id.slice(-8))}</b>
-</td>
-
-<td>
-<b>${esc(d.name)}</b>
-<br>
-<small>${esc(d.address||"")}</small>
-</td>
-
-<td>
-<strong style="
-font-size:21px;color:#d21d59">
-${esc(d.blood)}
-</strong>
-</td>
-
-<td>
-${esc(d.division)}<br>
-${esc(d.district)}<br>
-${esc(d.upazila)}
-</td>
-
-<td>
-📞 ${esc(d.phone)}
-</td>
-
-<td>
-<span class="status ${esc(d.status)}">
-${esc(d.status)}
-</span>
-</td>
-
-<td>
-
-<div class="actions">
-
-${
-d.status!=="approved"
-?`<button class="btn green"
-onclick="approveDonor('${d.id}')">
-✅ Approve
-</button>`:""
-}
-
-${
-d.status!=="rejected"
-?`<button class="btn yellow"
-onclick="rejectDonor('${d.id}')">
-❌ Reject
-</button>`:""
-}
-
-<button class="btn white"
-onclick="editDonor('${d.id}')">
-✏️ Edit
-</button>
-
-<button class="btn red"
-onclick="deleteDonor('${d.id}')">
-🗑 Delete
-</button>
-
-</div>
-
-</td>
-
-</tr>
-
-`).join(""):`
-
-<tr>
-<td colspan="7"
-style="text-align:center;padding:30px">
-কোনো Donor পাওয়া যায়নি।
-</td>
-</tr>
-
-`}
-
-</tbody>
-
-</table>
-
-</div>
-`;
-
-}
-
-
-/* =====================================================
- REQUEST LIST
-===================================================== */
-
-function requestList(){
-
-$("content").innerHTML=`
-
-<div class="toolbar">
-
-<h2>🚨 Blood Request Management</h2>
-
-<button class="btn primary"
-onclick="addRequestPage()">
-➕ Request Add
-</button>
-
-</div>
-
-<div class="tableWrap">
-
-<table>
-
-<thead>
-<tr>
-<th>Patient</th>
-<th>Blood</th>
-<th>Bags</th>
-<th>Location</th>
-<th>Hospital</th>
-<th>Date</th>
-<th>Urgency</th>
-<th>Status</th>
-<th>Control</th>
-</tr>
-</thead>
-
-<tbody>
-
-${requests.length?requests.map(r=>`
-
-<tr>
-
-<td>
-<b>${esc(r.patient)}</b>
-<br>
-📞 ${esc(r.phone)}
-</td>
-
-<td>
-<strong style="color:#d21d59">
-${esc(r.blood)}
-</strong>
-</td>
-
-<td>${esc(r.bags)}</td>
-
-<td>
-${esc(r.division)}<br>
-${esc(r.district)}<br>
-${esc(r.upazila)}
-</td>
-
-<td>${esc(r.hospital)}</td>
-
-<td>${esc(r.neededDate)}</td>
-
-<td>${esc(r.urgency)}</td>
-
-<td>
-<span class="status ${esc(r.status||"pending")}">
-${esc(r.status||"pending")}
-</span>
-</td>
-
-<td>
-
-<div class="actions">
-
-<button class="btn green"
-onclick="approveRequest('${r.id}')">
-✅ Approve
-</button>
-
-<button class="btn yellow"
-onclick="rejectRequest('${r.id}')">
-❌ Reject
-</button>
-
-<button class="btn white"
-onclick="editRequest('${r.id}')">
-✏️ Edit
-</button>
-
-<button class="btn red"
-onclick="deleteRequest('${r.id}')">
-🗑 Delete
-</button>
-
-</div>
-
-</td>
-
-</tr>
-
-`).join(""):`
-
-<tr>
-<td colspan="9"
-style="text-align:center;padding:30px">
-কোনো Request নেই।
-</td>
-</tr>
-
-`}
-
-</tbody>
-
-</table>
-
-</div>
-`;
-
-}
-
-
-/* =====================================================
- LOCATION FIELDS
-===================================================== */
-
-function locationHTML(prefix){
-
-return `
-
-<div>
-
-<label>বিভাগ</label>
-
-<select id="${prefix}Div"
-onchange="setDistrict('${prefix}')">
-
-<option value="">
-বিভাগ নির্বাচন
-</option>
-
-${geo.map(d=>`
-
-<option value="${esc(d.en)}">
-${esc(d.bn)} (${esc(d.en)})
-</option>
-
-`).join("")}
-
-</select>
-
-</div>
-
-<div>
-
-<label>জেলা</label>
-
-<select id="${prefix}Dist"
-onchange="setUpazila('${prefix}')">
-
-<option value="">
-জেলা নির্বাচন
-</option>
-
-</select>
-
-</div>
-
-<div>
-
-<label>উপজেলা</label>
-
-<select id="${prefix}Upa">
-
-<option value="">
-উপজেলা নির্বাচন
-</option>
-
-</select>
-
-</div>
-
-`;
-
-
-}
-
-
-window.setDistrict=prefix=>{
-
-const div=geo.find(
-x=>x.en===$(prefix+"Div").value);
-
-$(prefix+"Dist").innerHTML=
-'<option value="">জেলা নির্বাচন</option>'+
-(div?div.districts.map(d=>
-`<option value="${esc(d.en)}">
-${esc(d.bn)} (${esc(d.en)})
-</option>`).join(""):"");
-
-$(prefix+"Upa").innerHTML=
-'<option value="">উপজেলা নির্বাচন</option>';
-
-};
-
-
-window.setUpazila=prefix=>{
-
-const div=geo.find(
-x=>x.en===$(prefix+"Div").value);
-
-const dist=div?.districts.find(
-x=>x.en===$(prefix+"Dist").value);
-
-$(prefix+"Upa").innerHTML=
-'<option value="">উপজেলা নির্বাচন</option>'+
-(dist?dist.upazilas.map(u=>
-`<option value="${esc(u.en)}">
-${esc(u.bn)} (${esc(u.en)})
-</option>`).join(""):"");
-
-};
-
-
-function getLoc(prefix){
-
-return{
-division:$(prefix+"Div").value,
-district:$(prefix+"Dist").value,
-upazila:$(prefix+"Upa").value
-};
-
-}
-
-
-/* =====================================================
- ADD DONOR
-===================================================== */
-
-function addDonorPage(){
-
-currentPage="addDonor";
-
-$("content").innerHTML=`
-
-<div class="toolbar">
-
-<h2>➕ নতুন Donor Add</h2>
-
-</div>
-
-<form id="addDonorForm">
-
-<div class="formGrid">
-
-<div>
-<label>পূর্ণ নাম *</label>
-<input id="aName" required>
-</div>
-
-<div>
-<label>মোবাইল *</label>
-<input id="aPhone" required>
-</div>
-
-<div>
-<label>রক্তের গ্রুপ *</label>
-<select id="aBlood" required>
-<option value="">রক্তের গ্রুপ</option>
-${groups.map(x=>`<option>${x}</option>`).join("")}
-</select>
-</div>
-
-<div>
-<label>ঠিকানা</label>
-<input id="aAddress">
-</div>
-
-<div class="full locationGrid">
-${locationHTML("a")}
-</div>
-
-<div class="full">
-<label>অতিরিক্ত তথ্য</label>
-<textarea id="aInfo"></textarea>
-</div>
-
-</div>
-
-<button class="btn primary"
-style="margin-top:15px">
-➕ Approved Donor Add
-</button>
-
-</form>
-`;
-
-$("addDonorForm").onsubmit=async e=>{
-
-e.preventDefault();
-
-const loc=getLoc("a");
-
-const data={
-
-donorCode:"MB-DB-"+Date.now().toString().slice(-8),
-
-name:$("aName").value.trim(),
-
-phone:$("aPhone").value.trim(),
-
-blood:$("aBlood").value,
-
-...loc,
-
-address:$("aAddress").value.trim(),
-
-info:$("aInfo").value.trim(),
-
-status:"approved",
-
-createdAt:new Date().toISOString()
-
-};
-
-await addData("donors",data);
-
-toast("✅ Donor Added");
-
-await loadData();
-
-};
-
-}
-
-
-/* =====================================================
- ADD REQUEST
-===================================================== */
-
-function addRequestPage(){
-
-currentPage="addRequest";
-
-$("content").innerHTML=`
-
-<h2>➕ নতুন Blood Request Add</h2>
-
-<form id="addRequestForm">
-
-<div class="formGrid">
-
-<div>
-<label>রোগীর নাম *</label>
-<input id="rPatient" required>
-</div>
-
-<div>
-<label>যোগাযোগ নম্বর *</label>
-<input id="rPhone" required>
-</div>
-
-<div>
-<label>রক্তের গ্রুপ *</label>
-<select id="rBlood" required>
-<option value="">রক্তের গ্রুপ</option>
-${groups.map(x=>`<option>${x}</option>`).join("")}
-</select>
-</div>
-
-<div>
-<label>কত ব্যাগ *</label>
-<input id="rBags" type="number" min="1" value="1" required>
-</div>
-
-<div class="full locationGrid">
-${locationHTML("r")}
-</div>
-
-<div>
-<label>হাসপাতাল/স্থান *</label>
-<input id="rHospital" required>
-</div>
-
-<div>
-<label>প্রয়োজনের তারিখ *</label>
-<input id="rDate" type="date" required>
-</div>
-
-<div>
-<label>জরুরিতার মাত্রা</label>
-<select id="rUrgency">
-<option>অতি জরুরি</option>
-<option>জরুরি</option>
-<option>সাধারণ</option>
-</select>
-</div>
-
-<div class="full">
-<label>অতিরিক্ত তথ্য</label>
-<textarea id="rInfo"></textarea>
-</div>
-
-</div>
-
-<button class="btn primary"
-style="margin-top:15px">
-🚨 Request Add
-</button>
-
-</form>
-`;
-
-$("addRequestForm").onsubmit=async e=>{
-
-e.preventDefault();
-
-const loc=getLoc("r");
-
-const data={
-
-patient:$("rPatient").value.trim(),
-
-phone:$("rPhone").value.trim(),
-
-blood:$("rBlood").value,
-
-bags:Number($("rBags").value),
-
-...loc,
-
-hospital:$("rHospital").value.trim(),
-
-neededDate:$("rDate").value,
-
-urgency:$("rUrgency").value,
-
-info:$("rInfo").value.trim(),
-
-status:"approved",
-
-createdAt:new Date().toISOString()
-
-};
-
-await addData("requests",data);
-
-toast("🚨 Request Added");
-
-await loadData();
-
-};
-
-}
-
-
-/* =====================================================
- SEARCH
-===================================================== */
-
-function searchPage(){
-
-$("content").innerHTML=`
-
-<h2>🔎 Donor Search / Filter</h2>
-
-<div class="filters">
-
-<select id="filterBlood">
-<option value="">সব Blood Group</option>
-${groups.map(x=>`<option>${x}</option>`).join("")}
-</select>
-
-<select id="filterStatus">
-<option value="">সব Status</option>
-<option value="pending">Pending</option>
-<option value="approved">Approved</option>
-<option value="rejected">Rejected</option>
-</select>
-
-<input id="filterText"
-placeholder="নাম / ফোন / ID">
-
-<button class="btn primary"
-onclick="runFilter()">
-🔎 Search
-</button>
-
-</div>
-
-<div id="filterResults"></div>
-`;
-
-}
-
-
-window.runFilter=()=>{
-
-const blood=$("filterBlood").value;
-const status=$("filterStatus").value;
-const text=$("filterText").value.toLowerCase();
-
-const list=donors.filter(d=>
-
-(!blood||d.blood===blood)&&
-(!status||d.status===status)&&
-(
-!text||
-(d.name||"").toLowerCase().includes(text)||
-(d.phone||"").toLowerCase().includes(text)||
-(d.donorCode||"").toLowerCase().includes(text)
-)
-
-);
-
-$("filterResults").innerHTML=`
-
-<div class="tableWrap">
-
-<table>
-
-<tr>
-<th>Donor ID</th>
-<th>Name</th>
-<th>Blood</th>
-<th>Phone</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
-
-${list.map(d=>`
-
-<tr>
-
-<td>${esc(d.donorCode||d.id)}</td>
-<td>${esc(d.name)}</td>
-<td>${esc(d.blood)}</td>
-<td>${esc(d.phone)}</td>
-<td>${esc(d.status)}</td>
-
-<td>
-
-<button class="btn white"
-onclick="editDonor('${d.id}')">
-✏️ Edit
-</button>
-
-</td>
-
-</tr>
-
-`).join("")}
-
-</table>
-
-</div>
-`;
-
-};
-
-
-/* =====================================================
- LOCATION INFORMATION
-===================================================== */
-
-function locationPage(){
-
-const districts=geo.reduce(
-(a,d)=>a+d.districts.length,0);
-
-const upazilas=geo.reduce(
-(a,d)=>a+d.districts.reduce(
-(b,x)=>b+x.upazilas.length,0),0);
-
-$("content").innerHTML=`
-
-<h2>📍 Bangladesh Location Data</h2>
-
-<div class="dashboard">
-
-<div class="glass card">
-<div class="statNumber">${geo.length}</div>
-Division
-</div>
-
-<div class="glass card">
-<div class="statNumber">${districts}</div>
-District
-</div>
-
-<div class="glass card">
-<div class="statNumber">${upazilas}</div>
-Upazila
-</div>
-
-</div>
-
-<div class="note">
-বাংলা + English নামসহ 8 Division,
-64 District এবং 495 Upazila ব্যবহার করা হয়েছে।
-</div>
-
-${geo.map(d=>`
-
-<details class="glass card"
-style="margin:10px 0">
-
-<summary style="font-weight:900;cursor:pointer">
-
-${esc(d.bn)} (${esc(d.en)})
-— ${d.districts.length} District
-
-</summary>
-
-<div style="padding-top:12px">
-
-${d.districts.map(x=>`
-
-<div style="
-padding:10px;
-border-bottom:1px solid #75249320">
-
-<b>
-${esc(x.bn)} (${esc(x.en)})
-</b>
-
-<br>
-
-<small>
-
-${x.upazilas.map(u=>
-`${esc(u.bn)} (${esc(u.en)})`
-).join(" • ")}
-
-</small>
-
-</div>
-
-`).join("")}
-
-</div>
-
-</details>
-
-`).join("")}
-
-`;
-
-}
-
-
-/* =====================================================
- APPROVE / REJECT
-===================================================== */
-
-window.approveDonor=async id=>{
-
-await updateItem("donors",id,{
-status:"approved",
-reviewedAt:new Date().toISOString()
-});
-
-toast("✅ Donor Approved");
-
-await loadData();
-
-};
-
-
-window.rejectDonor=async id=>{
-
-await updateItem("donors",id,{
-status:"rejected",
-reviewedAt:new Date().toISOString()
-});
-
-toast("❌ Donor Rejected");
-
-await loadData();
-
-};
-
-
-window.approveRequest=async id=>{
-
-await updateItem("requests",id,{
-status:"approved",
-reviewedAt:new Date().toISOString()
-});
-
-toast("✅ Request Approved");
-
-await loadData();
-
-};
-
-
-window.rejectRequest=async id=>{
-
-await updateItem("requests",id,{
-status:"rejected",
-reviewedAt:new Date().toISOString()
-});
-
-toast("❌ Request Rejected");
-
-await loadData();
-
-};
-
-
-/* =====================================================
- EDIT DONOR
-===================================================== */
-
-window.editDonor=id=>{
-
-const d=donors.find(x=>x.id===id);
-
-if(!d)return;
-
-$("modalContent").innerHTML=`
-
-<h2>✏️ Edit Donor</h2>
-
-<form id="editDonorForm">
-
-<label>নাম</label>
-<input id="eName" value="${esc(d.name)}">
-
-<label>ফোন</label>
-<input id="ePhone" value="${esc(d.phone)}">
-
-<label>Blood Group</label>
-
-<select id="eBlood">
-
-${groups.map(x=>`
-
-<option
-value="${x}"
-${x===d.blood?"selected":""}>
-${x}
-</option>
-
-`).join("")}
-
-</select>
-
-<div class="locationGrid"
-style="margin-top:5px">
-
-${locationHTML("e")}
-
-</div>
-
-<label>ঠিকানা</label>
-<input id="eAddress" value="${esc(d.address||"")}">
-
-<label>অতিরিক্ত তথ্য</label>
-<textarea id="eInfo">${esc(d.info||"")}</textarea>
-
-<label>Status</label>
-
-<select id="eStatus">
-
-<option value="pending"
-${d.status==="pending"?"selected":""}>
-Pending
-</option>
-
-<option value="approved"
-${d.status==="approved"?"selected":""}>
-Approved
-</option>
-
-<option value="rejected"
-${d.status==="rejected"?"selected":""}>
-Rejected
-</option>
-
-</select>
-
-<button class="btn primary"
-style="margin-top:15px">
-💾 Save Changes
-</button>
-
-</form>
-`;
-
-$("modal").classList.add("show");
-
-
-setTimeout(()=>{
-
-$("eDiv").value=d.division;
-
-setDistrict("e");
-
-setTimeout(()=>{
-
-$("eDist").value=d.district;
-
-setUpazila("e");
-
-setTimeout(()=>{
-
-$("eUpa").value=d.upazila;
-
-},30);
-
-},30);
-
-},30);
-
-
-$("editDonorForm").onsubmit=async e=>{
-
-e.preventDefault();
-
-const loc=getLoc("e");
-
-await updateItem("donors",id,{
-
-name:$("eName").value.trim(),
-
-phone:$("ePhone").value.trim(),
-
-blood:$("eBlood").value,
-
-...loc,
-
-address:$("eAddress").value.trim(),
-
-info:$("eInfo").value.trim(),
-
-status:$("eStatus").value
-
-});
-
-closeModal();
-
-toast("💾 Donor Updated");
-
-await loadData();
-
-};
-
-};
-
-
-/* =====================================================
- EDIT REQUEST
-===================================================== */
-
-window.editRequest=id=>{
-
-const r=requests.find(x=>x.id===id);
-
-if(!r)return;
-
-$("modalContent").innerHTML=`
-
-<h2>✏️ Edit Blood Request</h2>
-
-<form id="editRequestForm">
-
-<label>রোগীর নাম</label>
-<input id="erPatient" value="${esc(r.patient)}">
-
-<label>যোগাযোগ</label>
-<input id="erPhone" value="${esc(r.phone)}">
-
-<label>Blood Group</label>
-
-<select id="erBlood">
-${groups.map(x=>`
-
-<option
-value="${x}"
-${x===r.blood?"selected":""}>
-${x}
-</option>
-
-`).join("")}
-</select>
-
-<label>কত ব্যাগ</label>
-<input id="erBags"
-type="number"
-min="1"
-value="${esc(r.bags)}">
-
-<div class="locationGrid">
-${locationHTML("er")}
-</div>
-
-<label>হাসপাতাল/স্থান</label>
-<input id="erHospital"
-value="${esc(r.hospital)}">
-
-<label>তারিখ</label>
-<input id="erDate"
-type="date"
-value="${esc(r.neededDate)}">
-
-<label>জরুরিতা</label>
-
-<select id="erUrgency">
-
-<option ${r.urgency==="অতি জরুরি"?"selected":""}>
-অতি জরুরি
-</option>
-
-<option ${r.urgency==="জরুরি"?"selected":""}>
-জরুরি
-</option>
-
-<option ${r.urgency==="সাধারণ"?"selected":""}>
-সাধারণ
-</option>
-
-</select>
-
-<label>অতিরিক্ত তথ্য</label>
-
-<textarea id="erInfo">${esc(r.info||"")}</textarea>
-
-<label>Status</label>
-
-<select id="erStatus">
-
-<option value="pending"
-${r.status==="pending"?"selected":""}>
-Pending
-</option>
-
-<option value="approved"
-${r.status==="approved"?"selected":""}>
-Approved
-</option>
-
-<option value="rejected"
-${r.status==="rejected"?"selected":""}>
-Rejected
-</option>
-
-</select>
-
-<button class="btn primary"
-style="margin-top:15px">
-💾 Save Changes
-</button>
-
-</form>
-`;
-
-$("modal").classList.add("show");
-
-
-setTimeout(()=>{
-
-$("erDiv").value=r.division;
-
-setDistrict("er");
-
-setTimeout(()=>{
-
-$("erDist").value=r.district;
-
-setUpazila("er");
-
-setTimeout(()=>{
-
-$("erUpa").value=r.upazila;
-
-},30);
-
-},30);
-
-},30);
-
-
-$("editRequestForm").onsubmit=async e=>{
-
-e.preventDefault();
-
-const loc=getLoc("er");
-
-await updateItem("requests",id,{
-
-patient:$("erPatient").value.trim(),
-
-phone:$("erPhone").value.trim(),
-
-blood:$("erBlood").value,
-
-bags:Number($("erBags").value),
-
-...loc,
-
-hospital:$("erHospital").value.trim(),
-
-neededDate:$("erDate").value,
-
-urgency:$("erUrgency").value,
-
-info:$("erInfo").value.trim(),
-
-status:$("erStatus").value
-
-});
-
-closeModal();
-
-toast("💾 Request Updated");
-
-await loadData();
-
-};
-
-};
-
-
-/* =====================================================
- DELETE
-===================================================== */
-
-window.deleteDonor=async id=>{
-
-if(!confirm("এই Donor সম্পূর্ণ Delete করবেন?"))return;
-
-await deleteItem("donors",id);
-
-toast("🗑 Donor Deleted");
-
-await loadData();
-
-};
-
-
-window.deleteRequest=async id=>{
-
-if(!confirm("এই Request সম্পূর্ণ Delete করবেন?"))return;
-
-await deleteItem("requests",id);
-
-toast("🗑 Request Deleted");
-
-await loadData();
-
-};
-
-
-/* =====================================================
- DATABASE HELPERS
-===================================================== */
-
-async function addData(type,data){
-
-if(db){
-
-await addDoc(
-collection(db,type),
-data
-);
-
-}else{
-
-const key=
-type==="donors"
-?"mb_demo_donors"
-:"mb_demo_requests";
-
-data.id=crypto.randomUUID();
-
-const arr=JSON.parse(
-localStorage.getItem(key)||"[]");
-
-arr.push(data);
-
-localStorage.setItem(
-key,JSON.stringify(arr));
-
-}
-
-}
-
-
-async function updateItem(type,id,data){
-
-if(db){
-
-await updateDoc(
-doc(db,type,id),
-data
-);
-
-}else{
-
-const key=
-type==="donors"
-?"mb_demo_donors"
-:"mb_demo_requests";
-
-const arr=JSON.parse(
-localStorage.getItem(key)||"[]");
-
-const i=arr.findIndex(x=>x.id===id);
-
-if(i>=0)arr[i]={...arr[i],...data};
-
-localStorage.setItem(
-key,JSON.stringify(arr));
-
-}
-
-}
-
-
-async function deleteItem(type,id){
-
-if(db){
-
-await deleteDoc(
-doc(db,type,id)
-);
-
-}else{
-
-const key=
-type==="donors"
-?"mb_demo_donors"
-:"mb_demo_requests";
-
-const arr=JSON.parse(
-localStorage.getItem(key)||"[]")
-.filter(x=>x.id!==id);
-
-localStorage.setItem(
-key,JSON.stringify(arr));
-
-}
-
-}
-
-
-/* =====================================================
- MODAL
-===================================================== */
-
-window.closeModal=()=>{
-$("modal").classList.remove("show");
-};
-
-
-/* =====================================================
- LOGOUT
-===================================================== */
-
-window.logout=()=>{
-
-if(auth)signOut(auth);
-
-};
-
-
-/* =====================================================
- LOGIN
-===================================================== */
-
-$("loginForm").onsubmit=async e=>{
-
-e.preventDefault();
-
-if(!firebaseReady){
-
-$("loginError").textContent=
-"Firebase Config আগে সেট করতে হবে।";
-
-return;
-
-}
-
-try{
-
-await signInWithEmailAndPassword(
-auth,
-$("loginEmail").value.trim(),
-$("loginPassword").value
-);
-
-}catch(error){
-
-$("loginError").textContent=
-"❌ Gmail অথবা Password সঠিক নয়।";
-
-}
-
-};
-
-
-/* =====================================================
- AUTH
-===================================================== */
-
-async function start(){
-
-await loadGeo();
-
-if(!firebaseReady){
-
-$("loginError").textContent=
-"Firebase Config বসানো হয়নি।";
-
-return;
-
-}
-
-onAuthStateChanged(auth,async user=>{
-
-if(!user){
-
-$("loginPage").classList.remove("hidden");
-$("adminPage").classList.add("hidden");
-
-return;
-
-}
-
-if(
-!user.email ||
-user.email.toLowerCase()!==
-ADMIN_EMAIL.toLowerCase()
-){
-
-await signOut(auth);
-
-$("loginError").textContent=
-"❌ এই Gmail Admin হিসেবে অনুমোদিত নয়।";
-
-return;
-
-}
-
-$("loginPage").classList.add("hidden");
-$("adminPage").classList.remove("hidden");
-
-await loadData();
-
-});
-
-}
-
-start();
-
-</script>
-
+    <!-- Admin Login Section -->
+    <div class="login-container" id="login-box">
+        <h2><i class="fa-solid fa-lock"></i> Admin Login</h2>
+        <div class="form-group">
+            <label>Gmail / Admin Email</label>
+            <input type="email" id="admin-email" placeholder="mbbloodbank@gmail.com" value="mbbloodbank@gmail.com">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="admin-pass" placeholder="পাসওয়ার্ড দিন">
+        </div>
+        <button class="btn" onclick="adminLogin()">লগইন করুন</button>
+    </div>
+
+    <!-- Admin Dashboard Section -->
+    <div class="admin-dashboard hidden" id="dashboard-box">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2><i class="fa-solid fa-gears"></i> Admin Control Panel</h2>
+            <button class="btn" style="width: auto; background: #555;" onclick="adminLogout()">লগআউট</button>
+        </div>
+
+        <!-- Pending Donor Requests -->
+        <h3 style="margin-top: 20px; color: #333;"><i class="fa-solid fa-user-clock"></i> পেন্ডিং ডোনার রিকোয়েস্ট</h3>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>নাম</th>
+                        <th>গ্রুপ</th>
+                        <th>মোবাইল</th>
+                        <th>ঠিকানা</th>
+                        <th>অ্যাকশন</th>
+                    </tr>
+                </thead>
+                <tbody id="pending-donors-list">
+                    <!-- Dynamic Rows -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Emergency Blood Requests -->
+        <h3 style="margin-top: 30px; color: #333;"><i class="fa-solid fa-triangle-exclamation"></i> রক্তের জরুরি অনুরোধসমূহ</h3>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>রোগী</th>
+                        <th>গ্রুপ</th>
+                        <th>ব্যাগ</th>
+                        <th>হাসপাতাল</th>
+                        <th>মোবাইল</th>
+                        <th>অ্যাকশন</th>
+                    </tr>
+                </thead>
+                <tbody id="blood-req-list">
+                    <!-- Dynamic Rows -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_EMAIL = "mbbloodbank@gmail.com";
+        const ADMIN_PASS = "mb123456"; // আপনার ইচ্ছামতো পাসওয়ার্ড পরিবর্তন করতে পারেন
+
+        function adminLogin() {
+            const email = document.getElementById('admin-email').value;
+            const pass = document.getElementById('admin-pass').value;
+
+            if(email === ADMIN_EMAIL && pass === ADMIN_PASS) {
+                localStorage.setItem('isAdminLoggedIn', 'true');
+                showDashboard();
+            } else {
+                alert('ভুল জিমেইল বা পাসওয়ার্ড!');
+            }
+        }
+
+        function showDashboard() {
+            document.getElementById('login-box').classList.add('hidden');
+            document.getElementById('dashboard-box').classList.remove('hidden');
+            loadAdminData();
+        }
+
+        function adminLogout() {
+            localStorage.removeItem('isAdminLoggedIn');
+            document.getElementById('login-box').classList.remove('hidden');
+            document.getElementById('dashboard-box').classList.add('hidden');
+        }
+
+        function loadAdminData() {
+            // Load Pending Donors
+            const pending = JSON.parse(localStorage.getItem('pendingDonors') || '[]');
+            const pendingTbody = document.getElementById('pending-donors-list');
+            pendingTbody.innerHTML = '';
+            if(pending.length === 0) {
+                pendingTbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">কোনো পেন্ডিং রিকোয়েস্ট নেই</td></tr>';
+            } else {
+                pending.forEach((d, index) => {
+                    pendingTbody.innerHTML += `<tr>
+                        <td>${d.name}</td>
+                        <td><strong>${d.group}</strong></td>
+                        <td>${d.phone}</td>
+                        <td>${d.address}</td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-approve" onclick="approveDonor(${index})"><i class="fa-solid fa-check"></i> Approve</button>
+                                <button class="btn-reject" onclick="rejectDonor(${index})"><i class="fa-solid fa-xmark"></i> Reject</button>
+                            </div>
+                        </td>
+                    </tr>`;
+                });
+            }
+
+            // Load Blood Requests
+            const requests = JSON.parse(localStorage.getItem('bloodRequests') || '[]');
+            const reqTbody = document.getElementById('blood-req-list');
+            reqTbody.innerHTML = '';
+            if(requests.length === 0) {
+                reqTbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">কোনো রক্তের অনুরোধ নেই</td></tr>';
+            } else {
+                requests.forEach((r, index) => {
+                    reqTbody.innerHTML += `<tr>
+                        <td>${r.patient}</td>
+                        <td><strong>${r.group}</strong></td>
+                        <td>${r.bags} ব্যাগ</td>
+                        <td>${r.hospital}</td>
+                        <td>${r.contact}</td>
+                        <td>
+                            <button class="btn-reject" onclick="deleteRequest(${index})"><i class="fa-solid fa-trash"></i> মুছুন</button>
+                        </td>
+                    </tr>`;
+                });
+            }
+        }
+
+        function approveDonor(index) {
+            let pending = JSON.parse(localStorage.getItem('pendingDonors') || '[]');
+            let approved = JSON.parse(localStorage.getItem('approvedDonors') || '[]');
+            
+            const donor = pending.splice(index, 1)[0];
+            donor.status = 'Approved';
+            approved.push(donor);
+
+            localStorage.setItem('pendingDonors', JSON.stringify(pending));
+            localStorage.setItem('approvedDonors', JSON.stringify(approved));
+            loadAdminData();
+            alert('ডোনার সফলভাবে অ্যাপ্রুভ করা হয়েছে!');
+        }
+
+        function rejectDonor(index) {
+            let pending = JSON.parse(localStorage.getItem('pendingDonors') || '[]');
+            pending.splice(index, 1);
+            localStorage.setItem('pendingDonors', JSON.stringify(pending));
+            loadAdminData();
+            alert('ডোনার রিকোয়েস্ট বাতিল (Reject) করা হয়েছে।');
+        }
+
+        function deleteRequest(index) {
+            let requests = JSON.parse(localStorage.getItem('bloodRequests') || '[]');
+            requests.splice(index, 1);
+            localStorage.setItem('bloodRequests', JSON.stringify(requests));
+            loadAdminData();
+        }
+
+        window.onload = function() {
+            if(localStorage.getItem('isAdminLoggedIn') === 'true') {
+                showDashboard();
+            }
+        }
+    </script>
 </body>
 </html>
