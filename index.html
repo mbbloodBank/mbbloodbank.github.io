@@ -284,7 +284,7 @@ input:focus,select:focus,textarea:focus{
     color:#9b267e;
 }
 
-/* contact - Custom 3-2-1 layout as requested */
+/* contact - Custom Grid layout */
 .contact-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -293,7 +293,7 @@ input:focus,select:focus,textarea:focus{
 
 .contact-item {
     background: rgba(255, 255, 255, 0.75);
-    padding: 20px 15px;
+    padding: 18px 12px;
     border-radius: 20px;
     text-align: center;
     box-shadow: 0 10px 25px rgba(60, 20, 80, 0.08);
@@ -303,7 +303,7 @@ input:focus,select:focus,textarea:focus{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 10px;
 }
 
 .contact-item:hover {
@@ -312,31 +312,27 @@ input:focus,select:focus,textarea:focus{
     box-shadow: 0 15px 30px rgba(60, 20, 80, 0.15);
 }
 
-/* Specific span adjustments for 3-2-1 placement */
-.contact-item.span-middle {
-    grid-column: span 1;
-}
-
 .contact-item.full-bottom {
-    grid-column: 2 / 3; /* Centers the single item in the last row */
+    grid-column: 2 / 3;
 }
 
 .icon3d {
-    font-size: 28px;
-    width: 55px;
-    height: 55px;
+    font-size: 26px;
+    width: 50px;
+    height: 50px;
     background: linear-gradient(145deg, #ffffff, #eae0f5);
-    border-radius: 16px;
+    border-radius: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 8px 15px rgba(80, 20, 100, 0.12);
+    box-shadow: 0 6px 12px rgba(80, 20, 100, 0.12);
 }
 
 .contact-text {
     font-weight: 700;
-    font-size: 15px;
+    font-size: 14px;
     color: #29123f;
+    word-break: break-all;
 }
 
 /* modal */
@@ -377,7 +373,8 @@ footer{
     color:white;
 }
 
-@media(max-width:850px){
+/* Responsive design for mobile screens */
+@media(max-width: 768px){
     .contact-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -386,7 +383,7 @@ footer{
     }
 }
 
-@media(max-width:600px){
+@media(max-width: 480px){
     .grid{grid-template-columns:1fr}
     .full{grid-column:auto}
     .stats{grid-template-columns:1fr}
@@ -420,7 +417,7 @@ footer{
 
 <main class="container" id="home">
 
-    <!-- আপনার দেওয়া ব্যানার -->
+    <!-- ব্যানার -->
     <div class="banner">
         <img src="1742.png" alt="MB Blood Bank Banner">
     </div>
@@ -704,7 +701,7 @@ footer{
         <div class="glass form-box">
             <div class="contact-grid">
 
-                <!-- Row 1 (3 items) -->
+                <!-- Row 1 -->
                 <a class="contact-item" href="tel:01726232108">
                     <span class="icon3d">📞</span>
                     <span class="contact-text">01726232108</span>
@@ -720,18 +717,18 @@ footer{
                     <span class="contact-text">SMS</span>
                 </a>
 
-                <!-- Row 2 (2 items) -->
-                <a class="contact-item span-middle" href="mailto:mbbloodbank@gmail.com">
+                <!-- Row 2 -->
+                <a class="contact-item" href="mailto:mbbloodbank@gmail.com">
                     <span class="icon3d">📧</span>
                     <span class="contact-text">mbbloodbank@gmail.com</span>
                 </a>
 
-                <a class="contact-item span-middle" href="https://www.facebook.com/share/14nUzxo73ig/" target="_blank">
+                <a class="contact-item" href="https://www.facebook.com/share/14nUzxo73ig/" target="_blank">
                     <span class="icon3d">🌐</span>
                     <span class="contact-text">Facebook Page</span>
                 </a>
 
-                <!-- Row 3 (1 item centered) -->
+                <!-- Row 3 (Centered) -->
                 <a class="contact-item full-bottom" href="https://www.facebook.com/share/g/1JuuUhn4pe/" target="_blank">
                     <span class="icon3d">👥</span>
                     <span class="contact-text">Facebook Group</span>
@@ -753,8 +750,6 @@ footer{
 
 /* =========================
    BANGLADESH LOCATION DATA
-   8 Division / 64 District /
-   495 Upazila
 ========================= */
 
 const LOCATION_URL =
