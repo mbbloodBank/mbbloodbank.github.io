@@ -690,6 +690,22 @@ footer{
                     mbbloodbank@gmail.com
                 </a>
 
+                <!-- ফেসবুক পেজ (আপনার লিংক এখানে বসাবেন) -->
+                <a class="contact-item"
+                   href="https://www.facebook.com/share/1XDhtuzbtQ/"
+                   target="_blank">
+                    <span class="icon3d">🌐</span>
+                    Facebook Page
+                </a>
+
+                <!-- ফেসবুক গ্রুপ (আপনার লিংক এখানে বসাবেন) -->
+                <a class="contact-item"
+                   href="https://www.facebook.com/share/g/1Epmmisqf8/"
+                   target="_blank">
+                    <span class="icon3d">👥</span>
+                    Facebook Group
+                </a>
+
             </div>
         </div>
     </section>
@@ -812,6 +828,15 @@ function getRequests(){
 
 /* Donor Registration */
 
+function fileToBase64(file){
+    return new Promise((resolve,reject)=>{
+        const reader=new FileReader();
+        reader.onload=()=>resolve(reader.result);
+        reader.onerror=reject;
+        reader.readAsDataURL(file);
+    });
+}
+
 document.getElementById("donorForm").addEventListener("submit",async function(e){
 
     e.preventDefault();
@@ -822,19 +847,19 @@ document.getElementById("donorForm").addEventListener("submit",async function(e)
 
     const donor={
         id:id,
-        name:dName.value.trim(),
-        phone:dPhone.value.trim(),
-        blood:dBlood.value,
-        division:dDivision.value,
-        district:dDistrict.value,
-        upazila:dUpazila.value,
-        address:dAddress.value.trim(),
+        name:document.getElementById("dName").value.trim(),
+        phone:document.getElementById("dPhone").value.trim(),
+        blood:document.getElementById("dBlood").value,
+        division:document.getElementById("dDivision").value,
+        district:document.getElementById("dDistrict").value,
+        upazila:document.getElementById("dUpazila").value,
+        address:document.getElementById("dAddress").value.trim(),
         photo:"",
         status:"pending",
         createdAt:new Date().toISOString()
     };
 
-    const photoFile=dPhoto.files[0];
+    const photoFile=document.getElementById("dPhoto").files[0];
 
     if(photoFile){
         donor.photo=await fileToBase64(photoFile);
@@ -855,16 +880,6 @@ document.getElementById("donorForm").addEventListener("submit",async function(e)
 });
 
 
-function fileToBase64(file){
-    return new Promise((resolve,reject)=>{
-        const reader=new FileReader();
-        reader.onload=()=>resolve(reader.result);
-        reader.onerror=reject;
-        reader.readAsDataURL(file);
-    });
-}
-
-
 /* Emergency Request */
 
 document.getElementById("requestForm").addEventListener("submit",function(e){
@@ -875,17 +890,17 @@ document.getElementById("requestForm").addEventListener("submit",function(e){
 
     requests.push({
         id:"REQ-"+Date.now().toString().slice(-8),
-        patient:rName.value.trim(),
-        phone:rPhone.value.trim(),
-        blood:rBlood.value,
-        bags:rBags.value,
-        division:rDivision.value,
-        district:rDistrict.value,
-        upazila:rUpazila.value,
-        hospital:rHospital.value.trim(),
-        date:rDate.value,
-        urgency:rUrgency.value,
-        info:rInfo.value.trim(),
+        patient:document.getElementById("rName").value.trim(),
+        phone:document.getElementById("rPhone").value.trim(),
+        blood:document.getElementById("rBlood").value,
+        bags:document.getElementById("rBags").value,
+        division:document.getElementById("rDivision").value,
+        district:document.getElementById("rDistrict").value,
+        upazila:document.getElementById("rUpazila").value,
+        hospital:document.getElementById("rHospital").value.trim(),
+        date:document.getElementById("rDate").value,
+        urgency:document.getElementById("rUrgency").value,
+        info:document.getElementById("rInfo").value.trim(),
         status:"pending",
         createdAt:new Date().toISOString()
     });
