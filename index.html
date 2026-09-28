@@ -284,55 +284,51 @@ input:focus,select:focus,textarea:focus{
     color:#9b267e;
 }
 
-/* contact - Custom Grid layout */
+/* Custom Contact Section matching the image[span_1](start_span)[span_1](end_span) */
 .contact-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
 }
 
-.contact-item {
-    background: rgba(255, 255, 255, 0.75);
-    padding: 18px 12px;
+.contact-card {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 20px 15px;
     border-radius: 20px;
     text-align: center;
     box-shadow: 0 10px 25px rgba(60, 20, 80, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.9);
-    transition: all 0.3s ease;
+    transition: transform 0.25s ease, background 0.25s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
 }
 
-.contact-item:hover {
-    transform: translateY(-4px);
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 15px 30px rgba(60, 20, 80, 0.15);
+.contact-card:hover {
+    transform: translateY(-3px);
+    background: #ffffff;
 }
 
-.contact-item.full-bottom {
-    grid-column: 2 / 3;
+.contact-card.full-width {
+    grid-column: 1 / -1;
+    max-width: 350px;
+    margin: 0 auto;
+    width: 100%;
 }
 
-.icon3d {
-    font-size: 26px;
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(145deg, #ffffff, #eae0f5);
-    border-radius: 15px;
+.contact-icon {
+    font-size: 28px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 6px 12px rgba(80, 20, 100, 0.12);
 }
 
 .contact-text {
     font-weight: 700;
-    font-size: 14px;
+    font-size: 15px;
     color: #29123f;
-    word-break: break-all;
 }
 
 /* modal */
@@ -373,28 +369,28 @@ footer{
     color:white;
 }
 
-/* Responsive design for mobile screens */
-@media(max-width: 768px){
+@media(max-width:800px){
     .contact-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    .contact-item.full-bottom {
-        grid-column: span 2;
+    .contact-card.full-width {
+        grid-column: 1 / -1;
     }
 }
 
-@media(max-width: 480px){
+@media(max-width:550px){
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+    .contact-card.full-width {
+        grid-column: 1;
+        max-width: 100%;
+    }
     .grid{grid-template-columns:1fr}
     .full{grid-column:auto}
     .stats{grid-template-columns:1fr}
     .section-title{font-size:23px}
     .banner{margin-top:10px}
-    .contact-grid {
-        grid-template-columns: 1fr;
-    }
-    .contact-item.full-bottom {
-        grid-column: span 1;
-    }
 }
 </style>
 </head>
@@ -417,7 +413,7 @@ footer{
 
 <main class="container" id="home">
 
-    <!-- ব্যানার -->
+    <!-- আপনার দেওয়া ব্যানার -->
     <div class="banner">
         <img src="1742.png" alt="MB Blood Bank Banner">
     </div>
@@ -681,57 +677,60 @@ footer{
             <p style="text-align:center; margin-bottom: 15px; font-weight: 700;">
                 জরুরি প্রয়োজনে এম্বুলেন্স বুকিং বা যোগাযোগের জন্য নিচের নাম্বারে যোগাযোগ করুন
             </p>
-            <div class="contact-grid">
-                <a class="contact-item" href="tel:01726232108">
-                    <span class="icon3d">🚑</span>
-                    <span class="contact-text">এম্বুলেন্স কল করুন</span>
+            <div class="grid" style="grid-template-columns: repeat(2, 1fr);">
+                <a class="contact-card" href="tel:01726232108" style="grid-column: span 1;">
+                    <div class="contact-icon">🚑</div>
+                    <div class="contact-text">এম্বুলেন্স কল করুন</div>
                 </a>
-                <a class="contact-item" href="https://wa.me/8801726232108" target="_blank">
-                    <span class="icon3d">💬</span>
-                    <span class="contact-text">WhatsApp এম্বুলেন্স</span>
+                <a class="contact-card" href="https://wa.me/8801726232108" target="_blank" style="grid-column: span 1;">
+                    <div class="contact-icon">💬</div>
+                    <div class="contact-text">WhatsApp এম্বুলেন্স</div>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- CONTACT -->
+    <!-- CONTACT (Matching the image layout exactly) -->
     <section id="contact">
         <h2 class="section-title">📞 যোগাযোগ করুন</h2>
 
         <div class="glass form-box">
             <div class="contact-grid">
 
-                <!-- Row 1 -->
-                <a class="contact-item" href="tel:01726232108">
-                    <span class="icon3d">📞</span>
-                    <span class="contact-text">01726232108</span>
+                <!-- 1. Phone -->
+                <a class="contact-card" href="tel:01726232108">
+                    <div class="contact-icon">📞</div>
+                    <div class="contact-text">01726232108</div>
                 </a>
 
-                <a class="contact-item" href="https://wa.me/8801726232108" target="_blank">
-                    <span class="icon3d">💬</span>
-                    <span class="contact-text">WhatsApp</span>
+                <!-- 2. WhatsApp -->
+                <a class="contact-card" href="https://wa.me/8801726232108" target="_blank">
+                    <div class="contact-icon">💬</div>
+                    <div class="contact-text">WhatsApp</div>
                 </a>
 
-                <a class="contact-item" href="sms:01726232108">
-                    <span class="icon3d">✉️</span>
-                    <span class="contact-text">SMS</span>
+                <!-- 3. SMS -->
+                <a class="contact-card" href="sms:01726232108">
+                    <div class="contact-icon">✉️</div>
+                    <div class="contact-text">SMS</div>
                 </a>
 
-                <!-- Row 2 -->
-                <a class="contact-item" href="mailto:mbbloodbank@gmail.com">
-                    <span class="icon3d">📧</span>
-                    <span class="contact-text">mbbloodbank@gmail.com</span>
+                <!-- 4. Email -->
+                <a class="contact-card" href="mailto:mbbloodbank@gmail.com">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-text">mbbloodbank@gmail.com</div>
                 </a>
 
-                <a class="contact-item" href="https://www.facebook.com/share/14nUzxo73ig/" target="_blank">
-                    <span class="icon3d">🌐</span>
-                    <span class="contact-text">Facebook Page</span>
+                <!-- 5. Facebook Page -->
+                <a class="contact-card" href="https://www.facebook.com/share/14nUzxo73ig/" target="_blank">
+                    <div class="contact-icon">🌐</div>
+                    <div class="contact-text">Facebook Page</div>
                 </a>
 
-                <!-- Row 3 (Centered) -->
-                <a class="contact-item full-bottom" href="https://www.facebook.com/share/g/1JuuUhn4pe/" target="_blank">
-                    <span class="icon3d">👥</span>
-                    <span class="contact-text">Facebook Group</span>
+                <!-- 6. Facebook Group (Centered below) -->
+                <a class="contact-card full-width" href="https://www.facebook.com/share/g/1JuuUhn4pe/" target="_blank">
+                    <div class="contact-icon">👥</div>
+                    <div class="contact-text">Facebook Group</div>
                 </a>
 
             </div>
@@ -750,6 +749,8 @@ footer{
 
 /* =========================
    BANGLADESH LOCATION DATA
+   8 Division / 64 District /
+   495 Upazila
 ========================= */
 
 const LOCATION_URL =
