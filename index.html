@@ -318,6 +318,19 @@ input:focus,select:focus,textarea:focus{
     justify-content: center;
 }
 
+/* Custom 3D Logo Styling inside Cards */
+.contact-icon img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+    transition: transform 0.3s ease;
+}
+
+.contact-card:hover .contact-icon img {
+    transform: scale(1.1);
+}
+
 .contact-text {
     font-weight: 700;
     font-size: 15px;
@@ -681,14 +694,16 @@ footer{
                     <div class="contact-text">এম্বুলেন্স কল করুন</div>
                 </a>
                 <a class="contact-card" href="https://wa.me/8801726232108" target="_blank" style="width:100%">
-                    <div class="contact-icon">💬</div>
+                    <div class="contact-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+                    </div>
                     <div class="contact-text">WhatsApp এম্বুলেন্স</div>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- CONTACT (Fixed Layout matching your image) -->
+    <!-- CONTACT (Updated with 3D/Original Logos) -->
     <section id="contact">
         <h2 class="section-title">📞 যোগাযোগ করুন</h2>
 
@@ -701,9 +716,11 @@ footer{
                     <div class="contact-text">01726232108</div>
                 </a>
 
-                <!-- 2. WhatsApp -->
+                <!-- 2. WhatsApp (3D Logo) -->
                 <a class="contact-card" href="https://wa.me/8801726232108" target="_blank">
-                    <div class="contact-icon">💬</div>
+                    <div class="contact-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+                    </div>
                     <div class="contact-text">WhatsApp</div>
                 </a>
 
@@ -719,15 +736,19 @@ footer{
                     <div class="contact-text">mbbloodbank@gmail.com</div>
                 </a>
 
-                <!-- 5. Facebook Page -->
+                <!-- 5. Facebook Page (3D Logo) -->
                 <a class="contact-card" href="https://www.facebook.com/share/14nUzxo73ig/" target="_blank">
-                    <div class="contact-icon">🌐</div>
+                    <div class="contact-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook Page">
+                    </div>
                     <div class="contact-text">Facebook Page</div>
                 </a>
 
-                <!-- 6. Facebook Group (Centered Full Width on bottom) -->
+                <!-- 6. Facebook Group (3D Logo) -->
                 <a class="contact-card full-width" href="https://www.facebook.com/share/g/1JuuUhn4pe/" target="_blank">
-                    <div class="contact-icon">👥</div>
+                    <div class="contact-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook Group">
+                    </div>
                     <div class="contact-text">Facebook Group</div>
                 </a>
 
@@ -1015,7 +1036,7 @@ function updateStats(){
         donors.filter(x=>x.status==="approved").length;
 
     document.getElementById("pendingCount").textContent=
-        donors.filter(x=>x.status===pending).length;
+        donors.filter(x=>x.status==="pending").length;
 
     document.getElementById("requestCount").textContent=
         requests.length;
