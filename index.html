@@ -284,64 +284,123 @@ input:focus,select:focus,textarea:focus{
     color:#9b267e;
 }
 
-/* Yellow Fund Section Style */
+/* Yellow Fund Section Design */
 .yellow-fund-box {
-    background: #f7ca54;
-    border-radius: 28px;
-    padding: 30px 20px;
-    box-shadow: 0 15px 40px rgba(200, 150, 0, 0.2);
+    background: linear-gradient(135deg, #fce38a, #f38181);
+    background-color: #f6c954;
+    border-radius: 25px;
+    padding: 25px;
+    box-shadow: 0 15px 35px rgba(150, 100, 20, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
-.yellow-fund-title {
-    text-align: center;
-    font-size: 26px;
-    font-weight: 800;
-    color: #1a1a1a;
-    margin-bottom: 25px;
-}
-
-.fund-form-group {
-    margin-bottom: 18px;
-}
-
-.fund-form-group label {
-    font-weight: 800;
-    color: #1a1a1a;
-    margin-bottom: 8px;
-    display: block;
-}
-
-.fund-input {
+.yellow-btn {
     width: 100%;
     padding: 15px;
-    border-radius: 14px;
-    border: none;
-    background: #ffffff;
-    font-family: inherit;
-    font-size: 15px;
-    outline: none;
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
-}
-
-.green-donate-btn {
-    width: 100%;
-    padding: 16px;
-    border: none;
-    border-radius: 14px;
-    background: #118a42;
-    color: white;
+    border: 0;
+    border-radius: 15px;
+    color: #fff;
     font-family: inherit;
     font-size: 18px;
     font-weight: 800;
     cursor: pointer;
-    box-shadow: 0 8px 20px rgba(17, 138, 66, 0.3);
-    transition: 0.2s;
+    background: #008751;
+    box-shadow: 0 8px 20px rgba(0, 135, 81, 0.3);
+    transition: 0.25s;
 }
 
-.green-donate-btn:hover {
-    background: #0e7237;
+.yellow-btn:hover {
+    background: #006c40;
     transform: translateY(-2px);
+}
+
+/* Gateway Modal Styles */
+.gateway-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    padding: 20px;
+    overflow: auto;
+}
+
+.gateway-box {
+    width: min(480px, 100%);
+    margin: 40px auto;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    overflow: hidden;
+    position: relative;
+    padding: 20px;
+}
+
+.gateway-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f1f5f9;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.gateway-tabs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.gateway-tab {
+    padding: 12px;
+    text-align: center;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s;
+}
+
+.gateway-tab.active {
+    border-color: #0066ff;
+    background: #eff6ff;
+    color: #0066ff;
+}
+
+.channel-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.channel-card {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.channel-card img {
+    width: 50px;
+    height: 35px;
+    object-fit: contain;
+}
+
+.channel-card.active {
+    border-color: #008751;
+    background: #f0fdf4;
 }
 
 /* Contact & Ambulance Section Grid Styles */
@@ -411,8 +470,8 @@ input:focus,select:focus,textarea:focus{
 }
 
 .modal-box{
-    width:min(500px,100%);
-    margin:40px auto;
+    width:min(600px,100%);
+    margin:60px auto;
     padding:25px;
     position:relative;
     background:#ffffff;
@@ -450,65 +509,6 @@ input:focus,select:focus,textarea:focus{
     font-size: 14px;
     margin: 3px 0;
     color: #29123f;
-}
-
-/* Payment Gateway Mock Styles */
-.payment-header {
-    background: #f0f4f8;
-    padding: 15px;
-    border-radius: 14px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.payment-tabs {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.pay-tab {
-    padding: 12px;
-    border: 2px solid #ddd;
-    border-radius: 12px;
-    text-align: center;
-    font-weight: 700;
-    cursor: pointer;
-    background: #fff;
-    transition: 0.2s;
-}
-
-.pay-tab.active {
-    border-color: #0066ff;
-    background: #eef4ff;
-    color: #0066ff;
-}
-
-.gateway-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin-bottom: 20px;
-}
-
-.gateway-item {
-    border: 2px solid #eee;
-    padding: 15px;
-    border-radius: 12px;
-    text-align: center;
-    cursor: pointer;
-    font-weight: 700;
-    background: #fff;
-    transition: 0.2s;
-}
-
-.gateway-item:hover, .gateway-item.selected {
-    border-color: #118a42;
-    background: #f1fbf4;
-    color: #118a42;
 }
 
 /* footer */
@@ -751,7 +751,7 @@ footer{
 
                     <div>
                         <label>প্রয়োজনের তারিখ *</label>
-                        <select id="rDate" type="date" required></select> <!-- Fixed input tag compatibility -->
+                        <input id="rDate" type="date" required>
                     </div>
 
                     <div>
@@ -777,31 +777,37 @@ footer{
         </div>
     </section>
 
-    <!-- MB MANOBOTA FUND (Yellow Box Style) -->
+    <!-- MB MANOBOTA FUND (Yellow Design) -->
     <section id="fund">
+        <h2 class="section-title">❤️️ MB মানবতা ফান্ড</h2>
+
         <div class="yellow-fund-box">
-            <h2 class="yellow-fund-title">আপনার অনুদান প্রদান করুন</h2>
+            <h2 style="text-align:center; font-size:24px; color:#29123f; margin-bottom:20px;">আপনার অনুদান প্রদান করুন</h2>
             
-            <div class="fund-form-group">
-                <label>তহবিল *</label>
-                <select id="fundType" class="fund-input">
+            <div style="margin-bottom:15px;">
+                <label style="color:#29123f; font-weight:800; margin-bottom:5px; display:block;">তহবিল *</label>
+                <select id="fundType" style="width:100%; padding:14px; border-radius:14px; border:1px solid #ccc; background:#fff; font-size:15px;">
                     <option value="">নির্বাচন করুন</option>
-                    <option>❤️ MB মানবতা ফান্ড (রক্তদান ও জরুরি সহায়তা)</option>
-                    <option>🩸 ফ্রি ব্লাড ক্যাম্পেইন ফান্ড</option>
+                    <option value="Blood Donation">রক্তদান কার্যক্রম ফান্ড</option>
+                    <option value="Emergency Patient">জরুরি রোগী সহায়তা ফান্ড</option>
                 </select>
             </div>
 
-            <div class="fund-form-group">
-                <label>মোবাইল / ইমেইল *</label>
-                <input type="text" id="fundContact" class="fund-input" placeholder="মোবাইল নম্বর / ইমেইল লিখুন">
+            <div style="margin-bottom:15px;">
+                <label style="color:#29123f; font-weight:800; margin-bottom:5px; display:block;">মোবাইল / ইমেইল *</label>
+                <input id="fundContact" placeholder="মোবাইল নম্বর / ইমেইল লিখুন" style="width:100%; padding:14px; border-radius:14px; border:1px solid #ccc; background:#fff; font-size:15px;">
             </div>
 
-            <div class="fund-form-group">
-                <label>পরিমাণ *</label>
-                <input type="number" id="fundAmount" class="fund-input" placeholder="টাকার সংখ্যায় লিখুন">
+            <div style="margin-bottom:20px;">
+                <label style="color:#29123f; font-weight:800; margin-bottom:5px; display:block;">পরিমাণ *</label>
+                <input id="fundAmount" type="number" placeholder="৳ সংখ্যায় লিখুন" style="width:100%; padding:14px; border-radius:14px; border:1px solid #ccc; background:#fff; font-size:15px;">
             </div>
 
-            <button class="green-donate-btn" onclick="openPaymentModal()">দান করুন</button>
+            <button class="yellow-btn" onclick="openGatewayModal()">দান করুন</button>
+            
+            <p style="text-align:center; margin-top:15px; font-weight:700; color:#29123f;">
+                আপনার ছোট্ট অনুদানে সচল থাকতে পারে আমাদের রক্তদানের কার্যক্রম।
+            </p>
         </div>
     </section>
 
@@ -912,40 +918,68 @@ footer{
 </div>
 
 <!-- Payment Gateway Modal -->
-<div id="paymentModal" class="modal">
-    <div class="modal-box">
-        <button class="close" onclick="closePaymentModal()">&times;</button>
-        
-        <div class="payment-header">
-            <div>
-                <span style="font-size: 13px; color: #555;">You are paying</span>
-                <h3 id="displayAmount" style="color: #118a42; font-size: 22px;">৳0.00</h3>
+<div id="gatewayModal" class="gateway-modal">
+    <div class="gateway-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <h4 style="font-size:16px; color:#333;">You are paying</h4>
+            <button class="close" style="position:static;" onclick="closeGatewayModal()">&times;</button>
+        </div>
+
+        <div style="background:#f1f5f9; padding:15px; border-radius:12px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;">
+            <span id="displayAmount" style="font-size:22px; font-weight:bold; color:#0f172a;">৳0.00</span>
+            <span style="font-size:12px; background:#e2e8f0; padding:4px 8px; border-radius:6px;">MB Fund</span>
+        </div>
+
+        <div class="gateway-tabs">
+            <div class="gateway-tab active" id="tabMobile" onclick="switchGatewayTab('mobile')">Mobile Banking</div>
+            <div class="gateway-tab" id="tabNet" onclick="switchGatewayTab('net')">Net Banking</div>
+        </div>
+
+        <!-- Mobile Banking Channels -->
+        <div id="mobileChannels" class="channel-grid">
+            <div class="channel-card" onclick="selectChannel(this, 'bKash', '01726232108')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Bkash_logo.svg" alt="bKash">
+                <span style="font-size:12px; font-weight:bold;">bKash</span>
             </div>
-            <div style="font-weight: 700; color: #333;">MB Blood Bank Fund</div>
+            <div class="channel-card" onclick="selectChannel(this, 'Nagad', '01726232108')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/Nagad_Logo.svg" alt="Nagad">
+                <span style="font-size:12px; font-weight:bold;">Nagad</span>
+            </div>
+            <div class="channel-card" onclick="selectChannel(this, 'Rocket', '01726232108-0')">
+                <img src="https://www.logo.wine/a/logo/Rocket_(mobile_banking)/Rocket_(mobile_banking)-Logo.wine.svg" alt="Rocket">
+                <span style="font-size:12px; font-weight:bold;">Rocket</span>
+            </div>
+            <div class="channel-card" onclick="selectChannel(this, 'Upay', '01726232108')">
+                <img src="https://seeklogo.com/images/U/upay-logo-5E00C89CE8-seeklogo.com.png" alt="Upay">
+                <span style="font-size:12px; font-weight:bold;">Upay</span>
+            </div>
         </div>
 
-        <div class="payment-tabs">
-            <div class="pay-tab active" id="tabMobile" onclick="switchPayTab('mobile')">Mobile Banking</div>
-            <div class="pay-tab" id="tabNet" onclick="switchPayTab('net')">Net Banking</div>
+        <!-- Net Banking Channels -->
+        <div id="netChannels" class="channel-grid" style="display:none;">
+            <div class="channel-card" onclick="selectChannel(this, 'DBBL Net Banking', '123.105.XXXXX')">
+                <span style="font-size:14px; font-weight:bold; color:#0055a5;">DBBL Bank</span>
+                <span style="font-size:11px; color:#555;">Dutch Bangla</span>
+            </div>
+            <div class="channel-card" onclick="selectChannel(this, 'IBBL Net Banking', '456.789.XXXXX')">
+                <span style="font-size:14px; font-weight:bold; color:#008751;">Islami Bank</span>
+                <span style="font-size:11px; color:#555;">IBBL</span>
+            </div>
+            <div class="channel-card" onclick="selectChannel(this, 'MTB Net Banking', '789.123.XXXXX')">
+                <span style="font-size:14px; font-weight:bold; color:#cc0000;">MTB Bank</span>
+                <span style="font-size:11px; color:#555;">Mutual Trust</span>
+            </div>
+            <div class="channel-card" onclick="selectChannel(this, 'City Bank', '321.654.XXXXX')">
+                <span style="font-size:14px; font-weight:bold; color:#002b49;">City Bank</span>
+                <span style="font-size:11px; color:#555;">City Touch</span>
+            </div>
         </div>
 
-        <!-- Mobile Banking Options -->
-        <div id="mobileBankingContainer" class="gateway-grid">
-            <div class="gateway-item" onclick="selectGateway(this, 'bKash')"><b>bKash</b><br><small>Personal</small></div>
-            <div class="gateway-item" onclick="selectGateway(this, 'Nagad')"><b>নগদ (Nagad)</b><br><small>Personal</small></div>
-            <div class="gateway-item" onclick="selectGateway(this, 'Rocket')"><b>রকেট (Rocket)</b><br><small>Agent</small></div>
-            <div class="gateway-item" onclick="selectGateway(this, 'Upay')"><b>উপায় (Upay)</b><br><small>Wallet</small></div>
+        <div id="paymentInstructions" style="display:none; margin-top:15px; padding:12px; background:#f8fafc; border-radius:10px; font-size:13px; color:#334155;">
+            <!-- Dynamic instructions -->
         </div>
 
-        <!-- Net Banking Options -->
-        <div id="netBankingContainer" class="gateway-grid" style="display: none;">
-            <div class="gateway-item" onclick="selectGateway(this, 'DBBL')"><b>DBBL (Dutch Bangla)</b></div>
-            <div class="gateway-item" onclick="selectGateway(this, 'IBBL')"><b>Islami Bank (IBBL)</b></div>
-            <div class="gateway-item" onclick="selectGateway(this, 'ABBank')"><b>AB Bank</b></div>
-            <div class="gateway-item" onclick="selectGateway(this, 'MTB')"><b>MTB Bank</b></div>
-        </div>
-
-        <button class="green-donate-btn" onclick="confirmPayment()" style="margin-top: 10px;">পরিশোধ করুন</button>
+        <button id="payActionBtn" class="yellow-btn" style="margin-top:20px; opacity:0.5; pointer-events:none;" onclick="completePayment()">Pay ৳0.00</button>
     </div>
 </div>
 
@@ -1055,75 +1089,99 @@ function closeAmbulanceModal(){
     document.getElementById("ambulanceModal").style.display = "none";
 }
 
-/* Payment Gateway Modal Functions */
-let selectedGatewayName = "";
+window.onclick = function(event) {
+    const ambModal = document.getElementById("ambulanceModal");
+    const gatewayModal = document.getElementById("gatewayModal");
+    if (event.target == ambModal) {
+        ambModal.style.display = "none";
+    }
+    if (event.target == gatewayModal) {
+        gatewayModal.style.display = "none";
+    }
+}
 
-function openPaymentModal(){
+/* Gateway Modal Logic */
+let selectedChannelName = "";
+let selectedChannelAccount = "";
+let currentAmount = 0;
+
+function openGatewayModal(){
     const fundType = document.getElementById("fundType").value;
     const contact = document.getElementById("fundContact").value.trim();
     const amount = document.getElementById("fundAmount").value.trim();
 
     if(!fundType || !contact || !amount || amount <= 0){
-        alert("দয়া করে তহবিল নির্বাচন করুন এবং সঠিক মোবাইল/ইমেইল ও টাকার পরিমাণ লিখুন।");
+        alert("দয়া করে তহবিল, মোবাইল/ইমেইল এবং সঠিক পরিমাণ পূরণ করুন।");
         return;
     }
 
-    document.getElementById("displayAmount").textContent = "৳" + Number(amount).toLocaleString('en-IN', {minimumFractionDigits: 2});
-    document.getElementById("paymentModal").style.display = "block";
+    currentAmount = amount;
+    document.getElementById("displayAmount").textContent = "৳ " + Number(amount).toLocaleString();
+    document.getElementById("gatewayModal").style.display = "block";
+    
+    // Reset selection
+    document.querySelectorAll(".channel-card").forEach(c => c.classList.remove("active"));
+    document.getElementById("paymentInstructions").style.display = "none";
+    const btn = document.getElementById("payActionBtn");
+    btn.style.opacity = "0.5";
+    btn.style.pointerEvents = "none";
+    btn.textContent = `Pay ৳${Number(amount).toLocaleString()}`;
 }
 
-function closePaymentModal(){
-    document.getElementById("paymentModal").style.display = "none";
+function closeGatewayModal(){
+    document.getElementById("gatewayModal").style.display = "none";
 }
 
-function switchPayTab(type){
+function switchGatewayTab(tab){
     const tabMobile = document.getElementById("tabMobile");
     const tabNet = document.getElementById("tabNet");
-    const mobContainer = document.getElementById("mobileBankingContainer");
-    const netContainer = document.getElementById("netBankingContainer");
+    const mobileChannels = document.getElementById("mobileChannels");
+    const netChannels = document.getElementById("netChannels");
 
-    if(type === 'mobile'){
+    if(tab === 'mobile'){
         tabMobile.classList.add("active");
         tabNet.classList.remove("active");
-        mobContainer.style.display = "grid";
-        netContainer.style.display = "none";
+        mobileChannels.style.display = "grid";
+        netChannels.style.display = "none";
     } else {
         tabNet.classList.add("active");
         tabMobile.classList.remove("active");
-        netContainer.style.display = "grid";
-        mobContainer.style.display = "none";
+        netChannels.style.display = "grid";
+        mobileChannels.style.display = "none";
     }
-    selectedGatewayName = "";
+    
+    document.querySelectorAll(".channel-card").forEach(c => c.classList.remove("active"));
+    document.getElementById("paymentInstructions").style.display = "none";
+    const btn = document.getElementById("payActionBtn");
+    btn.style.opacity = "0.5";
+    btn.style.pointerEvents = "none";
 }
 
-function selectGateway(el, name){
-    document.querySelectorAll(".gateway-item").forEach(item => item.classList.remove("selected"));
-    el.classList.add("selected");
-    selectedGatewayName = name;
+function selectChannel(cardElement, name, account){
+    document.querySelectorAll(".channel-card").forEach(c => c.classList.remove("active"));
+    cardElement.classList.add("active");
+
+    selectedChannelName = name;
+    selectedChannelAccount = account;
+
+    const inst = document.getElementById("paymentInstructions");
+    inst.style.display = "block";
+    inst.innerHTML = `<b>Selected:</b> ${name}<br><b>Account Number:</b> <span style="color:#008751; font-weight:bold;">${account}</span><br><small>*টাকা সেন্ড করার পর লেনদেন সফল হলে কনফার্ম করুন।</small>`;
+
+    const btn = document.getElementById("payActionBtn");
+    btn.style.opacity = "1";
+    btn.style.pointerEvents = "auto";
+    btn.textContent = `Pay ৳${Number(currentAmount).toLocaleString()} via ${name}`;
 }
 
-function confirmPayment(){
-    if(!selectedGatewayName){
-        alert("দয়া করে যেকোনো একটি ব্যাংক বা মোবাইল ব্যাংকিং মাধ্যম নির্বাচন করুন।");
-        return;
-    }
-    alert(`ধন্যবাদ! আপনি ${selectedGatewayName} এর মাধ্যমে অনুদান দেওয়ার জন্য সিলেক্ট করেছেন। পেমেন্ট প্রসেসিং সম্পন্ন করা হচ্ছে।`);
-    closePaymentModal();
+function completePayment(){
+    alert(`✅ সফলভাবে অনুদান প্রক্রিয়া সম্পন্ন হয়েছে!\nমাধ্যম: ${selectedChannelName}\nএকাউন্ট: ${selectedChannelAccount}\nপরিমাণ: ৳${currentAmount}\n\nMB মানবতা ফান্ডে সহযোগিতার জন্য আপনাকে ধন্যবাদ!`);
+    closeGatewayModal();
     document.getElementById("fundType").value = "";
     document.getElementById("fundContact").value = "";
     document.getElementById("fundAmount").value = "";
 }
 
-window.onclick = function(event) {
-    const ambModal = document.getElementById("ambulanceModal");
-    const payModal = document.getElementById("paymentModal");
-    if (event.target == ambModal) {
-        ambModal.style.display = "none";
-    }
-    if (event.target == payModal) {
-        payModal.style.display = "none";
-    }
-}
 
 /* Render Ambulance List from LocalStorage */
 function renderAmbulanceList(){
