@@ -284,19 +284,19 @@ input:focus,select:focus,textarea:focus{
     color:#9b267e;
 }
 
-/* Updated Contact Section Layout (Fixed Grid) */
+/* Compact Contact Section Layout (Small Cards & 2-column Grid) */
 .contact-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
 }
 
 .contact-card {
     background: #ffffff;
-    padding: 22px 15px;
-    border-radius: 20px;
+    padding: 14px 10px;
+    border-radius: 16px;
     text-align: center;
-    box-shadow: 0 10px 25px rgba(70, 20, 100, 0.08);
+    box-shadow: 0 6px 18px rgba(70, 20, 100, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.9);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     display: flex;
@@ -306,13 +306,13 @@ input:focus,select:focus,textarea:focus{
 }
 
 .contact-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 15px 30px rgba(70, 20, 100, 0.12);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 22px rgba(70, 20, 100, 0.1);
 }
 
 .contact-icon {
-    font-size: 32px;
-    margin-bottom: 10px;
+    font-size: 26px;
+    margin-bottom: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -320,10 +320,10 @@ input:focus,select:focus,textarea:focus{
 
 /* Custom 3D Logo Styling inside Cards */
 .contact-icon img {
-    width: 42px;
-    height: 42px;
+    width: 32px;
+    height: 32px;
     object-fit: contain;
-    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+    filter: drop-shadow(0 3px 5px rgba(0,0,0,0.15));
     transition: transform 0.3s ease;
 }
 
@@ -333,17 +333,9 @@ input:focus,select:focus,textarea:focus{
 
 .contact-text {
     font-weight: 700;
-    font-size: 15px;
+    font-size: 13px;
     color: #29123f;
     word-break: break-word;
-}
-
-/* Full width card for Facebook Group at the bottom */
-.contact-card.full-width {
-    grid-column: 1 / -1;
-    max-width: 320px;
-    margin: 0 auto;
-    width: 100%;
 }
 
 /* modal */
@@ -384,20 +376,13 @@ footer{
     color:white;
 }
 
-@media(max-width:768px){
+@media(min-width: 768px){
     .contact-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .contact-card.full-width {
-        grid-column: 1 / -1;
-        max-width: 100%;
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media(max-width:480px){
-    .contact-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
     .grid{grid-template-columns:1fr}
     .full{grid-column:auto}
     .stats{grid-template-columns:1fr}
@@ -703,7 +688,7 @@ footer{
         </div>
     </section>
 
-    <!-- CONTACT (Updated with 3D/Original Logos) -->
+    <!-- CONTACT (Updated Layout & Facebook Group next to Page) -->
     <section id="contact">
         <h2 class="section-title">📞 যোগাযোগ করুন</h2>
 
@@ -716,7 +701,7 @@ footer{
                     <div class="contact-text">01726232108</div>
                 </a>
 
-                <!-- 2. WhatsApp (3D Logo) -->
+                <!-- 2. WhatsApp -->
                 <a class="contact-card" href="https://wa.me/8801726232108" target="_blank">
                     <div class="contact-icon">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
@@ -736,7 +721,7 @@ footer{
                     <div class="contact-text">mbbloodbank@gmail.com</div>
                 </a>
 
-                <!-- 5. Facebook Page (3D Logo) -->
+                <!-- 5. Facebook Page -->
                 <a class="contact-card" href="https://www.facebook.com/share/14nUzxo73ig/" target="_blank">
                     <div class="contact-icon">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook Page">
@@ -744,8 +729,8 @@ footer{
                     <div class="contact-text">Facebook Page</div>
                 </a>
 
-                <!-- 6. Facebook Group (3D Logo) -->
-                <a class="contact-card full-width" href="https://www.facebook.com/share/g/1JuuUhn4pe/" target="_blank">
+                <!-- 6. Facebook Group (Placed right beside Facebook Page) -->
+                <a class="contact-card" href="https://www.facebook.com/share/g/1JuuUhn4pe/" target="_blank">
                     <div class="contact-icon">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook Group">
                     </div>
