@@ -338,6 +338,36 @@ input:focus,select:focus,textarea:focus{
     word-break: break-word;
 }
 
+/* Ambulance List Grid */
+.ambulance-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.ambulance-card {
+    background: #ffffff;
+    padding: 18px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(70, 20, 100, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ambulance-card h3 {
+    font-size: 17px;
+    color: #6825a5;
+    margin-bottom: 4px;
+}
+
+.ambulance-card p {
+    font-size: 14px;
+    color: #29123f;
+}
+
 /* modal */
 .modal{
     display:none;
@@ -670,25 +700,37 @@ footer{
         <h2 class="section-title">🚑 এম্বুলেন্স সেবা</h2>
 
         <div class="glass form-box">
-            <p style="text-align:center; margin-bottom: 15px; font-weight: 700;">
-                জরুরি প্রয়োজনে এম্বুলেন্স বুকিং বা যোগাযোগের জন্য নিচের নাম্বারে যোগাযোগ করুন
+            <p style="text-align:center; margin-bottom: 10px; font-weight: 700;">
+                জরুরি প্রয়োজনে এম্বুলেন্স বুকিং বা যোগাযোগের জন্য তালিকা নিচে দেওয়া হলো:
             </p>
-            <div class="grid" style="grid-template-columns: repeat(2, 1fr);">
-                <a class="contact-card" href="tel:01726232108" style="width:100%">
-                    <div class="contact-icon">🚑</div>
-                    <div class="contact-text">এম্বুলেন্স কল করুন</div>
-                </a>
-                <a class="contact-card" href="https://wa.me/8801726232108" target="_blank" style="width:100%">
-                    <div class="contact-icon">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+
+            <div class="ambulance-grid">
+                <!-- Ambulance 1 -->
+                <div class="ambulance-card">
+                    <h3>🚑 সেবা এম্বুলেন্স সার্ভিস</h3>
+                    <p><b>📞 নাম্বার:</b> <a href="tel:01726232108" style="color:#6825a5; font-weight:700;">01726232108</a></p>
+                    <p><b>📍 ঠিকানা:</b> কেন্দ্রীয় বাস টার্মিনাল সংলগ্ন</p>
+                    <div class="card-actions" style="margin-top:8px;">
+                        <a class="small-btn" href="tel:01726232108">📞 কল করুন</a>
+                        <a class="small-btn" href="https://wa.me/8801726232108" target="_blank">💬 WhatsApp</a>
                     </div>
-                    <div class="contact-text">WhatsApp এম্বুলেন্স</div>
-                </a>
+                </div>
+
+                <!-- Ambulance 2 -->
+                <div class="ambulance-card">
+                    <h3>🚑 আল-আফসা এম্বুলেন্স</h3>
+                    <p><b>📞 নাম্বার:</b> <a href="tel:01700000000" style="color:#6825a5; font-weight:700;">01700000000</a></p>
+                    <p><b>📍 ঠিকানা:</b> সদর হাসপাতাল রোড</p>
+                    <div class="card-actions" style="margin-top:8px;">
+                        <a class="small-btn" href="tel:01700000000">📞 কল করুন</a>
+                        <a class="small-btn" href="https://wa.me/8801700000000" target="_blank">💬 WhatsApp</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- CONTACT (Updated Layout & Facebook Group next to Page) -->
+    <!-- CONTACT -->
     <section id="contact">
         <h2 class="section-title">📞 যোগাযোগ করুন</h2>
 
@@ -729,7 +771,7 @@ footer{
                     <div class="contact-text">Facebook Page</div>
                 </a>
 
-                <!-- 6. Facebook Group (Placed right beside Facebook Page) -->
+                <!-- 6. Facebook Group -->
                 <a class="contact-card" href="https://www.facebook.com/share/g/1JuuUhn4pe/" target="_blank">
                     <div class="contact-icon">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook Group">
