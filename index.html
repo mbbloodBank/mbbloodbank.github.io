@@ -284,7 +284,7 @@ input:focus,select:focus,textarea:focus{
     color:#9b267e;
 }
 
-/* Compact Contact Section Layout (Small Cards & 2-column Grid) */
+/* Contact & Ambulance Section Grid Styles */
 .contact-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -303,6 +303,7 @@ input:focus,select:focus,textarea:focus{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 .contact-card:hover {
@@ -318,7 +319,6 @@ input:focus,select:focus,textarea:focus{
     justify-content: center;
 }
 
-/* Custom 3D Logo Styling inside Cards */
 .contact-icon img {
     width: 32px;
     height: 32px;
@@ -338,63 +338,58 @@ input:focus,select:focus,textarea:focus{
     word-break: break-word;
 }
 
-/* Ambulance List Grid */
-.ambulance-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 15px;
-    margin-top: 15px;
-}
-
-.ambulance-card {
-    background: #ffffff;
-    padding: 18px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(70, 20, 100, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.ambulance-card h3 {
-    font-size: 17px;
-    color: #6825a5;
-    margin-bottom: 4px;
-}
-
-.ambulance-card p {
-    font-size: 14px;
-    color: #29123f;
-}
-
-/* modal */
+/* Modal Styling */
 .modal{
     display:none;
     position:fixed;
     inset:0;
     z-index:2000;
-    background:rgba(25,5,40,.55);
-    backdrop-filter:blur(10px);
+    background:rgba(25,5,40,.6);
+    backdrop-filter:blur(8px);
     padding:20px;
     overflow:auto;
 }
 
 .modal-box{
-    width:min(650px,100%);
-    margin:40px auto;
+    width:min(600px,100%);
+    margin:60px auto;
     padding:25px;
     position:relative;
+    background:#ffffff;
+    border-radius:24px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.2);
 }
 
 .close{
     position:absolute;
-    right:15px;
-    top:12px;
+    right:18px;
+    top:14px;
     border:0;
     background:none;
-    font-size:28px;
+    font-size:26px;
     cursor:pointer;
+    color:#7c1eaf;
+    font-weight:bold;
+}
+
+.ambulance-list-item {
+    background: #f9f5ff;
+    padding: 15px;
+    border-radius: 14px;
+    margin-bottom: 12px;
+    border-left: 4px solid #7c1eaf;
+}
+
+.ambulance-list-item h4 {
+    color: #7c1eaf;
+    margin-bottom: 6px;
+    font-size: 16px;
+}
+
+.ambulance-list-item p {
+    font-size: 14px;
+    margin: 3px 0;
+    color: #29123f;
 }
 
 /* footer */
@@ -700,31 +695,13 @@ footer{
         <h2 class="section-title">🚑 এম্বুলেন্স সেবা</h2>
 
         <div class="glass form-box">
-            <p style="text-align:center; margin-bottom: 10px; font-weight: 700;">
-                জরুরি প্রয়োজনে এম্বুলেন্স বুকিং বা যোগাযোগের জন্য তালিকা নিচে দেওয়া হলো:
+            <p style="text-align:center; margin-bottom: 15px; font-weight: 700;">
+                জরুরি প্রয়োজনে এম্বুলেন্স বুকিং বা যোগাযোগের জন্য নিচের অপশনটিতে ক্লিক করুন
             </p>
-
-            <div class="ambulance-grid">
-                <!-- Ambulance 1 -->
-                <div class="ambulance-card">
-                    <h3>🚑 সেবা এম্বুলেন্স সার্ভিস</h3>
-                    <p><b>📞 নাম্বার:</b> <a href="tel:01726232108" style="color:#6825a5; font-weight:700;">01726232108</a></p>
-                    <p><b>📍 ঠিকানা:</b> কেন্দ্রীয় বাস টার্মিনাল সংলগ্ন</p>
-                    <div class="card-actions" style="margin-top:8px;">
-                        <a class="small-btn" href="tel:01726232108">📞 কল করুন</a>
-                        <a class="small-btn" href="https://wa.me/8801726232108" target="_blank">💬 WhatsApp</a>
-                    </div>
-                </div>
-
-                <!-- Ambulance 2 -->
-                <div class="ambulance-card">
-                    <h3>🚑 আল-আফসা এম্বুলেন্স</h3>
-                    <p><b>📞 নাম্বার:</b> <a href="tel:01700000000" style="color:#6825a5; font-weight:700;">01700000000</a></p>
-                    <p><b>📍 ঠিকানা:</b> সদর হাসপাতাল রোড</p>
-                    <div class="card-actions" style="margin-top:8px;">
-                        <a class="small-btn" href="tel:01700000000">📞 কল করুন</a>
-                        <a class="small-btn" href="https://wa.me/8801700000000" target="_blank">💬 WhatsApp</a>
-                    </div>
+            <div style="display:flex; justify-content:center;">
+                <div class="contact-card" onclick="openAmbulanceModal()" style="max-width:280px; width:100%;">
+                    <div class="contact-icon">🚑</div>
+                    <div class="contact-text">এম্বুলেন্স কল করুন</div>
                 </div>
             </div>
         </div>
@@ -784,6 +761,29 @@ footer{
     </section>
 
 </main>
+
+<!-- Ambulance List Modal -->
+<div id="ambulanceModal" class="modal">
+    <div class="modal-box">
+        <button class="close" onclick="closeAmbulanceModal()">&times;</button>
+        <h3 style="color:#7c1eaf; margin-bottom: 15px; text-align: center;">🚑 এম্বুলেন্স তালিকা</h3>
+        
+        <div id="ambulanceListContainer">
+            <!-- এম্বুলেন্স এর তালিকা এখানে থাকবে -->
+            <div class="ambulance-list-item">
+                <h4>এম্বুলেন্স এর নাম: আল-মদিনা এম্বুলেন্স সার্ভিস</h4>
+                <p><b>📞 নাম্বার:</b> <a href="tel:01726232108" style="color:#7c1eaf; font-weight:bold;">01726232108</a></p>
+                <p><b>📍 ঠিকানা:</b> কেন্দ্রীয় হাসপাতাল রোড, ঢাকা</p>
+            </div>
+            
+            <div class="ambulance-list-item">
+                <h4>এম্বুলেন্স এর নাম: সেবা এম্বুলেন্স</h4>
+                <p><b>📞 নাম্বার:</b> <a href="tel:01811223344" style="color:#7c1eaf; font-weight:bold;">01811223344</a></p>
+                <p><b>📍 ঠিকানা:</b> সদর রোড, কুমিল্লা</p>
+            </div>
+        </div>
+    </div>
+</div>
 
 <footer>
     <b>🩸 MB Blood Bank</b><br>
@@ -879,6 +879,22 @@ setupLocation("rDivision","rDistrict","rUpazila");
 
 function toggleMenu(){
     document.getElementById("sideMenu").classList.toggle("active");
+}
+
+/* Ambulance Modal Functions */
+function openAmbulanceModal(){
+    document.getElementById("ambulanceModal").style.display = "block";
+}
+
+function closeAmbulanceModal(){
+    document.getElementById("ambulanceModal").style.display = "none";
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById("ambulanceModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
 }
 
 
