@@ -769,18 +769,7 @@ footer{
         <h3 style="color:#7c1eaf; margin-bottom: 15px; text-align: center;">🚑 এম্বুলেন্স তালিকা</h3>
         
         <div id="ambulanceListContainer">
-            <!-- এম্বুলেন্স এর তালিকা এখানে থাকবে -->
-            <div class="ambulance-list-item">
-                <h4>এম্বুলেন্স এর নাম: আল-মদিনা এম্বুলেন্স সার্ভিস</h4>
-                <p><b>📞 নাম্বার:</b> <a href="tel:01726232108" style="color:#7c1eaf; font-weight:bold;">01726232108</a></p>
-                <p><b>📍 ঠিকানা:</b> কেন্দ্রীয় হাসপাতাল রোড, ঢাকা</p>
-            </div>
-            
-            <div class="ambulance-list-item">
-                <h4>এম্বুলেন্স এর নাম: সেবা এম্বুলেন্স</h4>
-                <p><b>📞 নাম্বার:</b> <a href="tel:01811223344" style="color:#7c1eaf; font-weight:bold;">01811223344</a></p>
-                <p><b>📍 ঠিকানা:</b> সদর রোড, কুমিল্লা</p>
-            </div>
+            <!-- এম্বুলেন্সের তালিকা ডাইনামিকালি লোড হবে -->
         </div>
     </div>
 </div>
@@ -883,6 +872,7 @@ function toggleMenu(){
 
 /* Ambulance Modal Functions */
 function openAmbulanceModal(){
+    renderAmbulanceList();
     document.getElementById("ambulanceModal").style.display = "block";
 }
 
@@ -895,6 +885,25 @@ window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
+}
+
+/* Render Ambulance List from LocalStorage */
+function renderAmbulanceList(){
+    const container = document.getElementById("ambulanceListContainer");
+    const ambulances = JSON.parse(localStorage.getItem("mb_ambulances") || "[]");
+
+    if(!ambulances.length){
+        container.innerHTML = `<p style="text-align:center; padding:10px; color:#555;">কোনো এম্বুলেন্সের তথ্য পাওয়া যায়নি।</p>`;
+        return;
+    }
+
+    container.innerHTML = ambulances.map(a => `
+        <div class="ambulance-list-item">
+            <h4>🚑 এম্বুলেন্স এর নাম: ${escapeHtml(a.name)}</h4>
+            <p><b>📞 নাম্বার:</b> <a href="tel:${escapeHtml(a.phone)}" style="color:#7c1eaf; font-weight:bold;">${escapeHtml(a.phone)}</a></p>
+            <p><b>📍 ঠিকানা:</b> ${escapeHtml(a.address)}</p>
+        </div>
+    `).join("");
 }
 
 
