@@ -284,6 +284,18 @@ input:focus,select:focus,textarea:focus{
     color:#9b267e;
 }
 
+/* Fund Section Clickable Card */
+.fund-card {
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.fund-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(70, 20, 100, 0.15);
+}
+
 /* Contact & Ambulance Section Grid Styles */
 .contact-grid {
     display: grid;
@@ -392,6 +404,26 @@ input:focus,select:focus,textarea:focus{
     color: #29123f;
 }
 
+.fund-box-item {
+    background: #f9f5ff;
+    padding: 15px;
+    border-radius: 14px;
+    margin-bottom: 15px;
+    border-left: 4px solid #d71967;
+}
+
+.fund-box-item h4 {
+    color: #d71967;
+    margin-bottom: 8px;
+    font-size: 17px;
+}
+
+.fund-box-item p {
+    font-size: 15px;
+    margin: 4px 0;
+    color: #29123f;
+}
+
 /* footer */
 footer{
     margin-top:40px;
@@ -429,6 +461,7 @@ footer{
     <a href="#request" onclick="toggleMenu()">🚨 জরুরি রক্তের অনুরোধ</a>
     <a href="#stats" onclick="toggleMenu()">📊 রক্তদাতা ও রক্তের অনুরোধের তথ্য</a>
     <a href="#ambulance" onclick="toggleMenu()">🚑 এম্বুলেন্স সেবা</a>
+    <a href="#fund" onclick="toggleMenu()">❤️ MB মানবতা ফান্ড</a>
     <a href="#contact" onclick="toggleMenu()">📞 যোগাযোগ করুন</a>
 </div>
 
@@ -657,14 +690,16 @@ footer{
         </div>
     </section>
 
-    <!-- PROFILE -->
-    <section>
-        <h2 class="section-title">👤 ডোনার প্রোফাইল</h2>
-        <div class="glass form-box">
-            <p style="text-align:center">
-                প্রতিটি Approved Donor-এর জন্য Unique Donor ID তৈরি হবে।
-                Profile-এ নাম, রক্তের গ্রুপ, ফোন/যোগাযোগ, ঠিকানা ও ছবি প্রদর্শিত হবে।
+    <!-- MB MANOBOTA FUND -->
+    <section id="fund">
+        <h2 class="section-title">❤️ MB মানবতা ফান্ড</h2>
+        <div class="glass form-box fund-card" onclick="openFundModal()">
+            <p style="font-size: 16px; font-weight: 700; color: #29123f; line-height: 1.6;">
+                আপনার ছোট্ট অনুদানে সচল থাকতে পারে আমাদের রক্তদানের কার্যক্রম।
             </p>
+            <span style="display:inline-block; margin-top: 12px; padding: 8px 16px; background: linear-gradient(145deg,#7027ad,#db1768); color: white; border-radius: 12px; font-weight: 700; font-size: 14px;">
+                অনুদান পাঠাতে এখানে ক্লিক করুন 💳
+            </span>
         </div>
     </section>
 
@@ -770,6 +805,30 @@ footer{
         
         <div id="ambulanceListContainer">
             <!-- এম্বুলেন্সের তালিকা ডাইনামিকালি লোড হবে -->
+        </div>
+    </div>
+</div>
+
+<!-- Fund Modal (Mobile & Net Banking) -->
+<div id="fundModal" class="modal">
+    <div class="modal-box">
+        <button class="close" onclick="closeFundModal()">&times;</button>
+        <h3 style="color:#d71967; margin-bottom: 20px; text-align: center;">❤️ MB মানবতা ফান্ড অনুদান</h3>
+        
+        <div class="fund-box-item">
+            <h4>📱 Mobile Banking</h4>
+            <p><b>বিকাশ (Bkash):</b> 01726232108 (Personal)</p>
+            <p><b>নগদ (Nagad):</b> 01726232108 (Personal)</p>
+            <p><b>রকেট (Rocket):</b> 01726232108-0</p>
+            <p style="font-size: 13px; color: #666; margin-top: 5px;">*টাকা পাঠানোর পর সেন্ড মানি বা ক্যাশ আউট করে নাম্বারে যোগাযোগ করুন।</p>
+        </div>
+
+        <div class="fund-box-item">
+            <h4>🏦 Net Banking</h4>
+            <p><b>ব্যাংকের নাম:</b> Dutch Bangla Bank Ltd (DBBL)</p>
+            <p><b>একাউন্ট নাম:</b> MB Blood Bank</p>
+            <p><b>একাউন্ট নাম্বার:</b> 123.105.XXXXX</p>
+            <p><b>ব্রাঞ্চ:</b> ঢাকা</p>
         </div>
     </div>
 </div>
@@ -880,10 +939,23 @@ function closeAmbulanceModal(){
     document.getElementById("ambulanceModal").style.display = "none";
 }
 
+/* Fund Modal Functions */
+function openFundModal(){
+    document.getElementById("fundModal").style.display = "block";
+}
+
+function closeFundModal(){
+    document.getElementById("fundModal").style.display = "none";
+}
+
 window.onclick = function(event) {
-    const modal = document.getElementById("ambulanceModal");
-    if (event.target == modal) {
-        modal.style.display = "none";
+    const ambModal = document.getElementById("ambulanceModal");
+    const fundModal = document.getElementById("fundModal");
+    if (event.target == ambModal) {
+        ambModal.style.display = "none";
+    }
+    if (event.target == fundModal) {
+        fundModal.style.display = "none";
     }
 }
 
