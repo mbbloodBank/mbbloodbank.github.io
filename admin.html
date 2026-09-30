@@ -959,17 +959,17 @@ function initFirebaseListeners() {
 }
 
 function adminLogin(){
-    const email=document.getElementById("loginEmail").value.trim().toLowerCase();
-    const password=document.getElementById("loginPassword").value;
+    const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+    const password = document.getElementById("loginPassword").value;
 
-    if(email===ADMIN_EMAIL && password===ADMIN_PASSWORD){
-        sessionStorage.setItem("mb_admin_authenticated","true");
-        document.getElementById("loginScreen").style.display="none";
-        document.getElementById("adminApp").style.display="block";
+    if(email === ADMIN_EMAIL && password === ADMIN_PASSWORD){
+        sessionStorage.setItem("mb_admin_authenticated", "true");
+        document.getElementById("loginScreen").style.display = "none";
+        document.getElementById("adminApp").style.display = "block";
         initFirebaseListeners();
         renderAll();
-    }else{
-        document.getElementById("loginError").style.display="block";
+    } else {
+        document.getElementById("loginError").style.display = "block";
     }
 }
 
@@ -978,29 +978,29 @@ function adminLogout(){
     location.reload();
 }
 
-document.getElementById("loginPassword").addEventListener("keydown",function(e){
-    if(e.key==="Enter") adminLogin();
+document.getElementById("loginPassword").addEventListener("keydown", function(e){
+    if(e.key === "Enter") adminLogin();
 });
 
-if(sessionStorage.getItem("mb_admin_authenticated")==="true"){
-    document.getElementById("loginScreen").style.display="none";
-    document.getElementById("adminApp").style.display="block";
+if(sessionStorage.getItem("mb_admin_authenticated") === "true"){
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("adminApp").style.display = "block";
     setTimeout(() => {
         initFirebaseListeners();
     }, 500);
 }
 
-function openPage(id,button){
-    document.querySelectorAll(".page").forEach(page=>page.classList.remove("active"));
-    const page=document.getElementById(id);
+function openPage(id, button){
+    document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
+    const page = document.getElementById(id);
     if(page) page.classList.add("active");
 
-    document.querySelectorAll(".side-link").forEach(link=>link.classList.remove("active"));
+    document.querySelectorAll(".side-link").forEach(link => link.classList.remove("active"));
     if(button) button.classList.add("active");
 
     document.getElementById("sidebar").classList.remove("open");
     renderAll();
-    window.scrollTo({top:0,behavior:"smooth"});
+    window.scrollTo({top: 0, behavior: "smooth"});
 }
 
 function toggleSidebar(){
@@ -1009,8 +1009,8 @@ function toggleSidebar(){
 
 // DASHBOARD & STATS
 function updateDashboard(){
-    const pending = globalDonors.filter(x=>x.status==="pending");
-    const approved = globalDonors.filter(x=>x.status==="approved");
+    const pending = globalDonors.filter(x => x.status === "pending");
+    const approved = globalDonors.filter(x => x.status === "approved");
 
     document.getElementById("dashTotal").textContent = globalDonors.length;
     document.getElementById("dashPending").textContent = pending.length;
@@ -1019,7 +1019,7 @@ function updateDashboard(){
 
     document.getElementById("sidePending").textContent = pending.length;
     document.getElementById("sideApproved").textContent = approved.length;
-    document.getElementById("sideRequests").textContent = globalRequests.filter(x=>x.status==="pending").length;
+    document.getElementById("sideRequests").textContent = globalRequests.filter(x => x.status === "pending").length;
 
     // Recent Pending
     const rp = document.getElementById("recentPending");
@@ -1027,7 +1027,7 @@ function updateDashboard(){
         rp.innerHTML = `<p>বর্তমানে কোনো Pending Donor নেই।</p>`;
     }else{
         rp.innerHTML = `<div class="table-scroll"><table><thead><tr><th>ID</th><th>নাম</th><th>Blood</th><th>Location</th><th>Action</th></tr></thead><tbody>
-        ${pending.slice(-5).reverse().map(d=>`
+        ${pending.slice(-5).reverse().map(d => `
         <tr>
             <td>${escapeHtml(d.id)}</td>
             <td>${escapeHtml(d.name)}</td>
@@ -1047,7 +1047,7 @@ function updateDashboard(){
         rr.innerHTML = `<p>কোনো Blood Request নেই।</p>`;
     }else{
         rr.innerHTML = `<div class="table-scroll"><table><thead><tr><th>ID</th><th>Patient</th><th>Blood</th><th>Bag</th><th>Status</th></tr></thead><tbody>
-        ${globalRequests.slice(-5).reverse().map(x=>`
+        ${globalRequests.slice(-5).reverse().map(x => `
         <tr>
             <td>${escapeHtml(x.id)}</td>
             <td>${escapeHtml(x.patient)}</td>
@@ -1060,10 +1060,10 @@ function updateDashboard(){
 }
 
 // TABLES
-function donorTable(data, emptyText="কোনো Donor পাওয়া যায়নি।"){
+function donorTable(data, emptyText = "কোনো Donor পাওয়া যায়নি।"){
     if(!data.length) return `<p>${emptyText}</p>`;
     return `<div class="table-scroll"><table><thead><tr><th>ID</th><th>নাম</th><th>Blood</th><th>Location</th><th>Phone</th><th>Status</th><th>Action</th></tr></thead><tbody>
-    ${data.map(d=>`
+    ${data.map(d => `
     <tr>
         <td><b>${escapeHtml(d.id)}</b></td>
         <td><b>${escapeHtml(d.name)}</b></td>
@@ -1072,8 +1072,8 @@ function donorTable(data, emptyText="কোনো Donor পাওয়া যা�
         <td>${escapeHtml(d.phone)}</td>
         <td><span class="status ${d.status}">${escapeHtml(d.status)}</span></td>
         <td><div class="actions">
-            ${d.status==="pending"?`<button class="action a-green" onclick="approveDonorByFirebaseKey('${d.firebaseKey}')">✅ Approve</button><button class="action a-red" onclick="rejectDonorByFirebaseKey('${d.firebaseKey}')">❌ Reject</button>`:""}
-            <button class="action a-purple" onclick="editDonorPrompt('${d.firebaseKey}')">✏️️ Edit</button>
+            ${d.status === "pending" ? `<button class="action a-green" onclick="approveDonorByFirebaseKey('${d.firebaseKey}')">✅ Approve</button><button class="action a-red" onclick="rejectDonorByFirebaseKey('${d.firebaseKey}')">❌ Reject</button>` : ""}
+            <button class="action a-purple" onclick="editDonorPrompt('${d.firebaseKey}')">✏️ Edit</button>
             <button class="action a-black" onclick="deleteDonorByFirebaseKey('${d.firebaseKey}')">🗑 Delete</button>
         </div></td>
     </tr>`).join("")}
@@ -1083,7 +1083,7 @@ function donorTable(data, emptyText="কোনো Donor পাওয়া যা�
 function ambulanceTable(data){
     if(!data.length) return `<p>কোনো এম্বুলেন্স পাওয়া যায়নি।</p>`;
     return `<div class="table-scroll"><table><thead><tr><th>ID</th><th>🚑 নাম</th><th>📞 নাম্বার</th><th>📍 ঠিকানা</th><th>Action</th></tr></thead><tbody>
-    ${data.map(a=>`
+    ${data.map(a => `
     <tr>
         <td><b>${escapeHtml(a.id)}</b></td>
         <td><b>${escapeHtml(a.name)}</b></td>
@@ -1098,45 +1098,45 @@ function ambulanceTable(data){
 }
 
 function renderAll(){
-    if(document.getElementById("adminApp").style.display!=="block") return;
+    if(document.getElementById("adminApp").style.display !== "block") return;
     updateDashboard();
 
     // Pending
-    let pending = globalDonors.filter(d=>d.status==="pending");
+    let pending = globalDonors.filter(d => d.status === "pending");
     const ps = document.getElementById("pendingSearch")?.value.toLowerCase().trim();
-    if(ps) pending = pending.filter(d=>searchDonor(d,ps));
+    if(ps) pending = pending.filter(d => searchDonor(d, ps));
     document.getElementById("pendingTable").innerHTML = donorTable(pending, "🎉 কোনো Pending Donor নেই।");
 
     // Approved
-    let approved = globalDonors.filter(d=>d.status==="approved");
+    let approved = globalDonors.filter(d => d.status === "approved");
     const as = document.getElementById("approvedSearch")?.value.toLowerCase().trim();
-    if(as) approved = approved.filter(d=>searchDonor(d,as));
+    if(as) approved = approved.filter(d => searchDonor(d, as));
     document.getElementById("approvedTable").innerHTML = donorTable(approved, "কোনো Approved Donor নেই।");
 
     // Rejected
-    let rejected = globalDonors.filter(d=>d.status==="rejected");
+    let rejected = globalDonors.filter(d => d.status === "rejected");
     document.getElementById("rejectedTable").innerHTML = donorTable(rejected, "কোনো Rejected Donor নেই।");
 
     // All
     let all = globalDonors;
     const alls = document.getElementById("allSearch")?.value.toLowerCase().trim();
-    if(alls) all = all.filter(d=>searchDonor(d,alls));
+    if(alls) all = all.filter(d => searchDonor(d, alls));
     document.getElementById("allTable").innerHTML = donorTable(all, "কোনো Donor নেই।");
 
     // Requests
     let req = globalRequests;
     const rs = document.getElementById("requestSearch")?.value.toLowerCase().trim();
-    if(rs) req = req.filter(r=>String(r.id).toLowerCase().includes(rs) || String(r.patient).toLowerCase().includes(rs));
+    if(rs) req = req.filter(r => String(r.id).toLowerCase().includes(rs) || String(r.patient).toLowerCase().includes(rs));
     renderRequests(req);
 
     // Ambulances
     let amb = globalAmbulances;
     const ambs = document.getElementById("ambulanceSearch")?.value.toLowerCase().trim();
-    if(ambs) amb = amb.filter(a=>String(a.name).toLowerCase().includes(ambs) || String(a.phone).toLowerCase().includes(ambs));
+    if(ambs) amb = amb.filter(a => String(a.name).toLowerCase().includes(ambs) || String(a.phone).toLowerCase().includes(ambs));
     document.getElementById("ambulanceTable").innerHTML = ambulanceTable(amb);
 }
 
-function searchDonor(d,q){
+function searchDonor(d, q){
     return [d.id, d.name, d.phone, d.blood, d.district, d.upazila].join(" ").toLowerCase().includes(q);
 }
 
@@ -1244,14 +1244,14 @@ function deleteAmbulanceByFirebaseKey(firebaseKey){
 }
 
 // REQUESTS TABLE & ACTIONS
-function renderRequests(data=globalRequests){
+function renderRequests(data = globalRequests){
     const box = document.getElementById("requestTable");
     if(!data.length){
         box.innerHTML = "<p>কোনো Blood Request নেই।</p>";
         return;
     }
     box.innerHTML = `<div class="table-scroll"><table><thead><tr><th>ID</th><th>Patient</th><th>Blood</th><th>Bag</th><th>Location</th><th>Hospital</th><th>Date</th><th>Status</th><th>Action</th></tr></thead><tbody>
-    ${data.map(r=>`
+    ${data.map(r => `
     <tr>
         <td>${escapeHtml(r.id)}</td>
         <td><b>${escapeHtml(r.patient)}</b><br>${escapeHtml(r.phone)}</td>
@@ -1262,8 +1262,8 @@ function renderRequests(data=globalRequests){
         <td>${escapeHtml(r.date)}</td>
         <td><span class="status ${r.status}">${escapeHtml(r.status)}</span></td>
         <td><div class="actions">
-            ${r.status==="pending"?`<button class="action a-green" onclick="approveRequestKey('${r.firebaseKey}')">✅ Approve</button><button class="action a-red" onclick="rejectRequestKey('${r.firebaseKey}')">❌ Reject</button>`:""}
-            <button class="action a-black" onclick="deleteRequestKey('${r.firebaseKey}')">🗑️ Delete</button>
+            ${r.status === "pending" ? `<button class="action a-green" onclick="approveRequestKey('${r.firebaseKey}')">✅ Approve</button><button class="action a-red" onclick="rejectRequestKey('${r.firebaseKey}')">❌ Reject</button>` : ""}
+            <button class="action a-black" onclick="deleteRequestKey('${r.firebaseKey}')">🗑️️ Delete</button>
         </div></td>
     </tr>`).join("")}
     </tbody></table></div>`;
@@ -1286,7 +1286,7 @@ function deleteRequestKey(key){
 }
 
 // ADD FORMS
-document.getElementById("addDonorForm").addEventListener("submit",function(e){
+document.getElementById("addDonorForm").addEventListener("submit", function(e){
     e.preventDefault();
     if(!window.firebaseDb) return;
     const { db, ref, push, set } = window.firebaseDb;
@@ -1314,7 +1314,7 @@ document.getElementById("addDonorForm").addEventListener("submit",function(e){
     });
 });
 
-document.getElementById("addAmbulanceForm").addEventListener("submit",function(e){
+document.getElementById("addAmbulanceForm").addEventListener("submit", function(e){
     e.preventDefault();
     if(!window.firebaseDb) return;
     const { db, ref, push, set } = window.firebaseDb;
