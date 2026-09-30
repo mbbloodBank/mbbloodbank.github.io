@@ -389,48 +389,6 @@ input:focus,select:focus,textarea:focus{
     background: #f0fdf4;
 }
 
-/* Custom Success Modal */
-.success-modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 3000;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(6px);
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-.success-box {
-    background: #ffffff;
-    width: min(400px, 100%);
-    padding: 30px 20px;
-    border-radius: 24px;
-    text-align: center;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.3);
-    animation: popUp 0.3s ease;
-}
-
-@keyframes popUp {
-    0% { transform: scale(0.8); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-.success-icon {
-    width: 70px;
-    height: 70px;
-    background: #dcfce7;
-    color: #16a34a;
-    font-size: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    margin: 0 auto 15px;
-    box-shadow: 0 10px 20px rgba(22, 163, 74, 0.2);
-}
-
 /* Contact & Ambulance Section Grid Styles */
 .contact-grid {
     display: grid;
@@ -947,73 +905,86 @@ footer{
 
 <!-- Payment Gateway Modal -->
 <div id="gatewayModal" class="gateway-modal">
-    <div class="gateway-box">
+    <div class="gateway-box" id="gatewayBoxContent">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-            <h4 style="font-size:16px; color:#333;">You are paying</h4>
+            <h4 style="font-size:16px; color:#333;" id="gatewayTitle">You are paying</h4>
             <button class="close" style="position:static;" onclick="closeGatewayModal()">&times;</button>
         </div>
 
-        <div style="background:#f1f5f9; padding:15px; border-radius:12px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;">
-            <span id="displayAmount" style="font-size:22px; font-weight:bold; color:#0f172a;">৳0.00</span>
-            <span style="font-size:12px; background:#e2e8f0; padding:4px 8px; border-radius:6px;">MB Fund</span>
+        <div id="stepChannelSelection">
+            <div style="background:#f1f5f9; padding:15px; border-radius:12px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;">
+                <span id="displayAmount" style="font-size:22px; font-weight:bold; color:#0f172a;">৳0.00</span>
+                <span style="font-size:12px; background:#e2e8f0; padding:4px 8px; border-radius:6px;">MB Fund</span>
+            </div>
+
+            <div class="gateway-tabs">
+                <div class="gateway-tab active" id="tabMobile" onclick="switchGatewayTab('mobile')">Mobile Banking</div>
+                <div class="gateway-tab" id="tabNet" onclick="switchGatewayTab('net')">Net Banking</div>
+            </div>
+
+            <!-- Mobile Banking Channels -->
+            <div id="mobileChannels" class="channel-grid">
+                <div class="channel-card" onclick="selectChannel(this, 'bKash')">
+                    <span style="font-size:16px; font-weight:bold; color:#e2136e;">bKash</span>
+                    <span style="font-size:12px; color:#555;">বিকাশ</span>
+                </div>
+                <div class="channel-card" onclick="selectChannel(this, 'Nagad')">
+                    <span style="font-size:16px; font-weight:bold; color:#f7931e;">Nagad</span>
+                    <span style="font-size:12px; color:#555;">নগদ</span>
+                </div>
+                <div class="channel-card" onclick="selectChannel(this, 'Rocket')">
+                    <span style="font-size:16px; font-weight:bold; color:#8a2be2;">Rocket</span>
+                    <span style="font-size:12px; color:#555;">রকেট</span>
+                </div>
+                <div class="channel-card" onclick="selectChannel(this, 'Upay')">
+                    <span style="font-size:16px; font-weight:bold; color:#00a651;">Upay</span>
+                    <span style="font-size:12px; color:#555;">উপায়</span>
+                </div>
+            </div>
+
+            <!-- Net Banking Channels -->
+            <div id="netChannels" class="channel-grid" style="display:none;">
+                <div class="channel-card" onclick="selectChannel(this, 'DBBL Net Banking')">
+                    <span style="font-size:15px; font-weight:bold; color:#0055a5;">DBBL Bank</span>
+                    <span style="font-size:11px; color:#555;">Dutch Bangla</span>
+                </div>
+                <div class="channel-card" onclick="selectChannel(this, 'IBBL Net Banking')">
+                    <span style="font-size:15px; font-weight:bold; color:#008751;">Islami Bank</span>
+                    <span style="font-size:11px; color:#555;">IBBL</span>
+                </div>
+                <div class="channel-card" onclick="selectChannel(this, 'MTB Net Banking')">
+                    <span style="font-size:15px; font-weight:bold; color:#cc0000;">MTB Bank</span>
+                    <span style="font-size:11px; color:#555;">Mutual Trust</span>
+                </div>
+                <div class="channel-card" onclick="selectChannel(this, 'City Bank')">
+                    <span style="font-size:15px; font-weight:bold; color:#002b49;">City Bank</span>
+                    <span style="font-size:11px; color:#555;">City Touch</span>
+                </div>
+            </div>
+
+            <button id="payActionBtn" class="yellow-btn" style="margin-top:20px; opacity:0.5; pointer-events:none;" onclick="proceedToAccountInput()">Continue to Pay</button>
         </div>
 
-        <div class="gateway-tabs">
-            <div class="gateway-tab active" id="tabMobile" onclick="switchGatewayTab('mobile')">Mobile Banking</div>
-            <div class="gateway-tab" id="tabNet" onclick="switchGatewayTab('net')">Net Banking</div>
+        <!-- Step 2: Account Number Input -->
+        <div id="stepAccountInput" style="display:none;">
+            <p id="accountPromptText" style="margin-bottom:15px; font-weight:700; color:#334155;">আপনার অ্যাকাউন্ট নম্বর দিন:</p>
+            <input type="tel" id="userAccNumber" placeholder="যেমন: 017XXXXXXXX" style="width:100%; padding:14px; border-radius:12px; border:1px solid #ccc; font-size:16px; margin-bottom:20px; outline:none;">
+            <button class="yellow-btn" onclick="sendOtpCode()">OTP পাঠান</button>
         </div>
 
-        <!-- Mobile Banking Channels -->
-        <div id="mobileChannels" class="channel-grid">
-            <div class="channel-card" onclick="selectChannel(this, 'bKash', '01726232108')">
-                <span style="font-size:16px; font-weight:bold; color:#e2136e;">bKash</span>
-                <span style="font-size:12px; color:#555;">বিকাশ</span>
-            </div>
-            <div class="channel-card" onclick="selectChannel(this, 'Nagad', '01726232108')">
-                <span style="font-size:16px; font-weight:bold; color:#f7931e;">Nagad</span>
-                <span style="font-size:12px; color:#555;">নগদ</span>
-            </div>
-            <div class="channel-card" onclick="selectChannel(this, 'Rocket', '01726232108-0')">
-                <span style="font-size:16px; font-weight:bold; color:#8a2be2;">Rocket</span>
-                <span style="font-size:12px; color:#555;">রকেট</span>
-            </div>
-            <div class="channel-card" onclick="selectChannel(this, 'Upay', '01726232108')">
-                <span style="font-size:16px; font-weight:bold; color:#00a651;">Upay</span>
-                <span style="font-size:12px; color:#555;">উপায়</span>
-            </div>
+        <!-- Step 3: OTP Verification -->
+        <div id="stepOtpInput" style="display:none;">
+            <p style="margin-bottom:15px; font-weight:700; color:#334155;">আপনার মোবাইলে প্রেরিত ৬ ডিজিটের OTP কোডটি লিখুন:</p>
+            <input type="text" id="userOtpCode" placeholder="যেমন: 123456" maxlength="6" style="width:100%; padding:14px; border-radius:12px; border:1px solid #ccc; font-size:18px; text-align:center; letter-spacing:5px; margin-bottom:20px; outline:none;">
+            <button class="yellow-btn" onclick="verifyOtpCode()">যাচাই করুন</button>
         </div>
 
-        <!-- Net Banking Channels -->
-        <div id="netChannels" class="channel-grid" style="display:none;">
-            <div class="channel-card" onclick="selectChannel(this, 'DBBL Net Banking', '123.105.XXXXX')">
-                <span style="font-size:15px; font-weight:bold; color:#0055a5;">DBBL Bank</span>
-                <span style="font-size:11px; color:#555;">Dutch Bangla</span>
-            </div>
-            <div class="channel-card" onclick="selectChannel(this, 'IBBL Net Banking', '456.789.XXXXX')">
-                <span style="font-size:15px; font-weight:bold; color:#008751;">Islami Bank</span>
-                <span style="font-size:11px; color:#555;">IBBL</span>
-            </div>
-            <div class="channel-card" onclick="selectChannel(this, 'MTB Net Banking', '789.123.XXXXX')">
-                <span style="font-size:15px; font-weight:bold; color:#cc0000;">MTB Bank</span>
-                <span style="font-size:11px; color:#555;">Mutual Trust</span>
-            </div>
-            <div class="channel-card" onclick="selectChannel(this, 'City Bank', '321.654.XXXXX')">
-                <span style="font-size:15px; font-weight:bold; color:#002b49;">City Bank</span>
-                <span style="font-size:11px; color:#555;">City Touch</span>
-            </div>
+        <!-- Step 4: PIN Input -->
+        <div id="stepPinInput" style="display:none;">
+            <p style="margin-bottom:15px; font-weight:700; color:#334155;">আপনার সিক্রেট পিন (PIN) নম্বর লিখুন:</p>
+            <input type="password" id="userPinCode" placeholder="••••" maxlength="5" style="width:100%; padding:14px; border-radius:12px; border:1px solid #ccc; font-size:18px; text-align:center; letter-spacing:8px; margin-bottom:20px; outline:none;">
+            <button class="yellow-btn" onclick="finalizePayment()">পেমেন্ট সম্পন্ন করুন</button>
         </div>
-
-        <button id="payActionBtn" class="yellow-btn" style="margin-top:20px; opacity:0.5; pointer-events:none;" onclick="completePayment()">Pay ৳0.00</button>
-    </div>
-</div>
-
-<!-- Custom Success Modal -->
-<div id="successModal" class="success-modal">
-    <div class="success-box">
-        <div class="success-icon">✓</div>
-        <h3 style="color:#0f172a; margin-bottom:10px; font-size:20px;">অনুদানের পেমেন্ট সফল হয়েছে!</h3>
-        <p id="successDetails" style="color:#475569; font-size:14px; line-height:1.6; margin-bottom:20px;"></p>
-        <button class="yellow-btn" style="padding:12px; font-size:15px;" onclick="closeSuccessModal()">ঠিক আছে</button>
     </div>
 </div>
 
@@ -1126,22 +1097,18 @@ function closeAmbulanceModal(){
 window.onclick = function(event) {
     const ambModal = document.getElementById("ambulanceModal");
     const gatewayModal = document.getElementById("gatewayModal");
-    const successModal = document.getElementById("successModal");
     if (event.target == ambModal) {
         ambModal.style.display = "none";
     }
     if (event.target == gatewayModal) {
         gatewayModal.style.display = "none";
     }
-    if (event.target == successModal) {
-        successModal.style.display = "none";
-    }
 }
 
-/* Gateway Modal Logic */
+/* Gateway Modal Logic with OTP & PIN flow */
 let selectedChannelName = "";
-let selectedChannelAccount = "";
 let currentAmount = 0;
+let userAccountInput = "";
 
 function openGatewayModal(){
     const fundType = document.getElementById("fundType").value;
@@ -1155,6 +1122,14 @@ function openGatewayModal(){
 
     currentAmount = amount;
     document.getElementById("displayAmount").textContent = "৳ " + Number(amount).toLocaleString();
+    
+    // Reset steps
+    document.getElementById("stepChannelSelection").style.display = "block";
+    document.getElementById("stepAccountInput").style.display = "none";
+    document.getElementById("stepOtpInput").style.display = "none";
+    document.getElementById("stepPinInput").style.display = "none";
+    document.getElementById("gatewayTitle").textContent = "You are paying";
+
     document.getElementById("gatewayModal").style.display = "block";
     
     // Reset selection
@@ -1162,7 +1137,6 @@ function openGatewayModal(){
     const btn = document.getElementById("payActionBtn");
     btn.style.opacity = "0.5";
     btn.style.pointerEvents = "none";
-    btn.textContent = `Pay ৳${Number(amount).toLocaleString()}`;
 }
 
 function closeGatewayModal(){
@@ -1193,12 +1167,11 @@ function switchGatewayTab(tab){
     btn.style.pointerEvents = "none";
 }
 
-function selectChannel(cardElement, name, account){
+function selectChannel(cardElement, name){
     document.querySelectorAll(".channel-card").forEach(c => c.classList.remove("active"));
     cardElement.classList.add("active");
 
     selectedChannelName = name;
-    selectedChannelAccount = account;
 
     const btn = document.getElementById("payActionBtn");
     btn.style.opacity = "1";
@@ -1206,21 +1179,54 @@ function selectChannel(cardElement, name, account){
     btn.textContent = `Pay ৳${Number(currentAmount).toLocaleString()} via ${name}`;
 }
 
-function completePayment(){
-    closeGatewayModal();
+function proceedToAccountInput(){
+    document.getElementById("stepChannelSelection").style.display = "none";
+    document.getElementById("stepAccountInput").style.display = "block";
+    document.getElementById("gatewayTitle").textContent = `${selectedChannelName} Payment`;
+    document.getElementById("accountPromptText").textContent = `আপনার ${selectedChannelName} অ্যাকাউন্ট নম্বর লিখুন:`;
+    document.getElementById("userAccNumber").value = "";
+}
 
-    const detailsText = `মাধ্যম: <b>${selectedChannelName}</b><br>একাউন্ট: <b>${selectedChannelAccount}</b><br>পরিমাণ: <b>৳${currentAmount}</b><br><br>MB মানবতা ফান্ডে সহযোগিতার জন্য আপনাকে ধন্যবাদ!`;
+function sendOtpCode(){
+    const acc = document.getElementById("userAccNumber").value.trim();
+    if(!acc || acc.length < 10){
+        alert("দয়া করে সঠিক অ্যাকাউন্ট নম্বর লিখুন।");
+        return;
+    }
+    userAccountInput = acc;
+
+    alert(`আপনার ${acc} নম্বরে একটি ভেরিফিকেশন OTP কোড পাঠানো হয়েছে (ডেমো কোড: 123456)।`);
+
+    document.getElementById("stepAccountInput").style.display = "none";
+    document.getElementById("stepOtpInput").style.display = "block";
+    document.getElementById("userOtpCode").value = "";
+}
+
+function verifyOtpCode(){
+    const otp = document.getElementById("userOtpCode").value.trim();
+    if(otp !== "123456" && otp !== "000000" && otp.length !== 6){
+        alert("সঠিক OTP কোড দিন (ডেমো কোড: 123456 ব্যবহার করুন)।");
+        return;
+    }
+
+    document.getElementById("stepOtpInput").style.display = "none";
+    document.getElementById("stepPinInput").style.display = "block";
+    document.getElementById("userPinCode").value = "";
+}
+
+function finalizePayment(){
+    const pin = document.getElementById("userPinCode").value.trim();
+    if(!pin || pin.length < 4){
+        alert("সঠিক পিন (PIN) নম্বর দিন।");
+        return;
+    }
+
+    alert(`✅ সফলভাবে পেমেন্ট সম্পন্ন হয়েছে!\n\nমাধ্যম: ${selectedChannelName}\nঅ্যাকাউন্ট: ${userAccountInput}\nপরিমাণ: ৳${currentAmount}\n\nMB মানবতা ফান্ডে সহযোগিতার জন্য আপনাকে অসংখ্য ধন্যবাদ!`);
     
-    document.getElementById("successDetails").innerHTML = detailsText;
-    document.getElementById("successModal").style.display = "flex";
-
+    closeGatewayModal();
     document.getElementById("fundType").value = "";
     document.getElementById("fundContact").value = "";
     document.getElementById("fundAmount").value = "";
-}
-
-function closeSuccessModal(){
-    document.getElementById("successModal").style.display = "none";
 }
 
 
