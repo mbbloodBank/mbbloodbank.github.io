@@ -737,7 +737,7 @@ footer{
 
                     <div>
                         <label>প্রয়োজনের তারিখ *</label>
-                        <select id="rDate" type="date" required></select>
+                        <input id="rDate" type="date" required>
                     </div>
 
                     <div>
@@ -907,7 +907,7 @@ footer{
 <div id="gatewayModal" class="gateway-modal">
     <div class="gateway-box">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-            <h4 style="font-size:16px; color:#333;">You are paying</h4>
+            <h4 style="font-size:16px; color:#333;">অনুদানের পেমেন্ট করুন</h4>
             <button class="close" style="position:static;" onclick="closeGatewayModal()">&times;</button>
         </div>
 
@@ -923,19 +923,19 @@ footer{
 
         <!-- Mobile Banking Channels -->
         <div id="mobileChannels" class="channel-grid">
-            <div class="channel-card" onclick="selectChannel(this, 'bKash')">
+            <div class="channel-card" onclick="selectChannel(this, 'bKash', '01726232108')">
                 <span style="font-size:16px; font-weight:bold; color:#e2136e;">bKash</span>
                 <span style="font-size:12px; color:#555;">বিকাশ</span>
             </div>
-            <div class="channel-card" onclick="selectChannel(this, 'Nagad')">
+            <div class="channel-card" onclick="selectChannel(this, 'Nagad', '01726232108')">
                 <span style="font-size:16px; font-weight:bold; color:#f7931e;">Nagad</span>
                 <span style="font-size:12px; color:#555;">নগদ</span>
             </div>
-            <div class="channel-card" onclick="selectChannel(this, 'Rocket')">
+            <div class="channel-card" onclick="selectChannel(this, 'Rocket', '01726232108-0')">
                 <span style="font-size:16px; font-weight:bold; color:#8a2be2;">Rocket</span>
                 <span style="font-size:12px; color:#555;">রকেট</span>
             </div>
-            <div class="channel-card" onclick="selectChannel(this, 'Upay')">
+            <div class="channel-card" onclick="selectChannel(this, 'Upay', '01726232108')">
                 <span style="font-size:16px; font-weight:bold; color:#00a651;">Upay</span>
                 <span style="font-size:12px; color:#555;">উপায়</span>
             </div>
@@ -943,26 +943,26 @@ footer{
 
         <!-- Net Banking Channels -->
         <div id="netChannels" class="channel-grid" style="display:none;">
-            <div class="channel-card" onclick="selectChannel(this, 'DBBL Bank')">
+            <div class="channel-card" onclick="selectChannel(this, 'DBBL Net Banking', '123.105.XXXXX')">
                 <span style="font-size:15px; font-weight:bold; color:#0055a5;">DBBL Bank</span>
                 <span style="font-size:11px; color:#555;">Dutch Bangla</span>
             </div>
-            <div class="channel-card" onclick="selectChannel(this, 'Islami Bank')">
+            <div class="channel-card" onclick="selectChannel(this, 'Islami Bank Net Banking', '456.789.XXXXX')">
                 <span style="font-size:15px; font-weight:bold; color:#008751;">Islami Bank</span>
                 <span style="font-size:11px; color:#555;">IBBL</span>
             </div>
-            <div class="channel-card" onclick="selectChannel(this, 'MTB Bank')">
+            <div class="channel-card" onclick="selectChannel(this, 'MTB Net Banking', '789.123.XXXXX')">
                 <span style="font-size:15px; font-weight:bold; color:#cc0000;">MTB Bank</span>
                 <span style="font-size:11px; color:#555;">Mutual Trust</span>
             </div>
-            <div class="channel-card" onclick="selectChannel(this, 'AB Bank')">
+            <div class="channel-card" onclick="selectChannel(this, 'AB Bank Net Banking', '321.654.XXXXX')">
                 <span style="font-size:15px; font-weight:bold; color:#e11d48;">AB Bank</span>
                 <span style="font-size:11px; color:#555;">AB Direct</span>
             </div>
         </div>
 
         <div id="paymentInstructions" style="display:none; margin-top:15px; padding:12px; background:#f8fafc; border-radius:10px; font-size:13px; color:#334155; border:1px solid #e2e8f0;">
-            <!-- Dynamic Instruction matches user requirement -->
+            <!-- Dynamic Instruction -->
         </div>
 
         <button id="payActionBtn" class="yellow-btn" style="margin-top:20px; opacity:0.5; pointer-events:none;" onclick="completePayment()">Pay ৳0.00</button>
@@ -973,17 +973,17 @@ footer{
 <div id="successModal" class="modal">
     <div class="modal-box" style="text-align:center; padding:30px;">
         <div style="width:70px; height:70px; background:#d1fae5; color:#059669; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:38px; margin:0 auto 15px;">✓</div>
-        <h3 style="color:#059669; font-size:22px; margin-bottom:8px;">অনুদানের পেমেন্ট সফল হয়েছে[span_2](start_span)[span_2](end_span)!</h3>
-        <p style="color:#64748b; font-size:14px; margin-bottom:20px;">MB মানবতা ফান্ডে সহযোগিতার জন্য আপনাকে আন্তরিক ধন্যবাদ[span_3](start_span)[span_3](end_span)</p>
+        <h3 style="color:#059669; font-size:22px; margin-bottom:8px;">অনুদানের পেমেন্ট সফল হয়েছে!</h3>
+        <p style="color:#64748b; font-size:14px; margin-bottom:20px;">MB মানবতা ফান্ডে সহযোগিতার জন্য আপনাকে আন্তরিক ধন্যবাদ</p>
         
         <div style="background:#f8fafc; border-radius:16px; padding:15px; text-align:left; font-size:14px; margin-bottom:20px; border:1px solid #e2e8f0;">
-            <p style="margin:5px 0;"><b>ট্রানজেকশন আইডি:</b> <span id="recTxn">TXN9843210</span>[span_4](start_span)[span_4](end_span)</p>
-            <p style="margin:5px 0;"><b>মাধ্যম:</b> <span id="recMethod">bKash</span>[span_5](start_span)[span_5](end_span)</p>
-            <p style="margin:5px 0;"><b>পরিমাণ:</b> <span id="recAmount">৳10.00</span>[span_6](start_span)[span_6](end_span)</p>
-            <p style="margin:5px 0;"><b>তারিখ:</b> <span id="recDate">৩০ সেপ, ২০২৬</span>[span_7](start_span)[span_7](end_span)</p>
+            <p style="margin:5px 0;"><b>ট্রানজেকশন আইডি:</b> <span id="recTxn">TXN9843210</span></p>
+            <p style="margin:5px 0;"><b>মাধ্যম:</b> <span id="recMethod">bKash</span></p>
+            <p style="margin:5px 0;"><b>পরিমাণ:</b> <span id="recAmount">৳10.00</span></p>
+            <p style="margin:5px 0;"><b>তারিখ:</b> <span id="recDate">৩০ সেপ, ২০২৬</span></p>
         </div>
 
-        <button class="yellow-btn" onclick="finishPaymentProcess()">হোমে ফিরে যান[span_8](start_span)[span_8](end_span)</button>
+        <button class="yellow-btn" onclick="finishPaymentProcess()">হোমে ফিরে যান</button>
     </div>
 </div>
 
@@ -1096,15 +1096,16 @@ function closeAmbulanceModal(){
 window.onclick = function(event) {
     const ambModal = document.getElementById("ambulanceModal");
     const gatewayModal = document.getElementById("gatewayModal");
-    const succModal = document.getElementById("successModal");
+    const successModal = document.getElementById("successModal");
 
     if (event.target == ambModal) ambModal.style.display = "none";
     if (event.target == gatewayModal) gatewayModal.style.display = "none";
-    if (event.target == succModal) succModal.style.display = "none";
+    if (event.target == successModal) successModal.style.display = "none";
 }
 
 /* Gateway Modal Logic */
 let selectedChannelName = "";
+let selectedAccountNumber = "";
 let currentAmount = 0;
 
 function openGatewayModal(){
@@ -1159,15 +1160,16 @@ function switchGatewayTab(tab){
     btn.style.pointerEvents = "none";
 }
 
-function selectChannel(cardElement, name){
+function selectChannel(cardElement, name, account){
     document.querySelectorAll(".channel-card").forEach(c => c.classList.remove("active"));
     cardElement.classList.add("active");
 
     selectedChannelName = name;
+    selectedAccountNumber = account;
 
     const inst = document.getElementById("paymentInstructions");
     inst.style.display = "block";
-    inst.innerHTML = `<b>নির্বাচিত মাধ্যম:</b> ${name}<br>অনুগ্রহ করে আপনার ${name} থেকে <b>01726232108</b> নম্বরে <b>৳${currentAmount}</b> পে করুন[span_9](start_span)[span_9](end_span)।`;
+    inst.innerHTML = `<b>নির্বাচিত মাধ্যম:</b> ${name}<br>অনুগ্রহ করে আপনার ${name} অ্যাপ থেকে <b>${account}</b> এই নম্বরে <b>৳${currentAmount}</b> পে করুন।`;
 
     const btn = document.getElementById("payActionBtn");
     btn.style.opacity = "1";
@@ -1176,15 +1178,12 @@ function selectChannel(cardElement, name){
 }
 
 function completePayment(){
-    document.getElementById("gatewayModal").style.display = "none";
+    closeGatewayModal();
     
     document.getElementById("recTxn").textContent = "TXN" + Math.floor(10000000 + Math.random() * 90000000);
     document.getElementById("recMethod").textContent = selectedChannelName;
     document.getElementById("recAmount").textContent = "৳" + Number(currentAmount).toLocaleString() + ".00";
     
-    const today = new Date();
-    document.getElementById("recDate").textContent = today.toLocaleDateString('bn-BD', { day: 'numeric', month: 'short', year: 'numeric' });
-
     document.getElementById("successModal").style.display = "block";
 }
 
