@@ -337,16 +337,6 @@ input:focus,select:focus,textarea:focus{
     padding: 20px;
 }
 
-.gateway-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #f1f5f9;
-    padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-}
-
 .gateway-tabs {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -389,13 +379,9 @@ input:focus,select:focus,textarea:focus{
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-}
-
-.channel-card img {
-    width: 50px;
-    height: 35px;
-    object-fit: contain;
+    justify-content: center;
+    gap: 6px;
+    min-height: 85px;
 }
 
 .channel-card.active {
@@ -548,7 +534,7 @@ footer{
     <a href="#request" onclick="toggleMenu()">🚨 জরুরি রক্তের অনুরোধ</a>
     <a href="#stats" onclick="toggleMenu()">📊 রক্তদাতা ও রক্তের অনুরোধের তথ্য</a>
     <a href="#ambulance" onclick="toggleMenu()">🚑 এম্বুলেন্স সেবা</a>
-    <a href="#fund" onclick="toggleMenu()">❤️ MB মানবতা ফান্ড</a>
+    <a href="#fund" onclick="toggleMenu()">❤ MB মানবতা ফান্ড</a>
     <a href="#contact" onclick="toggleMenu()">📞 যোগাযোগ করুন</a>
 </div>
 
@@ -779,7 +765,7 @@ footer{
 
     <!-- MB MANOBOTA FUND (Yellow Design) -->
     <section id="fund">
-        <h2 class="section-title">❤️️ MB মানবতা ফান্ড</h2>
+        <h2 class="section-title">❤ MB মানবতা ফান্ড</h2>
 
         <div class="yellow-fund-box">
             <h2 style="text-align:center; font-size:24px; color:#29123f; margin-bottom:20px;">আপনার অনুদান প্রদান করুন</h2>
@@ -938,39 +924,39 @@ footer{
         <!-- Mobile Banking Channels -->
         <div id="mobileChannels" class="channel-grid">
             <div class="channel-card" onclick="selectChannel(this, 'bKash', '01726232108')">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Bkash_logo.svg" alt="bKash">
-                <span style="font-size:12px; font-weight:bold;">bKash</span>
+                <span style="font-size:16px; font-weight:bold; color:#e2136e;">bKash</span>
+                <span style="font-size:12px; color:#555;">বিকাশ</span>
             </div>
             <div class="channel-card" onclick="selectChannel(this, 'Nagad', '01726232108')">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/Nagad_Logo.svg" alt="Nagad">
-                <span style="font-size:12px; font-weight:bold;">Nagad</span>
+                <span style="font-size:16px; font-weight:bold; color:#f7931e;">Nagad</span>
+                <span style="font-size:12px; color:#555;">নগদ</span>
             </div>
             <div class="channel-card" onclick="selectChannel(this, 'Rocket', '01726232108-0')">
-                <img src="https://www.logo.wine/a/logo/Rocket_(mobile_banking)/Rocket_(mobile_banking)-Logo.wine.svg" alt="Rocket">
-                <span style="font-size:12px; font-weight:bold;">Rocket</span>
+                <span style="font-size:16px; font-weight:bold; color:#8a2be2;">Rocket</span>
+                <span style="font-size:12px; color:#555;">রকেট</span>
             </div>
             <div class="channel-card" onclick="selectChannel(this, 'Upay', '01726232108')">
-                <img src="https://seeklogo.com/images/U/upay-logo-5E00C89CE8-seeklogo.com.png" alt="Upay">
-                <span style="font-size:12px; font-weight:bold;">Upay</span>
+                <span style="font-size:16px; font-weight:bold; color:#00a651;">Upay</span>
+                <span style="font-size:12px; color:#555;">উপায়</span>
             </div>
         </div>
 
         <!-- Net Banking Channels -->
         <div id="netChannels" class="channel-grid" style="display:none;">
             <div class="channel-card" onclick="selectChannel(this, 'DBBL Net Banking', '123.105.XXXXX')">
-                <span style="font-size:14px; font-weight:bold; color:#0055a5;">DBBL Bank</span>
+                <span style="font-size:15px; font-weight:bold; color:#0055a5;">DBBL Bank</span>
                 <span style="font-size:11px; color:#555;">Dutch Bangla</span>
             </div>
             <div class="channel-card" onclick="selectChannel(this, 'IBBL Net Banking', '456.789.XXXXX')">
-                <span style="font-size:14px; font-weight:bold; color:#008751;">Islami Bank</span>
+                <span style="font-size:15px; font-weight:bold; color:#008751;">Islami Bank</span>
                 <span style="font-size:11px; color:#555;">IBBL</span>
             </div>
             <div class="channel-card" onclick="selectChannel(this, 'MTB Net Banking', '789.123.XXXXX')">
-                <span style="font-size:14px; font-weight:bold; color:#cc0000;">MTB Bank</span>
+                <span style="font-size:15px; font-weight:bold; color:#cc0000;">MTB Bank</span>
                 <span style="font-size:11px; color:#555;">Mutual Trust</span>
             </div>
             <div class="channel-card" onclick="selectChannel(this, 'City Bank', '321.654.XXXXX')">
-                <span style="font-size:14px; font-weight:bold; color:#002b49;">City Bank</span>
+                <span style="font-size:15px; font-weight:bold; color:#002b49;">City Bank</span>
                 <span style="font-size:11px; color:#555;">City Touch</span>
             </div>
         </div>
