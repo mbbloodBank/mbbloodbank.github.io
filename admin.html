@@ -985,7 +985,6 @@ document.getElementById("loginPassword").addEventListener("keydown",function(e){
 if(sessionStorage.getItem("mb_admin_authenticated")==="true"){
     document.getElementById("loginScreen").style.display="none";
     document.getElementById("adminApp").style.display="block";
-    // Wait a brief moment for module script to load firebaseDb
     setTimeout(() => {
         initFirebaseListeners();
     }, 500);
@@ -1075,7 +1074,7 @@ function donorTable(data, emptyText="কোনো Donor পাওয়া যা�
         <td><div class="actions">
             ${d.status==="pending"?`<button class="action a-green" onclick="approveDonorByFirebaseKey('${d.firebaseKey}')">✅ Approve</button><button class="action a-red" onclick="rejectDonorByFirebaseKey('${d.firebaseKey}')">❌ Reject</button>`:""}
             <button class="action a-purple" onclick="editDonorPrompt('${d.firebaseKey}')">✏️ Edit</button>
-            <button class="action a-black" onclick="deleteDonorByFirebaseKey('${d.firebaseKey}')">🗑️️ Delete</button>
+            <button class="action a-black" onclick="deleteDonorByFirebaseKey('${d.firebaseKey}')">🗑 Delete</button>
         </div></td>
     </tr>`).join("")}
     </tbody></table></div>`;
