@@ -320,15 +320,15 @@ input:focus,select:focus,textarea:focus{
     position: fixed;
     inset: 0;
     z-index: 2000;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(5px);
     padding: 20px;
     overflow: auto;
 }
 
 .gateway-box {
-    width: min(480px, 100%);
-    margin: 40px auto;
+    width: min(450px, 100%);
+    margin: 30px auto;
     background: #ffffff;
     border-radius: 20px;
     box-shadow: 0 20px 50px rgba(0,0,0,0.3);
@@ -387,6 +387,53 @@ input:focus,select:focus,textarea:focus{
 .channel-card.active {
     border-color: #008751;
     background: #f0fdf4;
+}
+
+/* Mobile & Net Banking Simulated Gateway Screens */
+.simulated-card {
+    border-radius: 16px;
+    overflow: hidden;
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.simulated-header {
+    padding: 18px;
+    text-align: center;
+    position: relative;
+}
+
+.simulated-body {
+    padding: 22px;
+    background: #fff;
+    color: #333;
+}
+
+.simulated-btn-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.sim-btn-cancel {
+    padding: 12px;
+    border: 1px solid #ccc;
+    background: #e2e8f0;
+    color: #333;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.sim-btn-confirm {
+    padding: 12px;
+    border: 0;
+    background: #008751;
+    color: #fff;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 /* Contact & Ambulance Section Grid Styles */
@@ -903,7 +950,7 @@ footer{
     </div>
 </div>
 
-<!-- Payment Gateway Modal -->
+<!-- Payment Gateway Selection Modal -->
 <div id="gatewayModal" class="gateway-modal">
     <div class="gateway-box">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
@@ -923,19 +970,19 @@ footer{
 
         <!-- Mobile Banking Channels -->
         <div id="mobileChannels" class="channel-grid">
-            <div class="channel-card" onclick="selectChannel(this, 'bKash')">
+            <div class="channel-card" onclick="selectChannel(this, 'bKash', 'mobile')">
                 <span style="font-size:16px; font-weight:bold; color:#e2136e;">bKash</span>
                 <span style="font-size:12px; color:#555;">বিকাশ</span>
             </div>
-            <div class="channel-card" onclick="selectChannel(this, 'Nagad')">
+            <div class="channel-card" onclick="selectChannel(this, 'Nagad', 'mobile')">
                 <span style="font-size:16px; font-weight:bold; color:#f7931e;">Nagad</span>
                 <span style="font-size:12px; color:#555;">নগদ</span>
             </div>
-            <div class="channel-card" onclick="selectChannel(this, 'Rocket')">
+            <div class="channel-card" onclick="selectChannel(this, 'Rocket', 'mobile')">
                 <span style="font-size:16px; font-weight:bold; color:#8a2be2;">Rocket</span>
                 <span style="font-size:12px; color:#555;">রকেট</span>
             </div>
-            <div class="channel-card" onclick="selectChannel(this, 'Upay')">
+            <div class="channel-card" onclick="selectChannel(this, 'Upay', 'mobile')">
                 <span style="font-size:16px; font-weight:bold; color:#00a651;">Upay</span>
                 <span style="font-size:12px; color:#555;">উপায়</span>
             </div>
@@ -943,25 +990,52 @@ footer{
 
         <!-- Net Banking Channels -->
         <div id="netChannels" class="channel-grid" style="display:none;">
-            <div class="channel-card" onclick="selectChannel(this, 'DBBL Net Banking')">
+            <div class="channel-card" onclick="selectChannel(this, 'DBBL Bank', 'net')">
                 <span style="font-size:15px; font-weight:bold; color:#0055a5;">DBBL Bank</span>
                 <span style="font-size:11px; color:#555;">Dutch Bangla</span>
             </div>
-            <div class="channel-card" onclick="selectChannel(this, 'IBBL Net Banking')">
+            <div class="channel-card" onclick="selectChannel(this, 'Islami Bank', 'net')">
                 <span style="font-size:15px; font-weight:bold; color:#008751;">Islami Bank</span>
                 <span style="font-size:11px; color:#555;">IBBL</span>
             </div>
-            <div class="channel-card" onclick="selectChannel(this, 'MTB Net Banking')">
+            <div class="channel-card" onclick="selectChannel(this, 'MTB Bank', 'net')">
                 <span style="font-size:15px; font-weight:bold; color:#cc0000;">MTB Bank</span>
                 <span style="font-size:11px; color:#555;">Mutual Trust</span>
             </div>
-            <div class="channel-card" onclick="selectChannel(this, 'City Bank')">
-                <span style="font-size:15px; font-weight:bold; color:#002b49;">City Bank</span>
-                <span style="font-size:11px; color:#555;">City Touch</span>
+            <div class="channel-card" onclick="selectChannel(this, 'AB Bank', 'net')">
+                <span style="font-size:15px; font-weight:bold; color:#e11d48;">AB Bank</span>
+                <span style="font-size:11px; color:#555;">AB Direct</span>
             </div>
         </div>
 
-        <button id="payActionBtn" class="yellow-btn" style="margin-top:20px; opacity:0.5; pointer-events:none;" onclick="completePayment()">Pay ৳0.00</button>
+        <button id="payActionBtn" class="yellow-btn" style="margin-top:20px; opacity:0.5; pointer-events:none;" onclick="startRealPaymentFlow()">Pay ৳0.00</button>
+    </div>
+</div>
+
+<!-- Simulated Real Gateway Screen Modal -->
+<div id="simulatedGatewayModal" class="gateway-modal">
+    <div class="gateway-box" style="padding:0; background:transparent;">
+        <div id="simulatedContent">
+            <!-- Dynamic Real Payment Interface -->
+        </div>
+    </div>
+</div>
+
+<!-- Payment Success Receipt Modal -->
+<div id="successModal" class="modal">
+    <div class="modal-box" style="text-align:center; padding:30px;">
+        <div style="width:70px; height:70px; background:#d1fae5; color:#059669; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:38px; margin:0 auto 15px;">✓</div>
+        <h3 style="color:#059669; font-size:22px; margin-bottom:8px;">অনুদানের পেমেন্ট সফল হয়েছে!</h3>
+        <p style="color:#64748b; font-size:14px; margin-bottom:20px;">MB মানবতা ফান্ডে সহযোগিতার জন্য আপনাকে আন্তরিক ধন্যবাদ</p>
+        
+        <div style="background:#f8fafc; border-radius:16px; padding:15px; text-align:left; font-size:14px; margin-bottom:20px; border:1px solid #e2e8f0;">
+            <p style="margin:5px 0;"><b>ট্রানজেকশন আইডি:</b> <span id="recTxn">TXN9843210</span></p>
+            <p style="margin:5px 0;"><b>মাধ্যম:</b> <span id="recMethod">bKash</span></p>
+            <p style="margin:5px 0;"><b>পরিমাণ:</b> <span id="recAmount">৳10.00</span></p>
+            <p style="margin:5px 0;"><b>তারিখ:</b> <span id="recDate">30 Sep 2026</span></p>
+        </div>
+
+        <button class="yellow-btn" onclick="finishPaymentProcess()">হোমে ফিরে যান</button>
     </div>
 </div>
 
@@ -1074,17 +1148,20 @@ function closeAmbulanceModal(){
 window.onclick = function(event) {
     const ambModal = document.getElementById("ambulanceModal");
     const gatewayModal = document.getElementById("gatewayModal");
-    if (event.target == ambModal) {
-        ambModal.style.display = "none";
-    }
-    if (event.target == gatewayModal) {
-        gatewayModal.style.display = "none";
-    }
+    const simModal = document.getElementById("simulatedGatewayModal");
+    const succModal = document.getElementById("successModal");
+
+    if (event.target == ambModal) ambModal.style.display = "none";
+    if (event.target == gatewayModal) gatewayModal.style.display = "none";
+    if (event.target == simModal) simModal.style.display = "none";
+    if (event.target == succModal) succModal.style.display = "none";
 }
 
 /* Gateway Modal Logic */
 let selectedChannelName = "";
+let selectedCategory = "";
 let currentAmount = 0;
+let userPhone = "";
 
 function openGatewayModal(){
     const fundType = document.getElementById("fundType").value;
@@ -1096,6 +1173,7 @@ function openGatewayModal(){
         return;
     }
 
+    userPhone = contact;
     currentAmount = amount;
     document.getElementById("displayAmount").textContent = "৳ " + Number(amount).toLocaleString();
     document.getElementById("gatewayModal").style.display = "block";
@@ -1136,11 +1214,12 @@ function switchGatewayTab(tab){
     btn.style.pointerEvents = "none";
 }
 
-function selectChannel(cardElement, name){
+function selectChannel(cardElement, name, category){
     document.querySelectorAll(".channel-card").forEach(c => c.classList.remove("active"));
     cardElement.classList.add("active");
 
     selectedChannelName = name;
+    selectedCategory = category;
 
     const btn = document.getElementById("payActionBtn");
     btn.style.opacity = "1";
@@ -1148,9 +1227,147 @@ function selectChannel(cardElement, name){
     btn.textContent = `Pay ৳${Number(currentAmount).toLocaleString()} via ${name}`;
 }
 
-function completePayment(){
-    alert(`✅ সফলভাবে অনুদান প্রক্রিয়া সম্পন্ন হয়েছে!\nমাধ্যম: ${selectedChannelName}\nপরিমাণ: ৳${currentAmount}\n\nMB মানবতা ফান্ডে সহযোগিতার জন্য আপনাকে ধন্যবাদ!`);
+/* REAL GATEWAY FLOW SIMULATION */
+
+function startRealPaymentFlow(){
     closeGatewayModal();
+    const simModal = document.getElementById("simulatedGatewayModal");
+    const container = document.getElementById("simulatedContent");
+    simModal.style.display = "block";
+
+    if(selectedCategory === 'mobile'){
+        renderMobileStep1(container);
+    } else {
+        renderNetBankingStep1(container);
+    }
+}
+
+function renderMobileStep1(container){
+    let themeColor = "#e2136e"; // bKash default
+    if(selectedChannelName === "Nagad") themeColor = "#f7931e";
+    if(selectedChannelName === "Rocket") themeColor = "#8a2be2";
+    if(selectedChannelName === "Upay") themeColor = "#00a651";
+
+    container.innerHTML = `
+        <div class="simulated-card">
+            <div class="simulated-header" style="background:${themeColor};">
+                <h3 style="margin:0; font-size:22px;">${selectedChannelName} Payment</h3>
+                <p style="margin:5px 0 0; opacity:0.9;">Amount: ৳${currentAmount}.00</p>
+            </div>
+            <div class="simulated-body">
+                <label style="display:block; font-weight:bold; margin-bottom:8px;">Your ${selectedChannelName} Account Number</label>
+                <input id="simAccNum" type="tel" value="${userPhone}" placeholder="017XXXXXXXX" style="width:100%; padding:12px; border-radius:10px; border:1px solid #ccc; font-size:16px;">
+                <p style="font-size:12px; color:#666; margin-top:8px;">By clicking Confirm, you agree to terms & conditions.</p>
+                
+                <div class="simulated-btn-group">
+                    <button class="sim-btn-cancel" onclick="closeSimModal()">Cancel</button>
+                    <button class="sim-btn-confirm" style="background:${themeColor};" onclick="renderMobileStep2()">Confirm</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderMobileStep2(){
+    const acc = document.getElementById("simAccNum")?.value || userPhone;
+    const container = document.getElementById("simulatedContent");
+    
+    let themeColor = "#e2136e";
+    if(selectedChannelName === "Nagad") themeColor = "#f7931e";
+    if(selectedChannelName === "Rocket") themeColor = "#8a2be2";
+    if(selectedChannelName === "Upay") themeColor = "#00a651";
+
+    const masked = acc.length >= 11 ? acc.slice(0,3) + " ***** " + acc.slice(-3) : acc;
+
+    container.innerHTML = `
+        <div class="simulated-card">
+            <div class="simulated-header" style="background:${themeColor};">
+                <h3 style="margin:0; font-size:20px;">Verification Code</h3>
+                <p style="margin:5px 0 0; opacity:0.9;">Sent to ${masked}</p>
+            </div>
+            <div class="simulated-body">
+                <label style="display:block; font-weight:bold; margin-bottom:8px;">Enter 6-digit Code</label>
+                <input id="simOtp" type="number" placeholder="Enter OTP code" style="width:100%; padding:12px; border-radius:10px; border:1px solid #ccc; font-size:16px; text-align:center; letter-spacing:4px;">
+                <p style="font-size:12px; color:#666; margin-top:8px; text-align:center;">Resend Code in 28s</p>
+                
+                <div class="simulated-btn-group">
+                    <button class="sim-btn-cancel" onclick="closeSimModal()">Cancel</button>
+                    <button class="sim-btn-confirm" style="background:${themeColor};" onclick="renderMobileStep3()">Confirm</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderMobileStep3(){
+    const container = document.getElementById("simulatedContent");
+    
+    let themeColor = "#e2136e";
+    if(selectedChannelName === "Nagad") themeColor = "#f7931e";
+    if(selectedChannelName === "Rocket") themeColor = "#8a2be2";
+    if(selectedChannelName === "Upay") themeColor = "#00a651";
+
+    container.innerHTML = `
+        <div class="simulated-card">
+            <div class="simulated-header" style="background:${themeColor};">
+                <h3 style="margin:0; font-size:20px;">Enter PIN</h3>
+                <p style="margin:5px 0 0; opacity:0.9;">${selectedChannelName}</p>
+            </div>
+            <div class="simulated-body">
+                <label style="display:block; font-weight:bold; margin-bottom:8px;">Enter PIN Number</label>
+                <input id="simPin" type="password" maxlength="5" placeholder="•••••" style="width:100%; padding:12px; border-radius:10px; border:1px solid #ccc; font-size:20px; text-align:center;">
+                
+                <div class="simulated-btn-group">
+                    <button class="sim-btn-cancel" onclick="closeSimModal()">Cancel</button>
+                    <button class="sim-btn-confirm" style="background:${themeColor};" onclick="showSuccessReceipt()">Confirm</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderNetBankingStep1(container){
+    container.innerHTML = `
+        <div class="simulated-card">
+            <div class="simulated-header" style="background:#0f172a;">
+                <h3 style="margin:0; font-size:20px;">${selectedChannelName} Login</h3>
+                <p style="margin:5px 0 0; opacity:0.9;">Amount: ৳${currentAmount}.00</p>
+            </div>
+            <div class="simulated-body">
+                <label style="display:block; font-weight:bold; margin-bottom:5px;">Username / User ID</label>
+                <input type="text" placeholder="Enter Username" style="width:100%; padding:12px; border-radius:10px; border:1px solid #ccc; font-size:15px; margin-bottom:15px;">
+                
+                <label style="display:block; font-weight:bold; margin-bottom:5px;">Password</label>
+                <input type="password" placeholder="Enter Password" style="width:100%; padding:12px; border-radius:10px; border:1px solid #ccc; font-size:15px;">
+                
+                <div class="simulated-btn-group">
+                    <button class="sim-btn-cancel" onclick="closeSimModal()">Cancel</button>
+                    <button class="sim-btn-confirm" onclick="showSuccessReceipt()">Login & Pay</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function closeSimModal(){
+    document.getElementById("simulatedGatewayModal").style.display = "none";
+}
+
+function showSuccessReceipt(){
+    closeSimModal();
+    
+    document.getElementById("recTxn").textContent = "TXN" + Math.floor(10000000 + Math.random() * 90000000);
+    document.getElementById("recMethod").textContent = selectedChannelName;
+    document.getElementById("recAmount").textContent = "৳" + Number(currentAmount).toLocaleString() + ".00";
+    
+    const today = new Date();
+    document.getElementById("recDate").textContent = today.toLocaleDateString('bn-BD', { day: 'numeric', month: 'short', year: 'numeric' });
+
+    document.getElementById("successModal").style.display = "block";
+}
+
+function finishPaymentProcess(){
+    document.getElementById("successModal").style.display = "none";
     document.getElementById("fundType").value = "";
     document.getElementById("fundContact").value = "";
     document.getElementById("fundAmount").value = "";
