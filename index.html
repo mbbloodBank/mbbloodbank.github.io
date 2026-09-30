@@ -983,29 +983,28 @@ footer{
     বৃহত্তম ব্লাড ব্যাংক
 </footer>
 
-<!-- Firebase SDKs -->
+
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getDatabase, ref, set, get, child, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+/* =========================
+   FIREBASE INITIALIZATION
+========================= */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyDCJr3wCX4XzGDeC_OmXFs60nbtYdRUY",
-    authDomain: "mb-blood-bank-a17aa.firebaseapp.com",
-    databaseURL: "https://mb-blood-bank-a17aa-default-rtdb.firebaseio.com",
-    projectId: "mb-blood-bank-a17aa",
-    storageBucket: "mb-blood-bank-a17aa.firebasestorage.app",
-    messagingSenderId: "285880339463",
-    appId: "1:285880339463:web:698e0cc5d399bc6b433782"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyDCJr3wCX4XxCZgOeC_OmXFs6OmbtYdRuY",
+  authDomain: "mb-blood-bank-a17aa.firebaseapp.com",
+  databaseURL: "https://mb-blood-bank-a17aa-default-rtdb.firebaseio.com",
+  projectId: "mb-blood-bank-a17aa",
+  storageBucket: "mb-blood-bank-a17aa.firebasestorage.app",
+  messagingSenderId: "28580039463",
+  appId: "1:28580039463:web:698e0cc5d399bc6b433702",
+  measurementId: "G-D4FJTMQ17C"
+};
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-
-  // Make db functions globally available if needed, or handle events inside
-  window.dbRef = { ref, set, get, child, push, onValue, db };
-  window.dispatchEvent(new Event('firebase-ready'));
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 </script>
 
 <script>
@@ -1211,7 +1210,7 @@ function completePayment(){
 }
 
 
-/* Render Ambulance List from LocalStorage / Firebase fallback */
+/* Render Ambulance List from LocalStorage */
 function renderAmbulanceList(){
     const container = document.getElementById("ambulanceListContainer");
     const ambulances = JSON.parse(localStorage.getItem("mb_ambulances") || "[]");
@@ -1231,45 +1230,18 @@ function renderAmbulanceList(){
 }
 
 
-/* Data management with Firebase Integration */
-
-let cloudDonors = [];
-let cloudRequests = [];
-
-window.addEventListener('firebase-ready', () => {
-    const { ref, onValue, db } = window.dbRef;
-
-    // Listen to Donors from Firebase Realtime Database
-    onValue(ref(db, 'donors'), (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-            cloudDonors = Object.values(data);
-            localStorage.setItem("mb_donors", JSON.stringify(cloudDonors));
-        } else {
-            cloudDonors = [];
-        }
-        updateStats();
-    });
-
-    // Listen to Requests from Firebase Realtime Database
-    onValue(ref(db, 'requests'), (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-            cloudRequests = Object.values(data);
-            localStorage.setItem("mb_requests", JSON.stringify(cloudRequests));
-        } else {
-            cloudRequests = [];
-        }
-        updateStats();
-    });
-});
+/* Local storage */
 
 function getDonors(){
-    return cloudDonors.length > 0 ? cloudDonors : JSON.parse(localStorage.getItem("mb_donors")||"[]");
+    return JSON.parse(localStorage.getItem("mb_donors")||"[]");
+}
+
+function saveDonors(data){
+    localStorage.setItem("mb_donors",JSON.stringify(data));
 }
 
 function getRequests(){
-    return cloudRequests.length > 0 ? cloudRequests : JSON.parse(localStorage.getItem("mb_requests")||"[]");
+    return JSON.parse(localStorage.getItem("mb_requests")||"[]");
 }
 
 
@@ -1287,6 +1259,8 @@ function fileToBase64(file){
 document.getElementById("donorForm").addEventListener("submit",async function(e){
 
     e.preventDefault();
+
+    const donors=getDonors();
 
     const id="MB-"+Date.now().toString().slice(-8);
 
@@ -1310,15 +1284,8 @@ document.getElementById("donorForm").addEventListener("submit",async function(e)
         donor.photo=await fileToBase64(photoFile);
     }
 
-    // Save to Firebase Database if ready, fallback to localStorage
-    if(window.dbRef) {
-        const { ref, set, db } = window.dbRef;
-        set(ref(db, 'donors/' + id), donor).catch(err => console.error(err));
-    } else {
-        const donors = getDonors();
-        donors.push(donor);
-        localStorage.setItem("mb_donors", JSON.stringify(donors));
-    }
+    donors.push(donor);
+    saveDonors(donors);
 
     alert(
       "আপনার নিবন্ধনের অনুরোধ পাঠানো হয়েছে।\n\n"+
@@ -1338,10 +1305,10 @@ document.getElementById("requestForm").addEventListener("submit",function(e){
 
     e.preventDefault();
 
-    const reqId = "REQ-"+Date.now().toString().slice(-8);
+    const requests=getRequests();
 
-    const newReq = {
-        id: reqId,
+    requests.push({
+        id:"REQ-"+Date.now().toString().slice(-8),
         patient:document.getElementById("rName").value.trim(),
         phone:document.getElementById("rPhone").value.trim(),
         blood:document.getElementById("rBlood").value,
@@ -1355,16 +1322,9 @@ document.getElementById("requestForm").addEventListener("submit",function(e){
         info:document.getElementById("rInfo").value.trim(),
         status:"pending",
         createdAt:new Date().toISOString()
-    };
+    });
 
-    if(window.dbRef) {
-        const { ref, set, db } = window.dbRef;
-        set(ref(db, 'requests/' + reqId), newReq).catch(err => console.error(err));
-    } else {
-        const requests = getRequests();
-        requests.push(newReq);
-        localStorage.setItem("mb_requests",JSON.stringify(requests));
-    }
+    localStorage.setItem("mb_requests",JSON.stringify(requests));
 
     alert("🚨 আপনার রক্তের অনুরোধ সফলভাবে পাঠানো হয়েছে।");
 
