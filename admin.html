@@ -113,37 +113,6 @@ body{
     opacity:.7;
 }
 
-.field{
-    text-align:left;
-    margin-bottom:16px;
-}
-
-.field label{
-    display:block;
-    font-weight:800;
-    margin-bottom:6px;
-}
-
-.field input,
-.field select,
-.field textarea{
-    width:100%;
-    padding:14px 15px;
-    border:1px solid rgba(80,30,100,.15);
-    border-radius:16px;
-    outline:none;
-    background:rgba(255,255,255,.78);
-    font-family:inherit;
-    font-size:15px;
-}
-
-.field input:focus,
-.field select:focus,
-.field textarea:focus{
-    border-color:#8b39bd;
-    box-shadow:0 0 0 4px rgba(139,57,189,.12);
-}
-
 .main-btn{
     width:100%;
     padding:15px;
@@ -163,16 +132,6 @@ body{
 
 .main-btn:hover{
     transform:translateY(-3px);
-}
-
-.login-error{
-    display:none;
-    margin-top:15px;
-    padding:12px;
-    border-radius:14px;
-    color:#9e1223;
-    background:rgba(255,0,30,.08);
-    font-weight:700;
 }
 
 /* ================= APP ================= */
@@ -464,14 +423,6 @@ td{
     vertical-align:middle;
 }
 
-.avatar{
-    width:48px;
-    height:48px;
-    border-radius:15px;
-    object-fit:cover;
-    box-shadow:4px 5px 10px rgba(60,20,80,.15);
-}
-
 .status{
     display:inline-block;
     padding:5px 10px;
@@ -516,7 +467,6 @@ td{
 .a-red{background:#d62a3e}
 .a-purple{background:#7441b4}
 .a-black{background:#25212a}
-.a-blue{background:#2478b8}
 
 /* FORM */
 
@@ -633,20 +583,9 @@ td{
         <div class="admin-logo">🔐</div>
         <h1>MB <span>Blood Bank</span></h1>
         <h2>Admin Panel</h2>
-        <p>শুধুমাত্র অনুমোদিত Admin-এর জন্য</p>
-
-        <div class="field">
-            <label>📧 Admin Gmail</label>
-            <input type="email" id="loginEmail" placeholder="Admin Gmail">
-        </div>
-
-        <div class="field">
-            <label>🔑 Password</label>
-            <input type="password" id="loginPassword" placeholder="Password">
-        </div>
+        <p>সরাসরি প্রবেশ করতে নিচের বাটনে ক্লিক করুন</p>
 
         <button class="main-btn" onclick="adminLogin()">🔐 Login to Admin Panel</button>
-        <div id="loginError" class="login-error">❌ Gmail অথবা Password সঠিক নয়।</div>
     </div>
 </section>
 
@@ -870,7 +809,7 @@ td{
 <!-- SETTINGS -->
 <section id="settings" class="page">
     <div class="page-title">
-        <h2>⚙️️ Admin Settings</h2>
+        <h2>⚙️ Admin Settings</h2>
     </div>
     <div class="box">
         <h3>🔐 Current Admin</h3><br>
@@ -924,33 +863,26 @@ td{
 </div>
 
 <script>
-const ADMIN_EMAIL="monirahmeddhakib.mb@gmail.com";
-const ADMIN_PASSWORD="@monir7667";
-
 let globalDonors = [];
 let globalRequests = [];
 let globalAmbulances = [];
 
-// Initialize Firebase Realtime Listeners after login or load
 function initFirebaseListeners() {
     if (!window.firebaseDb) return;
     const { db, ref, onValue } = window.firebaseDb;
 
-    // Donors Listener
     onValue(ref(db, 'donors'), (snapshot) => {
         const data = snapshot.val();
         globalDonors = data ? Object.keys(data).map(key => ({ ...data[key], firebaseKey: key })) : [];
         renderAll();
     });
 
-    // Requests Listener
     onValue(ref(db, 'requests'), (snapshot) => {
         const data = snapshot.val();
         globalRequests = data ? Object.keys(data).map(key => ({ ...data[key], firebaseKey: key })) : [];
         renderAll();
     });
 
-    // Ambulances Listener
     onValue(ref(db, 'ambulances'), (snapshot) => {
         const data = snapshot.val();
         globalAmbulances = data ? Object.keys(data).map(key => ({ ...data[key], firebaseKey: key })) : [];
@@ -959,28 +891,17 @@ function initFirebaseListeners() {
 }
 
 function adminLogin(){
-    const email = document.getElementById("loginEmail").value.trim().toLowerCase();
-    const password = document.getElementById("loginPassword").value;
-
-    if(email === ADMIN_EMAIL && password === ADMIN_PASSWORD){
-        sessionStorage.setItem("mb_admin_authenticated", "true");
-        document.getElementById("loginScreen").style.display = "none";
-        document.getElementById("adminApp").style.display = "block";
-        initFirebaseListeners();
-        renderAll();
-    } else {
-        document.getElementById("loginError").style.display = "block";
-    }
+    sessionStorage.setItem("mb_admin_authenticated", "true");
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("adminApp").style.display = "block";
+    initFirebaseListeners();
+    renderAll();
 }
 
 function adminLogout(){
     sessionStorage.removeItem("mb_admin_authenticated");
     location.reload();
 }
-
-document.getElementById("loginPassword").addEventListener("keydown", function(e){
-    if(e.key === "Enter") adminLogin();
-});
 
 if(sessionStorage.getItem("mb_admin_authenticated") === "true"){
     document.getElementById("loginScreen").style.display = "none";
@@ -1007,7 +928,6 @@ function toggleSidebar(){
     document.getElementById("sidebar").classList.toggle("open");
 }
 
-// DASHBOARD & STATS
 function updateDashboard(){
     const pending = globalDonors.filter(x => x.status === "pending");
     const approved = globalDonors.filter(x => x.status === "approved");
@@ -1021,7 +941,6 @@ function updateDashboard(){
     document.getElementById("sideApproved").textContent = approved.length;
     document.getElementById("sideRequests").textContent = globalRequests.filter(x => x.status === "pending").length;
 
-    // Recent Pending
     const rp = document.getElementById("recentPending");
     if(!pending.length){
         rp.innerHTML = `<p>বর্তমানে কোনো Pending Donor নেই।</p>`;
@@ -1041,7 +960,6 @@ function updateDashboard(){
         </tbody></table></div>`;
     }
 
-    // Recent Requests
     const rr = document.getElementById("recentRequests");
     if(!globalRequests.length){
         rr.innerHTML = `<p>কোনো Blood Request নেই।</p>`;
@@ -1059,7 +977,6 @@ function updateDashboard(){
     }
 }
 
-// TABLES
 function donorTable(data, emptyText = "কোনো Donor পাওয়া যায়নি।"){
     if(!data.length) return `<p>${emptyText}</p>`;
     return `<div class="table-scroll"><table><thead><tr><th>ID</th><th>নাম</th><th>Blood</th><th>Location</th><th>Phone</th><th>Status</th><th>Action</th></tr></thead><tbody>
@@ -1090,7 +1007,7 @@ function ambulanceTable(data){
         <td>${escapeHtml(a.phone)}</td>
         <td>${escapeHtml(a.address)}</td>
         <td><div class="actions">
-            <button class="action a-purple" onclick="editAmbulancePrompt('${a.firebaseKey}')">✏️ Edit</button>
+            <button class="action a-purple" onclick="editAmbulancePrompt('${a.firebaseKey}')">✏️️ Edit</button>
             <button class="action a-black" onclick="deleteAmbulanceByFirebaseKey('${a.firebaseKey}')">🗑️ Delete</button>
         </div></td>
     </tr>`).join("")}
@@ -1101,35 +1018,29 @@ function renderAll(){
     if(document.getElementById("adminApp").style.display !== "block") return;
     updateDashboard();
 
-    // Pending
     let pending = globalDonors.filter(d => d.status === "pending");
     const ps = document.getElementById("pendingSearch")?.value.toLowerCase().trim();
     if(ps) pending = pending.filter(d => searchDonor(d, ps));
     document.getElementById("pendingTable").innerHTML = donorTable(pending, "🎉 কোনো Pending Donor নেই।");
 
-    // Approved
     let approved = globalDonors.filter(d => d.status === "approved");
     const as = document.getElementById("approvedSearch")?.value.toLowerCase().trim();
     if(as) approved = approved.filter(d => searchDonor(d, as));
     document.getElementById("approvedTable").innerHTML = donorTable(approved, "কোনো Approved Donor নেই।");
 
-    // Rejected
     let rejected = globalDonors.filter(d => d.status === "rejected");
     document.getElementById("rejectedTable").innerHTML = donorTable(rejected, "কোনো Rejected Donor নেই।");
 
-    // All
     let all = globalDonors;
     const alls = document.getElementById("allSearch")?.value.toLowerCase().trim();
     if(alls) all = all.filter(d => searchDonor(d, alls));
     document.getElementById("allTable").innerHTML = donorTable(all, "কোনো Donor নেই।");
 
-    // Requests
     let req = globalRequests;
     const rs = document.getElementById("requestSearch")?.value.toLowerCase().trim();
     if(rs) req = req.filter(r => String(r.id).toLowerCase().includes(rs) || String(r.patient).toLowerCase().includes(rs));
     renderRequests(req);
 
-    // Ambulances
     let amb = globalAmbulances;
     const ambs = document.getElementById("ambulanceSearch")?.value.toLowerCase().trim();
     if(ambs) amb = amb.filter(a => String(a.name).toLowerCase().includes(ambs) || String(a.phone).toLowerCase().includes(ambs));
@@ -1140,7 +1051,6 @@ function searchDonor(d, q){
     return [d.id, d.name, d.phone, d.blood, d.district, d.upazila].join(" ").toLowerCase().includes(q);
 }
 
-// FIREBASE ACTIONS (UPDATE/DELETE/APPROVE)
 function approveDonorByFirebaseKey(firebaseKey){
     if(!window.firebaseDb) return;
     const { db, ref, update } = window.firebaseDb;
@@ -1162,7 +1072,6 @@ function deleteDonorByFirebaseKey(firebaseKey){
     remove(ref(db, 'donors/' + firebaseKey));
 }
 
-// EDIT DONOR
 let editingFirebaseKey = null;
 function editDonorPrompt(firebaseKey){
     const d = globalDonors.find(x => x.firebaseKey === firebaseKey);
@@ -1205,7 +1114,6 @@ function closeEdit(){
     document.getElementById("editModal").classList.remove("show");
 }
 
-// AMBULANCE ACTIONS
 let editingAmbulanceKey = null;
 function editAmbulancePrompt(firebaseKey){
     const a = globalAmbulances.find(x => x.firebaseKey === firebaseKey);
@@ -1243,7 +1151,6 @@ function deleteAmbulanceByFirebaseKey(firebaseKey){
     remove(ref(db, 'ambulances/' + firebaseKey));
 }
 
-// REQUESTS TABLE & ACTIONS
 function renderRequests(data = globalRequests){
     const box = document.getElementById("requestTable");
     if(!data.length){
@@ -1263,7 +1170,7 @@ function renderRequests(data = globalRequests){
         <td><span class="status ${r.status}">${escapeHtml(r.status)}</span></td>
         <td><div class="actions">
             ${r.status === "pending" ? `<button class="action a-green" onclick="approveRequestKey('${r.firebaseKey}')">✅ Approve</button><button class="action a-red" onclick="rejectRequestKey('${r.firebaseKey}')">❌ Reject</button>` : ""}
-            <button class="action a-black" onclick="deleteRequestKey('${r.firebaseKey}')">🗑️️ Delete</button>
+            <button class="action a-black" onclick="deleteRequestKey('${r.firebaseKey}')">🗑️ Delete</button>
         </div></td>
     </tr>`).join("")}
     </tbody></table></div>`;
@@ -1285,7 +1192,6 @@ function deleteRequestKey(key){
     window.firebaseDb.remove(window.firebaseDb.ref(window.firebaseDb.db, 'requests/' + key));
 }
 
-// ADD FORMS
 document.getElementById("addDonorForm").addEventListener("submit", function(e){
     e.preventDefault();
     if(!window.firebaseDb) return;
