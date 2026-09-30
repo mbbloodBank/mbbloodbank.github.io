@@ -961,11 +961,23 @@ footer{
             </div>
         </div>
 
-        <div id="paymentInstructions" style="display:none; margin-top:15px; padding:12px; background:#f8fafc; border-radius:10px; font-size:13px; color:#334155; border:1px solid #e2e8f0;">
-            <!-- Dynamic Instruction -->
+        <button id="payActionBtn" class="yellow-btn" style="margin-top:20px; opacity:0.5; pointer-events:none;" onclick="proceedToPaymentDetails()">Pay ৳0.00</button>
+    </div>
+</div>
+
+<!-- Payment Details Instruction Modal (Appears when Pay is clicked) -->
+<div id="detailsModal" class="gateway-modal">
+    <div class="gateway-box" style="text-align:center; padding:25px;">
+        <h3 id="detailsTitle" style="color:#008751; margin-bottom:15px;">পেমেন্ট নির্দেশনা</h3>
+        
+        <div id="detailsInstructionBox" style="background:#f8fafc; border-radius:16px; padding:18px; text-align:left; font-size:15px; margin-bottom:20px; border:1px solid #e2e8f0; line-height:1.6;">
+            <!-- Dynamic instructions with account number -->
         </div>
 
-        <button id="payActionBtn" class="yellow-btn" style="margin-top:20px; opacity:0.5; pointer-events:none;" onclick="completePayment()">Pay ৳0.00</button>
+        <div style="display:flex; gap:10px;">
+            <button class="sim-btn-cancel" style="flex:1; padding:12px; border-radius:12px; border:1px solid #ccc; font-weight:bold; cursor:pointer;" onclick="closeDetailsModal()">বাতিল</button>
+            <button class="yellow-btn" style="flex:1;" onclick="completePayment()">টাকা পাঠিয়েছি, কনফার্ম করুন</button>
+        </div>
     </div>
 </div>
 
@@ -1096,10 +1108,12 @@ function closeAmbulanceModal(){
 window.onclick = function(event) {
     const ambModal = document.getElementById("ambulanceModal");
     const gatewayModal = document.getElementById("gatewayModal");
+    const detailsModal = document.getElementById("detailsModal");
     const successModal = document.getElementById("successModal");
 
     if (event.target == ambModal) ambModal.style.display = "none";
     if (event.target == gatewayModal) gatewayModal.style.display = "none";
+    if (event.target == detailsModal) detailsModal.style.display = "none";
     if (event.target == successModal) successModal.style.display = "none";
 }
 
@@ -1124,7 +1138,6 @@ function openGatewayModal(){
     
     // Reset selection
     document.querySelectorAll(".channel-card").forEach(c => c.classList.remove("active"));
-    document.getElementById("paymentInstructions").style.display = "none";
     const btn = document.getElementById("payActionBtn");
     btn.style.opacity = "0.5";
     btn.style.pointerEvents = "none";
@@ -1154,7 +1167,6 @@ function switchGatewayTab(tab){
     }
     
     document.querySelectorAll(".channel-card").forEach(c => c.classList.remove("active"));
-    document.getElementById("paymentInstructions").style.display = "none";
     const btn = document.getElementById("payActionBtn");
     btn.style.opacity = "0.5";
     btn.style.pointerEvents = "none";
@@ -1167,18 +1179,35 @@ function selectChannel(cardElement, name, account){
     selectedChannelName = name;
     selectedAccountNumber = account;
 
-    const inst = document.getElementById("paymentInstructions");
-    inst.style.display = "block";
-    inst.innerHTML = `<b>নির্বাচিত মাধ্যম:</b> ${name}<br>অনুগ্রহ করে আপনার ${name} অ্যাপ থেকে <b>${account}</b> এই নম্বরে <b>৳${currentAmount}</b> পে করুন।`;
-
     const btn = document.getElementById("payActionBtn");
     btn.style.opacity = "1";
     btn.style.pointerEvents = "auto";
     btn.textContent = `Pay ৳${Number(currentAmount).toLocaleString()} via ${name}`;
 }
 
-function completePayment(){
+function proceedToPaymentDetails(){
     closeGatewayModal();
+    
+    document.getElementById("detailsTitle").textContent = `${selectedChannelName} পেমেন্ট নির্দেশনা`;
+    document.getElementById("detailsInstructionBox").innerHTML = `
+        <b>নির্বাচিত মাধ্যম:</b> ${selectedChannelName}<br>
+        <b>পরিমাণ:</b> ৳${Number(currentAmount).toLocaleString()}<br><br>
+        অনুগ্রহ করে আপনার ${selectedChannelName} অ্যাপ থেকে নিচের নম্বরে টাকা পাঠান:<br>
+        <div style="background:#fff; padding:10px; border-radius:8px; margin:10px 0; font-size:18px; font-weight:bold; color:#008751; text-align:center; border:1px dashed #cbd5e1;">
+            ${selectedAccountNumber}
+        </div>
+        <small style="color:#64748b;">*টাকা সফলভাবে সেন্ড করার পর নিচের কনফার্ম বাটনে ক্লিক করুন।</small>
+    `;
+
+    document.getElementById("detailsModal").style.display = "block";
+}
+
+function closeDetailsModal(){
+    document.getElementById("detailsModal").style.display = "none";
+}
+
+function completePayment(){
+    closeDetailsModal();
     
     document.getElementById("recTxn").textContent = "TXN" + Math.floor(10000000 + Math.random() * 90000000);
     document.getElementById("recMethod").textContent = selectedChannelName;
