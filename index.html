@@ -737,7 +737,7 @@ footer{
 
                     <div>
                         <label>প্রয়োজনের তারিখ *</label>
-                        <input id="rDate" type="date" required>
+                        <select id="rDate" type="date" required></select>
                     </div>
 
                     <div>
@@ -961,11 +961,29 @@ footer{
             </div>
         </div>
 
-        <div id="paymentInstructions" style="display:none; margin-top:15px; padding:14px; background:#f0fdf4; border-radius:12px; font-size:13px; color:#166534; border:1px solid #bbf7d0; line-height: 1.6;">
+        <div id="paymentInstructions" style="display:none; margin-top:15px; padding:12px; background:#f8fafc; border-radius:10px; font-size:13px; color:#334155; border:1px solid #e2e8f0;">
             <!-- Dynamic Instruction matches user requirement -->
         </div>
 
         <button id="payActionBtn" class="yellow-btn" style="margin-top:20px; opacity:0.5; pointer-events:none;" onclick="completePayment()">Pay ৳0.00</button>
+    </div>
+</div>
+
+<!-- Payment Success Receipt Modal -->
+<div id="successModal" class="modal">
+    <div class="modal-box" style="text-align:center; padding:30px;">
+        <div style="width:70px; height:70px; background:#d1fae5; color:#059669; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:38px; margin:0 auto 15px;">✓</div>
+        <h3 style="color:#059669; font-size:22px; margin-bottom:8px;">অনুদানের পেমেন্ট সফল হয়েছে[span_2](start_span)[span_2](end_span)!</h3>
+        <p style="color:#64748b; font-size:14px; margin-bottom:20px;">MB মানবতা ফান্ডে সহযোগিতার জন্য আপনাকে আন্তরিক ধন্যবাদ[span_3](start_span)[span_3](end_span)</p>
+        
+        <div style="background:#f8fafc; border-radius:16px; padding:15px; text-align:left; font-size:14px; margin-bottom:20px; border:1px solid #e2e8f0;">
+            <p style="margin:5px 0;"><b>ট্রানজেকশন আইডি:</b> <span id="recTxn">TXN9843210</span>[span_4](start_span)[span_4](end_span)</p>
+            <p style="margin:5px 0;"><b>মাধ্যম:</b> <span id="recMethod">bKash</span>[span_5](start_span)[span_5](end_span)</p>
+            <p style="margin:5px 0;"><b>পরিমাণ:</b> <span id="recAmount">৳10.00</span>[span_6](start_span)[span_6](end_span)</p>
+            <p style="margin:5px 0;"><b>তারিখ:</b> <span id="recDate">৩০ সেপ, ২০২৬</span>[span_7](start_span)[span_7](end_span)</p>
+        </div>
+
+        <button class="yellow-btn" onclick="finishPaymentProcess()">হোমে ফিরে যান[span_8](start_span)[span_8](end_span)</button>
     </div>
 </div>
 
@@ -1078,9 +1096,11 @@ function closeAmbulanceModal(){
 window.onclick = function(event) {
     const ambModal = document.getElementById("ambulanceModal");
     const gatewayModal = document.getElementById("gatewayModal");
+    const succModal = document.getElementById("successModal");
 
     if (event.target == ambModal) ambModal.style.display = "none";
     if (event.target == gatewayModal) gatewayModal.style.display = "none";
+    if (event.target == succModal) succModal.style.display = "none";
 }
 
 /* Gateway Modal Logic */
@@ -1147,17 +1167,29 @@ function selectChannel(cardElement, name){
 
     const inst = document.getElementById("paymentInstructions");
     inst.style.display = "block";
-    inst.innerHTML = `<b>নির্বাচিত মাধ্যম:</b> ${name}[span_2](start_span)[span_2](end_span)<br>অনুগ্রহ করে আপনার <b>${name}</b> অ্যাপ বা অ্যাকাউন্ট থেকে <b>01726232108</b> এই নম্বরে <b>৳${currentAmount}</b> পে করুন[span_3](start_span)[span_3](end_span)।`;
+    inst.innerHTML = `<b>নির্বাচিত মাধ্যম:</b> ${name}<br>অনুগ্রহ করে আপনার ${name} থেকে <b>01726232108</b> নম্বরে <b>৳${currentAmount}</b> পে করুন[span_9](start_span)[span_9](end_span)।`;
 
     const btn = document.getElementById("payActionBtn");
     btn.style.opacity = "1";
     btn.style.pointerEvents = "auto";
-    btn.textContent = `Pay ৳${Number(currentAmount).toLocaleString()} via ${name}[span_4](start_span)[span_4](end_span)`;
+    btn.textContent = `Pay ৳${Number(currentAmount).toLocaleString()} via ${name}`;
 }
 
 function completePayment(){
-    alert(`✅ সফলভাবে অনুদান প্রক্রিয়া সম্পন্ন হয়েছে!\nমাধ্যম: ${selectedChannelName}\nপরিমাণ: ৳${currentAmount}\n\nMB মানবতা ফান্ডে সহযোগিতার জন্য আপনাকে ধন্যবাদ!`);
-    closeGatewayModal();
+    document.getElementById("gatewayModal").style.display = "none";
+    
+    document.getElementById("recTxn").textContent = "TXN" + Math.floor(10000000 + Math.random() * 90000000);
+    document.getElementById("recMethod").textContent = selectedChannelName;
+    document.getElementById("recAmount").textContent = "৳" + Number(currentAmount).toLocaleString() + ".00";
+    
+    const today = new Date();
+    document.getElementById("recDate").textContent = today.toLocaleDateString('bn-BD', { day: 'numeric', month: 'short', year: 'numeric' });
+
+    document.getElementById("successModal").style.display = "block";
+}
+
+function finishPaymentProcess(){
+    document.getElementById("successModal").style.display = "none";
     document.getElementById("fundType").value = "";
     document.getElementById("fundContact").value = "";
     document.getElementById("fundAmount").value = "";
