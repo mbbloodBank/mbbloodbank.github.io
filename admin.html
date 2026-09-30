@@ -10,6 +10,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+  import { getDatabase, ref, set, get, update, remove, child, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDCJr3wCX4XxCZgOeC_OmXFs6OmbtYdRuY",
@@ -24,6 +25,10 @@
 
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
+  const db = getDatabase(app);
+
+  // Expose Firebase functions globally for the app
+  window.firebaseDb = { db, ref, set, get, update, remove, child, onValue };
   window.firebaseApp = app;
 </script>
 
@@ -513,22 +518,6 @@ td{
 .a-black{background:#25212a}
 .a-blue{background:#2478b8}
 
-/* FILTER */
-
-.filter-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-}
-
-.filter-grid select{
-    padding:13px;
-    border-radius:14px;
-    border:1px solid rgba(80,30,100,.15);
-    background:rgba(255,255,255,.75);
-    font-family:inherit;
-}
-
 /* FORM */
 
 .form-grid{
@@ -600,8 +589,6 @@ td{
     cursor:pointer;
 }
 
-/* MOBILE */
-
 .mobile-menu{
     display:none;
     border:0;
@@ -611,85 +598,28 @@ td{
 }
 
 @media(max-width:1050px){
-
     .dashboard-grid{
         grid-template-columns:repeat(2,1fr);
     }
-
 }
 
 @media(max-width:800px){
-
     .mobile-menu{
         display:block;
     }
-
     .sidebar{
         transform:translateX(-100%);
         transition:.3s;
     }
-
     .sidebar.open{
         transform:translateX(0);
     }
-
     .main{
         margin-left:0;
         padding:95px 15px 30px;
     }
-
     .topbar{
         padding:0 14px;
-    }
-
-    .brand{
-        font-size:16px;
-    }
-
-    .brand-icon{
-        width:38px;
-        height:38px;
-    }
-
-    .top-actions .top-btn:first-child{
-        display:none;
-    }
-
-    .filter-grid{
-        grid-template-columns:1fr;
-    }
-
-}
-
-@media(max-width:600px){
-
-    .dashboard-grid{
-        grid-template-columns:1fr;
-    }
-
-    .form-grid{
-        grid-template-columns:1fr;
-    }
-
-    .full{
-        grid-column:auto;
-    }
-
-    .box{
-        padding:16px;
-    }
-
-    .box-header{
-        align-items:flex-start;
-        flex-direction:column;
-    }
-
-    .search-box{
-        width:100%;
-    }
-
-    .search-box input{
-        width:100%;
     }
 }
 </style>
@@ -697,2216 +627,718 @@ td{
 
 <body>
 
-
-<!-- =====================================================
-     LOGIN
-===================================================== -->
-
+<!-- LOGIN -->
 <section id="loginScreen">
-
     <div class="login-card">
-
         <div class="admin-logo">🔐</div>
-
         <h1>MB <span>Blood Bank</span></h1>
-
         <h2>Admin Panel</h2>
-
         <p>শুধুমাত্র অনুমোদিত Admin-এর জন্য</p>
 
         <div class="field">
             <label>📧 Admin Gmail</label>
-            <input
-                type="email"
-                id="loginEmail"
-                placeholder="Admin Gmail">
+            <input type="email" id="loginEmail" placeholder="Admin Gmail">
         </div>
 
         <div class="field">
             <label>🔑 Password</label>
-            <input
-                type="password"
-                id="loginPassword"
-                placeholder="Password">
+            <input type="password" id="loginPassword" placeholder="Password">
         </div>
 
-        <button class="main-btn" onclick="adminLogin()">
-            🔐 Login to Admin Panel
-        </button>
-
-        <div id="loginError" class="login-error">
-            ❌ Gmail অথবা Password সঠিক নয়।
-        </div>
-
+        <button class="main-btn" onclick="adminLogin()">🔐 Login to Admin Panel</button>
+        <div id="loginError" class="login-error">❌ Gmail অথবা Password সঠিক নয়।</div>
     </div>
-
 </section>
 
-
-<!-- =====================================================
-     ADMIN APP
-===================================================== -->
-
+<!-- ADMIN APP -->
 <div id="adminApp">
-
-
-<!-- TOPBAR -->
-
 <header class="topbar">
-
     <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
-
     <div class="brand">
-
         <div class="brand-icon">🩸</div>
-
         <span>MB Blood Bank Admin</span>
-
     </div>
-
     <div class="top-actions">
-
-        <button
-          class="top-btn"
-          onclick="openPage('dashboard')">
-          🏠 Dashboard
-        </button>
-
-        <button
-          class="top-btn logout"
-          onclick="adminLogout()">
-          Logout
-        </button>
-
+        <button class="top-btn" onclick="openPage('dashboard')">🏠 Dashboard</button>
+        <button class="top-btn logout" onclick="adminLogout()">Logout</button>
     </div>
-
 </header>
 
-
-<!-- SIDEBAR -->
-
 <aside class="sidebar" id="sidebar">
-
     <div class="admin-info">
-
         <small>Logged in as</small>
-
         <strong>mbbloodbank@gmail.com</strong>
-
     </div>
 
-
-    <button
-      class="side-link active"
-      onclick="openPage('dashboard',this)">
-      🏠 Dashboard
-    </button>
-
-
-    <button
-      class="side-link"
-      onclick="openPage('pendingDonors',this)">
-      ⏳ Pending Donor
-      <span class="badge" id="sidePending">0</span>
-    </button>
-
-
-    <button
-      class="side-link"
-      onclick="openPage('approvedDonors',this)">
-      ✅ Approved Donor
-      <span class="badge" id="sideApproved">0</span>
-    </button>
-
-
-    <button
-      class="side-link"
-      onclick="openPage('rejectedDonors',this)">
-      ❌ Rejected Donor
-    </button>
-
-
-    <button
-      class="side-link"
-      onclick="openPage('allDonors',this)">
-      👤 All Donors
-    </button>
-
-
-    <button
-      class="side-link"
-      onclick="openPage('bloodRequests',this)">
-      🚨 Blood Requests
-      <span class="badge" id="sideRequests">0</span>
-    </button>
-
-
-    <button
-      class="side-link"
-      onclick="openPage('ambulanceList',this)">
-      🚑 Ambulance List
-    </button>
-
-
-    <button
-      class="side-link"
-      onclick="openPage('addDonor',this)">
-      ➕ Add Donor
-    </button>
-
-
-    <button
-      class="side-link"
-      onclick="openPage('addAmbulance',this)">
-      🚑 Add Ambulance
-    </button>
-
-
-    <button
-      class="side-link"
-      onclick="openPage('settings',this)">
-      ⚙️ Admin Settings
-    </button>
-
-
-    <button
-      class="side-link"
-      onclick="adminLogout()">
-      🚪 Logout
-    </button>
-
+    <button class="side-link active" onclick="openPage('dashboard',this)">🏠 Dashboard</button>
+    <button class="side-link" onclick="openPage('pendingDonors',this)">⏳ Pending Donor <span class="badge" id="sidePending">0</span></button>
+    <button class="side-link" onclick="openPage('approvedDonors',this)">✅ Approved Donor <span class="badge" id="sideApproved">0</span></button>
+    <button class="side-link" onclick="openPage('rejectedDonors',this)">❌ Rejected Donor</button>
+    <button class="side-link" onclick="openPage('allDonors',this)">👤 All Donors</button>
+    <button class="side-link" onclick="openPage('bloodRequests',this)">🚨 Blood Requests <span class="badge" id="sideRequests">0</span></button>
+    <button class="side-link" onclick="openPage('ambulanceList',this)">🚑 Ambulance List</button>
+    <button class="side-link" onclick="openPage('addDonor',this)">➕ Add Donor</button>
+    <button class="side-link" onclick="openPage('addAmbulance',this)">🚑 Add Ambulance</button>
+    <button class="side-link" onclick="openPage('settings',this)">⚙️ Admin Settings</button>
+    <button class="side-link" onclick="adminLogout()">🚪 Logout</button>
 </aside>
-
-
-<!-- MAIN -->
 
 <main class="main">
 
-
-<!-- =====================================================
-     DASHBOARD
-===================================================== -->
-
+<!-- DASHBOARD -->
 <section id="dashboard" class="page active">
-
     <div class="page-title">
-
         <h2>📊 Admin Dashboard</h2>
-
-        <p>
-            MB Blood Bank-এর সকল Donor এবং Blood Request এখান থেকে পরিচালনা করুন।
-        </p>
-
+        <p>MB Blood Bank-এর লাইভ ডেটা ফায়ারবেজ থেকে পরিচালিত হচ্ছে।</p>
     </div>
-
 
     <div class="dashboard-grid">
-
         <div class="dashboard-card">
-
             <div class="card-icon">👤</div>
-
             <h3 id="dashTotal">0</h3>
-
             <p>Total Donors</p>
-
         </div>
-
-
         <div class="dashboard-card">
-
             <div class="card-icon">⏳</div>
-
             <h3 id="dashPending">0</h3>
-
             <p>Pending Donors</p>
-
         </div>
-
-
         <div class="dashboard-card">
-
             <div class="card-icon">✅</div>
-
             <h3 id="dashApproved">0</h3>
-
             <p>Approved Donors</p>
-
         </div>
-
-
         <div class="dashboard-card">
-
             <div class="card-icon">🚨</div>
-
             <h3 id="dashRequests">0</h3>
-
             <p>Blood Requests</p>
-
         </div>
-
     </div>
 
-
     <div class="box">
-
         <div class="box-header">
-
             <h3>🔔 Recent Pending Donors</h3>
-
-            <button
-              class="mini-btn"
-              onclick="openPage('pendingDonors')">
-              সব দেখুন
-            </button>
-
+            <button class="mini-btn" onclick="openPage('pendingDonors')">সব দেখুন</button>
         </div>
-
         <div id="recentPending"></div>
-
     </div>
 
-
     <div class="box">
-
         <div class="box-header">
-
             <h3>🚨 Recent Blood Requests</h3>
-
-            <button
-              class="mini-btn"
-              onclick="openPage('bloodRequests')">
-              সব দেখুন
-            </button>
-
+            <button class="mini-btn" onclick="openPage('bloodRequests')">সব দেখুন</button>
         </div>
-
         <div id="recentRequests"></div>
-
     </div>
-
 </section>
 
-
-<!-- =====================================================
-     PENDING DONOR
-===================================================== -->
-
+<!-- PENDING DONOR -->
 <section id="pendingDonors" class="page">
-
     <div class="page-title">
-
         <h2>⏳ Pending Donor</h2>
-
-        <p>নতুন Donor Registration যাচাই করে Approve অথবা Reject করুন।</p>
-
     </div>
-
-
     <div class="box">
-
         <div class="box-header">
-
             <h3>Pending Registration</h3>
-
             <div class="search-box">
-
-                <input
-                  id="pendingSearch"
-                  placeholder="নাম / ফোন / ID দিয়ে খুঁজুন"
-                  oninput="renderAll()">
-
+                <input id="pendingSearch" placeholder="নাম / ফোন / ID" oninput="renderAll()">
             </div>
-
         </div>
-
         <div id="pendingTable"></div>
-
     </div>
-
 </section>
 
-
-<!-- =====================================================
-     APPROVED DONOR
-===================================================== -->
-
+<!-- APPROVED DONOR -->
 <section id="approvedDonors" class="page">
-
     <div class="page-title">
-
         <h2>✅ Approved Donor</h2>
-
-        <p>যেসব Donor Admin যাচাই করে Approved করেছেন।</p>
-
     </div>
-
-
     <div class="box">
-
         <div class="box-header">
-
             <h3>Approved Donor List</h3>
-
             <div class="search-box">
-
-                <input
-                  id="approvedSearch"
-                  placeholder="Donor খুঁজুন"
-                  oninput="renderAll()">
-
+                <input id="approvedSearch" placeholder="Donor খুঁজুন" oninput="renderAll()">
             </div>
-
         </div>
-
         <div id="approvedTable"></div>
-
     </div>
-
 </section>
 
-
-<!-- =====================================================
-     REJECTED DONOR
-===================================================== -->
-
+<!-- REJECTED DONOR -->
 <section id="rejectedDonors" class="page">
-
     <div class="page-title">
-
         <h2>❌ Rejected Donor</h2>
-
-        <p>Reject করা Donor Registration।</p>
-
     </div>
-
-
     <div class="box">
-
         <div id="rejectedTable"></div>
-
     </div>
-
 </section>
 
-
-<!-- =====================================================
-     ALL DONORS
-===================================================== -->
-
+<!-- ALL DONORS -->
 <section id="allDonors" class="page">
-
     <div class="page-title">
-
         <h2>👤 All Donors</h2>
-
-        <p>সকল Donor-এর সম্পূর্ণ তালিকা।</p>
-
     </div>
-
-
     <div class="box">
-
         <div class="box-header">
-
             <h3>All Donors</h3>
-
             <div class="search-box">
-
-                <input
-                  id="allSearch"
-                  placeholder="নাম / ফোন / ID"
-                  oninput="renderAll()">
-
+                <input id="allSearch" placeholder="নাম / ফোন / ID" oninput="renderAll()">
             </div>
-
         </div>
-
         <div id="allTable"></div>
-
     </div>
-
 </section>
 
-
-<!-- =====================================================
-     BLOOD REQUESTS
-===================================================== -->
-
+<!-- BLOOD REQUESTS -->
 <section id="bloodRequests" class="page">
-
     <div class="page-title">
-
         <h2>🚨 Blood Request Management</h2>
-
-        <p>সকল জরুরি রক্তের অনুরোধ পরিচালনা করুন।</p>
-
     </div>
-
-
     <div class="box">
-
         <div class="box-header">
-
             <h3>Blood Requests</h3>
-
             <div class="search-box">
-
-                <input
-                  id="requestSearch"
-                  placeholder="Patient / Blood / ID"
-                  oninput="renderAll()">
-
+                <input id="requestSearch" placeholder="Patient / Blood / ID" oninput="renderAll()">
             </div>
-
         </div>
-
         <div id="requestTable"></div>
-
     </div>
-
 </section>
 
-
-<!-- =====================================================
-     AMBULANCE LIST
-===================================================== -->
-
+<!-- AMBULANCE LIST -->
 <section id="ambulanceList" class="page">
-
     <div class="page-title">
-
         <h2>🚑 Ambulance List</h2>
-
-        <p>সকল এম্বুলেন্সের তথ্য এখান থেকে পরিচালনা করুন।</p>
-
     </div>
-
-
     <div class="box">
-
         <div class="box-header">
-
             <h3>Ambulance Services</h3>
-
             <div class="search-box">
-
-                <input
-                  id="ambulanceSearch"
-                  placeholder="নাম / নাম্বার / ঠিকানা দিয়ে খুঁজুন"
-                  oninput="renderAll()">
-
+                <input id="ambulanceSearch" placeholder="নাম / নাম্বার" oninput="renderAll()">
             </div>
-
         </div>
-
         <div id="ambulanceTable"></div>
-
     </div>
-
 </section>
 
-
-<!-- =====================================================
-     ADD DONOR
-===================================================== -->
-
+<!-- ADD DONOR -->
 <section id="addDonor" class="page">
-
     <div class="page-title">
-
         <h2>➕ Add Donor</h2>
-
-        <p>Admin চাইলে সরাসরি Donor যোগ করতে পারবেন।</p>
-
     </div>
-
-
     <div class="box">
-
         <form id="addDonorForm">
-
             <div class="form-grid">
-
-                <div>
-                    <label>নাম *</label>
-                    <input id="addName" required>
-                </div>
-
-                <div>
-                    <label>ফোন *</label>
-                    <input id="addPhone" required>
-                </div>
-
+                <div><label>নাম *</label><input id="addName" required></div>
+                <div><label>ফোন *</label><input id="addPhone" required></div>
                 <div>
                     <label>Blood Group *</label>
                     <select id="addBlood" required>
                         <option value="">নির্বাচন করুন</option>
-                        <option>A+</option>
-                        <option>A-</option>
-                        <option>B+</option>
-                        <option>B-</option>
-                        <option>AB+</option>
-                        <option>AB-</option>
-                        <option>O+</option>
-                        <option>O-</option>
+                        <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+                        <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
                     </select>
                 </div>
-
-                <div>
-                    <label>বিভাগ *</label>
-                    <input id="addDivision" required>
-                </div>
-
-                <div>
-                    <label>জেলা *</label>
-                    <input id="addDistrict" required>
-                </div>
-
-                <div>
-                    <label>উপজেলা *</label>
-                    <input id="addUpazila" required>
-                </div>
-
-                <div class="full">
-                    <label>ঠিকানা *</label>
-                    <textarea id="addAddress" required></textarea>
-                </div>
-
-                <div class="full">
-
-                    <button class="main-btn" type="submit">
-                        ➕ Approved Donor হিসেবে যোগ করুন
-                    </button>
-
-                </div>
-
+                <div><label>বিভাগ *</label><input id="addDivision" required></div>
+                <div><label>জেলা *</label><input id="addDistrict" required></div>
+                <div><label>উপজেলা *</label><input id="addUpazila" required></div>
+                <div class="full"><label>ঠিকানা *</label><textarea id="addAddress" required></textarea></div>
+                <div class="full"><button class="main-btn" type="submit">➕ Approved Donor হিসেবে যোগ করুন</button></div>
             </div>
-
         </form>
-
     </div>
-
 </section>
 
-
-<!-- =====================================================
-     ADD AMBULANCE
-===================================================== -->
-
+<!-- ADD AMBULANCE -->
 <section id="addAmbulance" class="page">
-
     <div class="page-title">
-
         <h2>🚑 Add New Ambulance</h2>
-
-        <p>নতুন এম্বুলেন্সের তথ্য যুক্ত করুন।</p>
-
     </div>
-
-
     <div class="box">
-
         <form id="addAmbulanceForm">
-
             <div class="form-grid">
-
-                <div class="full">
-                    <label>🚑 এম্বুলেন্স এর নাম *</label>
-                    <input id="ambulName" required placeholder="এম্বুলেন্সের নাম লিখুন">
-                </div>
-
-                <div class="full">
-                    <label>📞 নাম্বার *</label>
-                    <input id="ambulPhone" required placeholder="যোগাযোগের নাম্বার">
-                </div>
-
-                <div class="full">
-                    <label>📍 ঠিকানা *</label>
-                    <textarea id="ambulAddress" required placeholder="এম্বুলেন্সের ঠিকানা লিখুন"></textarea>
-                </div>
-
-                <div class="full">
-                    <button class="main-btn" type="submit">
-                        ➕ এম্বুলেন্স যোগ করুন
-                    </button>
-                </div>
-
+                <div class="full"><label>🚑 এম্বুলেন্স এর নাম *</label><input id="ambulName" required></div>
+                <div class="full"><label>📞 নাম্বার *</label><input id="ambulPhone" required></div>
+                <div class="full"><label>📍 ঠিকানা *</label><textarea id="ambulAddress" required></textarea></div>
+                <div class="full"><button class="main-btn" type="submit">➕ এম্বুলেন্স যোগ করুন</button></div>
             </div>
-
         </form>
-
     </div>
-
 </section>
 
-
-<!-- =====================================================
-     SETTINGS
-===================================================== -->
-
+<!-- SETTINGS -->
 <section id="settings" class="page">
-
     <div class="page-title">
-
         <h2>⚙️ Admin Settings</h2>
-
-        <p>Admin Panel-এর সাধারণ সেটিংস।</p>
-
     </div>
-
-
     <div class="box">
-
-        <h3>🔐 Current Admin</h3>
-
-        <br>
-
-        <p>
-            <b>Gmail:</b> mbbloodbank@gmail.com
-        </p>
-
-        <br>
-
+        <h3>🔐 Current Admin</h3><br>
+        <p><b>Gmail:</b> mbbloodbank@gmail.com</p><br>
         <div class="box" style="margin-top:0">
-
-            <b>⚠️ Firebase & Security Note</b>
-
-            <p style="margin-top:8px">
-                আপনার ফায়ারবেজ (mb-blood-bank-a17aa) সফলভাবে কানেক্ট করা হয়েছে।
-            </p>
-
+            <b>🔥 Firebase Database Connected</b>
+            <p style="margin-top:8px">ডেটা এখন রিয়েলটাইম ফায়ারবেজে সেভ হচ্ছে, ফলে যেকোনো ডিভাইস থেকে একই ডেটা দেখা যাবে।</p>
         </div>
-
     </div>
-
 </section>
-
 
 </main>
-
 </div>
 
-
-<!-- =====================================================
-     EDIT MODAL
-===================================================== -->
-
+<!-- EDIT MODAL -->
 <div id="editModal" class="modal">
-
     <div class="modal-box">
-
         <button class="close" onclick="closeEdit()">×</button>
-
-        <h2>✏️ Edit Donor</h2>
-
-        <br>
-
+        <h2>✏️ Edit Donor</h2><br>
         <div class="form-grid">
-
-            <div>
-                <label>নাম</label>
-                <input id="editName">
-            </div>
-
-            <div>
-                <label>ফোন</label>
-                <input id="editPhone">
-            </div>
-
+            <div><label>নাম</label><input id="editName"></div>
+            <div><label>ফোন</label><input id="editPhone"></div>
             <div>
                 <label>Blood Group</label>
                 <select id="editBlood">
-                    <option>A+</option>
-                    <option>A-</option>
-                    <option>B+</option>
-                    <option>B-</option>
-                    <option>AB+</option>
-                    <option>AB-</option>
-                    <option>O+</option>
-                    <option>O-</option>
+                    <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+                    <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
                 </select>
             </div>
-
-            <div>
-                <label>বিভাগ</label>
-                <input id="editDivision">
-            </div>
-
-            <div>
-                <label>জেলা</label>
-                <input id="editDistrict">
-            </div>
-
-            <div>
-                <label>উপজেলা</label>
-                <input id="editUpazila">
-            </div>
-
-            <div class="full">
-                <label>ঠিকানা</label>
-                <textarea id="editAddress"></textarea>
-            </div>
-
-            <div class="full">
-                <button
-                  class="main-btn"
-                  onclick="saveEditedDonor()">
-                  💾 Save Changes
-                </button>
-            </div>
-
+            <div><label>বিভাগ</label><input id="editDivision"></div>
+            <div><label>জেলা</label><input id="editDistrict"></div>
+            <div><label>উপজেলা</label><input id="editUpazila"></div>
+            <div class="full"><label>ঠিকানা</label><textarea id="editAddress"></textarea></div>
+            <div class="full"><button class="main-btn" onclick="saveEditedDonor()">💾 Save Changes</button></div>
         </div>
-
     </div>
-
 </div>
 
-
-<!-- =====================================================
-     EDIT AMBULANCE MODAL
-===================================================== -->
-
+<!-- EDIT AMBULANCE MODAL -->
 <div id="editAmbulanceModal" class="modal">
-
     <div class="modal-box">
-
         <button class="close" onclick="closeAmbulanceEdit()">×</button>
-
-        <h2>✏️️ Edit Ambulance</h2>
-
-        <br>
-
+        <h2>✏ Edit Ambulance</h2><br>
         <div class="form-grid">
-
-            <div class="full">
-                <label>🚑 এম্বুলেন্স এর নাম : Edit</label>
-                <input id="editAmbulName">
-            </div>
-
-            <div class="full">
-                <label>📞 নাম্বার : Edit</label>
-                <input id="editAmbulPhone">
-            </div>
-
-            <div class="full">
-                <label>📍 ঠিকানা : Edit</label>
-                <textarea id="editAmbulAddress"></textarea>
-            </div>
-
-            <div class="full">
-                <button
-                  class="main-btn"
-                  onclick="saveEditedAmbulance()">
-                  💾 Save Changes
-                </button>
-            </div>
-
+            <div class="full"><label>🚑 নাম</label><input id="editAmbulName"></div>
+            <div class="full"><label>📞 নাম্বার</label><input id="editAmbulPhone"></div>
+            <div class="full"><label>📍 ঠিকানা</label><textarea id="editAmbulAddress"></textarea></div>
+            <div class="full"><button class="main-btn" onclick="saveEditedAmbulance()">💾 Save Changes</button></div>
         </div>
-
     </div>
-
 </div>
-
 
 <script>
-
-/* =====================================================
-   ADMIN LOGIN
-===================================================== */
-
 const ADMIN_EMAIL="mbbloodbank@gmail.com";
 const ADMIN_PASSWORD="MB@2026#Admin";
 
+let globalDonors = [];
+let globalRequests = [];
+let globalAmbulances = [];
 
-function adminLogin(){
+// Initialize Firebase Realtime Listeners after login or load
+function initFirebaseListeners() {
+    if (!window.firebaseDb) return;
+    const { db, ref, onValue } = window.firebaseDb;
 
-    const email=document
-        .getElementById("loginEmail")
-        .value
-        .trim();
-
-    const password=document
-        .getElementById("loginPassword")
-        .value;
-
-    if(
-        email===ADMIN_EMAIL &&
-        password===ADMIN_PASSWORD
-    ){
-
-        sessionStorage.setItem(
-            "mb_admin_authenticated",
-            "true"
-        );
-
-        document
-          .getElementById("loginScreen")
-          .style.display="none";
-
-        document
-          .getElementById("adminApp")
-          .style.display="block";
-
+    // Donors Listener
+    onValue(ref(db, 'donors'), (snapshot) => {
+        const data = snapshot.val();
+        globalDonors = data ? Object.keys(data).map(key => ({ ...data[key], firebaseKey: key })) : [];
         renderAll();
-
-    }else{
-
-        document
-          .getElementById("loginError")
-          .style.display="block";
-
-    }
-
-}
-
-
-function adminLogout(){
-
-    sessionStorage.removeItem(
-        "mb_admin_authenticated"
-    );
-
-    location.reload();
-
-}
-
-
-/* ENTER KEY LOGIN */
-
-document
-.getElementById("loginPassword")
-.addEventListener("keydown",function(e){
-
-    if(e.key==="Enter"){
-        adminLogin();
-    }
-
-});
-
-
-/* AUTO LOGIN */
-
-if(
-    sessionStorage.getItem(
-        "mb_admin_authenticated"
-    )==="true"
-){
-
-    document
-      .getElementById("loginScreen")
-      .style.display="none";
-
-    document
-      .getElementById("adminApp")
-      .style.display="block";
-
-}
-
-
-/* =====================================================
-   DATABASE - DEMO LOCAL STORAGE
-===================================================== */
-
-function getDonors(){
-
-    return JSON.parse(
-        localStorage.getItem("mb_donors") || "[]"
-    );
-
-}
-
-function saveDonors(data){
-
-    localStorage.setItem(
-        "mb_donors",
-        JSON.stringify(data)
-    );
-
-}
-
-function getRequests(){
-
-    return JSON.parse(
-        localStorage.getItem("mb_requests") || "[]"
-    );
-
-}
-
-function saveRequests(data){
-
-    localStorage.setItem(
-        "mb_requests",
-        JSON.stringify(data)
-    );
-
-}
-
-function getAmbulances(){
-
-    return JSON.parse(
-        localStorage.getItem("mb_ambulances") || "[]"
-    );
-
-}
-
-function saveAmbulances(data){
-
-    localStorage.setItem(
-        "mb_ambulances",
-        JSON.stringify(data)
-    );
-
-}
-
-
-/* =====================================================
-   PAGE NAVIGATION
-===================================================== */
-
-function openPage(id,button){
-
-    document
-      .querySelectorAll(".page")
-      .forEach(page=>{
-          page.classList.remove("active");
-      });
-
-    const page=document.getElementById(id);
-
-    if(page){
-        page.classList.add("active");
-    }
-
-    document
-      .querySelectorAll(".side-link")
-      .forEach(link=>{
-          link.classList.remove("active");
-      });
-
-    if(button){
-        button.classList.add("active");
-    }
-
-    document
-      .getElementById("sidebar")
-      .classList.remove("open");
-
-    renderAll();
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
     });
 
+    // Requests Listener
+    onValue(ref(db, 'requests'), (snapshot) => {
+        const data = snapshot.val();
+        globalRequests = data ? Object.keys(data).map(key => ({ ...data[key], firebaseKey: key })) : [];
+        renderAll();
+    });
+
+    // Ambulances Listener
+    onValue(ref(db, 'ambulances'), (snapshot) => {
+        const data = snapshot.val();
+        globalAmbulances = data ? Object.keys(data).map(key => ({ ...data[key], firebaseKey: key })) : [];
+        renderAll();
+    });
 }
 
+function adminLogin(){
+    const email=document.getElementById("loginEmail").value.trim();
+    const password=document.getElementById("loginPassword").value;
+
+    if(email===ADMIN_EMAIL && password===ADMIN_PASSWORD){
+        sessionStorage.setItem("mb_admin_authenticated","true");
+        document.getElementById("loginScreen").style.display="none";
+        document.getElementById("adminApp").style.display="block";
+        initFirebaseListeners();
+        renderAll();
+    }else{
+        document.getElementById("loginError").style.display="block";
+    }
+}
+
+function adminLogout(){
+    sessionStorage.removeItem("mb_admin_authenticated");
+    location.reload();
+}
+
+document.getElementById("loginPassword").addEventListener("keydown",function(e){
+    if(e.key==="Enter") adminLogin();
+});
+
+if(sessionStorage.getItem("mb_admin_authenticated")==="true"){
+    document.getElementById("loginScreen").style.display="none";
+    document.getElementById("adminApp").style.display="block";
+    // Wait a brief moment for module script to load firebaseDb
+    setTimeout(() => {
+        initFirebaseListeners();
+    }, 500);
+}
+
+function openPage(id,button){
+    document.querySelectorAll(".page").forEach(page=>page.classList.remove("active"));
+    const page=document.getElementById(id);
+    if(page) page.classList.add("active");
+
+    document.querySelectorAll(".side-link").forEach(link=>link.classList.remove("active"));
+    if(button) button.classList.add("active");
+
+    document.getElementById("sidebar").classList.remove("open");
+    renderAll();
+    window.scrollTo({top:0,behavior:"smooth"});
+}
 
 function toggleSidebar(){
-
-    document
-      .getElementById("sidebar")
-      .classList.toggle("open");
-
+    document.getElementById("sidebar").classList.toggle("open");
 }
 
-
-/* =====================================================
-   DASHBOARD
-===================================================== */
-
+// DASHBOARD & STATS
 function updateDashboard(){
+    const pending = globalDonors.filter(x=>x.status==="pending");
+    const approved = globalDonors.filter(x=>x.status==="approved");
 
-    const d=getDonors();
-    const r=getRequests();
+    document.getElementById("dashTotal").textContent = globalDonors.length;
+    document.getElementById("dashPending").textContent = pending.length;
+    document.getElementById("dashApproved").textContent = approved.length;
+    document.getElementById("dashRequests").textContent = globalRequests.length;
 
-    const pending=d.filter(x=>x.status==="pending");
-    const approved=d.filter(x=>x.status==="approved");
+    document.getElementById("sidePending").textContent = pending.length;
+    document.getElementById("sideApproved").textContent = approved.length;
+    document.getElementById("sideRequests").textContent = globalRequests.filter(x=>x.status==="pending").length;
 
-    document.getElementById("dashTotal")
-        .textContent=d.length;
-
-    document.getElementById("dashPending")
-        .textContent=pending.length;
-
-    document.getElementById("dashApproved")
-        .textContent=approved.length;
-
-    document.getElementById("dashRequests")
-        .textContent=r.length;
-
-    document.getElementById("sidePending")
-        .textContent=pending.length;
-
-    document.getElementById("sideApproved")
-        .textContent=approved.length;
-
-    document.getElementById("sideRequests")
-        .textContent=r.filter(x=>x.status==="pending").length;
-
-
-    /* Recent pending */
-
-    const rp=document.getElementById("recentPending");
-
+    // Recent Pending
+    const rp = document.getElementById("recentPending");
     if(!pending.length){
-
-        rp.innerHTML=
-        `<p>বর্তমানে কোনো Pending Donor নেই।</p>`;
-
+        rp.innerHTML = `<p>বর্তমানে কোনো Pending Donor নেই।</p>`;
     }else{
-
-        rp.innerHTML=`
-        <div class="table-scroll">
-
-        <table>
-
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>নাম</th>
-            <th>Blood</th>
-            <th>Location</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-
-        <tbody>
-
+        rp.innerHTML = `<div class="table-scroll"><table><thead><tr><th>ID</th><th>নাম</th><th>Blood</th><th>Location</th><th>Action</th></tr></thead><tbody>
         ${pending.slice(-5).reverse().map(d=>`
-
         <tr>
-
             <td>${escapeHtml(d.id)}</td>
-
             <td>${escapeHtml(d.name)}</td>
-
             <td><b>${escapeHtml(d.blood)}</b></td>
-
+            <td>${escapeHtml(d.district)} /${escapeHtml(d.upazila)}</td>
             <td>
-                ${escapeHtml(d.district)}
-                /
-                ${escapeHtml(d.upazila)}
+                <button class="action a-green" onclick="approveDonorByFirebaseKey('${d.firebaseKey}')">✅ Approve</button>
+                <button class="action a-red" onclick="rejectDonorByFirebaseKey('${d.firebaseKey}')">❌ Reject</button>
             </td>
-
-            <td>
-
-                <button
-                  class="action a-green"
-                  onclick="approveDonorById('${d.id}')">
-                  ✅ Approve
-                </button>
-
-                <button
-                  class="action a-red"
-                  onclick="rejectDonorById('${d.id}')">
-                  ❌ Reject
-                </button>
-
-            </td>
-
-        </tr>
-
-        `).join("")}
-
-        </tbody>
-
-        </table>
-
-        </div>`;
-
+        </tr>`).join("")}
+        </tbody></table></div>`;
     }
 
-
-    /* Recent Requests */
-
-    const rr=document.getElementById("recentRequests");
-
-    if(!r.length){
-
-        rr.innerHTML=
-        `<p>কোনো Blood Request নেই।</p>`;
-
+    // Recent Requests
+    const rr = document.getElementById("recentRequests");
+    if(!globalRequests.length){
+        rr.innerHTML = `<p>কোনো Blood Request নেই।</p>`;
     }else{
-
-        rr.innerHTML=`
-        <div class="table-scroll">
-
-        <table>
-
-        <thead>
+        rr.innerHTML = `<div class="table-scroll"><table><thead><tr><th>ID</th><th>Patient</th><th>Blood</th><th>Bag</th><th>Status</th></tr></thead><tbody>
+        ${globalRequests.slice(-5).reverse().map(x=>`
         <tr>
-            <th>ID</th>
-            <th>Patient</th>
-            <th>Blood</th>
-            <th>Bag</th>
-            <th>Status</th>
-        </tr>
-        </thead>
-
-        <tbody>
-
-        ${r.slice(-5).reverse().map(x=>`
-
-        <tr>
-
             <td>${escapeHtml(x.id)}</td>
-
             <td>${escapeHtml(x.patient)}</td>
-
             <td><b>${escapeHtml(x.blood)}</b></td>
-
             <td>${escapeHtml(x.bags)}</td>
-
-            <td>
-                <span class="status ${x.status}">
-                    ${escapeHtml(x.status)}
-                </span>
-            </td>
-
-        </tr>
-
-        `).join("")}
-
-        </tbody>
-
-        </table>
-
-        </div>`;
-
+            <td><span class="status ${x.status}">${escapeHtml(x.status)}</span></td>
+        </tr>`).join("")}
+        </tbody></table></div>`;
     }
-
 }
 
-
-/* =====================================================
-   DONOR TABLE
-===================================================== */
-
-function donorTable(data,emptyText="কোনো Donor পাওয়া যায়নি।"){
-
-    if(!data.length){
-
-        return `<p>${emptyText}</p>`;
-
-    }
-
-    return `
-
-    <div class="table-scroll">
-
-    <table>
-
-    <thead>
-
-    <tr>
-        <th>ID</th>
-        <th>ছবি</th>
-        <th>নাম</th>
-        <th>Blood</th>
-        <th>Location</th>
-        <th>Phone</th>
-        <th>Status</th>
-        <th>Action</th>
-    </tr>
-
-    </thead>
-
-    <tbody>
-
+// TABLES
+function donorTable(data, emptyText="কোনো Donor পাওয়া যায়নি।"){
+    if(!data.length) return `<p>${emptyText}</p>`;
+    return `<div class="table-scroll"><table><thead><tr><th>ID</th><th>নাম</th><th>Blood</th><th>Location</th><th>Phone</th><th>Status</th><th>Action</th></tr></thead><tbody>
     ${data.map(d=>`
-
     <tr>
-
-        <td>
-            <b>${escapeHtml(d.id)}</b>
-        </td>
-
-        <td>
-            ${
-                d.photo
-                ?
-                `<img
-                    class="avatar"
-                    src="${d.photo}"
-                    alt="Donor">`
-                :
-                `🩸`
-            }
-        </td>
-
-        <td>
-            <b>${escapeHtml(d.name)}</b>
-        </td>
-
-        <td>
-            <b>${escapeHtml(d.blood)}</b>
-        </td>
-
-        <td>
-            ${escapeHtml(d.division || "")}<br>
-            ${escapeHtml(d.district || "")}<br>
-            ${escapeHtml(d.upazila || "")}
-        </td>
-
-        <td>
-            ${escapeHtml(d.phone)}
-        </td>
-
-        <td>
-            <span class="status ${d.status}">
-                ${escapeHtml(d.status)}
-            </span>
-        </td>
-
-        <td>
-
-            <div class="actions">
-
-                ${
-                    d.status==="pending"
-                    ?
-                    `
-                    <button
-                      class="action a-green"
-                      onclick="approveDonorById('${d.id}')">
-                      ✅ Approve
-                    </button>
-
-                    <button
-                      class="action a-red"
-                      onclick="rejectDonorById('${d.id}')">
-                      ❌ Reject
-                    </button>
-                    `
-                    :
-                    ""
-                }
-
-                <button
-                  class="action a-purple"
-                  onclick="editDonorById('${d.id}')">
-                  ✏️ Edit
-                </button>
-
-                <button
-                  class="action a-blue"
-                  onclick="viewDonor('${d.id}')">
-                  👁️ View
-                </button>
-
-                <button
-                  class="action a-black"
-                  onclick="deleteDonorById('${d.id}')">
-                  🗑️ Delete
-                </button>
-
-            </div>
-
-        </td>
-
-    </tr>
-
-    `).join("")}
-
-    </tbody>
-
-    </table>
-
-    </div>
-
-    `;
-
+        <td><b>${escapeHtml(d.id)}</b></td>
+        <td><b>${escapeHtml(d.name)}</b></td>
+        <td><b>${escapeHtml(d.blood)}</b></td>
+        <td>${escapeHtml(d.district \vert{}\vert{} "")}<br>${escapeHtml(d.upazila || "")}</td>
+        <td>${escapeHtml(d.phone)}</td>
+        <td><span class="status ${d.status}">${escapeHtml(d.status)}</span></td>
+        <td><div class="actions">
+            ${d.status==="pending"?`<button class="action a-green" onclick="approveDonorByFirebaseKey('${d.firebaseKey}')">✅ Approve</button><button class="action a-red" onclick="rejectDonorByFirebaseKey('${d.firebaseKey}')">❌ Reject</button>`:""}
+            <button class="action a-purple" onclick="editDonorPrompt('${d.firebaseKey}')">✏️ Edit</button>
+            <button class="action a-black" onclick="deleteDonorByFirebaseKey('${d.firebaseKey}')">🗑️ Delete</button>
+        </div></td>
+    </tr>`).join("")}
+    </tbody></table></div>`;
 }
-
-
-/* =====================================================
-   AMBULANCE TABLE
-===================================================== */
 
 function ambulanceTable(data){
-
-    if(!data.length){
-
-        return `<p>কোনো এম্বুলেন্স পাওয়া যায়নি।</p>`;
-
-    }
-
-    return `
-
-    <div class="table-scroll">
-
-    <table>
-
-    <thead>
-
-    <tr>
-        <th>ID</th>
-        <th>🚑 এম্বুলেন্স এর নাম</th>
-        <th>📞 নাম্বার</th>
-        <th>📍 ঠিকানা</th>
-        <th>Action</th>
-    </tr>
-
-    </thead>
-
-    <tbody>
-
+    if(!data.length) return `<p>কোনো এম্বুলেন্স পাওয়া যায়নি।</p>`;
+    return `<div class="table-scroll"><table><thead><tr><th>ID</th><th>🚑 নাম</th><th>📞 নাম্বার</th><th>📍 ঠিকানা</th><th>Action</th></tr></thead><tbody>
     ${data.map(a=>`
-
     <tr>
-
-        <td>
-            <b>${escapeHtml(a.id)}</b>
-        </td>
-
-        <td>
-            <b>${escapeHtml(a.name)}</b>
-        </td>
-
-        <td>
-            ${escapeHtml(a.phone)}
-        </td>
-
-        <td>
-            ${escapeHtml(a.address)}
-        </td>
-
-        <td>
-
-            <div class="actions">
-
-                <button
-                  class="action a-purple"
-                  onclick="editAmbulanceById('${a.id}')">
-                  ✏️ Edit
-                </button>
-
-                <button
-                  class="action a-black"
-                  onclick="deleteAmbulanceById('${a.id}')">
-                  🗑️ Delete
-                </button>
-
-            </div>
-
-        </td>
-
-    </tr>
-
-    `).join("")}
-
-    </tbody>
-
-    </table>
-
-    </div>
-
-    `;
-
+        <td><b>${escapeHtml(a.id)}</b></td>
+        <td><b>${escapeHtml(a.name)}</b></td>
+        <td>${escapeHtml(a.phone)}</td>
+        <td>${escapeHtml(a.address)}</td>
+        <td><div class="actions">
+            <button class="action a-purple" onclick="editAmbulancePrompt('${a.firebaseKey}')">✏️ Edit</button>
+            <button class="action a-black" onclick="deleteAmbulanceByFirebaseKey('${a.firebaseKey}')">🗑️ Delete</button>
+        </div></td>
+    </tr>`).join("")}
+    </tbody></table></div>`;
 }
-
-
-/* =====================================================
-   RENDER ALL
-===================================================== */
 
 function renderAll(){
-
-    if(
-        document
-        .getElementById("adminApp")
-        .style.display!=="block"
-    ){
-        return;
-    }
-
+    if(document.getElementById("adminApp").style.display!=="block") return;
     updateDashboard();
 
-    const donors=getDonors();
+    // Pending
+    let pending = globalDonors.filter(d=>d.status==="pending");
+    const ps = document.getElementById("pendingSearch")?.value.toLowerCase().trim();
+    if(ps) pending = pending.filter(d=>searchDonor(d,ps));
+    document.getElementById("pendingTable").innerHTML = donorTable(pending, "🎉 কোনো Pending Donor নেই।");
 
+    // Approved
+    let approved = globalDonors.filter(d=>d.status==="approved");
+    const as = document.getElementById("approvedSearch")?.value.toLowerCase().trim();
+    if(as) approved = approved.filter(d=>searchDonor(d,as));
+    document.getElementById("approvedTable").innerHTML = donorTable(approved, "কোনো Approved Donor নেই।");
 
-    /* Pending */
+    // Rejected
+    let rejected = globalDonors.filter(d=>d.status==="rejected");
+    document.getElementById("rejectedTable").innerHTML = donorTable(rejected, "কোনো Rejected Donor নেই।");
 
-    let pending=donors.filter(
-        d=>d.status==="pending"
-    );
+    // All
+    let all = globalDonors;
+    const alls = document.getElementById("allSearch")?.value.toLowerCase().trim();
+    if(alls) all = all.filter(d=>searchDonor(d,alls));
+    document.getElementById("allTable").innerHTML = donorTable(all, "কোনো Donor নেই।");
 
-    const ps=document
-      .getElementById("pendingSearch")
-      ?.value
-      .toLowerCase()
-      .trim();
-
-    if(ps){
-
-        pending=pending.filter(d=>
-            searchDonor(d,ps)
-        );
-
-    }
-
-    document.getElementById("pendingTable")
-      .innerHTML=donorTable(
-        pending,
-        "🎉 কোনো Pending Donor নেই।"
-      );
-
-
-    /* Approved */
-
-    let approved=donors.filter(
-        d=>d.status==="approved"
-    );
-
-    const as=document
-      .getElementById("approvedSearch")
-      ?.value
-      .toLowerCase()
-      .trim();
-
-    if(as){
-
-        approved=approved.filter(d=>
-            searchDonor(d,as)
-        );
-
-    }
-
-    document.getElementById("approvedTable")
-      .innerHTML=donorTable(
-        approved,
-        "কোনো Approved Donor নেই।"
-      );
-
-
-    /* Rejected */
-
-    const rejected=donors.filter(
-        d=>d.status==="rejected"
-    );
-
-    document.getElementById("rejectedTable")
-      .innerHTML=donorTable(
-        rejected,
-        "কোনো Rejected Donor নেই।"
-      );
-
-
-    /* All */
-
-    let all=donors;
-
-    const alls=document
-      .getElementById("allSearch")
-      ?.value
-      .toLowerCase()
-      .trim();
-
-    if(alls){
-
-        all=all.filter(d=>
-            searchDonor(d,alls)
-        );
-
-    }
-
-    document.getElementById("allTable")
-      .innerHTML=donorTable(
-        all,
-        "কোনো Donor নেই।"
-      );
-
-
-    /* Requests */
-
-    let req=getRequests();
-
-    const rs=document
-      .getElementById("requestSearch")
-      ?.value
-      .toLowerCase()
-      .trim();
-
-    if(rs){
-
-        req=req.filter(r=>
-            String(r.id).toLowerCase().includes(rs) ||
-            String(r.patient).toLowerCase().includes(rs) ||
-            String(r.blood).toLowerCase().includes(rs)
-        );
-
-    }
-
+    // Requests
+    let req = globalRequests;
+    const rs = document.getElementById("requestSearch")?.value.toLowerCase().trim();
+    if(rs) req = req.filter(r=>String(r.id).toLowerCase().includes(rs) || String(r.patient).toLowerCase().includes(rs));
     renderRequests(req);
 
-
-    /* Ambulances */
-
-    let amb=getAmbulances();
-
-    const ambs=document
-      .getElementById("ambulanceSearch")
-      ?.value
-      .toLowerCase()
-      .trim();
-
-    if(ambs){
-
-        amb=amb.filter(a=>
-            String(a.id).toLowerCase().includes(ambs) ||
-            String(a.name).toLowerCase().includes(ambs) ||
-            String(a.phone).toLowerCase().includes(ambs) ||
-            String(a.address).toLowerCase().includes(ambs)
-        );
-
-    }
-
-    document.getElementById("ambulanceTable")
-      .innerHTML=ambulanceTable(amb);
-
+    // Ambulances
+    let amb = globalAmbulances;
+    const ambs = document.getElementById("ambulanceSearch")?.value.toLowerCase().trim();
+    if(ambs) amb = amb.filter(a=>String(a.name).toLowerCase().includes(ambs) || String(a.phone).toLowerCase().includes(ambs));
+    document.getElementById("ambulanceTable").innerHTML = ambulanceTable(amb);
 }
-
-
-/* =====================================================
-   SEARCH DONOR
-===================================================== */
 
 function searchDonor(d,q){
-
-    return [
-        d.id,
-        d.name,
-        d.phone,
-        d.blood,
-        d.division,
-        d.district,
-        d.upazila
-    ]
-    .join(" ")
-    .toLowerCase()
-    .includes(q);
-
+    return [d.id, d.name, d.phone, d.blood, d.district, d.upazila].join(" ").toLowerCase().includes(q);
 }
 
-
-/* =====================================================
-   APPROVE
-===================================================== */
-
-function approveDonorById(id){
-
-    const data=getDonors();
-
-    const index=data.findIndex(
-        d=>d.id===id
-    );
-
-    if(index===-1)return;
-
-    data[index].status="approved";
-
-    data[index].approvedAt=
-        new Date().toISOString();
-
-    saveDonors(data);
-
-    alert(
-      "✅ Donor Approved হয়েছে.\n"+
-      "এখন এই Donor public search-এ দেখা যাবে।"
-    );
-
-    renderAll();
-
+// FIREBASE ACTIONS (UPDATE/DELETE/APPROVE)
+function approveDonorByFirebaseKey(firebaseKey){
+    if(!window.firebaseDb) return;
+    const { db, ref, update } = window.firebaseDb;
+    update(ref(db, 'donors/' + firebaseKey), { status: 'approved', approvedAt: new Date().toISOString() })
+    .then(() => alert("✅ Donor Approved হয়েছে।"));
 }
 
-
-/* =====================================================
-   REJECT
-===================================================== */
-
-function rejectDonorById(id){
-
-    const data=getDonors();
-
-    const index=data.findIndex(
-        d=>d.id===id
-    );
-
-    if(index===-1)return;
-
-    if(!confirm("এই Donor Registration Reject করবেন?"))
-        return;
-
-    data[index].status="rejected";
-
-    data[index].rejectedAt=
-        new Date().toISOString();
-
-    saveDonors(data);
-
-    renderAll();
-
+function rejectDonorByFirebaseKey(firebaseKey){
+    if(!confirm("এই Donor Registration Reject করবেন?")) return;
+    if(!window.firebaseDb) return;
+    const { db, ref, update } = window.firebaseDb;
+    update(ref(db, 'donors/' + firebaseKey), { status: 'rejected' });
 }
 
-
-/* =====================================================
-   DELETE
-===================================================== */
-
-function deleteDonorById(id){
-
-    if(
-      !confirm(
-        "⚠️ এই Donor স্থায়ীভাবে Delete করবেন?"
-      )
-    ){
-        return;
-    }
-
-    let data=getDonors();
-
-    data=data.filter(
-        d=>d.id!==id
-    );
-
-    saveDonors(data);
-
-    renderAll();
-
+function deleteDonorByFirebaseKey(firebaseKey){
+    if(!confirm("⚠️ এই Donor স্থায়ীভাবে Delete করবেন?")) return;
+    if(!window.firebaseDb) return;
+    const { db, ref, remove } = window.firebaseDb;
+    remove(ref(db, 'donors/' + firebaseKey));
 }
 
+// EDIT DONOR
+let editingFirebaseKey = null;
+function editDonorPrompt(firebaseKey){
+    const d = globalDonors.find(x => x.firebaseKey === firebaseKey);
+    if(!d) return;
+    editingFirebaseKey = firebaseKey;
 
-/* =====================================================
-   VIEW DONOR
-===================================================== */
+    document.getElementById("editName").value = d.name || "";
+    document.getElementById("editPhone").value = d.phone || "";
+    document.getElementById("editBlood").value = d.blood || "";
+    document.getElementById("editDivision").value = d.division || "";
+    document.getElementById("editDistrict").value = d.district || "";
+    document.getElementById("editUpazila").value = d.upazila || "";
+    document.getElementById("editAddress").value = d.address || "";
 
-function viewDonor(id){
-
-    const d=getDonors().find(
-        x=>x.id===id
-    );
-
-    if(!d)return;
-
-    alert(
-`👤 Donor Profile
-
-🆔 ID: ${d.id}
-
-নাম: ${d.name}
-
-Blood Group: ${d.blood}
-
-Phone: ${d.phone}
-
-বিভাগ: ${d.division}
-
-জেলা: ${d.district}
-
-উপজেলা: ${d.upazila}
-
-ঠিকানা: ${d.address}
-
-Status: ${d.status}`
-    );
-
+    document.getElementById("editModal").classList.add("show");
 }
-
-
-/* =====================================================
-   EDIT
-===================================================== */
-
-let editingId=null;
-
-
-function editDonorById(id){
-
-    const d=getDonors().find(
-        x=>x.id===id
-    );
-
-    if(!d)return;
-
-    editingId=id;
-
-    document.getElementById("editName").value=
-        d.name||"";
-
-    document.getElementById("editPhone").value=
-        d.phone||"";
-
-    document.getElementById("editBlood").value=
-        d.blood||"";
-
-    document.getElementById("editDivision").value=
-        d.division||"";
-
-    document.getElementById("editDistrict").value=
-        d.district||"";
-
-    document.getElementById("editUpazila").value=
-        d.upazila||"";
-
-    document.getElementById("editAddress").value=
-        d.address||"";
-
-    document
-      .getElementById("editModal")
-      .classList.add("show");
-
-}
-
 
 function saveEditedDonor(){
+    if(!editingFirebaseKey || !window.firebaseDb) return;
+    const { db, ref, update } = window.firebaseDb;
 
-    if(!editingId)return;
+    const updatedData = {
+        name: document.getElementById("editName").value.trim(),
+        phone: document.getElementById("editPhone").value.trim(),
+        blood: document.getElementById("editBlood").value,
+        division: document.getElementById("editDivision").value.trim(),
+        district: document.getElementById("editDistrict").value.trim(),
+        upazila: document.getElementById("editUpazila").value.trim(),
+        address: document.getElementById("editAddress").value.trim()
+    };
 
-    const data=getDonors();
-
-    const index=data.findIndex(
-        d=>d.id===editingId
-    );
-
-    if(index===-1)return;
-
-    data[index].name=
-        document.getElementById("editName").value.trim();
-
-    data[index].phone=
-        document.getElementById("editPhone").value.trim();
-
-    data[index].blood=
-        document.getElementById("editBlood").value;
-
-    data[index].division=
-        document.getElementById("editDivision").value.trim();
-
-    data[index].district=
-        document.getElementById("editDistrict").value.trim();
-
-    data[index].upazila=
-        document.getElementById("editUpazila").value.trim();
-
-    data[index].address=
-        document.getElementById("editAddress").value.trim();
-
-    saveDonors(data);
-
-    closeEdit();
-
-    renderAll();
-
-    alert("✅ Donor information updated.");
-
+    update(ref(db, 'donors/' + editingFirebaseKey), updatedData).then(() => {
+        closeEdit();
+        alert("✅ Donor information updated.");
+    });
 }
-
 
 function closeEdit(){
-
-    editingId=null;
-
-    document
-      .getElementById("editModal")
-      .classList.remove("show");
-
+    editingFirebaseKey = null;
+    document.getElementById("editModal").classList.remove("show");
 }
 
-
-/* =====================================================
-   AMBULANCE EDIT & DELETE
-===================================================== */
-
-let editingAmbulanceId=null;
-
-function editAmbulanceById(id){
-    const a = getAmbulances().find(x => x.id === id);
+// AMBULANCE ACTIONS
+let editingAmbulanceKey = null;
+function editAmbulancePrompt(firebaseKey){
+    const a = globalAmbulances.find(x => x.firebaseKey === firebaseKey);
     if(!a) return;
-
-    editingAmbulanceId = id;
+    editingAmbulanceKey = firebaseKey;
     document.getElementById("editAmbulName").value = a.name || "";
     document.getElementById("editAmbulPhone").value = a.phone || "";
     document.getElementById("editAmbulAddress").value = a.address || "";
-
     document.getElementById("editAmbulanceModal").classList.add("show");
 }
 
 function saveEditedAmbulance(){
-    if(!editingAmbulanceId) return;
-
-    const data = getAmbulances();
-    const index = data.findIndex(a => a.id === editingAmbulanceId);
-    if(index === -1) return;
-
-    data[index].name = document.getElementById("editAmbulName").value.trim();
-    data[index].phone = document.getElementById("editAmbulPhone").value.trim();
-    data[index].address = document.getElementById("editAmbulAddress").value.trim();
-
-    saveAmbulances(data);
-    closeAmbulanceEdit();
-    renderAll();
-    alert("✅ Ambulance information updated.");
+    if(!editingAmbulanceKey || !window.firebaseDb) return;
+    const { db, ref, update } = window.firebaseDb;
+    const updatedData = {
+        name: document.getElementById("editAmbulName").value.trim(),
+        phone: document.getElementById("editAmbulPhone").value.trim(),
+        address: document.getElementById("editAmbulAddress").value.trim()
+    };
+    update(ref(db, 'ambulances/' + editingAmbulanceKey), updatedData).then(() => {
+        closeAmbulanceEdit();
+        alert("✅ Ambulance updated.");
+    });
 }
 
 function closeAmbulanceEdit(){
-    editingAmbulanceId = null;
+    editingAmbulanceKey = null;
     document.getElementById("editAmbulanceModal").classList.remove("show");
 }
 
-function deleteAmbulanceById(id){
-    if(!confirm("⚠️ এই এম্বুলেন্সের তথ্য স্থায়ীভাবে Delete করবেন?")) return;
-
-    let data = getAmbulances();
-    data = data.filter(a => a.id !== id);
-    saveAmbulances(data);
-    renderAll();
+function deleteAmbulanceByFirebaseKey(firebaseKey){
+    if(!confirm("⚠️ এই এম্বুলেন্সের তথ্য Delete করবেন?")) return;
+    if(!window.firebaseDb) return;
+    const { db, ref, remove } = window.firebaseDb;
+    remove(ref(db, 'ambulances/' + firebaseKey));
 }
 
-
-/* =====================================================
-   REQUEST TABLE
-===================================================== */
-
-function renderRequests(data=getRequests()){
-
-    const box=document.getElementById("requestTable");
-
+// REQUESTS TABLE & ACTIONS
+function renderRequests(data=globalRequests){
+    const box = document.getElementById("requestTable");
     if(!data.length){
-
-        box.innerHTML=
-            "<p>কোনো Blood Request নেই।</p>";
-
+        box.innerHTML = "<p>কোনো Blood Request নেই।</p>";
         return;
-
     }
-
-    box.innerHTML=`
-
-    <div class="table-scroll">
-
-    <table>
-
-    <thead>
-
-    <tr>
-        <th>ID</th>
-        <th>Patient</th>
-        <th>Blood</th>
-        <th>Bag</th>
-        <th>Location</th>
-        <th>Hospital</th>
-        <th>Date</th>
-        <th>Urgency</th>
-        <th>Status</th>
-        <th>Action</th>
-    </tr>
-
-    </thead>
-
-    <tbody>
-
+    box.innerHTML = `<div class="table-scroll"><table><thead><tr><th>ID</th><th>Patient</th><th>Blood</th><th>Bag</th><th>Location</th><th>Hospital</th><th>Date</th><th>Status</th><th>Action</th></tr></thead><tbody>
     ${data.map(r=>`
-
     <tr>
-
         <td>${escapeHtml(r.id)}</td>
-
-        <td>
-            <b>${escapeHtml(r.patient)}</b><br>${escapeHtml(r.phone)}
-        </td>
-
-        <td>
-            <b>${escapeHtml(r.blood)}</b>
-        </td>
-
-        <td>
-            ${escapeHtml(r.bags)}
-        </td>
-
-        <td>
-            ${escapeHtml(r.division || "")}<br>
-            ${escapeHtml(r.district || "")}<br>
-            ${escapeHtml(r.upazila || "")}
-        </td>
-
-        <td>
-            ${escapeHtml(r.hospital)}
-        </td>
-
-        <td>
-            ${escapeHtml(r.date)}
-        </td>
-
-        <td>
-            ${escapeHtml(r.urgency)}
-        </td>
-
-        <td>
-            <span class="status ${r.status}">
-                ${escapeHtml(r.status)}
-            </span>
-        </td>
-
-        <td>
-
-            <div class="actions">
-
-                ${
-                  r.status==="pending"
-                  ?
-                  `
-                  <button
-                    class="action a-green"
-                    onclick="approveRequest('${r.id}')">
-                    ✅ Approve
-                  </button>
-
-                  <button
-                    class="action a-red"
-                    onclick="rejectRequest('${r.id}')">
-                    ❌ Reject
-                  </button>
-                  `
-                  :
-                  ""
-                }
-
-                <button
-                  class="action a-black"
-                  onclick="deleteRequest('${r.id}')">
-                  🗑️ Delete
-                </button>
-
-            </div>
-
-        </td>
-
-    </tr>
-
-    `).join("")}
-
-    </tbody>
-
-    </table>
-
-    </div>
-
-    `;
-
+        <td><b>${escapeHtml(r.patient)}</b><br>${escapeHtml(r.phone)}</td>
+        <td><b>${escapeHtml(r.blood)}</b></td>
+        <td>${escapeHtml(r.bags)}</td>
+        <td>${escapeHtml(r.district \vert{}\vert{} "")} / ${escapeHtml(r.upazila || "")}</td>
+        <td>${escapeHtml(r.hospital)}</td>
+        <td>${escapeHtml(r.date)}</td>
+        <td><span class="status ${r.status}">${escapeHtml(r.status)}</span></td>
+        <td><div class="actions">
+            ${r.status==="pending"?`<button class="action a-green" onclick="approveRequestKey('${r.firebaseKey}')">✅ Approve</button><button class="action a-red" onclick="rejectRequestKey('${r.firebaseKey}')">❌ Reject</button>`:""}
+            <button class="action a-black" onclick="deleteRequestKey('${r.firebaseKey}')">🗑️ Delete</button>
+        </div></td>
+    </tr>`).join("")}
+    </tbody></table></div>`;
 }
 
-
-/* =====================================================
-   REQUEST APPROVE
-===================================================== */
-
-function approveRequest(id){
-
-    const data=getRequests();
-
-    const index=data.findIndex(
-        r=>r.id===id
-    );
-
-    if(index===-1)return;
-
-    data[index].status="approved";
-
-    saveRequests(data);
-
-    renderAll();
-
+function approveRequestKey(key){
+    if(!window.firebaseDb) return;
+    window.firebaseDb.update(window.firebaseDb.ref(window.firebaseDb.db, 'requests/' + key), { status: 'approved' });
 }
 
-
-/* =====================================================
-   REQUEST REJECT
-===================================================== */
-
-function rejectRequest(id){
-
-    const data=getRequests();
-
-    const index=data.findIndex(
-        r=>r.id===id
-    );
-
-    if(index===-1)return;
-
-    data[index].status="rejected";
-
-    saveRequests(data);
-
-    renderAll();
-
+function rejectRequestKey(key){
+    if(!window.firebaseDb) return;
+    window.firebaseDb.update(window.firebaseDb.ref(window.firebaseDb.db, 'requests/' + key), { status: 'rejected' });
 }
 
-
-/* =====================================================
-   REQUEST DELETE
-===================================================== */
-
-function deleteRequest(id){
-
-    if(
-      !confirm(
-        "এই Blood Request Delete করবেন?"
-      )
-    ){
-        return;
-    }
-
-    let data=getRequests();
-
-    data=data.filter(
-        r=>r.id!==id
-    );
-
-    saveRequests(data);
-
-    renderAll();
-
+function deleteRequestKey(key){
+    if(!confirm("Request Delete করবেন?")) return;
+    if(!window.firebaseDb) return;
+    window.firebaseDb.remove(window.firebaseDb.ref(window.firebaseDb.db, 'requests/' + key));
 }
 
-
-/* =====================================================
-   ADD DONOR
-===================================================== */
-
-document
-.getElementById("addDonorForm")
-.addEventListener("submit",function(e){
-
+// ADD FORMS
+document.getElementById("addDonorForm").addEventListener("submit",function(e){
     e.preventDefault();
+    if(!window.firebaseDb) return;
+    const { db, ref, push, set } = window.firebaseDb;
 
-    const data=getDonors();
-
-    const donor={
-
-        id:
-        "MB-"+
-        Date.now()
-        .toString()
-        .slice(-8),
-
-        name:
-        document.getElementById("addName").value.trim(),
-
-        phone:
-        document.getElementById("addPhone").value.trim(),
-
-        blood:
-        document.getElementById("addBlood").value,
-
-        division:
-        document.getElementById("addDivision").value.trim(),
-
-        district:
-        document.getElementById("addDistrict").value.trim(),
-
-        upazila:
-        document.getElementById("addUpazila").value.trim(),
-
-        address:
-        document.getElementById("addAddress").value.trim(),
-
-        photo:"",
-
-        status:"approved",
-
-        createdAt:
-        new Date().toISOString(),
-
-        approvedAt:
-        new Date().toISOString()
-
+    const donor = {
+        id: "MB-" + Date.now().toString().slice(-8),
+        name: document.getElementById("addName").value.trim(),
+        phone: document.getElementById("addPhone").value.trim(),
+        blood: document.getElementById("addBlood").value,
+        division: document.getElementById("addDivision").value.trim(),
+        district: document.getElementById("addDistrict").value.trim(),
+        upazila: document.getElementById("addUpazila").value.trim(),
+        address: document.getElementById("addAddress").value.trim(),
+        photo: "",
+        status: "approved",
+        createdAt: new Date().toISOString(),
+        approvedAt: new Date().toISOString()
     };
 
-    data.push(donor);
-
-    saveDonors(data);
-
-    this.reset();
-
-    alert(
-      "✅ Donor সফলভাবে Approved অবস্থায় যোগ হয়েছে।"
-    );
-
-    renderAll();
-
+    const newRef = push(ref(db, 'donors'));
+    set(newRef, donor).then(() => {
+        this.reset();
+        alert("✅ Donor সফলভাবে ফায়ারবেজে Approved অবস্থায় যুক্ত হয়েছে।");
+        renderAll();
+    });
 });
 
-
-/* =====================================================
-   ADD AMBULANCE
-===================================================== */
-
-document
-.getElementById("addAmbulanceForm")
-.addEventListener("submit",function(e){
-
+document.getElementById("addAmbulanceForm").addEventListener("submit",function(e){
     e.preventDefault();
+    if(!window.firebaseDb) return;
+    const { db, ref, push, set } = window.firebaseDb;
 
-    const data=getAmbulances();
-
-    const ambulance={
-
-        id:
-        "AMB-"+
-        Date.now()
-        .toString()
-        .slice(-8),
-
-        name:
-        document.getElementById("ambulName").value.trim(),
-
-        phone:
-        document.getElementById("ambulPhone").value.trim(),
-
-        address:
-        document.getElementById("ambulAddress").value.trim(),
-
-        createdAt:
-        new Date().toISOString()
-
+    const ambulance = {
+        id: "AMB-" + Date.now().toString().slice(-8),
+        name: document.getElementById("ambulName").value.trim(),
+        phone: document.getElementById("ambulPhone").value.trim(),
+        address: document.getElementById("ambulAddress").value.trim(),
+        createdAt: new Date().toISOString()
     };
 
-    data.push(ambulance);
-
-    saveAmbulances(data);
-
-    this.reset();
-
-    alert(
-      "✅ নতুন এম্বুলেন্স সফলভাবে যুক্ত হয়েছে।"
-    );
-
-    openPage('ambulanceList');
-
+    const newRef = push(ref(db, 'ambulances'));
+    set(newRef, ambulance).then(() => {
+        this.reset();
+        alert("✅ নতুন এম্বুলেন্স ফায়ারবেজে যুক্ত হয়েছে।");
+        openPage('ambulanceList');
+    });
 });
-
-
-/* =====================================================
-   SAFE HTML
-===================================================== */
 
 function escapeHtml(text){
-
-    return String(text ?? "")
-      .replace(/&/g,"&amp;")
-      .replace(/</g,"&lt;")
-      .replace(/>/g,"&gt;")
-      .replace(/"/g,"&quot;")
-      .replace(/'/g,"&#039;");
-
+    return String(text ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 }
-
-
-/* INITIAL */
-
-renderAll();
-
 </script>
 
 </body>
