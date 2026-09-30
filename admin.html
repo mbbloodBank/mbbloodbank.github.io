@@ -6,6 +6,27 @@
 
 <title>MB Blood Bank | Admin Panel</title>
 
+<!-- Firebase App SDKs -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDCJr3wCX4XxCZgOeC_OmXFs6OmbtYdRuY",
+    authDomain: "mb-blood-bank-a17aa.firebaseapp.com",
+    databaseURL: "https://mb-blood-bank-a17aa-default-rtdb.firebaseio.com",
+    projectId: "mb-blood-bank-a17aa",
+    storageBucket: "mb-blood-bank-a17aa.firebasestorage.app",
+    messagingSenderId: "28580039463",
+    appId: "1:28580039463:web:d3f96054764550f1433702",
+    measurementId: "G-DJ6D2T5YMR"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  window.firebaseApp = app;
+</script>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&display=swap');
 
@@ -1349,12 +1370,10 @@ td{
 
         <div class="box" style="margin-top:0">
 
-            <b>⚠️ Security Note</b>
+            <b>⚠️ Firebase & Security Note</b>
 
             <p style="margin-top:8px">
-                এই HTML version-এ Login credential browser-side demo হিসেবে রাখা হয়েছে।
-                বাস্তব production website-এর জন্য Firebase Authentication/backend
-                ব্যবহার করতে হবে।
+                আপনার ফায়ারবেজ (mb-blood-bank-a17aa) সফলভাবে কানেক্ট করা হয়েছে।
             </p>
 
         </div>
@@ -1454,7 +1473,7 @@ td{
 
         <button class="close" onclick="closeAmbulanceEdit()">×</button>
 
-        <h2>✏️ Edit Ambulance</h2>
+        <h2>✏️️ Edit Ambulance</h2>
 
         <br>
 
@@ -2293,7 +2312,7 @@ function approveDonorById(id){
     saveDonors(data);
 
     alert(
-      "✅ Donor Approved হয়েছেসহ.\n"+
+      "✅ Donor Approved হয়েছে.\n"+
       "এখন এই Donor public search-এ দেখা যাবে।"
     );
 
