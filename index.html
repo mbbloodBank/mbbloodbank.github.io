@@ -961,8 +961,8 @@ footer{
             </div>
         </div>
 
-        <div id="paymentInstructions" style="display:none; margin-top:15px; padding:12px; background:#f8fafc; border-radius:10px; font-size:13px; color:#334155; border:1px solid #e2e8f0;">
-            <!-- Dynamic Instruction -->
+        <div id="paymentInstructions" style="display:none; margin-top:15px; padding:14px; background:#f0fdf4; border-radius:12px; font-size:13px; color:#166534; border:1px solid #bbf7d0; line-height: 1.6;">
+            <!-- Dynamic Instruction matches user requirement -->
         </div>
 
         <button id="payActionBtn" class="yellow-btn" style="margin-top:20px; opacity:0.5; pointer-events:none;" onclick="completePayment()">Pay ৳0.00</button>
@@ -1147,12 +1147,12 @@ function selectChannel(cardElement, name){
 
     const inst = document.getElementById("paymentInstructions");
     inst.style.display = "block";
-    inst.innerHTML = `<b>নির্বাচিত মাধ্যম:</b> ${name}<br>অনুগ্রহ করে আপনার ${name} অ্যাপ বা অ্যাকাউন্ট থেকে <b>01726232108</b> নম্বরে <b>৳${currentAmount}</b> সেন্ড মানি করুন এবং সফল হওয়ার পর নিচের পে বাটনে ক্লিক করুন।`;
+    inst.innerHTML = `<b>নির্বাচিত মাধ্যম:</b> ${name}[span_2](start_span)[span_2](end_span)<br>অনুগ্রহ করে আপনার <b>${name}</b> অ্যাপ বা অ্যাকাউন্ট থেকে <b>01726232108</b> এই নম্বরে <b>৳${currentAmount}</b> পে করুন[span_3](start_span)[span_3](end_span)।`;
 
     const btn = document.getElementById("payActionBtn");
     btn.style.opacity = "1";
     btn.style.pointerEvents = "auto";
-    btn.textContent = `Pay ৳${Number(currentAmount).toLocaleString()} via ${name}`;
+    btn.textContent = `Pay ৳${Number(currentAmount).toLocaleString()} via ${name}[span_4](start_span)[span_4](end_span)`;
 }
 
 function completePayment(){
