@@ -389,6 +389,48 @@ input:focus,select:focus,textarea:focus{
     background: #f0fdf4;
 }
 
+/* Custom Success Modal */
+.success-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(6px);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.success-box {
+    background: #ffffff;
+    width: min(400px, 100%);
+    padding: 30px 20px;
+    border-radius: 24px;
+    text-align: center;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+    animation: popUp 0.3s ease;
+}
+
+@keyframes popUp {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.success-icon {
+    width: 70px;
+    height: 70px;
+    background: #dcfce7;
+    color: #16a34a;
+    font-size: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    box-shadow: 0 10px 20px rgba(22, 163, 74, 0.2);
+}
+
 /* Contact & Ambulance Section Grid Styles */
 .contact-grid {
     display: grid;
@@ -961,11 +1003,17 @@ footer{
             </div>
         </div>
 
-        <div id="paymentInstructions" style="display:none; margin-top:15px; padding:12px; background:#f8fafc; border-radius:10px; font-size:13px; color:#334155;">
-            <!-- Dynamic instructions -->
-        </div>
-
         <button id="payActionBtn" class="yellow-btn" style="margin-top:20px; opacity:0.5; pointer-events:none;" onclick="completePayment()">Pay ৳0.00</button>
+    </div>
+</div>
+
+<!-- Custom Success Modal -->
+<div id="successModal" class="success-modal">
+    <div class="success-box">
+        <div class="success-icon">✓</div>
+        <h3 style="color:#0f172a; margin-bottom:10px; font-size:20px;">অনুদানের পেমেন্ট সফল হয়েছে!</h3>
+        <p id="successDetails" style="color:#475569; font-size:14px; line-height:1.6; margin-bottom:20px;"></p>
+        <button class="yellow-btn" style="padding:12px; font-size:15px;" onclick="closeSuccessModal()">ঠিক আছে</button>
     </div>
 </div>
 
@@ -1078,11 +1126,15 @@ function closeAmbulanceModal(){
 window.onclick = function(event) {
     const ambModal = document.getElementById("ambulanceModal");
     const gatewayModal = document.getElementById("gatewayModal");
+    const successModal = document.getElementById("successModal");
     if (event.target == ambModal) {
         ambModal.style.display = "none";
     }
     if (event.target == gatewayModal) {
         gatewayModal.style.display = "none";
+    }
+    if (event.target == successModal) {
+        successModal.style.display = "none";
     }
 }
 
@@ -1107,7 +1159,6 @@ function openGatewayModal(){
     
     // Reset selection
     document.querySelectorAll(".channel-card").forEach(c => c.classList.remove("active"));
-    document.getElementById("paymentInstructions").style.display = "none";
     const btn = document.getElementById("payActionBtn");
     btn.style.opacity = "0.5";
     btn.style.pointerEvents = "none";
@@ -1137,7 +1188,6 @@ function switchGatewayTab(tab){
     }
     
     document.querySelectorAll(".channel-card").forEach(c => c.classList.remove("active"));
-    document.getElementById("paymentInstructions").style.display = "none";
     const btn = document.getElementById("payActionBtn");
     btn.style.opacity = "0.5";
     btn.style.pointerEvents = "none";
@@ -1150,10 +1200,6 @@ function selectChannel(cardElement, name, account){
     selectedChannelName = name;
     selectedChannelAccount = account;
 
-    const inst = document.getElementById("paymentInstructions");
-    inst.style.display = "block";
-    inst.innerHTML = `<b>Selected:</b> ${name}<br><b>Account Number:</b> <span style="color:#008751; font-weight:bold;">${account}</span><br><small>*টাকা সেন্ড করার পর লেনদেন সফল হলে কনফার্ম করুন।</small>`;
-
     const btn = document.getElementById("payActionBtn");
     btn.style.opacity = "1";
     btn.style.pointerEvents = "auto";
@@ -1161,11 +1207,20 @@ function selectChannel(cardElement, name, account){
 }
 
 function completePayment(){
-    alert(`✅ সফলভাবে অনুদান প্রক্রিয়া সম্পন্ন হয়েছে!\nমাধ্যম: ${selectedChannelName}\nএকাউন্ট: ${selectedChannelAccount}\nপরিমাণ: ৳${currentAmount}\n\nMB মানবতা ফান্ডে সহযোগিতার জন্য আপনাকে ধন্যবাদ!`);
     closeGatewayModal();
+
+    const detailsText = `মাধ্যম: <b>${selectedChannelName}</b><br>একাউন্ট: <b>${selectedChannelAccount}</b><br>পরিমাণ: <b>৳${currentAmount}</b><br><br>MB মানবতা ফান্ডে সহযোগিতার জন্য আপনাকে ধন্যবাদ!`;
+    
+    document.getElementById("successDetails").innerHTML = detailsText;
+    document.getElementById("successModal").style.display = "flex";
+
     document.getElementById("fundType").value = "";
     document.getElementById("fundContact").value = "";
     document.getElementById("fundAmount").value = "";
+}
+
+function closeSuccessModal(){
+    document.getElementById("successModal").style.display = "none";
 }
 
 
