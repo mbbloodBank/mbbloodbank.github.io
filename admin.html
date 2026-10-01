@@ -59,8 +59,7 @@ body{
       linear-gradient(135deg,#f8e5ff,#eee7ff,#ffe8f3);
 }
 
-/* ================= APP ================= */
-
+/* TOPBAR */
 .topbar{
     height:75px;
     position:fixed;
@@ -111,27 +110,28 @@ body{
     font-family:inherit;
     font-weight:800;
     background:rgba(255,255,255,.12);
+    text-decoration: none;
+    display: inline-block;
 }
 
-.logout{
-    background:#d92863;
-}
-
-/* SIDEBAR */
-
+/* SIDEBAR - Fixed Toggle */
 .sidebar{
     position:fixed;
-    left:0;
+    left:-280px;
     top:75px;
     bottom:0;
     width:265px;
     padding:20px 14px;
     z-index:400;
-    background:rgba(43,12,62,.92);
+    background:rgba(43,12,62,.98);
     backdrop-filter:blur(25px);
     color:#fff;
     overflow-y:auto;
-    transition:transform 0.3s ease;
+    transition:left 0.3s ease;
+}
+
+.sidebar.open{
+    left:0;
 }
 
 .admin-info{
@@ -185,10 +185,9 @@ body{
     background:#f02d75;
 }
 
-/* MAIN */
-
+/* MAIN CONTENT */
 .main{
-    margin-left:265px;
+    margin-left:0;
     padding:100px 28px 40px;
     transition:margin-left 0.3s ease;
 }
@@ -215,7 +214,6 @@ body{
 }
 
 /* DASHBOARD CARDS */
-
 .dashboard-grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -233,17 +231,6 @@ body{
     box-shadow:
       12px 15px 35px rgba(70,20,100,.13),
       inset 2px 2px 5px rgba(255,255,255,.7);
-}
-
-.dashboard-card:after{
-    content:"";
-    position:absolute;
-    width:90px;
-    height:90px;
-    border-radius:50%;
-    right:-35px;
-    bottom:-35px;
-    background:rgba(150,40,180,.12);
 }
 
 .card-icon{
@@ -269,8 +256,7 @@ body{
     font-weight:700;
 }
 
-/* GLASS BOX */
-
+/* BOX & TABLES */
 .box{
     margin-top:22px;
     padding:23px;
@@ -295,11 +281,6 @@ body{
     font-size:21px;
 }
 
-.search-box{
-    display:flex;
-    gap:10px;
-}
-
 .search-box input{
     width:250px;
     padding:12px 15px;
@@ -320,8 +301,6 @@ body{
     font-family:inherit;
     font-weight:800;
 }
-
-/* TABLE */
 
 .table-scroll{
     overflow-x:auto;
@@ -354,20 +333,9 @@ td{
     font-weight:900;
 }
 
-.status.pending{
-    color:#8a6200;
-    background:#fff0b9;
-}
-
-.status.approved{
-    color:#137326;
-    background:#d8ffdd;
-}
-
-.status.rejected{
-    color:#a11828;
-    background:#ffdce0;
-}
+.status.pending{color:#8a6200;background:#fff0b9;}
+.status.approved{color:#137326;background:#d8ffdd;}
+.status.rejected{color:#a11828;background:#ffdce0;}
 
 .actions{
     display:flex;
@@ -386,13 +354,12 @@ td{
     font-weight:800;
 }
 
-.a-green{background:#159447}
-.a-red{background:#d62a3e}
-.a-purple{background:#7441b4}
-.a-black{background:#25212a}
+.a-green{background:#159447;}
+.a-red{background:#d62a3e;}
+.a-purple{background:#7441b4;}
+.a-black{background:#25212a;}
 
-/* FORM */
-
+/* FORMS */
 .form-grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
@@ -436,18 +403,10 @@ td{
     font-weight:900;
     cursor:pointer;
     background:linear-gradient(145deg,#6b24a5,#db1768);
-    box-shadow:
-      8px 9px 20px rgba(75,20,105,.3),
-      inset 2px 2px 5px rgba(255,255,255,.3);
-    transition:.25s;
-}
-
-.main-btn:hover{
-    transform:translateY(-3px);
+    box-shadow:8px 9px 20px rgba(75,20,105,.3);
 }
 
 /* MODAL */
-
 .modal{
     display:none;
     position:fixed;
@@ -484,12 +443,13 @@ td{
 }
 
 .mobile-menu{
-    display:none;
+    display:block;
     border:0;
     color:#fff;
     background:none;
-    font-size:25px;
+    font-size:26px;
     cursor:pointer;
+    padding:5px 10px;
 }
 
 @media(max-width:1050px){
@@ -498,22 +458,15 @@ td{
     }
 }
 
-@media(max-width:800px){
-    .mobile-menu{
-        display:block;
-    }
+@media(min-width:801px){
     .sidebar{
-        transform:translateX(-100%);
-    }
-    .sidebar.open{
-        transform:translateX(0);
+        left:0 !important;
     }
     .main{
-        margin-left:0;
-        padding:95px 15px 30px;
+        margin-left:265px !important;
     }
-    .topbar{
-        padding:0 14px;
+    .mobile-menu{
+        display:none !important;
     }
 }
 </style>
@@ -521,8 +474,6 @@ td{
 
 <body>
 
-<!-- DIRECT ADMIN APP -->
-<div id="adminApp" style="display:block;">
 <header class="topbar">
     <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
     <div class="brand">
@@ -530,7 +481,8 @@ td{
         <span>MB Blood Bank Admin</span>
     </div>
     <div class="top-actions">
-        <button class="top-btn" onclick="openPage('dashboard')">🏠 Dashboard</button>
+        <a href="index.html" class="top-btn" target="_blank">🌐 পাবলিক সাইট</a>
+        <button class="top-btn" onclick="openPage('dashboard', document.querySelector('.side-link'))">🏠 Dashboard</button>
     </div>
 </header>
 
@@ -603,15 +555,11 @@ td{
 
 <!-- PENDING DONOR -->
 <section id="pendingDonors" class="page">
-    <div class="page-title">
-        <h2>⏳ Pending Donor</h2>
-    </div>
+    <div class="page-title"><h2>⏳ Pending Donor</h2></div>
     <div class="box">
         <div class="box-header">
             <h3>Pending Registration</h3>
-            <div class="search-box">
-                <input id="pendingSearch" placeholder="নাম / ফোন / ID" oninput="renderAll()">
-            </div>
+            <div class="search-box"><input id="pendingSearch" placeholder="নাম / ফোন / ID" oninput="renderAll()"></div>
         </div>
         <div id="pendingTable"></div>
     </div>
@@ -619,15 +567,11 @@ td{
 
 <!-- APPROVED DONOR -->
 <section id="approvedDonors" class="page">
-    <div class="page-title">
-        <h2>✅ Approved Donor</h2>
-    </div>
+    <div class="page-title"><h2>✅ Approved Donor</h2></div>
     <div class="box">
         <div class="box-header">
             <h3>Approved Donor List</h3>
-            <div class="search-box">
-                <input id="approvedSearch" placeholder="Donor খুঁজুন" oninput="renderAll()">
-            </div>
+            <div class="search-box"><input id="approvedSearch" placeholder="Donor খুঁজুন" oninput="renderAll()"></div>
         </div>
         <div id="approvedTable"></div>
     </div>
@@ -635,25 +579,17 @@ td{
 
 <!-- REJECTED DONOR -->
 <section id="rejectedDonors" class="page">
-    <div class="page-title">
-        <h2>❌ Rejected Donor</h2>
-    </div>
-    <div class="box">
-        <div id="rejectedTable"></div>
-    </div>
+    <div class="page-title"><h2>❌ Rejected Donor</h2></div>
+    <div class="box"><div id="rejectedTable"></div></div>
 </section>
 
 <!-- ALL DONORS -->
 <section id="allDonors" class="page">
-    <div class="page-title">
-        <h2>👤 All Donors</h2>
-    </div>
+    <div class="page-title"><h2>👤 All Donors</h2></div>
     <div class="box">
         <div class="box-header">
             <h3>All Donors</h3>
-            <div class="search-box">
-                <input id="allSearch" placeholder="নাম / ফোন / ID" oninput="renderAll()">
-            </div>
+            <div class="search-box"><input id="allSearch" placeholder="নাম / ফোন / ID" oninput="renderAll()"></div>
         </div>
         <div id="allTable"></div>
     </div>
@@ -661,15 +597,11 @@ td{
 
 <!-- BLOOD REQUESTS -->
 <section id="bloodRequests" class="page">
-    <div class="page-title">
-        <h2>🚨 Blood Request Management</h2>
-    </div>
+    <div class="page-title"><h2>🚨 Blood Request Management</h2></div>
     <div class="box">
         <div class="box-header">
             <h3>Blood Requests</h3>
-            <div class="search-box">
-                <input id="requestSearch" placeholder="Patient / Blood / ID" oninput="renderAll()">
-            </div>
+            <div class="search-box"><input id="requestSearch" placeholder="Patient / Blood" oninput="renderAll()"></div>
         </div>
         <div id="requestTable"></div>
     </div>
@@ -677,15 +609,11 @@ td{
 
 <!-- AMBULANCE LIST -->
 <section id="ambulanceList" class="page">
-    <div class="page-title">
-        <h2>🚑 Ambulance List</h2>
-    </div>
+    <div class="page-title"><h2>🚑 Ambulance List</h2></div>
     <div class="box">
         <div class="box-header">
             <h3>Ambulance Services</h3>
-            <div class="search-box">
-                <input id="ambulanceSearch" placeholder="নাম / নাম্বার" oninput="renderAll()">
-            </div>
+            <div class="search-box"><input id="ambulanceSearch" placeholder="নাম / নাম্বার" oninput="renderAll()"></div>
         </div>
         <div id="ambulanceTable"></div>
     </div>
@@ -693,9 +621,7 @@ td{
 
 <!-- ADD DONOR -->
 <section id="addDonor" class="page">
-    <div class="page-title">
-        <h2>➕ Add Donor</h2>
-    </div>
+    <div class="page-title"><h2>➕ Add Donor</h2></div>
     <div class="box">
         <form id="addDonorForm">
             <div class="form-grid">
@@ -721,9 +647,7 @@ td{
 
 <!-- ADD AMBULANCE -->
 <section id="addAmbulance" class="page">
-    <div class="page-title">
-        <h2>🚑 Add New Ambulance</h2>
-    </div>
+    <div class="page-title"><h2>🚑 Add New Ambulance</h2></div>
     <div class="box">
         <form id="addAmbulanceForm">
             <div class="form-grid">
@@ -738,23 +662,20 @@ td{
 
 <!-- SETTINGS -->
 <section id="settings" class="page">
-    <div class="page-title">
-        <h2>⚙️ Admin Settings</h2>
-    </div>
+    <div class="page-title"><h2>⚙️ Admin Settings</h2></div>
     <div class="box">
         <h3>🔐 Current Admin</h3><br>
         <p><b>Gmail:</b> <span id="settingsAdminEmail">monirahmeddhakib.mb@gmail.com</span></p><br>
         <div class="box" style="margin-top:0">
             <b>🔥 Firebase Database Connected</b>
-            <p style="margin-top:8px">ডেটা এখন রিয়েলটাইম ফায়ারবেজে সেভ হচ্ছে, ফলে যেকোনো ডিভাইস থেকে একই ডেটা দেখা যাবে।</p>
+            <p style="margin-top:8px">পাবলিক ওয়েবসাইট (`index.html`) এবং এই এডমিন প্যানেল একই ফায়ারবেজের ডাটাবেজ শেয়ার করছে।</p>
         </div>
     </div>
 </section>
 
 </main>
-</div>
 
-<!-- EDIT MODAL -->
+<!-- EDIT DONOR MODAL -->
 <div id="editModal" class="modal">
     <div class="modal-box">
         <button class="close" onclick="closeEdit()">×</button>
@@ -774,20 +695,6 @@ td{
             <div><label>উপজেলা</label><input id="editUpazila"></div>
             <div class="full"><label>ঠিকানা</label><textarea id="editAddress"></textarea></div>
             <div class="full"><button class="main-btn" onclick="saveEditedDonor()">💾 Save Changes</button></div>
-        </div>
-    </div>
-</div>
-
-<!-- EDIT AMBULANCE MODAL -->
-<div id="editAmbulanceModal" class="modal">
-    <div class="modal-box">
-        <button class="close" onclick="closeAmbulanceEdit()">×</button>
-        <h2>✏ Edit Ambulance</h2><br>
-        <div class="form-grid">
-            <div class="full"><label>🚑 নাম</label><input id="editAmbulName"></div>
-            <div class="full"><label>📞 নাম্বার</label><input id="editAmbulPhone"></div>
-            <div class="full"><label>📍 ঠিকানা</label><textarea id="editAmbulAddress"></textarea></div>
-            <div class="full"><button class="main-btn" onclick="saveEditedAmbulance()">💾 Save Changes</button></div>
         </div>
     </div>
 </div>
@@ -924,7 +831,6 @@ function ambulanceTable(data){
         <td>${escapeHtml(a.phone)}</td>
         <td>${escapeHtml(a.address)}</td>
         <td><div class="actions">
-            <button class="action a-purple" onclick="editAmbulancePrompt('${a.firebaseKey}')">✏️ Edit</button>
             <button class="action a-black" onclick="deleteAmbulanceByFirebaseKey('${a.firebaseKey}')">🗑️ Delete</button>
         </div></td>
     </tr>`).join("")}
@@ -971,7 +877,7 @@ function approveDonorByFirebaseKey(firebaseKey){
     if(!window.firebaseDb) return;
     const { db, ref, update } = window.firebaseDb;
     update(ref(db, 'donors/' + firebaseKey), { status: 'approved', approvedAt: new Date().toISOString() })
-    .then(() => alert("✅ Donor Approved হয়েছে।"));
+    .then(() => alert("✅ Donor Approved হয়েছে এবং এখন পাবলিক ওয়েবসাইটে দেখা যাবে।"));
 }
 
 function rejectDonorByFirebaseKey(firebaseKey){
@@ -1030,36 +936,6 @@ function closeEdit(){
     document.getElementById("editModal").classList.remove("show");
 }
 
-let editingAmbulanceKey = null;
-function editAmbulancePrompt(firebaseKey){
-    const a = globalAmbulances.find(x => x.firebaseKey === firebaseKey);
-    if(!a) return;
-    editingAmbulanceKey = firebaseKey;
-    document.getElementById("editAmbulName").value = a.name || "";
-    document.getElementById("editAmbulPhone").value = a.phone || "";
-    document.getElementById("editAmbulAddress").value = a.address || "";
-    document.getElementById("editAmbulanceModal").classList.add("show");
-}
-
-function saveEditedAmbulance(){
-    if(!editingAmbulanceKey || !window.firebaseDb) return;
-    const { db, ref, update } = window.firebaseDb;
-    const updatedData = {
-        name: document.getElementById("editAmbulName").value.trim(),
-        phone: document.getElementById("editAmbulPhone").value.trim(),
-        address: document.getElementById("editAmbulAddress").value.trim()
-    };
-    update(ref(db, 'ambulances/' + editingAmbulanceKey), updatedData).then(() => {
-        closeAmbulanceEdit();
-        alert("✅ Ambulance updated.");
-    });
-}
-
-function closeAmbulanceEdit(){
-    editingAmbulanceKey = null;
-    document.getElementById("editAmbulanceModal").classList.remove("show");
-}
-
 function deleteAmbulanceByFirebaseKey(firebaseKey){
     if(!confirm("⚠️ এই এম্বুলেন্সের তথ্য Delete করবেন?")) return;
     if(!window.firebaseDb) return;
@@ -1073,7 +949,7 @@ function renderRequests(data = globalRequests){
         box.innerHTML = "<p>কোনো Blood Request নেই।</p>";
         return;
     }
-    box.innerHTML = `<div class="table-scroll"><table><thead><tr><th>ID</th><th>Patient</th><th>Blood</th><th>Bag</th><th>Location</th><th>Hospital</th><th>Date</th><th>Status</th><th>Action</th></tr></thead><tbody>
+    box.innerHTML = `<div class="table-scroll"><table><thead><tr><th>ID</th><th>Patient</th><th>Blood</th><th>Bag</th><th>Location</th><th>Hospital</th><th>Status</th><th>Action</th></tr></thead><tbody>
     ${data.map(r => `
     <tr>
         <td>${escapeHtml(r.id)}</td>
@@ -1082,7 +958,6 @@ function renderRequests(data = globalRequests){
         <td>${escapeHtml(r.bags)}</td>
         <td>${escapeHtml(r.district \vert{}\vert{} '')} /${escapeHtml(r.upazila || '')}</td>
         <td>${escapeHtml(r.hospital)}</td>
-        <td>${escapeHtml(r.date)}</td>
         <td><span class="status ${r.status}">${escapeHtml(r.status)}</span></td>
         <td><div class="actions">
             ${r.status === "pending" ? `<button class="action a-green" onclick="approveRequestKey('${r.firebaseKey}')">✅ Approve</button><button class="action a-red" onclick="rejectRequestKey('${r.firebaseKey}')">❌ Reject</button>` : ""}
