@@ -131,6 +131,7 @@ body{
     backdrop-filter:blur(25px);
     color:#fff;
     overflow-y:auto;
+    transition:transform 0.3s ease;
 }
 
 .admin-info{
@@ -189,6 +190,7 @@ body{
 .main{
     margin-left:265px;
     padding:100px 28px 40px;
+    transition:margin-left 0.3s ease;
 }
 
 .page{
@@ -487,6 +489,7 @@ td{
     color:#fff;
     background:none;
     font-size:25px;
+    cursor:pointer;
 }
 
 @media(max-width:1050px){
@@ -501,7 +504,6 @@ td{
     }
     .sidebar{
         transform:translateX(-100%);
-        transition:.3s;
     }
     .sidebar.open{
         transform:translateX(0);
@@ -818,7 +820,6 @@ function initFirebaseListeners() {
     });
 }
 
-// Auto load data on startup
 setTimeout(() => {
     initFirebaseListeners();
     renderAll();
@@ -838,7 +839,10 @@ function openPage(id, button){
 }
 
 function toggleSidebar(){
-    document.getElementById("sidebar").classList.toggle("open");
+    const sidebar = document.getElementById("sidebar");
+    if(sidebar){
+        sidebar.classList.toggle("open");
+    }
 }
 
 function updateDashboard(){
