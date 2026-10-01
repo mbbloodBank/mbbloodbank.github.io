@@ -2,1343 +2,2565 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MB Blood Bank | Admin Panel</title>
 
-<!-- Firebase App SDKs -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-  import { getDatabase, ref, set, get, update, remove, child, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDCJr3wCX4XxCZgOeC_OmXFs6OmbtYdRuY",
-    authDomain: "mb-blood-bank-a17aa.firebaseapp.com",
-    databaseURL: "https://mb-blood-bank-a17aa-default-rtdb.firebaseio.com",
-    projectId: "mb-blood-bank-a17aa",
-    storageBucket: "mb-blood-bank-a17aa.firebasestorage.app",
-    messagingSenderId: "28580039463",
-    appId: "1:28580039463:web:d3f96054764550f1433702",
-    measurementId: "G-DJ6D2T5YMR"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const db = getDatabase(app);
-
-  // Expose Firebase functions globally for the app
-  window.firebaseDb = { db, ref, set, get, update, remove, child, onValue };
-  window.firebaseApp = app;
-</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&display=swap');
-
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 :root{
-    --purple:#5b1f91;
-    --pink:#d71967;
-    --dark:#24102f;
-    --glass:rgba(255,255,255,.58);
-    --border:rgba(255,255,255,.78);
+  --purple:#4b168f;
+  --purple2:#7b2cbf;
+  --pink:#e91e72;
+  --dark:#130b22;
+  --white:rgba(255,255,255,.95);
+  --glass:rgba(255,255,255,.12);
+  --border:rgba(255,255,255,.20);
+  --green:#16c784;
+  --red:#ff4d67;
+  --orange:#ff9f43;
+  --blue:#36a3ff;
 }
 
 body{
-    font-family:'Noto Sans Bengali',Arial,sans-serif;
-    min-height:100vh;
-    color:#281233;
-    background:
-      radial-gradient(circle at 5% 5%,rgba(255,0,120,.22),transparent 28%),
-      radial-gradient(circle at 95% 10%,rgba(86,40,255,.22),transparent 30%),
-      radial-gradient(circle at 50% 100%,rgba(255,150,220,.28),transparent 35%),
-      linear-gradient(135deg,#f8e5ff,#eee7ff,#ffe8f3);
+  min-height:100vh;
+  font-family:"Noto Sans Bengali","Poppins",sans-serif;
+  color:#fff;
+  background:
+    radial-gradient(circle at 10% 10%,rgba(233,30,114,.28),transparent 28%),
+    radial-gradient(circle at 90% 20%,rgba(123,44,191,.35),transparent 30%),
+    linear-gradient(135deg,#10071d,#271044,#12091e);
+  overflow-x:hidden;
 }
 
-/* ================= LOGIN ================= */
+body:before,
+body:after{
+  content:"";
+  position:fixed;
+  width:320px;
+  height:320px;
+  border-radius:50%;
+  filter:blur(80px);
+  opacity:.35;
+  z-index:-1;
+}
+
+body:before{
+  background:#e91e72;
+  left:-130px;
+  top:30%;
+}
+
+body:after{
+  background:#7b2cbf;
+  right:-130px;
+  bottom:10%;
+}
+
+/* LOGIN */
 
 #loginScreen{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
 }
 
-.login-card{
-    width:430px;
-    max-width:100%;
-    padding:38px 30px;
-    text-align:center;
-    border-radius:35px;
-    background:rgba(255,255,255,.55);
-    border:1px solid var(--border);
-    backdrop-filter:blur(25px);
-    box-shadow:
-      20px 25px 60px rgba(61,15,88,.25),
-      inset 2px 2px 8px rgba(255,255,255,.8);
+.login-box{
+  width:100%;
+  max-width:430px;
+  padding:35px 28px;
+  border:1px solid var(--border);
+  border-radius:30px;
+  background:rgba(255,255,255,.10);
+  backdrop-filter:blur(25px);
+  -webkit-backdrop-filter:blur(25px);
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+  text-align:center;
 }
 
-.admin-logo{
-    width:90px;
-    height:90px;
-    margin:0 auto 15px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    border-radius:28px;
-    font-size:42px;
-    background:linear-gradient(145deg,#7025a8,#dd1668);
-    color:#fff;
-    box-shadow:
-      9px 10px 20px rgba(77,20,110,.3),
-      inset 3px 3px 7px rgba(255,255,255,.3);
+.logo{
+  width:80px;
+  height:80px;
+  margin:0 auto 15px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:40px;
+  border-radius:25px;
+  background:linear-gradient(145deg,var(--pink),var(--purple2));
+  box-shadow:
+    0 12px 25px rgba(233,30,114,.35),
+    inset 0 2px 10px rgba(255,255,255,.3);
 }
 
-.login-card h1{
-    font-size:27px;
+.login-box h1{
+  font-size:27px;
+  margin-bottom:5px;
 }
 
-.login-card h1 span{
-    color:var(--pink);
+.login-box p{
+  color:#ddd;
+  font-size:14px;
+  margin-bottom:25px;
 }
 
-.login-card p{
-    margin:7px 0 25px;
-    opacity:.7;
+.input{
+  width:100%;
+  padding:14px 16px;
+  border:none;
+  outline:none;
+  border-radius:15px;
+  background:rgba(255,255,255,.12);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.15);
+  margin-bottom:14px;
+  font-family:inherit;
 }
 
-.field{
-    text-align:left;
-    margin-bottom:16px;
+.input::placeholder{
+  color:#ccc;
 }
 
-.field label{
-    display:block;
-    font-weight:800;
-    margin-bottom:6px;
+select.input{
+  color:#fff;
 }
 
-.field input,
-.field select,
-.field textarea{
-    width:100%;
-    padding:14px 15px;
-    border:1px solid rgba(80,30,100,.15);
-    border-radius:16px;
-    outline:none;
-    background:rgba(255,255,255,.78);
-    font-family:inherit;
-    font-size:15px;
+select.input option{
+  color:#111;
 }
 
-.field input:focus,
-.field select:focus,
-.field textarea:focus{
-    border-color:#8b39bd;
-    box-shadow:0 0 0 4px rgba(139,57,189,.12);
+.btn{
+  border:none;
+  cursor:pointer;
+  padding:12px 18px;
+  border-radius:14px;
+  color:#fff;
+  font-weight:700;
+  font-family:inherit;
+  transition:.25s;
 }
 
-.main-btn{
-    width:100%;
-    padding:15px;
-    border:0;
-    border-radius:18px;
-    color:#fff;
-    font-family:inherit;
-    font-size:16px;
-    font-weight:900;
-    cursor:pointer;
-    background:linear-gradient(145deg,#6b24a5,#db1768);
-    box-shadow:
-      8px 9px 20px rgba(75,20,105,.3),
-      inset 2px 2px 5px rgba(255,255,255,.3);
-    transition:.25s;
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
 }
 
-.main-btn:hover{
-    transform:translateY(-3px);
+.btn-main{
+  width:100%;
+  padding:14px;
+  background:linear-gradient(135deg,var(--pink),var(--purple2));
 }
 
-.login-error{
-    display:none;
-    margin-top:15px;
-    padding:12px;
-    border-radius:14px;
-    color:#9e1223;
-    background:rgba(255,0,30,.08);
-    font-weight:700;
+.error{
+  color:#ff9aaa;
+  margin-top:12px;
+  font-size:14px;
 }
 
-/* ================= APP ================= */
+/* APP */
 
 #adminApp{
-    display:none;
+  display:none;
 }
 
-.topbar{
-    height:75px;
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    z-index:500;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 25px;
-    background:rgba(38,10,56,.94);
-    backdrop-filter:blur(20px);
-    color:#fff;
-    box-shadow:0 10px 35px rgba(0,0,0,.2);
-}
-
-.brand{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-size:21px;
-    font-weight:900;
-}
-
-.brand-icon{
-    width:43px;
-    height:43px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:14px;
-    background:linear-gradient(145deg,#7b2ab5,#e21a6b);
-}
-
-.top-actions{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.top-btn{
-    border:0;
-    cursor:pointer;
-    padding:10px 15px;
-    border-radius:13px;
-    color:#fff;
-    font-family:inherit;
-    font-weight:800;
-    background:rgba(255,255,255,.12);
-}
-
-.logout{
-    background:#d92863;
+.layout{
+  display:flex;
+  min-height:100vh;
 }
 
 /* SIDEBAR */
 
 .sidebar{
-    position:fixed;
-    left:0;
-    top:75px;
-    bottom:0;
-    width:265px;
-    padding:20px 14px;
-    z-index:400;
-    background:rgba(43,12,62,.92);
-    backdrop-filter:blur(25px);
-    color:#fff;
-    overflow-y:auto;
+  width:270px;
+  padding:22px 15px;
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  z-index:100;
+  background:rgba(20,8,36,.82);
+  backdrop-filter:blur(25px);
+  border-right:1px solid rgba(255,255,255,.12);
+  overflow-y:auto;
 }
 
-.admin-info{
-    padding:17px;
-    border-radius:20px;
-    margin-bottom:18px;
-    background:rgba(255,255,255,.08);
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:8px 10px 25px;
 }
 
-.admin-info small{
-    opacity:.65;
+.brand-icon{
+  width:50px;
+  height:50px;
+  border-radius:17px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  background:linear-gradient(135deg,var(--pink),var(--purple2));
+  box-shadow:0 10px 25px rgba(233,30,114,.3);
 }
 
-.admin-info strong{
-    display:block;
-    margin-top:4px;
-    word-break:break-all;
+.brand h2{
+  font-size:19px;
 }
 
-.side-link{
-    width:100%;
-    border:0;
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:14px 15px;
-    margin:6px 0;
-    border-radius:15px;
-    cursor:pointer;
-    color:#fff;
-    background:transparent;
-    font-family:inherit;
-    font-size:14px;
-    font-weight:800;
-    text-align:left;
-    transition:.25s;
+.brand small{
+  color:#cfc7d8;
+  font-size:11px;
 }
 
-.side-link:hover,
-.side-link.active{
-    background:linear-gradient(145deg,rgba(124,44,177,.9),rgba(213,22,102,.9));
-    transform:translateX(3px);
+.menu-title{
+  color:#a99eb5;
+  font-size:11px;
+  padding:12px 12px 7px;
 }
 
-.badge{
-    margin-left:auto;
-    min-width:25px;
-    padding:3px 7px;
-    text-align:center;
-    border-radius:10px;
-    background:#f02d75;
+.nav-btn{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:13px 14px;
+  margin:4px 0;
+  border:none;
+  border-radius:15px;
+  color:#eee;
+  background:transparent;
+  cursor:pointer;
+  font-family:inherit;
+  text-align:left;
+  font-size:14px;
+  transition:.2s;
+}
+
+.nav-btn:hover,
+.nav-btn.active{
+  background:linear-gradient(135deg,rgba(233,30,114,.35),rgba(123,44,191,.35));
+  box-shadow:inset 0 0 20px rgba(255,255,255,.04);
+}
+
+.nav-btn span:first-child{
+  width:25px;
+  text-align:center;
+  font-size:18px;
 }
 
 /* MAIN */
 
 .main{
-    margin-left:265px;
-    padding:100px 28px 40px;
+  margin-left:270px;
+  width:calc(100% - 270px);
+  padding:22px;
 }
 
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:22px;
+}
+
+.topbar h1{
+  font-size:25px;
+}
+
+.admin-user{
+  padding:10px 15px;
+  border-radius:15px;
+  background:rgba(255,255,255,.1);
+  border:1px solid var(--border);
+  font-size:13px;
+}
+
+/* PAGE */
+
 .page{
-    display:none;
+  display:none;
 }
 
 .page.active{
-    display:block;
+  display:block;
 }
 
-.page-title{
-    margin-bottom:22px;
+/* STATS */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  margin-bottom:22px;
 }
 
-.page-title h2{
-    font-size:29px;
+.stat{
+  padding:22px;
+  border-radius:22px;
+  background:rgba(255,255,255,.10);
+  border:1px solid var(--border);
+  backdrop-filter:blur(18px);
+  box-shadow:0 15px 40px rgba(0,0,0,.18);
 }
 
-.page-title p{
-    opacity:.65;
-    margin-top:3px;
+.stat-icon{
+  font-size:28px;
+  margin-bottom:10px;
 }
 
-/* DASHBOARD CARDS */
-
-.dashboard-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:17px;
+.stat h3{
+  font-size:28px;
 }
 
-.dashboard-card{
-    position:relative;
-    overflow:hidden;
-    padding:22px;
-    border-radius:25px;
-    background:var(--glass);
-    border:1px solid var(--border);
-    backdrop-filter:blur(18px);
-    box-shadow:
-      12px 15px 35px rgba(70,20,100,.13),
-      inset 2px 2px 5px rgba(255,255,255,.7);
+.stat p{
+  color:#cfc7d8;
+  font-size:13px;
 }
 
-.dashboard-card:after{
-    content:"";
-    position:absolute;
-    width:90px;
-    height:90px;
-    border-radius:50%;
-    right:-35px;
-    bottom:-35px;
-    background:rgba(150,40,180,.12);
+/* CARDS */
+
+.card{
+  background:rgba(255,255,255,.09);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:20px;
+  margin-bottom:18px;
+  backdrop-filter:blur(18px);
+  box-shadow:0 15px 40px rgba(0,0,0,.16);
 }
 
-.card-icon{
-    width:53px;
-    height:53px;
-    border-radius:17px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:25px;
-    color:#fff;
-    background:linear-gradient(145deg,#7027aa,#da1967);
-    box-shadow:5px 6px 12px rgba(70,20,100,.2);
+.card-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:17px;
 }
 
-.dashboard-card h3{
-    margin-top:17px;
-    font-size:31px;
-}
-
-.dashboard-card p{
-    opacity:.65;
-    font-weight:700;
-}
-
-/* GLASS BOX */
-
-.box{
-    margin-top:22px;
-    padding:23px;
-    border-radius:27px;
-    background:var(--glass);
-    border:1px solid var(--border);
-    backdrop-filter:blur(20px);
-    box-shadow:
-      12px 15px 40px rgba(70,20,100,.13),
-      inset 2px 2px 5px rgba(255,255,255,.75);
-}
-
-.box-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-    margin-bottom:18px;
-}
-
-.box-header h3{
-    font-size:21px;
-}
-
-.search-box{
-    display:flex;
-    gap:10px;
-}
-
-.search-box input{
-    width:250px;
-    padding:12px 15px;
-    border:1px solid rgba(80,30,100,.15);
-    border-radius:14px;
-    outline:none;
-    background:rgba(255,255,255,.75);
-    font-family:inherit;
-}
-
-.mini-btn{
-    border:0;
-    cursor:pointer;
-    padding:10px 14px;
-    border-radius:13px;
-    color:#fff;
-    background:linear-gradient(145deg,#6b27a6,#d81a68);
-    font-family:inherit;
-    font-weight:800;
+.card-header h2{
+  font-size:19px;
 }
 
 /* TABLE */
 
-.table-scroll{
-    overflow-x:auto;
+.table-wrap{
+  width:100%;
+  overflow-x:auto;
 }
 
 table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:950px;
+  width:100%;
+  border-collapse:collapse;
+  min-width:850px;
+}
+
+th,td{
+  padding:12px 10px;
+  border-bottom:1px solid rgba(255,255,255,.10);
+  text-align:left;
+  font-size:13px;
 }
 
 th{
-    padding:13px;
-    text-align:left;
-    background:rgba(100,35,140,.08);
-    white-space:nowrap;
+  color:#d7cce0;
+  background:rgba(255,255,255,.04);
 }
 
 td{
-    padding:12px;
-    border-bottom:1px solid rgba(70,20,100,.09);
-    vertical-align:middle;
+  color:#eee;
 }
 
-.avatar{
-    width:48px;
-    height:48px;
-    border-radius:15px;
-    object-fit:cover;
-    box-shadow:4px 5px 10px rgba(60,20,80,.15);
+.badge{
+  display:inline-block;
+  padding:5px 10px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
 }
 
-.status{
-    display:inline-block;
-    padding:5px 10px;
-    border-radius:10px;
-    font-size:12px;
-    font-weight:900;
+.pending{
+  background:rgba(255,159,67,.18);
+  color:#ffbd72;
 }
 
-.status.pending{
-    color:#8a6200;
-    background:#fff0b9;
+.approved{
+  background:rgba(22,199,132,.18);
+  color:#65e3b2;
 }
 
-.status.approved{
-    color:#137326;
-    background:#d8ffdd;
-}
-
-.status.rejected{
-    color:#a11828;
-    background:#ffdce0;
+.rejected{
+  background:rgba(255,77,103,.18);
+  color:#ff8498;
 }
 
 .actions{
-    display:flex;
-    flex-wrap:wrap;
-    gap:5px;
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
 }
 
-.action{
-    border:0;
-    cursor:pointer;
-    padding:7px 9px;
-    border-radius:9px;
-    color:#fff;
-    font-family:inherit;
-    font-size:12px;
-    font-weight:800;
+.btn-sm{
+  padding:7px 10px;
+  font-size:11px;
 }
 
-.a-green{background:#159447}
-.a-red{background:#d62a3e}
-.a-purple{background:#7441b4}
-.a-black{background:#25212a}
-.a-blue{background:#2478b8}
+.green{
+  background:var(--green);
+}
+
+.red{
+  background:var(--red);
+}
+
+.blue{
+  background:var(--blue);
+}
+
+.orange{
+  background:var(--orange);
+  color:#231405;
+}
+
+.gray{
+  background:#55505c;
+}
 
 /* FORM */
 
 .form-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:15px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
 }
 
-.full{
-    grid-column:1/-1;
+.form-group{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
 }
 
-.form-grid label{
-    display:block;
-    font-weight:800;
-    margin-bottom:5px;
+.form-group.full{
+  grid-column:1/-1;
 }
 
-.form-grid input,
-.form-grid select,
-.form-grid textarea{
-    width:100%;
-    padding:13px;
-    border:1px solid rgba(80,30,100,.15);
-    border-radius:14px;
-    background:rgba(255,255,255,.75);
-    outline:none;
-    font-family:inherit;
+.form-group label{
+  font-size:13px;
+  color:#ddd;
 }
 
-.form-grid textarea{
-    min-height:100px;
+textarea.input{
+  min-height:100px;
+  resize:vertical;
 }
 
-/* MODAL */
+/* SEARCH */
 
-.modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    z-index:1000;
-    padding:20px;
-    overflow:auto;
-    background:rgba(25,5,40,.58);
-    backdrop-filter:blur(12px);
+.search-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
 }
 
-.modal.show{
-    display:block;
+/* TOAST */
+
+#toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:9999;
+  padding:14px 18px;
+  border-radius:15px;
+  background:#20152c;
+  border:1px solid var(--border);
+  box-shadow:0 15px 40px rgba(0,0,0,.35);
+  display:none;
+  max-width:350px;
+  font-size:13px;
 }
 
-.modal-box{
-    width:min(700px,100%);
-    margin:40px auto;
-    padding:28px;
-    position:relative;
-    border-radius:28px;
-    background:rgba(255,255,255,.9);
-    box-shadow:0 30px 70px rgba(20,5,30,.35);
-}
-
-.close{
-    position:absolute;
-    right:16px;
-    top:10px;
-    border:0;
-    background:none;
-    font-size:29px;
-    cursor:pointer;
-}
+/* MOBILE */
 
 .mobile-menu{
+  display:none;
+  border:none;
+  color:#fff;
+  background:rgba(255,255,255,.1);
+  border-radius:12px;
+  padding:10px 13px;
+  cursor:pointer;
+}
+
+@media(max-width:1000px){
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .search-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:750px){
+
+  .sidebar{
+    transform:translateX(-100%);
+    transition:.3s;
+  }
+
+  .sidebar.open{
+    transform:translateX(0);
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+    padding:15px;
+  }
+
+  .mobile-menu{
+    display:block;
+  }
+
+  .topbar{
+    align-items:flex-start;
+  }
+
+  .topbar h1{
+    font-size:20px;
+  }
+
+  .admin-user{
     display:none;
-    border:0;
-    color:#fff;
-    background:none;
-    font-size:25px;
-}
+  }
 
-@media(max-width:1050px){
-    .dashboard-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-}
+  .stats{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
 
-@media(max-width:800px){
-    .mobile-menu{
-        display:block;
-    }
-    .sidebar{
-        transform:translateX(-100%);
-        transition:.3s;
-    }
-    .sidebar.open{
-        transform:translateX(0);
-    }
-    .main{
-        margin-left:0;
-        padding:95px 15px 30px;
-    }
-    .topbar{
-        padding:0 14px;
-    }
+  .stat{
+    padding:16px;
+  }
+
+  .stat h3{
+    font-size:23px;
+  }
+
+  .form-grid,
+  .search-grid{
+    grid-template-columns:1fr;
+  }
+
+  .form-group.full{
+    grid-column:auto;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
+<!-- ================= LOGIN ================= -->
+
 <section id="loginScreen">
-    <div class="login-card">
-        <div class="admin-logo">🔐</div>
-        <h1>MB <span>Blood Bank</span></h1>
-        <h2>Admin Panel</h2>
-        <p>শুধুমাত্র অনুমোদিত Admin-এর জন্য</p>
 
-        <div class="field">
-            <label>📧 Admin Gmail</label>
-            <input type="email" id="loginEmail" placeholder="Admin Gmail">
-        </div>
+  <div class="login-box">
 
-        <div class="field">
-            <label>🔑 Password</label>
-            <input type="password" id="loginPassword" placeholder="Password">
-        </div>
+    <div class="logo">🩸</div>
 
-        <button class="main-btn" onclick="adminLogin()">🔐 Login to Admin Panel</button>
-        <div id="loginError" class="login-error">❌ Gmail অথবা Password সঠিক নয়।</div>
-    </div>
+    <h1>MB Blood Bank</h1>
+    <p>Admin Control Panel</p>
+
+    <input
+      id="loginEmail"
+      class="input"
+      type="email"
+      placeholder="Admin Gmail"
+      autocomplete="email"
+    >
+
+    <input
+      id="loginPassword"
+      class="input"
+      type="password"
+      placeholder="Password"
+      autocomplete="current-password"
+    >
+
+    <button class="btn btn-main" id="loginBtn">
+      🔐 Admin Login
+    </button>
+
+    <div id="loginError" class="error"></div>
+
+  </div>
+
 </section>
 
-<!-- ADMIN APP -->
-<div id="adminApp">
-<header class="topbar">
-    <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
-    <div class="brand">
-        <div class="brand-icon">🩸</div>
-        <span>MB Blood Bank Admin</span>
-    </div>
-    <div class="top-actions">
-        <button class="top-btn" onclick="openPage('dashboard')">🏠 Dashboard</button>
-        <button class="top-btn logout" onclick="adminLogout()">Logout</button>
-    </div>
-</header>
+
+<!-- ================= ADMIN APP ================= -->
+
+<section id="adminApp">
+
+<div class="layout">
+
+<!-- SIDEBAR -->
 
 <aside class="sidebar" id="sidebar">
-    <div class="admin-info">
-        <small>Logged in as</small>
-        <strong>mbbloodbank@gmail.com</strong>
-    </div>
 
-    <button class="side-link active" onclick="openPage('dashboard',this)">🏠 Dashboard</button>
-    <button class="side-link" onclick="openPage('pendingDonors',this)">⏳ Pending Donor <span class="badge" id="sidePending">0</span></button>
-    <button class="side-link" onclick="openPage('approvedDonors',this)">✅ Approved Donor <span class="badge" id="sideApproved">0</span></button>
-    <button class="side-link" onclick="openPage('rejectedDonors',this)">❌ Rejected Donor</button>
-    <button class="side-link" onclick="openPage('allDonors',this)">👤 All Donors</button>
-    <button class="side-link" onclick="openPage('bloodRequests',this)">🚨 Blood Requests <span class="badge" id="sideRequests">0</span></button>
-    <button class="side-link" onclick="openPage('ambulanceList',this)">🚑 Ambulance List</button>
-    <button class="side-link" onclick="openPage('addDonor',this)">➕ Add Donor</button>
-    <button class="side-link" onclick="openPage('addAmbulance',this)">🚑 Add Ambulance</button>
-    <button class="side-link" onclick="openPage('settings',this)">⚙️ Admin Settings</button>
-    <button class="side-link" onclick="adminLogout()">🚪 Logout</button>
+  <div class="brand">
+    <div class="brand-icon">🩸</div>
+
+    <div>
+      <h2>MB Blood Bank</h2>
+      <small>Admin Panel</small>
+    </div>
+  </div>
+
+  <div class="menu-title">MAIN MENU</div>
+
+  <button class="nav-btn active" data-page="dashboard">
+    <span>📊</span>
+    <span>Dashboard</span>
+  </button>
+
+  <button class="nav-btn" data-page="pending">
+    <span>⏳</span>
+    <span>Pending Donor</span>
+  </button>
+
+  <button class="nav-btn" data-page="approved">
+    <span>✅</span>
+    <span>Approved Donor</span>
+  </button>
+
+  <button class="nav-btn" data-page="rejected">
+    <span>❌</span>
+    <span>Rejected Donor</span>
+  </button>
+
+  <button class="nav-btn" data-page="allDonors">
+    <span>👥</span>
+    <span>All Donors</span>
+  </button>
+
+  <button class="nav-btn" data-page="requests">
+    <span>🚨</span>
+    <span>Blood Requests</span>
+  </button>
+
+  <div class="menu-title">MANAGEMENT</div>
+
+  <button class="nav-btn" data-page="addDonor">
+    <span>➕</span>
+    <span>Add Donor</span>
+  </button>
+
+  <button class="nav-btn" data-page="addRequest">
+    <span>➕</span>
+    <span>Add Blood Request</span>
+  </button>
+
+  <button class="nav-btn" data-page="settings">
+    <span>⚙️</span>
+    <span>Settings</span>
+  </button>
+
+  <div class="menu-title">ACCOUNT</div>
+
+  <button class="nav-btn" id="logoutBtn">
+    <span>🚪</span>
+    <span>Logout</span>
+  </button>
+
 </aside>
+
+
+<!-- MAIN -->
 
 <main class="main">
 
-<!-- DASHBOARD -->
-<section id="dashboard" class="page active">
-    <div class="page-title">
-        <h2>📊 Admin Dashboard</h2>
-        <p>MB Blood Bank-এর লাইভ ডেটা ফায়ারবেজ থেকে পরিচালিত হচ্ছে।</p>
+  <div class="topbar">
+
+    <div style="display:flex;align-items:center;gap:12px">
+
+      <button class="mobile-menu" id="mobileMenu">
+        ☰
+      </button>
+
+      <div>
+        <h1 id="pageTitle">Dashboard</h1>
+        <small style="color:#bfb3ca">
+          MB Blood Bank Management System
+        </small>
+      </div>
+
     </div>
 
-    <div class="dashboard-grid">
-        <div class="dashboard-card">
-            <div class="card-icon">👤</div>
-            <h3 id="dashTotal">0</h3>
-            <p>Total Donors</p>
-        </div>
-        <div class="dashboard-card">
-            <div class="card-icon">⏳</div>
-            <h3 id="dashPending">0</h3>
-            <p>Pending Donors</p>
-        </div>
-        <div class="dashboard-card">
-            <div class="card-icon">✅</div>
-            <h3 id="dashApproved">0</h3>
-            <p>Approved Donors</p>
-        </div>
-        <div class="dashboard-card">
-            <div class="card-icon">🚨</div>
-            <h3 id="dashRequests">0</h3>
-            <p>Blood Requests</p>
-        </div>
+    <div class="admin-user" id="adminEmail">
+      Admin
     </div>
 
-    <div class="box">
-        <div class="box-header">
-            <h3>🔔 Recent Pending Donors</h3>
-            <button class="mini-btn" onclick="openPage('pendingDonors')">সব দেখুন</button>
-        </div>
-        <div id="recentPending"></div>
+  </div>
+
+
+<!-- ================= DASHBOARD ================= -->
+
+<div class="page active" id="dashboard">
+
+  <div class="stats">
+
+    <div class="stat">
+      <div class="stat-icon">👥</div>
+      <h3 id="totalDonors">0</h3>
+      <p>Total Donors</p>
     </div>
 
-    <div class="box">
-        <div class="box-header">
-            <h3>🚨 Recent Blood Requests</h3>
-            <button class="mini-btn" onclick="openPage('bloodRequests')">সব দেখুন</button>
-        </div>
-        <div id="recentRequests"></div>
+    <div class="stat">
+      <div class="stat-icon">⏳</div>
+      <h3 id="pendingCount">0</h3>
+      <p>Pending Donor</p>
     </div>
-</section>
 
-<!-- PENDING DONOR -->
-<section id="pendingDonors" class="page">
-    <div class="page-title">
-        <h2>⏳ Pending Donor</h2>
+    <div class="stat">
+      <div class="stat-icon">✅</div>
+      <h3 id="approvedCount">0</h3>
+      <p>Approved Donor</p>
     </div>
-    <div class="box">
-        <div class="box-header">
-            <h3>Pending Registration</h3>
-            <div class="search-box">
-                <input id="pendingSearch" placeholder="নাম / ফোন / ID" oninput="renderAll()">
-            </div>
-        </div>
-        <div id="pendingTable"></div>
-    </div>
-</section>
 
-<!-- APPROVED DONOR -->
-<section id="approvedDonors" class="page">
-    <div class="page-title">
-        <h2>✅ Approved Donor</h2>
+    <div class="stat">
+      <div class="stat-icon">🚨</div>
+      <h3 id="requestCount">0</h3>
+      <p>Blood Requests</p>
     </div>
-    <div class="box">
-        <div class="box-header">
-            <h3>Approved Donor List</h3>
-            <div class="search-box">
-                <input id="approvedSearch" placeholder="Donor খুঁজুন" oninput="renderAll()">
-            </div>
-        </div>
-        <div id="approvedTable"></div>
-    </div>
-</section>
 
-<!-- REJECTED DONOR -->
-<section id="rejectedDonors" class="page">
-    <div class="page-title">
-        <h2>❌ Rejected Donor</h2>
-    </div>
-    <div class="box">
-        <div id="rejectedTable"></div>
-    </div>
-</section>
+  </div>
 
-<!-- ALL DONORS -->
-<section id="allDonors" class="page">
-    <div class="page-title">
-        <h2>👤 All Donors</h2>
-    </div>
-    <div class="box">
-        <div class="box-header">
-            <h3>All Donors</h3>
-            <div class="search-box">
-                <input id="allSearch" placeholder="নাম / ফোন / ID" oninput="renderAll()">
-            </div>
-        </div>
-        <div id="allTable"></div>
-    </div>
-</section>
 
-<!-- BLOOD REQUESTS -->
-<section id="bloodRequests" class="page">
-    <div class="page-title">
-        <h2>🚨 Blood Request Management</h2>
-    </div>
-    <div class="box">
-        <div class="box-header">
-            <h3>Blood Requests</h3>
-            <div class="search-box">
-                <input id="requestSearch" placeholder="Patient / Blood / ID" oninput="renderAll()">
-            </div>
-        </div>
-        <div id="requestTable"></div>
-    </div>
-</section>
+  <div class="card">
 
-<!-- AMBULANCE LIST -->
-<section id="ambulanceList" class="page">
-    <div class="page-title">
-        <h2>🚑 Ambulance List</h2>
+    <div class="card-header">
+      <h2>📌 System Information</h2>
     </div>
-    <div class="box">
-        <div class="box-header">
-            <h3>Ambulance Services</h3>
-            <div class="search-box">
-                <input id="ambulanceSearch" placeholder="নাম / নাম্বার" oninput="renderAll()">
-            </div>
-        </div>
-        <div id="ambulanceTable"></div>
-    </div>
-</section>
 
-<!-- ADD DONOR -->
-<section id="addDonor" class="page">
-    <div class="page-title">
-        <h2>➕ Add Donor</h2>
-    </div>
-    <div class="box">
-        <form id="addDonorForm">
-            <div class="form-grid">
-                <div><label>নাম *</label><input id="addName" required></div>
-                <div><label>ফোন *</label><input id="addPhone" required></div>
-                <div>
-                    <label>Blood Group *</label>
-                    <select id="addBlood" required>
-                        <option value="">নির্বাচন করুন</option>
-                        <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
-                        <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
-                    </select>
-                </div>
-                <div><label>বিভাগ *</label><input id="addDivision" required></div>
-                <div><label>জেলা *</label><input id="addDistrict" required></div>
-                <div><label>উপজেলা *</label><input id="addUpazila" required></div>
-                <div class="full"><label>ঠিকানা *</label><textarea id="addAddress" required></textarea></div>
-                <div class="full"><button class="main-btn" type="submit">➕ Approved Donor হিসেবে যোগ করুন</button></div>
-            </div>
-        </form>
-    </div>
-</section>
+    <p style="line-height:1.8;color:#ddd;font-size:14px">
+      এখানে নতুন রক্তদাতা নিবন্ধন করলে প্রথমে Pending অবস্থায় থাকবে।
+      Admin যাচাই করে Approved করলে তবেই Donor তালিকায় সক্রিয় হবে।
+      Rejected করলে তা প্রত্যাখ্যাত তালিকায় থাকবে।
+    </p>
 
-<!-- ADD AMBULANCE -->
-<section id="addAmbulance" class="page">
-    <div class="page-title">
-        <h2>🚑 Add New Ambulance</h2>
-    </div>
-    <div class="box">
-        <form id="addAmbulanceForm">
-            <div class="form-grid">
-                <div class="full"><label>🚑 এম্বুলেন্স এর নাম *</label><input id="ambulName" required></div>
-                <div class="full"><label>📞 নাম্বার *</label><input id="ambulPhone" required></div>
-                <div class="full"><label>📍 ঠিকানা *</label><textarea id="ambulAddress" required></textarea></div>
-                <div class="full"><button class="main-btn" type="submit">➕ এম্বুলেন্স যোগ করুন</button></div>
-            </div>
-        </form>
-    </div>
-</section>
+  </div>
 
-<!-- SETTINGS -->
-<section id="settings" class="page">
-    <div class="page-title">
-        <h2>⚙️ Admin Settings</h2>
+
+  <div class="card">
+
+    <div class="card-header">
+      <h2>🩸 Blood Group Statistics</h2>
     </div>
-    <div class="box">
-        <h3>🔐 Current Admin</h3><br>
-        <p><b>Gmail:</b> mbbloodbank@gmail.com</p><br>
-        <div class="box" style="margin-top:0">
-            <b>🔥 Firebase Database Connected</b>
-            <p style="margin-top:8px">ডেটা এখন রিয়েলটাইম ফায়ারবেজে সেভ হচ্ছে, ফলে যেকোনো ডিভাইস থেকে একই ডেটা দেখা যাবে।</p>
-        </div>
+
+    <div id="bloodStats"></div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= PENDING ================= -->
+
+<div class="page" id="pending">
+
+  <div class="card">
+
+    <div class="card-header">
+      <h2>⏳ Pending Donor</h2>
+
+      <button class="btn blue" onclick="loadDonors()">
+        🔄 Refresh
+      </button>
     </div>
-</section>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Blood</th>
+            <th>Location</th>
+            <th>Last Donate</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="pendingTable"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= APPROVED ================= -->
+
+<div class="page" id="approved">
+
+  <div class="card">
+
+    <div class="card-header">
+      <h2>✅ Approved Donor</h2>
+    </div>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Blood</th>
+            <th>Location</th>
+            <th>Last Donate</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="approvedTable"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= REJECTED ================= -->
+
+<div class="page" id="rejected">
+
+  <div class="card">
+
+    <div class="card-header">
+      <h2>❌ Rejected Donor</h2>
+    </div>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Blood</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="rejectedTable"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= ALL DONORS ================= -->
+
+<div class="page" id="allDonors">
+
+  <div class="card">
+
+    <div class="card-header">
+
+      <h2>👥 All Donors</h2>
+
+      <input
+        id="donorSearch"
+        class="input"
+        style="max-width:280px;margin:0"
+        placeholder="🔎 Name / Phone / Blood"
+      >
+
+    </div>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Blood</th>
+            <th>Division</th>
+            <th>District</th>
+            <th>Upazila</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="allDonorsTable"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= BLOOD REQUESTS ================= -->
+
+<div class="page" id="requests">
+
+  <div class="card">
+
+    <div class="card-header">
+
+      <h2>🚨 Blood Requests</h2>
+
+      <button class="btn blue" onclick="loadRequests()">
+        🔄 Refresh
+      </button>
+
+    </div>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Phone</th>
+            <th>Blood</th>
+            <th>Bags</th>
+            <th>Location</th>
+            <th>Date</th>
+            <th>Urgency</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="requestTable"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= ADD DONOR ================= -->
+
+<div class="page" id="addDonor">
+
+  <div class="card">
+
+    <div class="card-header">
+      <h2>➕ Add Donor</h2>
+    </div>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Donor Name *</label>
+        <input id="dName" class="input" placeholder="নাম">
+      </div>
+
+      <div class="form-group">
+        <label>Phone *</label>
+        <input id="dPhone" class="input" placeholder="01XXXXXXXXX">
+      </div>
+
+      <div class="form-group">
+        <label>Blood Group *</label>
+
+        <select id="dBlood" class="input">
+
+          <option value="">Select Blood</option>
+          <option>A+</option>
+          <option>A-</option>
+          <option>B+</option>
+          <option>B-</option>
+          <option>AB+</option>
+          <option>AB-</option>
+          <option>O+</option>
+          <option>O-</option>
+
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Last Blood Donation</label>
+        <input id="dLast" class="input" type="date">
+      </div>
+
+      <div class="form-group">
+        <label>Division</label>
+        <input id="dDivision" class="input" placeholder="বিভাগ">
+      </div>
+
+      <div class="form-group">
+        <label>District</label>
+        <input id="dDistrict" class="input" placeholder="জেলা">
+      </div>
+
+      <div class="form-group">
+        <label>Upazila</label>
+        <input id="dUpazila" class="input" placeholder="উপজেলা">
+      </div>
+
+      <div class="form-group full">
+        <label>Additional Information</label>
+        <textarea id="dInfo" class="input" placeholder="অতিরিক্ত তথ্য"></textarea>
+      </div>
+
+      <div class="form-group full">
+
+        <button class="btn btn-main" id="addDonorBtn">
+          🩸 Donor Add করুন
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= ADD REQUEST ================= -->
+
+<div class="page" id="addRequest">
+
+  <div class="card">
+
+    <div class="card-header">
+      <h2>🚨 Add Blood Request</h2>
+    </div>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Patient Name *</label>
+        <input id="rPatient" class="input">
+      </div>
+
+      <div class="form-group">
+        <label>Contact Number *</label>
+        <input id="rPhone" class="input">
+      </div>
+
+      <div class="form-group">
+        <label>Blood Group *</label>
+
+        <select id="rBlood" class="input">
+
+          <option value="">Select Blood</option>
+          <option>A+</option>
+          <option>A-</option>
+          <option>B+</option>
+          <option>B-</option>
+          <option>AB+</option>
+          <option>AB-</option>
+          <option>O+</option>
+          <option>O-</option>
+
+        </select>
+
+      </div>
+
+      <div class="form-group">
+        <label>How many bags?</label>
+        <input id="rBags" class="input" type="number" min="1">
+      </div>
+
+      <div class="form-group">
+        <label>Division</label>
+        <input id="rDivision" class="input">
+      </div>
+
+      <div class="form-group">
+        <label>District</label>
+        <input id="rDistrict" class="input">
+      </div>
+
+      <div class="form-group">
+        <label>Upazila</label>
+        <input id="rUpazila" class="input">
+      </div>
+
+      <div class="form-group">
+        <label>Hospital / Location</label>
+        <input id="rHospital" class="input">
+      </div>
+
+      <div class="form-group">
+        <label>Date Needed</label>
+        <input id="rDate" class="input" type="date">
+      </div>
+
+      <div class="form-group">
+        <label>Urgency</label>
+
+        <select id="rUrgency" class="input">
+          <option>অতি জরুরি</option>
+          <option>জরুরি</option>
+          <option>সাধারণ</option>
+        </select>
+
+      </div>
+
+      <div class="form-group full">
+        <label>Extra Information</label>
+        <textarea id="rInfo" class="input"></textarea>
+      </div>
+
+      <div class="form-group full">
+
+        <button class="btn btn-main" id="addRequestBtn">
+          🚨 Request Add করুন
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= SETTINGS ================= -->
+
+<div class="page" id="settings">
+
+  <div class="card">
+
+    <div class="card-header">
+      <h2>⚙️ Firebase / Admin Information</h2>
+    </div>
+
+    <p style="line-height:2;color:#ddd;font-size:14px">
+      <b>Project:</b> mb-blood-bank-a17aa<br>
+      <b>Database:</b> Firebase Realtime Database<br>
+      <b>Authentication:</b> Firebase Email/Password<br>
+      <b>Donor Collection:</b> donors<br>
+      <b>Blood Request Collection:</b> bloodRequests
+    </p>
+
+  </div>
+
+  <div class="card">
+
+    <div class="card-header">
+      <h2>⚠️ গুরুত্বপূর্ণ</h2>
+    </div>
+
+    <p style="line-height:1.9;color:#ddd;font-size:14px">
+      Firebase Console-এর Realtime Database Rules অবশ্যই নিরাপদ রাখতে হবে।
+      শুধু Admin authenticated user-কে database পরিবর্তনের permission দেওয়া উচিত।
+    </p>
+
+  </div>
+
+</div>
+
 
 </main>
 </div>
 
-<!-- EDIT MODAL -->
-<div id="editModal" class="modal">
-    <div class="modal-box">
-        <button class="close" onclick="closeEdit()">×</button>
-        <h2>✏️ Edit Donor</h2><br>
-        <div class="form-grid">
-            <div><label>নাম</label><input id="editName"></div>
-            <div><label>ফোন</label><input id="editPhone"></div>
-            <div>
-                <label>Blood Group</label>
-                <select id="editBlood">
-                    <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
-                    <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
-                </select>
-            </div>
-            <div><label>বিভাগ</label><input id="editDivision"></div>
-            <div><label>জেলা</label><input id="editDistrict"></div>
-            <div><label>উপজেলা</label><input id="editUpazila"></div>
-            <div class="full"><label>ঠিকানা</label><textarea id="editAddress"></textarea></div>
-            <div class="full"><button class="main-btn" onclick="saveEditedDonor()">💾 Save Changes</button></div>
-        </div>
-    </div>
-</div>
+</section>
 
-<!-- EDIT AMBULANCE MODAL -->
-<div id="editAmbulanceModal" class="modal">
-    <div class="modal-box">
-        <button class="close" onclick="closeAmbulanceEdit()">×</button>
-        <h2>✏ Edit Ambulance</h2><br>
-        <div class="form-grid">
-            <div class="full"><label>🚑 নাম</label><input id="editAmbulName"></div>
-            <div class="full"><label>📞 নাম্বার</label><input id="editAmbulPhone"></div>
-            <div class="full"><label>📍 ঠিকানা</label><textarea id="editAmbulAddress"></textarea></div>
-            <div class="full"><button class="main-btn" onclick="saveEditedAmbulance()">💾 Save Changes</button></div>
-        </div>
-    </div>
-</div>
+<div id="toast"></div>
 
-<script>
-const ADMIN_EMAIL="mbbloodbank@gmail.com";
-const ADMIN_PASSWORD="MB@2026#Admin";
 
-let globalDonors = [];
-let globalRequests = [];
-let globalAmbulances = [];
+<!-- ================= FIREBASE ================= -->
 
-// Initialize Firebase Realtime Listeners after login or load
-function initFirebaseListeners() {
-    if (!window.firebaseDb) return;
-    const { db, ref, onValue } = window.firebaseDb;
+<script type="module">
 
-    // Donors Listener
-    onValue(ref(db, 'donors'), (snapshot) => {
-        const data = snapshot.val();
-        globalDonors = data ? Object.keys(data).map(key => ({ ...data[key], firebaseKey: key })) : [];
-        renderAll();
-    });
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
 
-    // Requests Listener
-    onValue(ref(db, 'requests'), (snapshot) => {
-        const data = snapshot.val();
-        globalRequests = data ? Object.keys(data).map(key => ({ ...data[key], firebaseKey: key })) : [];
-        renderAll();
-    });
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
-    // Ambulances Listener
-    onValue(ref(db, 'ambulances'), (snapshot) => {
-        const data = snapshot.val();
-        globalAmbulances = data ? Object.keys(data).map(key => ({ ...data[key], firebaseKey: key })) : [];
-        renderAll();
-    });
+import {
+  getDatabase,
+  ref,
+  push,
+  set,
+  update,
+  remove,
+  onValue
+}
+from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+
+
+/* =========================================
+   FIREBASE CONFIG
+========================================= */
+
+const firebaseConfig = {
+
+  apiKey:
+  "AIzaSyDCJr3wCX4XxCZgOeC_OmXFs6OmbtYdRuY",
+
+  authDomain:
+  "mb-blood-bank-a17aa.firebaseapp.com",
+
+  databaseURL:
+  "https://mb-blood-bank-a17aa-default-rtdb.firebaseio.com",
+
+  projectId:
+  "mb-blood-bank-a17aa",
+
+  storageBucket:
+  "mb-blood-bank-a17aa.firebasestorage.app",
+
+  messagingSenderId:
+  "28580039463",
+
+  appId:
+  "1:28580039463:web:d3f96054764550f1433702",
+
+  measurementId:
+  "G-DJ6D2T5YMR"
+};
+
+
+/* =========================================
+   INITIALIZE
+========================================= */
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getDatabase(app);
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const loginScreen =
+document.getElementById("loginScreen");
+
+const adminApp =
+document.getElementById("adminApp");
+
+const loginEmail =
+document.getElementById("loginEmail");
+
+const loginPassword =
+document.getElementById("loginPassword");
+
+const loginBtn =
+document.getElementById("loginBtn");
+
+const loginError =
+document.getElementById("loginError");
+
+const adminEmail =
+document.getElementById("adminEmail");
+
+
+/* =========================================
+   TOAST
+========================================= */
+
+function toast(message){
+
+  const box =
+  document.getElementById("toast");
+
+  box.innerText = message;
+
+  box.style.display = "block";
+
+  setTimeout(()=>{
+    box.style.display = "none";
+  },3000);
 }
 
-function adminLogin(){
-    const email=document.getElementById("loginEmail").value.trim();
-    const password=document.getElementById("loginPassword").value;
 
-    if(email===ADMIN_EMAIL && password===ADMIN_PASSWORD){
-        sessionStorage.setItem("mb_admin_authenticated","true");
-        document.getElementById("loginScreen").style.display="none";
-        document.getElementById("adminApp").style.display="block";
-        initFirebaseListeners();
-        renderAll();
-    }else{
-        document.getElementById("loginError").style.display="block";
-    }
-}
+/* =========================================
+   LOGIN
+========================================= */
 
-function adminLogout(){
-    sessionStorage.removeItem("mb_admin_authenticated");
-    location.reload();
-}
+loginBtn.addEventListener("click", async ()=>{
 
-document.getElementById("loginPassword").addEventListener("keydown",function(e){
-    if(e.key==="Enter") adminLogin();
+  const email =
+  loginEmail.value.trim();
+
+  const password =
+  loginPassword.value;
+
+  if(!email || !password){
+
+    loginError.innerText =
+    "Email এবং Password দিন।";
+
+    return;
+  }
+
+  loginBtn.disabled = true;
+
+  loginBtn.innerText =
+  "Logging in...";
+
+  try{
+
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    loginError.innerText = "";
+
+  }catch(error){
+
+    console.error(error);
+
+    loginError.innerText =
+    firebaseError(error.code);
+
+  }finally{
+
+    loginBtn.disabled = false;
+
+    loginBtn.innerText =
+    "🔐 Admin Login";
+  }
+
 });
 
-if(sessionStorage.getItem("mb_admin_authenticated")==="true"){
-    document.getElementById("loginScreen").style.display="none";
-    document.getElementById("adminApp").style.display="block";
-    // Wait a brief moment for module script to load firebaseDb
-    setTimeout(() => {
-        initFirebaseListeners();
-    }, 500);
+
+/* =========================================
+   FIREBASE ERROR
+========================================= */
+
+function firebaseError(code){
+
+  switch(code){
+
+    case "auth/invalid-credential":
+      return "Email অথবা Password ভুল।";
+
+    case "auth/user-not-found":
+      return "এই Email দিয়ে Admin account নেই।";
+
+    case "auth/wrong-password":
+      return "Password ভুল।";
+
+    case "auth/invalid-email":
+      return "সঠিক Email দিন।";
+
+    case "auth/too-many-requests":
+      return "অনেকবার চেষ্টা হয়েছে। কিছুক্ষণ পরে আবার চেষ্টা করুন।";
+
+    default:
+      return "Login ব্যর্থ হয়েছে। Firebase Console চেক করুন।";
+  }
+
 }
 
-function openPage(id,button){
-    document.querySelectorAll(".page").forEach(page=>page.classList.remove("active"));
-    const page=document.getElementById(id);
-    if(page) page.classList.add("active");
 
-    document.querySelectorAll(".side-link").forEach(link=>link.classList.remove("active"));
-    if(button) button.classList.add("active");
+/* =========================================
+   AUTH STATE
+========================================= */
 
-    document.getElementById("sidebar").classList.remove("open");
-    renderAll();
-    window.scrollTo({top:0,behavior:"smooth"});
-}
+onAuthStateChanged(auth,(user)=>{
 
-function toggleSidebar(){
-    document.getElementById("sidebar").classList.toggle("open");
-}
+  if(user){
 
-// DASHBOARD & STATS
-function updateDashboard(){
-    const pending = globalDonors.filter(x=>x.status==="pending");
-    const approved = globalDonors.filter(x=>x.status==="approved");
+    loginScreen.style.display =
+    "none";
 
-    document.getElementById("dashTotal").textContent = globalDonors.length;
-    document.getElementById("dashPending").textContent = pending.length;
-    document.getElementById("dashApproved").textContent = approved.length;
-    document.getElementById("dashRequests").textContent = globalRequests.length;
+    adminApp.style.display =
+    "block";
 
-    document.getElementById("sidePending").textContent = pending.length;
-    document.getElementById("sideApproved").textContent = approved.length;
-    document.getElementById("sideRequests").textContent = globalRequests.filter(x=>x.status==="pending").length;
+    adminEmail.innerText =
+    user.email || "Admin";
 
-    // Recent Pending
-    const rp = document.getElementById("recentPending");
-    if(!pending.length){
-        rp.innerHTML = `<p>বর্তমানে কোনো Pending Donor নেই।</p>`;
-    }else{
-        rp.innerHTML = `<div class="table-scroll"><table><thead><tr><th>ID</th><th>নাম</th><th>Blood</th><th>Location</th><th>Action</th></tr></thead><tbody>
-        ${pending.slice(-5).reverse().map(d=>`
-        <tr>
-            <td>${escapeHtml(d.id)}</td>
-            <td>${escapeHtml(d.name)}</td>
-            <td><b>${escapeHtml(d.blood)}</b></td>
-            <td>${escapeHtml(d.district)} /${escapeHtml(d.upazila)}</td>
-            <td>
-                <button class="action a-green" onclick="approveDonorByFirebaseKey('${d.firebaseKey}')">✅ Approve</button>
-                <button class="action a-red" onclick="rejectDonorByFirebaseKey('${d.firebaseKey}')">❌ Reject</button>
-            </td>
-        </tr>`).join("")}
-        </tbody></table></div>`;
-    }
+    loadDonors();
 
-    // Recent Requests
-    const rr = document.getElementById("recentRequests");
-    if(!globalRequests.length){
-        rr.innerHTML = `<p>কোনো Blood Request নেই।</p>`;
-    }else{
-        rr.innerHTML = `<div class="table-scroll"><table><thead><tr><th>ID</th><th>Patient</th><th>Blood</th><th>Bag</th><th>Status</th></tr></thead><tbody>
-        ${globalRequests.slice(-5).reverse().map(x=>`
-        <tr>
-            <td>${escapeHtml(x.id)}</td>
-            <td>${escapeHtml(x.patient)}</td>
-            <td><b>${escapeHtml(x.blood)}</b></td>
-            <td>${escapeHtml(x.bags)}</td>
-            <td><span class="status ${x.status}">${escapeHtml(x.status)}</span></td>
-        </tr>`).join("")}
-        </tbody></table></div>`;
-    }
-}
+    loadRequests();
 
-// TABLES
-function donorTable(data, emptyText="কোনো Donor পাওয়া যায়নি।"){
-    if(!data.length) return `<p>${emptyText}</p>`;
-    return `<div class="table-scroll"><table><thead><tr><th>ID</th><th>নাম</th><th>Blood</th><th>Location</th><th>Phone</th><th>Status</th><th>Action</th></tr></thead><tbody>
-    ${data.map(d=>`
-    <tr>
-        <td><b>${escapeHtml(d.id)}</b></td>
-        <td><b>${escapeHtml(d.name)}</b></td>
-        <td><b>${escapeHtml(d.blood)}</b></td>
-        <td>${escapeHtml(d.district \vert{}\vert{} "")}<br>${escapeHtml(d.upazila || "")}</td>
-        <td>${escapeHtml(d.phone)}</td>
-        <td><span class="status ${d.status}">${escapeHtml(d.status)}</span></td>
-        <td><div class="actions">
-            ${d.status==="pending"?`<button class="action a-green" onclick="approveDonorByFirebaseKey('${d.firebaseKey}')">✅ Approve</button><button class="action a-red" onclick="rejectDonorByFirebaseKey('${d.firebaseKey}')">❌ Reject</button>`:""}
-            <button class="action a-purple" onclick="editDonorPrompt('${d.firebaseKey}')">✏️ Edit</button>
-            <button class="action a-black" onclick="deleteDonorByFirebaseKey('${d.firebaseKey}')">🗑️ Delete</button>
-        </div></td>
-    </tr>`).join("")}
-    </tbody></table></div>`;
-}
+  }else{
 
-function ambulanceTable(data){
-    if(!data.length) return `<p>কোনো এম্বুলেন্স পাওয়া যায়নি।</p>`;
-    return `<div class="table-scroll"><table><thead><tr><th>ID</th><th>🚑 নাম</th><th>📞 নাম্বার</th><th>📍 ঠিকানা</th><th>Action</th></tr></thead><tbody>
-    ${data.map(a=>`
-    <tr>
-        <td><b>${escapeHtml(a.id)}</b></td>
-        <td><b>${escapeHtml(a.name)}</b></td>
-        <td>${escapeHtml(a.phone)}</td>
-        <td>${escapeHtml(a.address)}</td>
-        <td><div class="actions">
-            <button class="action a-purple" onclick="editAmbulancePrompt('${a.firebaseKey}')">✏️ Edit</button>
-            <button class="action a-black" onclick="deleteAmbulanceByFirebaseKey('${a.firebaseKey}')">🗑️ Delete</button>
-        </div></td>
-    </tr>`).join("")}
-    </tbody></table></div>`;
-}
+    loginScreen.style.display =
+    "flex";
 
-function renderAll(){
-    if(document.getElementById("adminApp").style.display!=="block") return;
+    adminApp.style.display =
+    "none";
+
+  }
+
+});
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+document
+.getElementById("logoutBtn")
+.addEventListener("click",async ()=>{
+
+  await signOut(auth);
+
+  toast("Admin Logout হয়েছে।");
+
+});
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+const navButtons =
+document.querySelectorAll(".nav-btn[data-page]");
+
+const pages =
+document.querySelectorAll(".page");
+
+const pageTitles = {
+
+  dashboard:"Dashboard",
+  pending:"Pending Donor",
+  approved:"Approved Donor",
+  rejected:"Rejected Donor",
+  allDonors:"All Donors",
+  requests:"Blood Requests",
+  addDonor:"Add Donor",
+  addRequest:"Add Blood Request",
+  settings:"Settings"
+
+};
+
+
+navButtons.forEach(button=>{
+
+  button.addEventListener("click",()=>{
+
+    const page =
+    button.dataset.page;
+
+    navButtons.forEach(b=>
+      b.classList.remove("active")
+    );
+
+    button.classList.add("active");
+
+    pages.forEach(p=>
+      p.classList.remove("active")
+    );
+
+    document
+    .getElementById(page)
+    .classList.add("active");
+
+    document
+    .getElementById("pageTitle")
+    .innerText =
+    pageTitles[page] || "Admin";
+
+    document
+    .getElementById("sidebar")
+    .classList.remove("open");
+
+  });
+
+});
+
+
+/* =========================================
+   MOBILE MENU
+========================================= */
+
+document
+.getElementById("mobileMenu")
+.addEventListener("click",()=>{
+
+  document
+  .getElementById("sidebar")
+  .classList.toggle("open");
+
+});
+
+
+/* =========================================
+   DONOR DATA
+========================================= */
+
+let donors = {};
+
+
+/* =========================================
+   LOAD DONORS
+========================================= */
+
+function loadDonors(){
+
+  const donorRef =
+  ref(db,"donors");
+
+  onValue(donorRef,(snapshot)=>{
+
+    donors =
+    snapshot.val() || {};
+
+    renderDonors();
+
     updateDashboard();
 
-    // Pending
-    let pending = globalDonors.filter(d=>d.status==="pending");
-    const ps = document.getElementById("pendingSearch")?.value.toLowerCase().trim();
-    if(ps) pending = pending.filter(d=>searchDonor(d,ps));
-    document.getElementById("pendingTable").innerHTML = donorTable(pending, "🎉 কোনো Pending Donor নেই।");
+  },(error)=>{
 
-    // Approved
-    let approved = globalDonors.filter(d=>d.status==="approved");
-    const as = document.getElementById("approvedSearch")?.value.toLowerCase().trim();
-    if(as) approved = approved.filter(d=>searchDonor(d,as));
-    document.getElementById("approvedTable").innerHTML = donorTable(approved, "কোনো Approved Donor নেই।");
+    console.error(error);
 
-    // Rejected
-    let rejected = globalDonors.filter(d=>d.status==="rejected");
-    document.getElementById("rejectedTable").innerHTML = donorTable(rejected, "কোনো Rejected Donor নেই।");
+    toast(
+      "Donor data load হয়নি। Database Rules চেক করুন।"
+    );
 
-    // All
-    let all = globalDonors;
-    const alls = document.getElementById("allSearch")?.value.toLowerCase().trim();
-    if(alls) all = all.filter(d=>searchDonor(d,alls));
-    document.getElementById("allTable").innerHTML = donorTable(all, "কোনো Donor নেই।");
+  });
 
-    // Requests
-    let req = globalRequests;
-    const rs = document.getElementById("requestSearch")?.value.toLowerCase().trim();
-    if(rs) req = req.filter(r=>String(r.id).toLowerCase().includes(rs) || String(r.patient).toLowerCase().includes(rs));
-    renderRequests(req);
-
-    // Ambulances
-    let amb = globalAmbulances;
-    const ambs = document.getElementById("ambulanceSearch")?.value.toLowerCase().trim();
-    if(ambs) amb = amb.filter(a=>String(a.name).toLowerCase().includes(ambs) || String(a.phone).toLowerCase().includes(ambs));
-    document.getElementById("ambulanceTable").innerHTML = ambulanceTable(amb);
 }
 
-function searchDonor(d,q){
-    return [d.id, d.name, d.phone, d.blood, d.district, d.upazila].join(" ").toLowerCase().includes(q);
-}
 
-// FIREBASE ACTIONS (UPDATE/DELETE/APPROVE)
-function approveDonorByFirebaseKey(firebaseKey){
-    if(!window.firebaseDb) return;
-    const { db, ref, update } = window.firebaseDb;
-    update(ref(db, 'donors/' + firebaseKey), { status: 'approved', approvedAt: new Date().toISOString() })
-    .then(() => alert("✅ Donor Approved হয়েছে।"));
-}
+/* =========================================
+   RENDER DONORS
+========================================= */
 
-function rejectDonorByFirebaseKey(firebaseKey){
-    if(!confirm("এই Donor Registration Reject করবেন?")) return;
-    if(!window.firebaseDb) return;
-    const { db, ref, update } = window.firebaseDb;
-    update(ref(db, 'donors/' + firebaseKey), { status: 'rejected' });
-}
+function renderDonors(){
 
-function deleteDonorByFirebaseKey(firebaseKey){
-    if(!confirm("⚠️ এই Donor স্থায়ীভাবে Delete করবেন?")) return;
-    if(!window.firebaseDb) return;
-    const { db, ref, remove } = window.firebaseDb;
-    remove(ref(db, 'donors/' + firebaseKey));
-}
+  const pending =
+  document.getElementById("pendingTable");
 
-// EDIT DONOR
-let editingFirebaseKey = null;
-function editDonorPrompt(firebaseKey){
-    const d = globalDonors.find(x => x.firebaseKey === firebaseKey);
-    if(!d) return;
-    editingFirebaseKey = firebaseKey;
+  const approved =
+  document.getElementById("approvedTable");
 
-    document.getElementById("editName").value = d.name || "";
-    document.getElementById("editPhone").value = d.phone || "";
-    document.getElementById("editBlood").value = d.blood || "";
-    document.getElementById("editDivision").value = d.division || "";
-    document.getElementById("editDistrict").value = d.district || "";
-    document.getElementById("editUpazila").value = d.upazila || "";
-    document.getElementById("editAddress").value = d.address || "";
+  const rejected =
+  document.getElementById("rejectedTable");
 
-    document.getElementById("editModal").classList.add("show");
-}
+  const all =
+  document.getElementById("allDonorsTable");
 
-function saveEditedDonor(){
-    if(!editingFirebaseKey || !window.firebaseDb) return;
-    const { db, ref, update } = window.firebaseDb;
+  pending.innerHTML = "";
+  approved.innerHTML = "";
+  rejected.innerHTML = "";
+  all.innerHTML = "";
 
-    const updatedData = {
-        name: document.getElementById("editName").value.trim(),
-        phone: document.getElementById("editPhone").value.trim(),
-        blood: document.getElementById("editBlood").value,
-        division: document.getElementById("editDivision").value.trim(),
-        district: document.getElementById("editDistrict").value.trim(),
-        upazila: document.getElementById("editUpazila").value.trim(),
-        address: document.getElementById("editAddress").value.trim()
-    };
+  Object.entries(donors).forEach(([id,d])=>{
 
-    update(ref(db, 'donors/' + editingFirebaseKey), updatedData).then(() => {
-        closeEdit();
-        alert("✅ Donor information updated.");
-    });
-}
+    const status =
+    d.status || "pending";
 
-function closeEdit(){
-    editingFirebaseKey = null;
-    document.getElementById("editModal").classList.remove("show");
-}
+    const row = donorRow(id,d);
 
-// AMBULANCE ACTIONS
-let editingAmbulanceKey = null;
-function editAmbulancePrompt(firebaseKey){
-    const a = globalAmbulances.find(x => x.firebaseKey === firebaseKey);
-    if(!a) return;
-    editingAmbulanceKey = firebaseKey;
-    document.getElementById("editAmbulName").value = a.name || "";
-    document.getElementById("editAmbulPhone").value = a.phone || "";
-    document.getElementById("editAmbulAddress").value = a.address || "";
-    document.getElementById("editAmbulanceModal").classList.add("show");
-}
-
-function saveEditedAmbulance(){
-    if(!editingAmbulanceKey || !window.firebaseDb) return;
-    const { db, ref, update } = window.firebaseDb;
-    const updatedData = {
-        name: document.getElementById("editAmbulName").value.trim(),
-        phone: document.getElementById("editAmbulPhone").value.trim(),
-        address: document.getElementById("editAmbulAddress").value.trim()
-    };
-    update(ref(db, 'ambulances/' + editingAmbulanceKey), updatedData).then(() => {
-        closeAmbulanceEdit();
-        alert("✅ Ambulance updated.");
-    });
-}
-
-function closeAmbulanceEdit(){
-    editingAmbulanceKey = null;
-    document.getElementById("editAmbulanceModal").classList.remove("show");
-}
-
-function deleteAmbulanceByFirebaseKey(firebaseKey){
-    if(!confirm("⚠️ এই এম্বুলেন্সের তথ্য Delete করবেন?")) return;
-    if(!window.firebaseDb) return;
-    const { db, ref, remove } = window.firebaseDb;
-    remove(ref(db, 'ambulances/' + firebaseKey));
-}
-
-// REQUESTS TABLE & ACTIONS
-function renderRequests(data=globalRequests){
-    const box = document.getElementById("requestTable");
-    if(!data.length){
-        box.innerHTML = "<p>কোনো Blood Request নেই।</p>";
-        return;
+    if(status==="pending"){
+      pending.innerHTML += row;
     }
-    box.innerHTML = `<div class="table-scroll"><table><thead><tr><th>ID</th><th>Patient</th><th>Blood</th><th>Bag</th><th>Location</th><th>Hospital</th><th>Date</th><th>Status</th><th>Action</th></tr></thead><tbody>
-    ${data.map(r=>`
-    <tr>
-        <td>${escapeHtml(r.id)}</td>
-        <td><b>${escapeHtml(r.patient)}</b><br>${escapeHtml(r.phone)}</td>
-        <td><b>${escapeHtml(r.blood)}</b></td>
-        <td>${escapeHtml(r.bags)}</td>
-        <td>${escapeHtml(r.district \vert{}\vert{} "")} / ${escapeHtml(r.upazila || "")}</td>
-        <td>${escapeHtml(r.hospital)}</td>
-        <td>${escapeHtml(r.date)}</td>
-        <td><span class="status ${r.status}">${escapeHtml(r.status)}</span></td>
-        <td><div class="actions">
-            ${r.status==="pending"?`<button class="action a-green" onclick="approveRequestKey('${r.firebaseKey}')">✅ Approve</button><button class="action a-red" onclick="rejectRequestKey('${r.firebaseKey}')">❌ Reject</button>`:""}
-            <button class="action a-black" onclick="deleteRequestKey('${r.firebaseKey}')">🗑️ Delete</button>
-        </div></td>
-    </tr>`).join("")}
-    </tbody></table></div>`;
+
+    if(status==="approved"){
+      approved.innerHTML += row;
+    }
+
+    if(status==="rejected"){
+      rejected.innerHTML += row;
+    }
+
+    all.innerHTML += allDonorRow(id,d);
+
+  });
+
 }
 
-function approveRequestKey(key){
-    if(!window.firebaseDb) return;
-    window.firebaseDb.update(window.firebaseDb.ref(window.firebaseDb.db, 'requests/' + key), { status: 'approved' });
+
+/* =========================================
+   DONOR ROW
+========================================= */
+
+function donorRow(id,d){
+
+  return `
+
+  <tr>
+
+    <td>${safe(d.name)}</td>
+
+    <td>${safe(d.phone)}</td>
+
+    <td><b>${safe(d.blood)}</b></td>
+
+    <td>
+      ${safe(d.division)}
+      /
+      ${safe(d.district)}
+      /
+      ${safe(d.upazila)}
+    </td>
+
+    <td>
+      ${safe(d.lastDonate || d.lastDonation || "-")}
+    </td>
+
+    <td>
+      <span class="badge ${safe(d.status || "pending")}">
+        ${safe(d.status || "pending")}
+      </span>
+    </td>
+
+    <td>
+
+      <div class="actions">
+
+        ${
+          d.status !== "approved"
+          ?
+          `<button
+            class="btn btn-sm green"
+            onclick="approveDonor('${id}')">
+            ✓ Approve
+          </button>`
+          : ""
+        }
+
+        ${
+          d.status !== "rejected"
+          ?
+          `<button
+            class="btn btn-sm orange"
+            onclick="rejectDonor('${id}')">
+            ✕ Reject
+          </button>`
+          : ""
+        }
+
+        <button
+          class="btn btn-sm blue"
+          onclick="viewDonor('${id}')">
+          👁 View
+        </button>
+
+        <button
+          class="btn btn-sm red"
+          onclick="deleteDonor('${id}')">
+          🗑 Delete
+        </button>
+
+      </div>
+
+    </td>
+
+  </tr>
+
+  `;
+
 }
 
-function rejectRequestKey(key){
-    if(!window.firebaseDb) return;
-    window.firebaseDb.update(window.firebaseDb.ref(window.firebaseDb.db, 'requests/' + key), { status: 'rejected' });
+
+/* =========================================
+   ALL DONOR ROW
+========================================= */
+
+function allDonorRow(id,d){
+
+  return `
+
+  <tr data-donor-row="${id}">
+
+    <td>${safe(d.name)}</td>
+
+    <td>${safe(d.phone)}</td>
+
+    <td><b>${safe(d.blood)}</b></td>
+
+    <td>${safe(d.division)}</td>
+
+    <td>${safe(d.district)}</td>
+
+    <td>${safe(d.upazila)}</td>
+
+    <td>
+      <span class="badge ${safe(d.status || "pending")}">
+        ${safe(d.status || "pending")}
+      </span>
+    </td>
+
+    <td>
+
+      <div class="actions">
+
+        ${
+          d.status !== "approved"
+          ?
+          `<button
+            class="btn btn-sm green"
+            onclick="approveDonor('${id}')">
+            ✓
+          </button>`
+          : ""
+        }
+
+        ${
+          d.status !== "rejected"
+          ?
+          `<button
+            class="btn btn-sm orange"
+            onclick="rejectDonor('${id}')">
+            ✕
+          </button>`
+          : ""
+        }
+
+        <button
+          class="btn btn-sm red"
+          onclick="deleteDonor('${id}')">
+          🗑
+        </button>
+
+      </div>
+
+    </td>
+
+  </tr>
+
+  `;
+
 }
 
-function deleteRequestKey(key){
-    if(!confirm("Request Delete করবেন?")) return;
-    if(!window.firebaseDb) return;
-    window.firebaseDb.remove(window.firebaseDb.ref(window.firebaseDb.db, 'requests/' + key));
-}
 
-// ADD FORMS
-document.getElementById("addDonorForm").addEventListener("submit",function(e){
-    e.preventDefault();
-    if(!window.firebaseDb) return;
-    const { db, ref, push, set } = window.firebaseDb;
+/* =========================================
+   APPROVE DONOR
+========================================= */
 
-    const donor = {
-        id: "MB-" + Date.now().toString().slice(-8),
-        name: document.getElementById("addName").value.trim(),
-        phone: document.getElementById("addPhone").value.trim(),
-        blood: document.getElementById("addBlood").value,
-        division: document.getElementById("addDivision").value.trim(),
-        district: document.getElementById("addDistrict").value.trim(),
-        upazila: document.getElementById("addUpazila").value.trim(),
-        address: document.getElementById("addAddress").value.trim(),
-        photo: "",
-        status: "approved",
-        createdAt: new Date().toISOString(),
-        approvedAt: new Date().toISOString()
-    };
+window.approveDonor =
+async function(id){
 
-    const newRef = push(ref(db, 'donors'));
-    set(newRef, donor).then(() => {
-        this.reset();
-        alert("✅ Donor সফলভাবে ফায়ারবেজে Approved অবস্থায় যুক্ত হয়েছে।");
-        renderAll();
-    });
+  if(!confirm("এই Donor-কে Approved করবেন?")){
+    return;
+  }
+
+  try{
+
+    await update(
+      ref(db,"donors/"+id),
+      {
+        status:"approved",
+        approvedAt:new Date().toISOString()
+      }
+    );
+
+    toast("Donor Approved হয়েছে।");
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "Approve করা যায়নি। Database Rules চেক করুন।"
+    );
+
+  }
+
+};
+
+
+/* =========================================
+   REJECT DONOR
+========================================= */
+
+window.rejectDonor =
+async function(id){
+
+  if(!confirm("এই Donor-কে Reject করবেন?")){
+    return;
+  }
+
+  try{
+
+    await update(
+      ref(db,"donors/"+id),
+      {
+        status:"rejected",
+        rejectedAt:new Date().toISOString()
+      }
+    );
+
+    toast("Donor Rejected হয়েছে।");
+
+  }catch(error){
+
+    console.error(error);
+
+    toast("Reject করা যায়নি।");
+
+  }
+
+};
+
+
+/* =========================================
+   DELETE DONOR
+========================================= */
+
+window.deleteDonor =
+async function(id){
+
+  if(!confirm(
+    "এই Donor permanently Delete করবেন?"
+  )){
+    return;
+  }
+
+  try{
+
+    await remove(
+      ref(db,"donors/"+id)
+    );
+
+    toast("Donor Delete হয়েছে।");
+
+  }catch(error){
+
+    console.error(error);
+
+    toast("Delete করা যায়নি।");
+
+  }
+
+};
+
+
+/* =========================================
+   VIEW DONOR
+========================================= */
+
+window.viewDonor =
+function(id){
+
+  const d =
+  donors[id];
+
+  if(!d){
+    return;
+  }
+
+  alert(
+
+`🩸 DONOR DETAILS
+
+Name: ${d.name || "-"}
+Phone: ${d.phone || "-"}
+Blood: ${d.blood || "-"}
+Division: ${d.division || "-"}
+District: ${d.district || "-"}
+Upazila: ${d.upazila || "-"}
+Last Donation: ${d.lastDonate || d.lastDonation || "-"}
+Status: ${d.status || "-"}
+Info: ${d.info || d.additionalInfo || "-"}`
+  );
+
+};
+
+
+/* =========================================
+   ADD DONOR
+========================================= */
+
+document
+.getElementById("addDonorBtn")
+.addEventListener("click",async ()=>{
+
+  const name =
+  document.getElementById("dName").value.trim();
+
+  const phone =
+  document.getElementById("dPhone").value.trim();
+
+  const blood =
+  document.getElementById("dBlood").value;
+
+  if(!name || !phone || !blood){
+
+    toast(
+      "Name, Phone এবং Blood Group আবশ্যক।"
+    );
+
+    return;
+  }
+
+  const donorRef =
+  push(ref(db,"donors"));
+
+  const data = {
+
+    name:name,
+
+    phone:phone,
+
+    blood:blood,
+
+    lastDonate:
+    document.getElementById("dLast").value,
+
+    division:
+    document.getElementById("dDivision").value.trim(),
+
+    district:
+    document.getElementById("dDistrict").value.trim(),
+
+    upazila:
+    document.getElementById("dUpazila").value.trim(),
+
+    info:
+    document.getElementById("dInfo").value.trim(),
+
+    status:"approved",
+
+    createdAt:
+    new Date().toISOString(),
+
+    addedBy:"admin"
+
+  };
+
+
+  try{
+
+    await set(donorRef,data);
+
+    toast("Donor সফলভাবে Add হয়েছে।");
+
+    clearDonorForm();
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "Donor Add করা যায়নি।"
+    );
+
+  }
+
 });
 
-document.getElementById("addAmbulanceForm").addEventListener("submit",function(e){
-    e.preventDefault();
-    if(!window.firebaseDb) return;
-    const { db, ref, push, set } = window.firebaseDb;
 
-    const ambulance = {
-        id: "AMB-" + Date.now().toString().slice(-8),
-        name: document.getElementById("ambulName").value.trim(),
-        phone: document.getElementById("ambulPhone").value.trim(),
-        address: document.getElementById("ambulAddress").value.trim(),
-        createdAt: new Date().toISOString()
-    };
+function clearDonorForm(){
 
-    const newRef = push(ref(db, 'ambulances'));
-    set(newRef, ambulance).then(() => {
-        this.reset();
-        alert("✅ নতুন এম্বুলেন্স ফায়ারবেজে যুক্ত হয়েছে।");
-        openPage('ambulanceList');
-    });
+  [
+    "dName",
+    "dPhone",
+    "dLast",
+    "dDivision",
+    "dDistrict",
+    "dUpazila",
+    "dInfo"
+  ].forEach(id=>{
+    document.getElementById(id).value="";
+  });
+
+  document.getElementById("dBlood").value="";
+
+}
+
+
+/* =========================================
+   REQUEST DATA
+========================================= */
+
+let requests = {};
+
+
+/* =========================================
+   LOAD REQUESTS
+========================================= */
+
+function loadRequests(){
+
+  const requestRef =
+  ref(db,"bloodRequests");
+
+  onValue(requestRef,(snapshot)=>{
+
+    requests =
+    snapshot.val() || {};
+
+    renderRequests();
+
+    updateDashboard();
+
+  },(error)=>{
+
+    console.error(error);
+
+    toast(
+      "Blood Request load হয়নি।"
+    );
+
+  });
+
+}
+
+
+/* =========================================
+   RENDER REQUESTS
+========================================= */
+
+function renderRequests(){
+
+  const table =
+  document.getElementById("requestTable");
+
+  table.innerHTML = "";
+
+  Object.entries(requests)
+  .forEach(([id,r])=>{
+
+    table.innerHTML += `
+
+      <tr>
+
+        <td>${safe(r.patient || r.patientName)}</td>
+
+        <td>${safe(r.phone)}</td>
+
+        <td><b>${safe(r.blood)}</b></td>
+
+        <td>${safe(r.bags)}</td>
+
+        <td>
+          ${safe(r.division)}
+          /
+          ${safe(r.district)}
+          /
+          ${safe(r.upazila)}
+        </td>
+
+        <td>
+          ${safe(r.date || r.dateNeeded || "-")}
+        </td>
+
+        <td>
+          ${safe(r.urgency || "-")}
+        </td>
+
+        <td>
+
+          <span class="badge ${safe(r.status || "pending")}">
+            ${safe(r.status || "pending")}
+          </span>
+
+        </td>
+
+        <td>
+
+          <div class="actions">
+
+            ${
+              r.status !== "approved"
+              ?
+              `<button
+                class="btn btn-sm green"
+                onclick="approveRequest('${id}')">
+                ✓
+              </button>`
+              : ""
+            }
+
+            ${
+              r.status !== "rejected"
+              ?
+              `<button
+                class="btn btn-sm orange"
+                onclick="rejectRequest('${id}')">
+                ✕
+              </button>`
+              : ""
+            }
+
+            <button
+              class="btn btn-sm red"
+              onclick="deleteRequest('${id}')">
+              🗑
+            </button>
+
+          </div>
+
+        </td>
+
+      </tr>
+
+    `;
+
+  });
+
+}
+
+
+/* =========================================
+   APPROVE REQUEST
+========================================= */
+
+window.approveRequest =
+async function(id){
+
+  if(!confirm(
+    "এই Blood Request Approved করবেন?"
+  )){
+    return;
+  }
+
+  try{
+
+    await update(
+      ref(db,"bloodRequests/"+id),
+      {
+        status:"approved",
+        approvedAt:new Date().toISOString()
+      }
+    );
+
+    toast(
+      "Blood Request Approved হয়েছে।"
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "Approve করা যায়নি।"
+    );
+
+  }
+
+};
+
+
+/* =========================================
+   REJECT REQUEST
+========================================= */
+
+window.rejectRequest =
+async function(id){
+
+  if(!confirm(
+    "এই Blood Request Reject করবেন?"
+  )){
+    return;
+  }
+
+  try{
+
+    await update(
+      ref(db,"bloodRequests/"+id),
+      {
+        status:"rejected",
+        rejectedAt:new Date().toISOString()
+      }
+    );
+
+    toast(
+      "Blood Request Rejected হয়েছে।"
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "Reject করা যায়নি।"
+    );
+
+  }
+
+};
+
+
+/* =========================================
+   DELETE REQUEST
+========================================= */
+
+window.deleteRequest =
+async function(id){
+
+  if(!confirm(
+    "এই Blood Request Delete করবেন?"
+  )){
+    return;
+  }
+
+  try{
+
+    await remove(
+      ref(db,"bloodRequests/"+id)
+    );
+
+    toast(
+      "Blood Request Delete হয়েছে।"
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "Delete করা যায়নি।"
+    );
+
+  }
+
+};
+
+
+/* =========================================
+   ADD REQUEST
+========================================= */
+
+document
+.getElementById("addRequestBtn")
+.addEventListener("click",async ()=>{
+
+  const patient =
+  document.getElementById("rPatient").value.trim();
+
+  const phone =
+  document.getElementById("rPhone").value.trim();
+
+  const blood =
+  document.getElementById("rBlood").value;
+
+  if(!patient || !phone || !blood){
+
+    toast(
+      "Patient, Phone এবং Blood Group আবশ্যক।"
+    );
+
+    return;
+  }
+
+
+  const requestRef =
+  push(ref(db,"bloodRequests"));
+
+
+  const data = {
+
+    patient:patient,
+
+    phone:phone,
+
+    blood:blood,
+
+    bags:
+    document.getElementById("rBags").value,
+
+    division:
+    document.getElementById("rDivision").value.trim(),
+
+    district:
+    document.getElementById("rDistrict").value.trim(),
+
+    upazila:
+    document.getElementById("rUpazila").value.trim(),
+
+    hospital:
+    document.getElementById("rHospital").value.trim(),
+
+    date:
+    document.getElementById("rDate").value,
+
+    urgency:
+    document.getElementById("rUrgency").value,
+
+    info:
+    document.getElementById("rInfo").value.trim(),
+
+    status:"approved",
+
+    createdAt:
+    new Date().toISOString(),
+
+    addedBy:"admin"
+
+  };
+
+
+  try{
+
+    await set(requestRef,data);
+
+    toast(
+      "Blood Request সফলভাবে Add হয়েছে।"
+    );
+
+    clearRequestForm();
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "Request Add করা যায়নি।"
+    );
+
+  }
+
 });
 
-function escapeHtml(text){
-    return String(text ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+
+function clearRequestForm(){
+
+  [
+    "rPatient",
+    "rPhone",
+    "rBags",
+    "rDivision",
+    "rDistrict",
+    "rUpazila",
+    "rHospital",
+    "rDate",
+    "rInfo"
+  ].forEach(id=>{
+    document.getElementById(id).value="";
+  });
+
+  document.getElementById("rBlood").value="";
+
 }
+
+
+/* =========================================
+   DASHBOARD
+========================================= */
+
+function updateDashboard(){
+
+  const donorList =
+  Object.values(donors);
+
+  const requestList =
+  Object.values(requests);
+
+
+  const pending =
+  donorList.filter(
+    d=>(d.status||"pending")==="pending"
+  ).length;
+
+
+  const approved =
+  donorList.filter(
+    d=>d.status==="approved"
+  ).length;
+
+
+  document.getElementById(
+    "totalDonors"
+  ).innerText =
+  donorList.length;
+
+
+  document.getElementById(
+    "pendingCount"
+  ).innerText =
+  pending;
+
+
+  document.getElementById(
+    "approvedCount"
+  ).innerText =
+  approved;
+
+
+  document.getElementById(
+    "requestCount"
+  ).innerText =
+  requestList.length;
+
+
+  renderBloodStats(donorList);
+
+}
+
+
+/* =========================================
+   BLOOD STATISTICS
+========================================= */
+
+function renderBloodStats(list){
+
+  const groups = [
+    "A+","A-",
+    "B+","B-",
+    "AB+","AB-",
+    "O+","O-"
+  ];
+
+  const counts = {};
+
+  groups.forEach(g=>{
+    counts[g]=0;
+  });
+
+
+  list
+  .filter(d=>d.status==="approved")
+  .forEach(d=>{
+
+    if(counts[d.blood] !== undefined){
+      counts[d.blood]++;
+    }
+
+  });
+
+
+  let html = `
+
+  <div style="
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+  ">
+
+  `;
+
+
+  groups.forEach(g=>{
+
+    html += `
+
+      <div style="
+        padding:15px;
+        border-radius:16px;
+        background:rgba(255,255,255,.08);
+        text-align:center;
+      ">
+
+        <div style="
+          font-size:20px;
+          font-weight:800;
+        ">
+          ${g}
+        </div>
+
+        <div style="
+          color:#bbb;
+          margin-top:4px;
+        ">
+          ${counts[g]} Donor
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+
+  html += "</div>";
+
+  document.getElementById(
+    "bloodStats"
+  ).innerHTML = html;
+
+}
+
+
+/* =========================================
+   DONOR SEARCH
+========================================= */
+
+document
+.getElementById("donorSearch")
+.addEventListener("input",function(){
+
+  const value =
+  this.value.toLowerCase().trim();
+
+  document
+  .querySelectorAll(
+    "#allDonorsTable tr"
+  )
+  .forEach(row=>{
+
+    const text =
+    row.innerText.toLowerCase();
+
+    row.style.display =
+    text.includes(value)
+    ? ""
+    : "none";
+
+  });
+
+});
+
+
+/* =========================================
+   HTML SAFETY
+========================================= */
+
+function safe(value){
+
+  if(value === undefined ||
+     value === null ||
+     value === ""){
+    return "-";
+  }
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
 </script>
 
 </body>
