@@ -667,7 +667,7 @@ td{
 <aside class="sidebar" id="sidebar">
     <div class="admin-info">
         <small>Logged in as</small>
-        <strong id="displayAdminEmail">monirahmeddhakib.mb@gmail.com</strong>
+        <strong>mbbloodbank@gmail.com</strong>
     </div>
 
     <button class="side-link active" onclick="openPage('dashboard',this)">🏠 Dashboard</button>
@@ -874,7 +874,7 @@ td{
     </div>
     <div class="box">
         <h3>🔐 Current Admin</h3><br>
-        <p><b>Gmail:</b> <span id="settingsAdminEmail">monirahmeddhakib.mb@gmail.com</span></p><br>
+        <p><b>Gmail:</b> mbbloodbank@gmail.com</p><br>
         <div class="box" style="margin-top:0">
             <b>🔥 Firebase Database Connected</b>
             <p style="margin-top:8px">ডেটা এখন রিয়েলটাইম ফায়ারবেজে সেভ হচ্ছে, ফলে যেকোনো ডিভাইস থেকে একই ডেটা দেখা যাবে।</p>
@@ -924,8 +924,8 @@ td{
 </div>
 
 <script>
-const ADMIN_EMAIL="monirahmeddhakib.mb@gmail.com";
-const ADMIN_PASSWORD="@monir7667";
+const ADMIN_EMAIL="mbbloodbank@gmail.com";
+const ADMIN_PASSWORD="MB@2026#Admin";
 
 let globalDonors = [];
 let globalRequests = [];
@@ -959,7 +959,7 @@ function initFirebaseListeners() {
 }
 
 function adminLogin(){
-    const email=document.getElementById("loginEmail").value.trim().toLowerCase();
+    const email=document.getElementById("loginEmail").value.trim();
     const password=document.getElementById("loginPassword").value;
 
     if(email===ADMIN_EMAIL && password===ADMIN_PASSWORD){
@@ -985,6 +985,7 @@ document.getElementById("loginPassword").addEventListener("keydown",function(e){
 if(sessionStorage.getItem("mb_admin_authenticated")==="true"){
     document.getElementById("loginScreen").style.display="none";
     document.getElementById("adminApp").style.display="block";
+    // Wait a brief moment for module script to load firebaseDb
     setTimeout(() => {
         initFirebaseListeners();
     }, 500);
@@ -1074,7 +1075,7 @@ function donorTable(data, emptyText="কোনো Donor পাওয়া যা�
         <td><div class="actions">
             ${d.status==="pending"?`<button class="action a-green" onclick="approveDonorByFirebaseKey('${d.firebaseKey}')">✅ Approve</button><button class="action a-red" onclick="rejectDonorByFirebaseKey('${d.firebaseKey}')">❌ Reject</button>`:""}
             <button class="action a-purple" onclick="editDonorPrompt('${d.firebaseKey}')">✏️ Edit</button>
-            <button class="action a-black" onclick="deleteDonorByFirebaseKey('${d.firebaseKey}')">🗑 Delete</button>
+            <button class="action a-black" onclick="deleteDonorByFirebaseKey('${d.firebaseKey}')">🗑️ Delete</button>
         </div></td>
     </tr>`).join("")}
     </tbody></table></div>`;
