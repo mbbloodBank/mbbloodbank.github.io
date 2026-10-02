@@ -497,137 +497,214 @@ input:focus,select:focus,textarea:focus{
     color: #29123f;
 }
 
-/* Ambulance Animation Styles (Red Theme with Clinic, Hospital, Donor, Patient & MB Blood Bank Ambulance) */
-.anim-scene {
-    position: relative;
+/* Custom Animation Banner Styles (Ambulance, Bike, Clinic, Hospital) */
+.custom-animation-banner {
     width: 100%;
-    height: 160px;
-    background: linear-gradient(180deg, #fff0f3 0%, #ffe3e8 100%);
+    height: 190px;
+    background: #ffffff;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: inset 0 2px 8px rgba(200,0,50,0.1);
+    position: relative;
+    box-shadow: 0 10px 30px rgba(70, 20, 100, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    margin-bottom: 15px;
 }
 
-.anim-road {
+.ca-road {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 35px;
+    height: 38px;
     background: #2b2b2b;
-    border-top: 4px dashed #ff4d6d;
+    border-top: 4px solid #141414;
 }
 
-.anim-building {
+.ca-road-stripe {
     position: absolute;
-    bottom: 35px;
-    font-size: 24px;
-    text-align: center;
-    font-weight: bold;
-    color: #a4161a;
-    line-height: 1.1;
+    top: 15px;
+    width: 100%;
+    height: 4px;
+    background: repeating-linear-gradient(90deg, #f59e0b, #f59e0b 30px, transparent 30px, transparent 60px);
 }
 
-.anim-building small {
-    font-size: 11px;
-    background: rgba(255,255,255,0.9);
-    padding: 2px 6px;
-    border-radius: 6px;
-    display: inline-block;
-    margin-top: 2px;
-    font-weight: 700;
-}
-
-.clinic-bldg { left: 4%; }
-.hospital-bldg { left: 28%; }
-.donor-bldg { left: 55%; }
-.patient-bldg { left: 80%; }
-
-.anim-ambulance {
+/* Clinic (Left) */
+.ca-clinic {
     position: absolute;
-    bottom: 42px;
-    width: 115px;
-    height: 52px;
-    animation: driveAmbulance 7s linear infinite;
-}
-
-.ambulance-body {
-    position: absolute;
-    width: 115px;
-    height: 40px;
-    background: #d90429;
-    border-radius: 10px 25px 6px 6px;
-    box-shadow: 0 4px 12px rgba(217,4,41,0.35);
+    bottom: 38px;
+    left: 20px;
+    width: 110px;
+    height: 90px;
+    background: #065f46;
+    border-radius: 8px 8px 0 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 8px;
+    justify-content: flex-end;
+    padding-bottom: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.ambulance-body::before {
-    content: "";
+.ca-clinic-sign {
     position: absolute;
-    top: -12px;
-    right: 15px;
-    width: 38px;
-    height: 15px;
-    background: #edf2f4;
-    border-radius: 8px 12px 0 0;
-    border: 2px solid #b7094c;
+    top: 8px;
+    background: #ffffff;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #065f46;
+    border-radius: 4px;
 }
 
-.amb-cross {
+.ca-donor {
+    position: absolute;
+    bottom: 38px;
+    left: 140px;
+    font-size: 24px;
+    animation: waveHand 1.5s infinite alternate ease-in-out;
+}
+
+@keyframes waveHand {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-4px); }
+}
+
+/* Hospital (Right) */
+.ca-hospital {
+    position: absolute;
+    bottom: 38px;
+    right: 20px;
+    width: 120px;
+    height: 95px;
+    background: #1e293b;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.ca-hospital-sign {
+    position: absolute;
+    top: 8px;
+    background: #ef4444;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #ffffff;
+    border-radius: 4px;
+}
+
+.ca-patient {
+    position: absolute;
+    bottom: 45px;
+    right: 155px;
+    font-size: 22px;
+}
+
+/* Moving Ambulance & Bike */
+.ca-moving-fleet {
+    position: absolute;
+    bottom: 38px;
+    left: -220px;
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    animation: driveAcross 11s infinite linear;
+}
+
+@keyframes driveAcross {
+    0% { left: -250px; }
+    100% { left: 105%; }
+}
+
+.ca-ambulance {
+    width: 130px;
+    height: 60px;
+    background: #dc2626; /* Red */
+    border-radius: 12px 25px 6px 6px;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+    border: 2px solid #b91c1c;
+}
+
+.ca-ambulance-top {
+    position: absolute;
+    top: -18px;
+    left: 20px;
+    width: 65px;
+    height: 22px;
+    background: #ffffff;
+    border-radius: 10px 10px 0 0;
+    border: 2px solid #e2e8f0;
+}
+
+.ca-siren {
+    position: absolute;
+    top: -26px;
+    left: 45px;
+    width: 14px;
+    height: 10px;
+    background: #3b82f6;
+    border-radius: 4px;
+    animation: flashSiren 0.5s infinite alternate;
+}
+
+@keyframes flashSiren {
+    0% { background: #3b82f6; }
+    100% { background: #ef4444; }
+}
+
+.ca-amb-logo {
+    position: absolute;
+    top: 14px;
+    left: 30px;
+    background: #ffffff;
+    padding: 2px 6px;
+    font-size: 10px;
     font-weight: 900;
-    font-size: 16px;
-    background: #fff;
-    color: #d90429;
+    color: #dc2626;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    white-space: nowrap;
+}
+
+.ca-wheel {
+    position: absolute;
+    bottom: -10px;
     width: 22px;
     height: 22px;
+    background: #0f172a;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: 4px solid #cbd5e1;
+    animation: rotateWheel 1s infinite linear;
 }
 
-.amb-text {
-    color: #fff;
-    font-size: 10px;
-    font-weight: bold;
-    white-space: nowrap;
-    margin-left: 2px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-}
+.ca-wheel.left { left: 18px; }
+.ca-wheel.right { right: 18px; }
 
-.wheel {
-    position: absolute;
-    bottom: -6px;
-    width: 18px;
-    height: 18px;
-    background: #111;
-    border-radius: 50%;
-    border: 3px solid #ddd;
-    animation: spinWheel 0.6s linear infinite;
-}
-
-.wheel-front { right: 15px; }
-.wheel-back { left: 15px; }
-
-@keyframes spinWheel {
-    0% { transform: rotate(0deg); }
+@keyframes rotateWheel {
     100% { transform: rotate(360deg); }
 }
 
-@keyframes driveAmbulance {
-    0% { transform: translateX(-130px); }
-    100% { transform: translateX(calc(100vw + 130px)); }
+.ca-bike {
+    font-size: 28px;
+    margin-bottom: 2px;
 }
 
-@media(max-width: 768px){
+/* footer */
+footer{
+    margin-top:40px;
+    padding:30px 15px;
+    text-align:center;
+    background:rgba(38,10,58,.9);
+    color:white;
+}
+
+@media(min-width: 768px){
     .contact-grid {
         grid-template-columns: repeat(3, 1fr);
-    }
-    @keyframes driveAmbulance {
-        0% { transform: translateX(-130px); }
-        100% { transform: translateX(380px); }
     }
 }
 
@@ -938,30 +1015,37 @@ input:focus,select:focus,textarea:focus{
         </div>
     </section>
 
-    <!-- ANIMATED AMBULANCE SERVICE BANNER (Placed right above Ambulance Section) -->
-    <section id="ambulance-animation">
-        <div class="glass form-box" style="padding:15px; overflow:hidden; position:relative;">
-            <div class="anim-scene">
-                <div class="anim-road"></div>
-                <div class="anim-building clinic-bldg">🏥<br><small>ক্লিনিক</small></div>
-                <div class="anim-building hospital-bldg">🏨<br><small>হসপিটাল</small></div>
-                <div class="anim-building donor-bldg">🩸<br><small>ডোনার</small></div>
-                <div class="anim-building patient-bldg">🏠<br><small>রোগী</small></div>
-                <div class="anim-ambulance">
-                    <div class="ambulance-body">
-                        <span class="amb-cross">✚</span>
-                        <span class="amb-text">MB Blood Bank</span>
-                    </div>
-                    <div class="wheel wheel-front"></div>
-                    <div class="wheel wheel-back"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- AMBULANCE -->
     <section id="ambulance">
         <h2 class="section-title">🚑 এম্বুলেন্স সেবা</h2>
+
+        <!-- কাস্টম অ্যানিমেশন ব্যানার (এম্বুলেন্স, বাইক, ক্লিনিক, রক্তদাতা, হাসপাতাল ও রোগী) -->
+        <div class="custom-animation-banner">
+            <div class="ca-clinic">
+                <div class="ca-clinic-sign">Clinic</div>
+            </div>
+            <div class="ca-donor" title="রক্তদাতা">🧍‍♂️🩸</div>
+
+            <div class="ca-hospital">
+                <div class="ca-hospital-sign">Hospital</div>
+            </div>
+            <div class="ca-patient" title="রোগী বেডে শুয়ে আছে">🛌</div>
+
+            <div class="ca-road">
+                <div class="ca-road-stripe"></div>
+            </div>
+
+            <div class="ca-moving-fleet">
+                <div class="ca-bike" title="বাইক">🏍️</div>
+                <div class="ca-ambulance">
+                    <div class="ca-siren"></div>
+                    <div class="ca-ambulance-top"></div>
+                    <div class="ca-amb-logo">MB Blood Bank</div>
+                    <div class="ca-wheel left"></div>
+                    <div class="ca-wheel right"></div>
+                </div>
+            </div>
+        </div>
 
         <div class="glass form-box">
             <p style="text-align:center; margin-bottom: 15px; font-weight: 700;">
