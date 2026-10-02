@@ -497,156 +497,145 @@ input:focus,select:focus,textarea:focus{
     color: #29123f;
 }
 
-/* Red Delivery Animation Styles */
-.red-anim-wrapper {
+/* ==========================================
+   MB BLOOD BANK CUSTOM UNIQUE ANIMATION CSS
+   ========================================== */
+.mb-delivery-animation-container {
+    width: 100%;
+    height: 150px;
     background: #ffffff;
     border-radius: 20px;
-    padding: 25px 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 10px 30px rgba(220, 20, 60, 0.12);
-    border: 2px solid rgba(220, 20, 60, 0.2);
     overflow: hidden;
     position: relative;
-    text-align: center;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.04);
+    margin-bottom: 15px;
+    border: 1px solid rgba(220, 20, 60, 0.15);
 }
 
-.red-anim-scene {
-    position: relative;
+/* Background sceneries */
+.mb-scenery {
+    position: absolute;
+    bottom: 25px;
     width: 100%;
-    max-width: 600px;
-    height: 140px;
-    margin: 0 auto;
-    background: #fff8f8;
-    border-radius: 12px;
-    overflow: hidden;
-    border-bottom: 4px solid #dc2626;
+    height: 100%;
 }
 
-.red-road {
+.mb-building-left {
+    position: absolute;
+    left: 15px;
+    bottom: 25px;
+    width: 75px;
+    height: 55px;
+    background: #d81b60;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.mb-building-left::after {
+    content: "🩸";
+    font-size: 22px;
+}
+
+.mb-building-right {
+    position: absolute;
+    right: 20px;
+    bottom: 25px;
+    width: 65px;
+    height: 60px;
+    background: #2e7d32;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+/* Road Styling */
+.mb-road {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 14px;
-    background: #1e293b;
-    border-top: 2px dashed #f87171;
+    height: 25px;
+    background: #263238;
+    border-top: 3px dashed #ffffff;
 }
 
-.red-building-left {
+/* Moving Delivery Truck */
+.mb-truck {
     position: absolute;
-    bottom: 14px;
-    left: 20px;
-    width: 70px;
-    height: 65px;
-    background: #dc2626;
-    border-radius: 6px 6px 0 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 11px;
-    font-weight: bold;
-    box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
-}
-
-.red-building-right {
-    position: absolute;
-    bottom: 14px;
-    right: 20px;
-    width: 70px;
-    height: 65px;
-    background: #991b1b;
-    border-radius: 6px 6px 0 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 11px;
-    font-weight: bold;
-    box-shadow: 0 4px 10px rgba(153, 27, 27, 0.3);
-}
-
-.red-warehouse {
-    position: absolute;
-    bottom: 14px;
-    left: 140px;
-    width: 90px;
+    bottom: 25px;
+    left: -180px;
+    width: 135px;
     height: 55px;
-    background: #ef4444;
-    border-radius: 6px 6px 0 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 11px;
-    font-weight: bold;
+    animation: mbDriveTruck 6s linear infinite;
 }
 
-.red-delivery-truck {
+.mb-truck-body {
     position: absolute;
-    bottom: 16px;
-    left: -120px;
-    width: 110px;
-    height: 48px;
-    background: #dc2626;
-    border-radius: 8px 8px 0 0;
-    animation: redTruckDrive 7s linear infinite;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+    width: 85px;
+    height: 42px;
+    background: #d32f2f;
+    border-radius: 6px 12px 0 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-.red-delivery-truck::before {
-    content: "🩸";
+/* Truck Cabin */
+.mb-truck-cabin {
     position: absolute;
+    right: -42px;
+    bottom: 0;
+    width: 45px;
+    height: 34px;
+    background: #c62828;
+    border-radius: 0 10px 0 0;
+}
+
+.mb-truck-window {
+    position: absolute;
+    top: 5px;
+    right: 6px;
+    width: 22px;
+    height: 16px;
+    background: #e3f2fd;
+    border-radius: 0 6px 0 0;
+}
+
+/* Truck Wheels */
+.mb-wheel {
+    position: absolute;
+    bottom: -6px;
+    width: 18px;
+    height: 18px;
+    background: #212121;
+    border: 3px solid #cfd8dc;
+    border-radius: 50%;
+    animation: mbRotateWheel .6s linear infinite;
+}
+.mb-wheel.left { left: 15px; }
+.mb-wheel.right { right: 15px; }
+
+/* Truck Branding & Logo */
+.mb-truck-label {
+    position: absolute;
+    top: 9px;
     left: 8px;
-    top: 6px;
-    font-size: 14px;
-}
-
-.red-truck-text {
     font-size: 10px;
     font-weight: 800;
     color: #fff;
-    background: rgba(0,0,0,0.2);
-    padding: 2px 5px;
-    border-radius: 4px;
-    margin-left: 12px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
-.red-truck-wheel1, .red-truck-wheel2 {
-    position: absolute;
-    bottom: -6px;
-    width: 14px;
-    height: 14px;
-    background: #0f172a;
-    border-radius: 50%;
-    border: 2px solid #cbd5e1;
-}
-
-.red-truck-wheel1 { left: 15px; }
-.red-truck-wheel2 { right: 15px; }
-
-@keyframes redTruckDrive {
-    0% { left: -130px; }
+@keyframes mbDriveTruck {
+    0% { left: -160px; }
     100% { left: 105%; }
 }
 
-.red-person {
-    position: absolute;
-    bottom: 14px;
-    left: 250px;
-    font-size: 18px;
-    animation: redPersonPulse 2s ease-in-out infinite;
-}
-
-@keyframes redPersonPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.08); }
+@keyframes mbRotateWheel {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 /* footer */
@@ -975,23 +964,26 @@ footer{
     <section id="ambulance">
         <h2 class="section-title">🚑 এম্বুলেন্স সেবা</h2>
 
-        <!-- Red Delivery Animation Added Directly Above Ambulance Section -->
-        <div class="red-anim-wrapper">
-            <div class="red-anim-scene">
-                <div class="red-building-left">MB Bank</div>
-                <div class="red-warehouse">🩸 Blood Bank</div>
-                <div class="red-delivery-truck">
-                    <span class="red-truck-text">MB Blood Bank</span>
-                    <div class="red-truck-wheel1"></div>
-                    <div class="red-truck-wheel2"></div>
-                </div>
-                <div class="red-person">🏃‍♂️</div>
-                <div class="red-building-right">Emergency</div>
-                <div class="red-road"></div>
-            </div>
-        </div>
-
         <div class="glass form-box">
+            <!-- এম্বুলেন্স সেবা অপশনের ঠিক উপরে ইউনিক এনিমেশন -->
+            <div class="mb-delivery-animation-container">
+                <div class="mb-scenery">
+                    <div class="mb-building-left"></div>
+                    <div class="mb-building-right"></div>
+                </div>
+                <div class="mb-road"></div>
+                <div class="mb-truck">
+                    <div class="mb-truck-body">
+                        <div class="mb-truck-label">🩸 MB Blood Bank</div>
+                    </div>
+                    <div class="mb-truck-cabin">
+                        <div class="mb-truck-window"></div>
+                    </div>
+                    <div class="mb-wheel left"></div>
+                    <div class="mb-wheel right"></div>
+                </div>
+            </div>
+
             <p style="text-align:center; margin-bottom: 15px; font-weight: 700;">
                 জরুরি প্রয়োজনে এম্বুলেন্স বুকিং বা যোগাযোগের জন্য নিচের অপশনটিতে ক্লিক করুন
             </p>
