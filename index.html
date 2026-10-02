@@ -497,242 +497,137 @@ input:focus,select:focus,textarea:focus{
     color: #29123f;
 }
 
-/* Red Delivery Animation Styling */
-.delivery-animation-container {
-    width: 100%;
-    max-width: 700px;
-    margin: 0 auto 20px;
-    background: #ffffff;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(220, 20, 60, 0.12);
-    border: 2px solid rgba(220, 20, 60, 0.2);
-    position: relative;
-}
-
+/* Ambulance Animation Styles (Red Theme with Clinic, Hospital, Donor, Patient & MB Blood Bank Ambulance) */
 .anim-scene {
     position: relative;
     width: 100%;
-    height: 180px;
-    background: #fff5f5;
+    height: 160px;
+    background: linear-gradient(180deg, #fff0f3 0%, #ffe3e8 100%);
+    border-radius: 20px;
     overflow: hidden;
+    box-shadow: inset 0 2px 8px rgba(200,0,50,0.1);
 }
 
 .anim-road {
     position: absolute;
-    bottom: 25px;
-    width: 200%;
-    height: 14px;
+    bottom: 0;
+    width: 100%;
+    height: 35px;
     background: #2b2b2b;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    animation: moveRoad 3s linear infinite;
+    border-top: 4px dashed #ff4d6d;
 }
 
-.road-stripe {
-    width: 40px;
-    height: 3px;
-    background: #ffffff;
-    border-radius: 2px;
-}
-
-@keyframes moveRoad {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
-.anim-building-left {
+.anim-building {
     position: absolute;
-    bottom: 39px;
-    left: 20px;
-    width: 85px;
-    height: 75px;
-    background: #d32f2f;
-    border-radius: 8px 8px 0 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 6px;
-    color: white;
+    bottom: 35px;
+    font-size: 24px;
+    text-align: center;
+    font-weight: bold;
+    color: #a4161a;
+    line-height: 1.1;
+}
+
+.anim-building small {
     font-size: 11px;
-    font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
-
-.anim-building-mid {
-    position: absolute;
-    bottom: 39px;
-    left: 170px;
-    width: 95px;
-    height: 90px;
-    background: #c62828;
-    border-radius: 10px 10px 0 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 6px;
-    color: white;
-    font-size: 11px;
-    font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
-
-.anim-building-right {
-    position: absolute;
-    bottom: 39px;
-    right: 35px;
-    width: 75px;
-    height: 85px;
-    background: #b71c1c;
-    border-radius: 12px 12px 0 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 6px;
-    color: white;
-    font-size: 10px;
-    font-weight: bold;
-    clip-path: polygon(50% 0%, 100% 35%, 100% 100%, 0% 100%, 0% 35%);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
-
-.anim-windows {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 4px;
-    margin-top: 5px;
-}
-
-.anim-window {
-    width: 18px;
-    height: 14px;
-    background: #ffebee;
-    border-radius: 3px;
-}
-
-.anim-truck {
-    position: absolute;
-    bottom: 39px;
-    left: 45%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: flex-end;
-    animation: bounceTruck 0.5s ease-in-out infinite alternate;
-}
-
-@keyframes bounceTruck {
-    0% { transform: translateX(-50%) translateY(0); }
-    100% { transform: translateX(-50%) translateY(-3px); }
-}
-
-.truck-body {
-    width: 90px;
-    height: 45px;
-    background: #e53935;
+    background: rgba(255,255,255,0.9);
+    padding: 2px 6px;
     border-radius: 6px;
-    position: relative;
+    display: inline-block;
+    margin-top: 2px;
+    font-weight: 700;
+}
+
+.clinic-bldg { left: 4%; }
+.hospital-bldg { left: 28%; }
+.donor-bldg { left: 55%; }
+.patient-bldg { left: 80%; }
+
+.anim-ambulance {
+    position: absolute;
+    bottom: 42px;
+    width: 115px;
+    height: 52px;
+    animation: driveAmbulance 7s linear infinite;
+}
+
+.ambulance-body {
+    position: absolute;
+    width: 115px;
+    height: 40px;
+    background: #d90429;
+    border-radius: 10px 25px 6px 6px;
+    box-shadow: 0 4px 12px rgba(217,4,41,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+}
+
+.ambulance-body::before {
+    content: "";
+    position: absolute;
+    top: -12px;
+    right: 15px;
+    width: 38px;
+    height: 15px;
+    background: #edf2f4;
+    border-radius: 8px 12px 0 0;
+    border: 2px solid #b7094c;
+}
+
+.amb-cross {
+    font-weight: 900;
+    font-size: 16px;
+    background: #fff;
+    color: #d90429;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-.truck-label {
-    background: #ffffff;
-    color: #b71c1c;
+.amb-text {
+    color: #fff;
     font-size: 10px;
-    font-weight: 800;
-    padding: 2px 6px;
-    border-radius: 4px;
+    font-weight: bold;
     white-space: nowrap;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.truck-cabin {
-    width: 30px;
-    height: 35px;
-    background: #d32f2f;
-    border-radius: 6px 12px 0 0;
-    position: relative;
-}
-
-.truck-cabin::after {
-    content: "";
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    width: 10px;
-    height: 10px;
-    background: #ffebee;
-    border-radius: 2px;
-}
-
-.truck-wheels {
-    position: absolute;
-    bottom: -8px;
-    left: 10px;
-    right: 10px;
-    display: flex;
-    justify-content: space-between;
+    margin-left: 2px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4);
 }
 
 .wheel {
+    position: absolute;
+    bottom: -6px;
     width: 18px;
     height: 18px;
-    background: #212121;
-    border: 3px solid #e0e0e0;
+    background: #111;
     border-radius: 50%;
-    animation: spinWheel 0.8s linear infinite;
+    border: 3px solid #ddd;
+    animation: spinWheel 0.6s linear infinite;
 }
+
+.wheel-front { right: 15px; }
+.wheel-back { left: 15px; }
 
 @keyframes spinWheel {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
-.anim-worker {
-    position: absolute;
-    bottom: 39px;
-    left: 110px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    animation: workerMove 3s ease-in-out infinite;
+@keyframes driveAmbulance {
+    0% { transform: translateX(-130px); }
+    100% { transform: translateX(calc(100vw + 130px)); }
 }
 
-.worker-head {
-    width: 10px;
-    height: 10px;
-    background: #ffccbc;
-    border-radius: 50%;
-    margin-bottom: 2px;
-}
-
-.worker-body {
-    width: 12px;
-    height: 18px;
-    background: #d32f2f;
-    border-radius: 4px;
-}
-
-@keyframes workerMove {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(10px); }
-}
-
-/* footer */
-footer{
-    margin-top:40px;
-    padding:30px 15px;
-    text-align:center;
-    background:rgba(38,10,58,.9);
-    color:white;
-}
-
-@media(min-width: 768px){
+@media(max-width: 768px){
     .contact-grid {
         grid-template-columns: repeat(3, 1fr);
+    }
+    @keyframes driveAmbulance {
+        0% { transform: translateX(-130px); }
+        100% { transform: translateX(380px); }
     }
 }
 
@@ -830,7 +725,7 @@ footer{
         <h2 class="section-title">📝 রক্তদাতা হিসেবে নিবন্ধন</h2>
 
         <div class="notice">
-            ⚠️️ নিবন্ধনের পর আপনার Account/Donor/Profile সরাসরি active হবে না।
+            ⚠️ নিবন্ধনের পর আপনার Account/Donor/Profile সরাসরি active হবে না।
             Admin যাচাই ও Approved করার পর আপনার তথ্য রক্তদাতার তালিকায় প্রদর্শিত হবে।
         </div>
 
@@ -1043,64 +938,30 @@ footer{
         </div>
     </section>
 
-    <!-- AMBULANCE -->
-    <section id="ambulance">
-        <h2 class="section-title">🚑 এম্বুলেন্স সেবা</h2>
-
-        <!-- Red Delivery Animation with Clinic & Hospital (MB Blood Bank) -->
-        <div class="delivery-animation-container">
+    <!-- ANIMATED AMBULANCE SERVICE BANNER (Placed right above Ambulance Section) -->
+    <section id="ambulance-animation">
+        <div class="glass form-box" style="padding:15px; overflow:hidden; position:relative;">
             <div class="anim-scene">
-                <!-- ক্লিনিক বিল্ডিং -->
-                <div class="anim-building-left">
-                    <span>ক্লিনিক</span>
-                    <div class="anim-windows">
-                        <div class="anim-window"></div><div class="anim-window"></div>
+                <div class="anim-road"></div>
+                <div class="anim-building clinic-bldg">🏥<br><small>ক্লিনিক</small></div>
+                <div class="anim-building hospital-bldg">🏨<br><small>হসপিটাল</small></div>
+                <div class="anim-building donor-bldg">🩸<br><small>ডোনার</small></div>
+                <div class="anim-building patient-bldg">🏠<br><small>রোগী</small></div>
+                <div class="anim-ambulance">
+                    <div class="ambulance-body">
+                        <span class="amb-cross">✚</span>
+                        <span class="amb-text">MB Blood Bank</span>
                     </div>
-                </div>
-
-                <!-- হাসপাতাল বিল্ডিং -->
-                <div class="anim-building-mid">
-                    <span>হাসপাতাল</span>
-                    <div class="anim-windows">
-                        <div class="anim-window"></div><div class="anim-window"></div>
-                    </div>
-                </div>
-
-                <!-- ডান দিকের ভবন -->
-                <div class="anim-building-right">
-                    <span>MB</span>
-                </div>
-
-                <div class="anim-worker">
-                    <div class="worker-head"></div>
-                    <div class="worker-body"></div>
-                </div>
-
-                <!-- এম্বুলেন্স / গাড়ি ও MB Blood Bank লেখা -->
-                <div class="anim-truck">
-                    <div class="truck-body">
-                        <span class="truck-label">MB Blood Bank</span>
-                        <div class="truck-wheels">
-                            <div class="wheel"></div>
-                            <div class="wheel"></div>
-                        </div>
-                    </div>
-                    <div class="truck-cabin">
-                        <div class="truck-wheels" style="left:5px; right:5px;">
-                            <div class="wheel"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- রাস্তা -->
-                <div class="anim-road">
-                    <div class="road-stripe"></div>
-                    <div class="road-stripe"></div>
-                    <div class="road-stripe"></div>
-                    <div class="road-stripe"></div>
+                    <div class="wheel wheel-front"></div>
+                    <div class="wheel wheel-back"></div>
                 </div>
             </div>
         </div>
+    </section>
+
+    <!-- AMBULANCE -->
+    <section id="ambulance">
+        <h2 class="section-title">🚑 এম্বুলেন্স সেবা</h2>
 
         <div class="glass form-box">
             <p style="text-align:center; margin-bottom: 15px; font-weight: 700;">
