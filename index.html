@@ -284,6 +284,82 @@ input:focus,select:focus,textarea:focus{
     color:#9b267e;
 }
 
+/* Live Map Network Animation Section Styles */
+.map-network-container {
+    background: #0f172a;
+    border-radius: 28px;
+    padding: 30px 20px;
+    color: #ffffff;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.map-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.map-badge {
+    background: rgba(16, 185, 129, 0.2);
+    border: 1px solid #10b981;
+    color: #34d399;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.map-badge::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: #34d399;
+    border-radius: 50%;
+    animation: pulse-dot 1.5s infinite;
+}
+
+@keyframes pulse-dot {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+}
+
+.map-canvas-wrapper {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    background: radial-gradient(circle at center, #1e293b 0%, #0b1120 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#networkCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.map-footer-text {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 13px;
+    color: #94a3b8;
+}
+
 /* Yellow Fund Section Design */
 .yellow-fund-box {
     background: linear-gradient(135deg, #fce38a, #f38181);
@@ -495,147 +571,6 @@ input:focus,select:focus,textarea:focus{
     font-size: 14px;
     margin: 3px 0;
     color: #29123f;
-}
-
-/* ==========================================
-   MB BLOOD BANK CUSTOM UNIQUE ANIMATION CSS
-   ========================================== */
-.mb-delivery-animation-container {
-    width: 100%;
-    height: 150px;
-    background: #ffffff;
-    border-radius: 20px;
-    overflow: hidden;
-    position: relative;
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.04);
-    margin-bottom: 15px;
-    border: 1px solid rgba(220, 20, 60, 0.15);
-}
-
-/* Background sceneries */
-.mb-scenery {
-    position: absolute;
-    bottom: 25px;
-    width: 100%;
-    height: 100%;
-}
-
-.mb-building-left {
-    position: absolute;
-    left: 15px;
-    bottom: 25px;
-    width: 75px;
-    height: 55px;
-    background: #d81b60;
-    border-radius: 8px 8px 0 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-.mb-building-left::after {
-    content: "🩸";
-    font-size: 22px;
-}
-
-.mb-building-right {
-    position: absolute;
-    right: 20px;
-    bottom: 25px;
-    width: 65px;
-    height: 60px;
-    background: #2e7d32;
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-}
-
-/* Road Styling */
-.mb-road {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 25px;
-    background: #263238;
-    border-top: 3px dashed #ffffff;
-}
-
-/* Moving Delivery Truck */
-.mb-truck {
-    position: absolute;
-    bottom: 25px;
-    left: -180px;
-    width: 135px;
-    height: 55px;
-    animation: mbDriveTruck 6s linear infinite;
-}
-
-.mb-truck-body {
-    position: absolute;
-    width: 85px;
-    height: 42px;
-    background: #d32f2f;
-    border-radius: 6px 12px 0 0;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-/* Truck Cabin */
-.mb-truck-cabin {
-    position: absolute;
-    right: -42px;
-    bottom: 0;
-    width: 45px;
-    height: 34px;
-    background: #c62828;
-    border-radius: 0 10px 0 0;
-}
-
-.mb-truck-window {
-    position: absolute;
-    top: 5px;
-    right: 6px;
-    width: 22px;
-    height: 16px;
-    background: #e3f2fd;
-    border-radius: 0 6px 0 0;
-}
-
-/* Truck Wheels */
-.mb-wheel {
-    position: absolute;
-    bottom: -6px;
-    width: 18px;
-    height: 18px;
-    background: #212121;
-    border: 3px solid #cfd8dc;
-    border-radius: 50%;
-    animation: mbRotateWheel .6s linear infinite;
-}
-.mb-wheel.left { left: 15px; }
-.mb-wheel.right { right: 15px; }
-
-/* Truck Branding & Logo */
-.mb-truck-label {
-    position: absolute;
-    top: 9px;
-    left: 8px;
-    font-size: 10px;
-    font-weight: 800;
-    color: #fff;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-}
-
-@keyframes mbDriveTruck {
-    0% { left: -160px; }
-    100% { left: 105%; }
-}
-
-@keyframes mbRotateWheel {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
 }
 
 /* footer */
@@ -938,9 +873,27 @@ footer{
         </div>
     </section>
 
-    <!-- STATS -->
+    <!-- STATS (With Live Map Network Animation) -->
     <section id="stats">
         <h2 class="section-title">📊 রক্তদাতা ও রক্তের অনুরোধের তথ্য</h2>
+
+        <div class="map-network-container">
+            <div class="map-header">
+                <div>
+                    <h3 style="font-size: 18px; font-weight: 700; color: #fff;">দেশ জুড়ে লাইভ নেটওয়ার্ক</h3>
+                    <p style="font-size: 13px; color: #94a3b8; margin-top: 2px;">রক্তদাতা ও জরুরি রক্তের অনুরোধের ডিজিটাল সংযোগ মাধ্যম</p>
+                </div>
+                <div class="map-badge">লাইভ নেটওয়ার্ক সক্রিয়</div>
+            </div>
+
+            <div class="map-canvas-wrapper">
+                <canvas id="networkCanvas"></canvas>
+            </div>
+            
+            <div class="map-footer-text">
+                প্রতিটি বিন্দু হলো একটি রক্তদাতা হাব বা রক্তের অনুরোধ। সংযোগ রেখাগুলো লাইভ আপডেট নির্দেশ করে।
+            </div>
+        </div>
 
         <div class="stats">
             <div class="glass stat">
@@ -965,25 +918,6 @@ footer{
         <h2 class="section-title">🚑 এম্বুলেন্স সেবা</h2>
 
         <div class="glass form-box">
-            <!-- এম্বুলেন্স সেবা অপশনের ঠিক উপরে ইউনিক এনিমেশন -->
-            <div class="mb-delivery-animation-container">
-                <div class="mb-scenery">
-                    <div class="mb-building-left"></div>
-                    <div class="mb-building-right"></div>
-                </div>
-                <div class="mb-road"></div>
-                <div class="mb-truck">
-                    <div class="mb-truck-body">
-                        <div class="mb-truck-label">🩸 MB Blood Bank</div>
-                    </div>
-                    <div class="mb-truck-cabin">
-                        <div class="mb-truck-window"></div>
-                    </div>
-                    <div class="mb-wheel left"></div>
-                    <div class="mb-wheel right"></div>
-                </div>
-            </div>
-
             <p style="text-align:center; margin-bottom: 15px; font-weight: 700;">
                 জরুরি প্রয়োজনে এম্বুলেন্স বুকিং বা যোগাযোগের জন্য নিচের অপশনটিতে ক্লিক করুন
             </p>
@@ -1579,6 +1513,74 @@ function updateStats(){
 
 loadLocations();
 updateStats();
+
+
+/* =========================
+   LIVE NETWORK CANVAS ANIMATION
+========================= */
+const canvas = document.getElementById("networkCanvas");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas() {
+    canvas.width = canvas.parentElement.offsetWidth;
+    canvas.height = canvas.parentElement.offsetHeight;
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+const nodes = [];
+const nodeCount = 28;
+
+for (let i = 0; i < nodeCount; i++) {
+    nodes.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.8,
+        vy: (Math.random() - 0.5) * 0.8,
+        radius: Math.random() * 2.5 + 1.5,
+        color: Math.random() > 0.4 ? "#34d399" : "#fb7185" // Green & Pink blood accent dots
+    });
+}
+
+function animateNetwork() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Update & draw nodes
+    for (let i = 0; i < nodes.length; i++) {
+        let n = nodes[i];
+        n.x += n.vx;
+        n.y += n.vy;
+
+        if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
+        if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+        ctx.fillStyle = n.color;
+        ctx.fill();
+
+        // Connect nearby nodes with glowing lines
+        for (let j = i + 1; j < nodes.length; j++) {
+            let n2 = nodes[j];
+            let dx = n.x - n2.x;
+            let dy = n.y - n2.y;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < 110) {
+                ctx.beginPath();
+                ctx.moveTo(n.x, n.y);
+                ctx.lineTo(n2.x, n2.y);
+                ctx.strokeStyle = `rgba(52, 211, 153, ${1 - dist / 110})`;
+                ctx.lineWidth = 0.8;
+                ctx.stroke();
+            }
+        }
+    }
+
+    requestAnimationFrame(animateNetwork);
+}
+
+animateNetwork();
 
 </script>
 
