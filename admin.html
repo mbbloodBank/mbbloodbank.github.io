@@ -27,6 +27,7 @@
   const analytics = getAnalytics(app);
   const db = getDatabase(app);
 
+  // Expose Firebase functions globally for the app
   window.firebaseDb = { db, ref, set, get, update, remove, child, onValue };
   window.firebaseApp = app;
 </script>
@@ -59,7 +60,127 @@ body{
       linear-gradient(135deg,#f8e5ff,#eee7ff,#ffe8f3);
 }
 
-/* TOPBAR */
+/* ================= LOGIN ================= */
+
+#loginScreen{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.login-card{
+    width:430px;
+    max-width:100%;
+    padding:38px 30px;
+    text-align:center;
+    border-radius:35px;
+    background:rgba(255,255,255,.55);
+    border:1px solid var(--border);
+    backdrop-filter:blur(25px);
+    box-shadow:
+      20px 25px 60px rgba(61,15,88,.25),
+      inset 2px 2px 8px rgba(255,255,255,.8);
+}
+
+.admin-logo{
+    width:90px;
+    height:90px;
+    margin:0 auto 15px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:28px;
+    font-size:42px;
+    background:linear-gradient(145deg,#7025a8,#dd1668);
+    color:#fff;
+    box-shadow:
+      9px 10px 20px rgba(77,20,110,.3),
+      inset 3px 3px 7px rgba(255,255,255,.3);
+}
+
+.login-card h1{
+    font-size:27px;
+}
+
+.login-card h1 span{
+    color:var(--pink);
+}
+
+.login-card p{
+    margin:7px 0 25px;
+    opacity:.7;
+}
+
+.field{
+    text-align:left;
+    margin-bottom:16px;
+}
+
+.field label{
+    display:block;
+    font-weight:800;
+    margin-bottom:6px;
+}
+
+.field input,
+.field select,
+.field textarea{
+    width:100%;
+    padding:14px 15px;
+    border:1px solid rgba(80,30,100,.15);
+    border-radius:16px;
+    outline:none;
+    background:rgba(255,255,255,.78);
+    font-family:inherit;
+    font-size:15px;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+    border-color:#8b39bd;
+    box-shadow:0 0 0 4px rgba(139,57,189,.12);
+}
+
+.main-btn{
+    width:100%;
+    padding:15px;
+    border:0;
+    border-radius:18px;
+    color:#fff;
+    font-family:inherit;
+    font-size:16px;
+    font-weight:900;
+    cursor:pointer;
+    background:linear-gradient(145deg,#6b24a5,#db1768);
+    box-shadow:
+      8px 9px 20px rgba(75,20,105,.3),
+      inset 2px 2px 5px rgba(255,255,255,.3);
+    transition:.25s;
+}
+
+.main-btn:hover{
+    transform:translateY(-3px);
+}
+
+.login-error{
+    display:none;
+    margin-top:15px;
+    padding:12px;
+    border-radius:14px;
+    color:#9e1223;
+    background:rgba(255,0,30,.08);
+    font-weight:700;
+}
+
+/* ================= APP ================= */
+
+#adminApp{
+    display:none;
+}
+
 .topbar{
     height:75px;
     position:fixed;
@@ -110,28 +231,26 @@ body{
     font-family:inherit;
     font-weight:800;
     background:rgba(255,255,255,.12);
-    text-decoration: none;
-    display: inline-block;
 }
 
-/* SIDEBAR - Fixed Toggle */
+.logout{
+    background:#d92863;
+}
+
+/* SIDEBAR */
+
 .sidebar{
     position:fixed;
-    left:-280px;
+    left:0;
     top:75px;
     bottom:0;
     width:265px;
     padding:20px 14px;
     z-index:400;
-    background:rgba(43,12,62,.98);
+    background:rgba(43,12,62,.92);
     backdrop-filter:blur(25px);
     color:#fff;
     overflow-y:auto;
-    transition:left 0.3s ease;
-}
-
-.sidebar.open{
-    left:0;
 }
 
 .admin-info{
@@ -185,11 +304,11 @@ body{
     background:#f02d75;
 }
 
-/* MAIN CONTENT */
+/* MAIN */
+
 .main{
-    margin-left:0;
+    margin-left:265px;
     padding:100px 28px 40px;
-    transition:margin-left 0.3s ease;
 }
 
 .page{
@@ -214,6 +333,7 @@ body{
 }
 
 /* DASHBOARD CARDS */
+
 .dashboard-grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -231,6 +351,17 @@ body{
     box-shadow:
       12px 15px 35px rgba(70,20,100,.13),
       inset 2px 2px 5px rgba(255,255,255,.7);
+}
+
+.dashboard-card:after{
+    content:"";
+    position:absolute;
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    right:-35px;
+    bottom:-35px;
+    background:rgba(150,40,180,.12);
 }
 
 .card-icon{
@@ -256,7 +387,8 @@ body{
     font-weight:700;
 }
 
-/* BOX & TABLES */
+/* GLASS BOX */
+
 .box{
     margin-top:22px;
     padding:23px;
@@ -281,6 +413,11 @@ body{
     font-size:21px;
 }
 
+.search-box{
+    display:flex;
+    gap:10px;
+}
+
 .search-box input{
     width:250px;
     padding:12px 15px;
@@ -301,6 +438,8 @@ body{
     font-family:inherit;
     font-weight:800;
 }
+
+/* TABLE */
 
 .table-scroll{
     overflow-x:auto;
@@ -325,6 +464,14 @@ td{
     vertical-align:middle;
 }
 
+.avatar{
+    width:48px;
+    height:48px;
+    border-radius:15px;
+    object-fit:cover;
+    box-shadow:4px 5px 10px rgba(60,20,80,.15);
+}
+
 .status{
     display:inline-block;
     padding:5px 10px;
@@ -333,9 +480,20 @@ td{
     font-weight:900;
 }
 
-.status.pending{color:#8a6200;background:#fff0b9;}
-.status.approved{color:#137326;background:#d8ffdd;}
-.status.rejected{color:#a11828;background:#ffdce0;}
+.status.pending{
+    color:#8a6200;
+    background:#fff0b9;
+}
+
+.status.approved{
+    color:#137326;
+    background:#d8ffdd;
+}
+
+.status.rejected{
+    color:#a11828;
+    background:#ffdce0;
+}
 
 .actions{
     display:flex;
@@ -354,12 +512,14 @@ td{
     font-weight:800;
 }
 
-.a-green{background:#159447;}
-.a-red{background:#d62a3e;}
-.a-purple{background:#7441b4;}
-.a-black{background:#25212a;}
+.a-green{background:#159447}
+.a-red{background:#d62a3e}
+.a-purple{background:#7441b4}
+.a-black{background:#25212a}
+.a-blue{background:#2478b8}
 
-/* FORMS */
+/* FORM */
+
 .form-grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
@@ -392,21 +552,8 @@ td{
     min-height:100px;
 }
 
-.main-btn{
-    width:100%;
-    padding:15px;
-    border:0;
-    border-radius:18px;
-    color:#fff;
-    font-family:inherit;
-    font-size:16px;
-    font-weight:900;
-    cursor:pointer;
-    background:linear-gradient(145deg,#6b24a5,#db1768);
-    box-shadow:8px 9px 20px rgba(75,20,105,.3);
-}
-
 /* MODAL */
+
 .modal{
     display:none;
     position:fixed;
@@ -443,13 +590,11 @@ td{
 }
 
 .mobile-menu{
-    display:block;
+    display:none;
     border:0;
     color:#fff;
     background:none;
-    font-size:26px;
-    cursor:pointer;
-    padding:5px 10px;
+    font-size:25px;
 }
 
 @media(max-width:1050px){
@@ -458,15 +603,23 @@ td{
     }
 }
 
-@media(min-width:801px){
+@media(max-width:800px){
+    .mobile-menu{
+        display:block;
+    }
     .sidebar{
-        left:0 !important;
+        transform:translateX(-100%);
+        transition:.3s;
+    }
+    .sidebar.open{
+        transform:translateX(0);
     }
     .main{
-        margin-left:265px !important;
+        margin-left:0;
+        padding:95px 15px 30px;
     }
-    .mobile-menu{
-        display:none !important;
+    .topbar{
+        padding:0 14px;
     }
 }
 </style>
@@ -474,6 +627,31 @@ td{
 
 <body>
 
+<!-- LOGIN -->
+<section id="loginScreen">
+    <div class="login-card">
+        <div class="admin-logo">🔐</div>
+        <h1>MB <span>Blood Bank</span></h1>
+        <h2>Admin Panel</h2>
+        <p>শুধুমাত্র অনুমোদিত Admin-এর জন্য</p>
+
+        <div class="field">
+            <label>📧 Admin Gmail</label>
+            <input type="email" id="loginEmail" placeholder="Admin Gmail">
+        </div>
+
+        <div class="field">
+            <label>🔑 Password</label>
+            <input type="password" id="loginPassword" placeholder="Password">
+        </div>
+
+        <button class="main-btn" onclick="adminLogin()">🔐 Login to Admin Panel</button>
+        <div id="loginError" class="login-error">❌ Gmail অথবা Password সঠিক নয়।</div>
+    </div>
+</section>
+
+<!-- ADMIN APP -->
+<div id="adminApp">
 <header class="topbar">
     <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
     <div class="brand">
@@ -481,8 +659,8 @@ td{
         <span>MB Blood Bank Admin</span>
     </div>
     <div class="top-actions">
-        <a href="index.html" class="top-btn" target="_blank">🌐 পাবলিক সাইট</a>
-        <button class="top-btn" onclick="openPage('dashboard', document.querySelector('.side-link'))">🏠 Dashboard</button>
+        <button class="top-btn" onclick="openPage('dashboard')">🏠 Dashboard</button>
+        <button class="top-btn logout" onclick="adminLogout()">Logout</button>
     </div>
 </header>
 
@@ -502,6 +680,7 @@ td{
     <button class="side-link" onclick="openPage('addDonor',this)">➕ Add Donor</button>
     <button class="side-link" onclick="openPage('addAmbulance',this)">🚑 Add Ambulance</button>
     <button class="side-link" onclick="openPage('settings',this)">⚙️ Admin Settings</button>
+    <button class="side-link" onclick="adminLogout()">🚪 Logout</button>
 </aside>
 
 <main class="main">
@@ -555,11 +734,15 @@ td{
 
 <!-- PENDING DONOR -->
 <section id="pendingDonors" class="page">
-    <div class="page-title"><h2>⏳ Pending Donor</h2></div>
+    <div class="page-title">
+        <h2>⏳ Pending Donor</h2>
+    </div>
     <div class="box">
         <div class="box-header">
             <h3>Pending Registration</h3>
-            <div class="search-box"><input id="pendingSearch" placeholder="নাম / ফোন / ID" oninput="renderAll()"></div>
+            <div class="search-box">
+                <input id="pendingSearch" placeholder="নাম / ফোন / ID" oninput="renderAll()">
+            </div>
         </div>
         <div id="pendingTable"></div>
     </div>
@@ -567,11 +750,15 @@ td{
 
 <!-- APPROVED DONOR -->
 <section id="approvedDonors" class="page">
-    <div class="page-title"><h2>✅ Approved Donor</h2></div>
+    <div class="page-title">
+        <h2>✅ Approved Donor</h2>
+    </div>
     <div class="box">
         <div class="box-header">
             <h3>Approved Donor List</h3>
-            <div class="search-box"><input id="approvedSearch" placeholder="Donor খুঁজুন" oninput="renderAll()"></div>
+            <div class="search-box">
+                <input id="approvedSearch" placeholder="Donor খুঁজুন" oninput="renderAll()">
+            </div>
         </div>
         <div id="approvedTable"></div>
     </div>
@@ -579,17 +766,25 @@ td{
 
 <!-- REJECTED DONOR -->
 <section id="rejectedDonors" class="page">
-    <div class="page-title"><h2>❌ Rejected Donor</h2></div>
-    <div class="box"><div id="rejectedTable"></div></div>
+    <div class="page-title">
+        <h2>❌ Rejected Donor</h2>
+    </div>
+    <div class="box">
+        <div id="rejectedTable"></div>
+    </div>
 </section>
 
 <!-- ALL DONORS -->
 <section id="allDonors" class="page">
-    <div class="page-title"><h2>👤 All Donors</h2></div>
+    <div class="page-title">
+        <h2>👤 All Donors</h2>
+    </div>
     <div class="box">
         <div class="box-header">
             <h3>All Donors</h3>
-            <div class="search-box"><input id="allSearch" placeholder="নাম / ফোন / ID" oninput="renderAll()"></div>
+            <div class="search-box">
+                <input id="allSearch" placeholder="নাম / ফোন / ID" oninput="renderAll()">
+            </div>
         </div>
         <div id="allTable"></div>
     </div>
@@ -597,11 +792,15 @@ td{
 
 <!-- BLOOD REQUESTS -->
 <section id="bloodRequests" class="page">
-    <div class="page-title"><h2>🚨 Blood Request Management</h2></div>
+    <div class="page-title">
+        <h2>🚨 Blood Request Management</h2>
+    </div>
     <div class="box">
         <div class="box-header">
             <h3>Blood Requests</h3>
-            <div class="search-box"><input id="requestSearch" placeholder="Patient / Blood" oninput="renderAll()"></div>
+            <div class="search-box">
+                <input id="requestSearch" placeholder="Patient / Blood / ID" oninput="renderAll()">
+            </div>
         </div>
         <div id="requestTable"></div>
     </div>
@@ -609,11 +808,15 @@ td{
 
 <!-- AMBULANCE LIST -->
 <section id="ambulanceList" class="page">
-    <div class="page-title"><h2>🚑 Ambulance List</h2></div>
+    <div class="page-title">
+        <h2>🚑 Ambulance List</h2>
+    </div>
     <div class="box">
         <div class="box-header">
             <h3>Ambulance Services</h3>
-            <div class="search-box"><input id="ambulanceSearch" placeholder="নাম / নাম্বার" oninput="renderAll()"></div>
+            <div class="search-box">
+                <input id="ambulanceSearch" placeholder="নাম / নাম্বার" oninput="renderAll()">
+            </div>
         </div>
         <div id="ambulanceTable"></div>
     </div>
@@ -621,7 +824,9 @@ td{
 
 <!-- ADD DONOR -->
 <section id="addDonor" class="page">
-    <div class="page-title"><h2>➕ Add Donor</h2></div>
+    <div class="page-title">
+        <h2>➕ Add Donor</h2>
+    </div>
     <div class="box">
         <form id="addDonorForm">
             <div class="form-grid">
@@ -647,7 +852,9 @@ td{
 
 <!-- ADD AMBULANCE -->
 <section id="addAmbulance" class="page">
-    <div class="page-title"><h2>🚑 Add New Ambulance</h2></div>
+    <div class="page-title">
+        <h2>🚑 Add New Ambulance</h2>
+    </div>
     <div class="box">
         <form id="addAmbulanceForm">
             <div class="form-grid">
@@ -662,20 +869,23 @@ td{
 
 <!-- SETTINGS -->
 <section id="settings" class="page">
-    <div class="page-title"><h2>⚙️ Admin Settings</h2></div>
+    <div class="page-title">
+        <h2>⚙️ Admin Settings</h2>
+    </div>
     <div class="box">
         <h3>🔐 Current Admin</h3><br>
         <p><b>Gmail:</b> <span id="settingsAdminEmail">monirahmeddhakib.mb@gmail.com</span></p><br>
         <div class="box" style="margin-top:0">
             <b>🔥 Firebase Database Connected</b>
-            <p style="margin-top:8px">পাবলিক ওয়েবসাইট (`index.html`) এবং এই এডমিন প্যানেল একই ফায়ারবেজের ডাটাবেজ শেয়ার করছে।</p>
+            <p style="margin-top:8px">ডেটা এখন রিয়েলটাইম ফায়ারবেজে সেভ হচ্ছে, ফলে যেকোনো ডিভাইস থেকে একই ডেটা দেখা যাবে।</p>
         </div>
     </div>
 </section>
 
 </main>
+</div>
 
-<!-- EDIT DONOR MODAL -->
+<!-- EDIT MODAL -->
 <div id="editModal" class="modal">
     <div class="modal-box">
         <button class="close" onclick="closeEdit()">×</button>
@@ -699,27 +909,48 @@ td{
     </div>
 </div>
 
+<!-- EDIT AMBULANCE MODAL -->
+<div id="editAmbulanceModal" class="modal">
+    <div class="modal-box">
+        <button class="close" onclick="closeAmbulanceEdit()">×</button>
+        <h2>✏ Edit Ambulance</h2><br>
+        <div class="form-grid">
+            <div class="full"><label>🚑 নাম</label><input id="editAmbulName"></div>
+            <div class="full"><label>📞 নাম্বার</label><input id="editAmbulPhone"></div>
+            <div class="full"><label>📍 ঠিকানা</label><textarea id="editAmbulAddress"></textarea></div>
+            <div class="full"><button class="main-btn" onclick="saveEditedAmbulance()">💾 Save Changes</button></div>
+        </div>
+    </div>
+</div>
+
 <script>
+const ADMIN_EMAIL="monirahmeddhakib.mb@gmail.com";
+const ADMIN_PASSWORD="@monir7667";
+
 let globalDonors = [];
 let globalRequests = [];
 let globalAmbulances = [];
 
+// Initialize Firebase Realtime Listeners after login or load
 function initFirebaseListeners() {
     if (!window.firebaseDb) return;
     const { db, ref, onValue } = window.firebaseDb;
 
+    // Donors Listener
     onValue(ref(db, 'donors'), (snapshot) => {
         const data = snapshot.val();
         globalDonors = data ? Object.keys(data).map(key => ({ ...data[key], firebaseKey: key })) : [];
         renderAll();
     });
 
+    // Requests Listener
     onValue(ref(db, 'requests'), (snapshot) => {
         const data = snapshot.val();
         globalRequests = data ? Object.keys(data).map(key => ({ ...data[key], firebaseKey: key })) : [];
         renderAll();
     });
 
+    // Ambulances Listener
     onValue(ref(db, 'ambulances'), (snapshot) => {
         const data = snapshot.val();
         globalAmbulances = data ? Object.keys(data).map(key => ({ ...data[key], firebaseKey: key })) : [];
@@ -727,34 +958,59 @@ function initFirebaseListeners() {
     });
 }
 
-setTimeout(() => {
-    initFirebaseListeners();
-    renderAll();
-}, 500);
+function adminLogin(){
+    const email=document.getElementById("loginEmail").value.trim().toLowerCase();
+    const password=document.getElementById("loginPassword").value;
 
-function openPage(id, button){
-    document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
-    const page = document.getElementById(id);
+    if(email===ADMIN_EMAIL && password===ADMIN_PASSWORD){
+        sessionStorage.setItem("mb_admin_authenticated","true");
+        document.getElementById("loginScreen").style.display="none";
+        document.getElementById("adminApp").style.display="block";
+        initFirebaseListeners();
+        renderAll();
+    }else{
+        document.getElementById("loginError").style.display="block";
+    }
+}
+
+function adminLogout(){
+    sessionStorage.removeItem("mb_admin_authenticated");
+    location.reload();
+}
+
+document.getElementById("loginPassword").addEventListener("keydown",function(e){
+    if(e.key==="Enter") adminLogin();
+});
+
+if(sessionStorage.getItem("mb_admin_authenticated")==="true"){
+    document.getElementById("loginScreen").style.display="none";
+    document.getElementById("adminApp").style.display="block";
+    setTimeout(() => {
+        initFirebaseListeners();
+    }, 500);
+}
+
+function openPage(id,button){
+    document.querySelectorAll(".page").forEach(page=>page.classList.remove("active"));
+    const page=document.getElementById(id);
     if(page) page.classList.add("active");
 
-    document.querySelectorAll(".side-link").forEach(link => link.classList.remove("active"));
+    document.querySelectorAll(".side-link").forEach(link=>link.classList.remove("active"));
     if(button) button.classList.add("active");
 
     document.getElementById("sidebar").classList.remove("open");
     renderAll();
-    window.scrollTo({top: 0, behavior: "smooth"});
+    window.scrollTo({top:0,behavior:"smooth"});
 }
 
 function toggleSidebar(){
-    const sidebar = document.getElementById("sidebar");
-    if(sidebar){
-        sidebar.classList.toggle("open");
-    }
+    document.getElementById("sidebar").classList.toggle("open");
 }
 
+// DASHBOARD & STATS
 function updateDashboard(){
-    const pending = globalDonors.filter(x => x.status === "pending");
-    const approved = globalDonors.filter(x => x.status === "approved");
+    const pending = globalDonors.filter(x=>x.status==="pending");
+    const approved = globalDonors.filter(x=>x.status==="approved");
 
     document.getElementById("dashTotal").textContent = globalDonors.length;
     document.getElementById("dashPending").textContent = pending.length;
@@ -763,19 +1019,20 @@ function updateDashboard(){
 
     document.getElementById("sidePending").textContent = pending.length;
     document.getElementById("sideApproved").textContent = approved.length;
-    document.getElementById("sideRequests").textContent = globalRequests.filter(x => x.status === "pending").length;
+    document.getElementById("sideRequests").textContent = globalRequests.filter(x=>x.status==="pending").length;
 
+    // Recent Pending
     const rp = document.getElementById("recentPending");
     if(!pending.length){
         rp.innerHTML = `<p>বর্তমানে কোনো Pending Donor নেই।</p>`;
     }else{
         rp.innerHTML = `<div class="table-scroll"><table><thead><tr><th>ID</th><th>নাম</th><th>Blood</th><th>Location</th><th>Action</th></tr></thead><tbody>
-        ${pending.slice(-5).reverse().map(d => `
+        ${pending.slice(-5).reverse().map(d=>`
         <tr>
             <td>${escapeHtml(d.id)}</td>
             <td>${escapeHtml(d.name)}</td>
             <td><b>${escapeHtml(d.blood)}</b></td>
-            <td>${escapeHtml(d.district \vert{}\vert{} '')} /${escapeHtml(d.upazila || '')}</td>
+            <td>${escapeHtml(d.district)} /${escapeHtml(d.upazila)}</td>
             <td>
                 <button class="action a-green" onclick="approveDonorByFirebaseKey('${d.firebaseKey}')">✅ Approve</button>
                 <button class="action a-red" onclick="rejectDonorByFirebaseKey('${d.firebaseKey}')">❌ Reject</button>
@@ -784,12 +1041,13 @@ function updateDashboard(){
         </tbody></table></div>`;
     }
 
+    // Recent Requests
     const rr = document.getElementById("recentRequests");
     if(!globalRequests.length){
         rr.innerHTML = `<p>কোনো Blood Request নেই।</p>`;
     }else{
         rr.innerHTML = `<div class="table-scroll"><table><thead><tr><th>ID</th><th>Patient</th><th>Blood</th><th>Bag</th><th>Status</th></tr></thead><tbody>
-        ${globalRequests.slice(-5).reverse().map(x => `
+        ${globalRequests.slice(-5).reverse().map(x=>`
         <tr>
             <td>${escapeHtml(x.id)}</td>
             <td>${escapeHtml(x.patient)}</td>
@@ -801,10 +1059,11 @@ function updateDashboard(){
     }
 }
 
-function donorTable(data, emptyText = "কোনো Donor পাওয়া যায়নি।"){
+// TABLES
+function donorTable(data, emptyText="কোনো Donor পাওয়া যায়নি।"){
     if(!data.length) return `<p>${emptyText}</p>`;
     return `<div class="table-scroll"><table><thead><tr><th>ID</th><th>নাম</th><th>Blood</th><th>Location</th><th>Phone</th><th>Status</th><th>Action</th></tr></thead><tbody>
-    ${data.map(d => `
+    ${data.map(d=>`
     <tr>
         <td><b>${escapeHtml(d.id)}</b></td>
         <td><b>${escapeHtml(d.name)}</b></td>
@@ -813,7 +1072,7 @@ function donorTable(data, emptyText = "কোনো Donor পাওয়া যা
         <td>${escapeHtml(d.phone)}</td>
         <td><span class="status ${d.status}">${escapeHtml(d.status)}</span></td>
         <td><div class="actions">
-            ${d.status === "pending" ? `<button class="action a-green" onclick="approveDonorByFirebaseKey('${d.firebaseKey}')">✅ Approve</button><button class="action a-red" onclick="rejectDonorByFirebaseKey('${d.firebaseKey}')">❌ Reject</button>` : ""}
+            ${d.status==="pending"?`<button class="action a-green" onclick="approveDonorByFirebaseKey('${d.firebaseKey}')">✅ Approve</button><button class="action a-red" onclick="rejectDonorByFirebaseKey('${d.firebaseKey}')">❌ Reject</button>`:""}
             <button class="action a-purple" onclick="editDonorPrompt('${d.firebaseKey}')">✏️ Edit</button>
             <button class="action a-black" onclick="deleteDonorByFirebaseKey('${d.firebaseKey}')">🗑 Delete</button>
         </div></td>
@@ -824,13 +1083,14 @@ function donorTable(data, emptyText = "কোনো Donor পাওয়া যা
 function ambulanceTable(data){
     if(!data.length) return `<p>কোনো এম্বুলেন্স পাওয়া যায়নি।</p>`;
     return `<div class="table-scroll"><table><thead><tr><th>ID</th><th>🚑 নাম</th><th>📞 নাম্বার</th><th>📍 ঠিকানা</th><th>Action</th></tr></thead><tbody>
-    ${data.map(a => `
+    ${data.map(a=>`
     <tr>
         <td><b>${escapeHtml(a.id)}</b></td>
         <td><b>${escapeHtml(a.name)}</b></td>
         <td>${escapeHtml(a.phone)}</td>
         <td>${escapeHtml(a.address)}</td>
         <td><div class="actions">
+            <button class="action a-purple" onclick="editAmbulancePrompt('${a.firebaseKey}')">✏️ Edit</button>
             <button class="action a-black" onclick="deleteAmbulanceByFirebaseKey('${a.firebaseKey}')">🗑️ Delete</button>
         </div></td>
     </tr>`).join("")}
@@ -838,46 +1098,54 @@ function ambulanceTable(data){
 }
 
 function renderAll(){
+    if(document.getElementById("adminApp").style.display!=="block") return;
     updateDashboard();
 
-    let pending = globalDonors.filter(d => d.status === "pending");
+    // Pending
+    let pending = globalDonors.filter(d=>d.status==="pending");
     const ps = document.getElementById("pendingSearch")?.value.toLowerCase().trim();
-    if(ps) pending = pending.filter(d => searchDonor(d, ps));
+    if(ps) pending = pending.filter(d=>searchDonor(d,ps));
     document.getElementById("pendingTable").innerHTML = donorTable(pending, "🎉 কোনো Pending Donor নেই।");
 
-    let approved = globalDonors.filter(d => d.status === "approved");
+    // Approved
+    let approved = globalDonors.filter(d=>d.status==="approved");
     const as = document.getElementById("approvedSearch")?.value.toLowerCase().trim();
-    if(as) approved = approved.filter(d => searchDonor(d, as));
+    if(as) approved = approved.filter(d=>searchDonor(d,as));
     document.getElementById("approvedTable").innerHTML = donorTable(approved, "কোনো Approved Donor নেই।");
 
-    let rejected = globalDonors.filter(d => d.status === "rejected");
+    // Rejected
+    let rejected = globalDonors.filter(d=>d.status==="rejected");
     document.getElementById("rejectedTable").innerHTML = donorTable(rejected, "কোনো Rejected Donor নেই।");
 
+    // All
     let all = globalDonors;
     const alls = document.getElementById("allSearch")?.value.toLowerCase().trim();
-    if(alls) all = all.filter(d => searchDonor(d, alls));
+    if(alls) all = all.filter(d=>searchDonor(d,alls));
     document.getElementById("allTable").innerHTML = donorTable(all, "কোনো Donor নেই।");
 
+    // Requests
     let req = globalRequests;
     const rs = document.getElementById("requestSearch")?.value.toLowerCase().trim();
-    if(rs) req = req.filter(r => String(r.id).toLowerCase().includes(rs) || String(r.patient).toLowerCase().includes(rs));
+    if(rs) req = req.filter(r=>String(r.id).toLowerCase().includes(rs) || String(r.patient).toLowerCase().includes(rs));
     renderRequests(req);
 
+    // Ambulances
     let amb = globalAmbulances;
     const ambs = document.getElementById("ambulanceSearch")?.value.toLowerCase().trim();
-    if(ambs) amb = amb.filter(a => String(a.name).toLowerCase().includes(ambs) || String(a.phone).toLowerCase().includes(ambs));
+    if(ambs) amb = amb.filter(a=>String(a.name).toLowerCase().includes(ambs) || String(a.phone).toLowerCase().includes(ambs));
     document.getElementById("ambulanceTable").innerHTML = ambulanceTable(amb);
 }
 
-function searchDonor(d, q){
+function searchDonor(d,q){
     return [d.id, d.name, d.phone, d.blood, d.district, d.upazila].join(" ").toLowerCase().includes(q);
 }
 
+// FIREBASE ACTIONS (UPDATE/DELETE/APPROVE)
 function approveDonorByFirebaseKey(firebaseKey){
     if(!window.firebaseDb) return;
     const { db, ref, update } = window.firebaseDb;
     update(ref(db, 'donors/' + firebaseKey), { status: 'approved', approvedAt: new Date().toISOString() })
-    .then(() => alert("✅ Donor Approved হয়েছে এবং এখন পাবলিক ওয়েবসাইটে দেখা যাবে।"));
+    .then(() => alert("✅ Donor Approved হয়েছে।"));
 }
 
 function rejectDonorByFirebaseKey(firebaseKey){
@@ -894,6 +1162,7 @@ function deleteDonorByFirebaseKey(firebaseKey){
     remove(ref(db, 'donors/' + firebaseKey));
 }
 
+// EDIT DONOR
 let editingFirebaseKey = null;
 function editDonorPrompt(firebaseKey){
     const d = globalDonors.find(x => x.firebaseKey === firebaseKey);
@@ -936,6 +1205,37 @@ function closeEdit(){
     document.getElementById("editModal").classList.remove("show");
 }
 
+// AMBULANCE ACTIONS
+let editingAmbulanceKey = null;
+function editAmbulancePrompt(firebaseKey){
+    const a = globalAmbulances.find(x => x.firebaseKey === firebaseKey);
+    if(!a) return;
+    editingAmbulanceKey = firebaseKey;
+    document.getElementById("editAmbulName").value = a.name || "";
+    document.getElementById("editAmbulPhone").value = a.phone || "";
+    document.getElementById("editAmbulAddress").value = a.address || "";
+    document.getElementById("editAmbulanceModal").classList.add("show");
+}
+
+function saveEditedAmbulance(){
+    if(!editingAmbulanceKey || !window.firebaseDb) return;
+    const { db, ref, update } = window.firebaseDb;
+    const updatedData = {
+        name: document.getElementById("editAmbulName").value.trim(),
+        phone: document.getElementById("editAmbulPhone").value.trim(),
+        address: document.getElementById("editAmbulAddress").value.trim()
+    };
+    update(ref(db, 'ambulances/' + editingAmbulanceKey), updatedData).then(() => {
+        closeAmbulanceEdit();
+        alert("✅ Ambulance updated.");
+    });
+}
+
+function closeAmbulanceEdit(){
+    editingAmbulanceKey = null;
+    document.getElementById("editAmbulanceModal").classList.remove("show");
+}
+
 function deleteAmbulanceByFirebaseKey(firebaseKey){
     if(!confirm("⚠️ এই এম্বুলেন্সের তথ্য Delete করবেন?")) return;
     if(!window.firebaseDb) return;
@@ -943,24 +1243,26 @@ function deleteAmbulanceByFirebaseKey(firebaseKey){
     remove(ref(db, 'ambulances/' + firebaseKey));
 }
 
-function renderRequests(data = globalRequests){
+// REQUESTS TABLE & ACTIONS
+function renderRequests(data=globalRequests){
     const box = document.getElementById("requestTable");
     if(!data.length){
         box.innerHTML = "<p>কোনো Blood Request নেই।</p>";
         return;
     }
-    box.innerHTML = `<div class="table-scroll"><table><thead><tr><th>ID</th><th>Patient</th><th>Blood</th><th>Bag</th><th>Location</th><th>Hospital</th><th>Status</th><th>Action</th></tr></thead><tbody>
-    ${data.map(r => `
+    box.innerHTML = `<div class="table-scroll"><table><thead><tr><th>ID</th><th>Patient</th><th>Blood</th><th>Bag</th><th>Location</th><th>Hospital</th><th>Date</th><th>Status</th><th>Action</th></tr></thead><tbody>
+    ${data.map(r=>`
     <tr>
         <td>${escapeHtml(r.id)}</td>
         <td><b>${escapeHtml(r.patient)}</b><br>${escapeHtml(r.phone)}</td>
         <td><b>${escapeHtml(r.blood)}</b></td>
         <td>${escapeHtml(r.bags)}</td>
-        <td>${escapeHtml(r.district \vert{}\vert{} '')} /${escapeHtml(r.upazila || '')}</td>
+        <td>${escapeHtml(r.district \vert{}\vert{} "")} / ${escapeHtml(r.upazila || "")}</td>
         <td>${escapeHtml(r.hospital)}</td>
+        <td>${escapeHtml(r.date)}</td>
         <td><span class="status ${r.status}">${escapeHtml(r.status)}</span></td>
         <td><div class="actions">
-            ${r.status === "pending" ? `<button class="action a-green" onclick="approveRequestKey('${r.firebaseKey}')">✅ Approve</button><button class="action a-red" onclick="rejectRequestKey('${r.firebaseKey}')">❌ Reject</button>` : ""}
+            ${r.status==="pending"?`<button class="action a-green" onclick="approveRequestKey('${r.firebaseKey}')">✅ Approve</button><button class="action a-red" onclick="rejectRequestKey('${r.firebaseKey}')">❌ Reject</button>`:""}
             <button class="action a-black" onclick="deleteRequestKey('${r.firebaseKey}')">🗑️ Delete</button>
         </div></td>
     </tr>`).join("")}
@@ -983,7 +1285,8 @@ function deleteRequestKey(key){
     window.firebaseDb.remove(window.firebaseDb.ref(window.firebaseDb.db, 'requests/' + key));
 }
 
-document.getElementById("addDonorForm").addEventListener("submit", function(e){
+// ADD FORMS
+document.getElementById("addDonorForm").addEventListener("submit",function(e){
     e.preventDefault();
     if(!window.firebaseDb) return;
     const { db, ref, push, set } = window.firebaseDb;
@@ -1011,7 +1314,7 @@ document.getElementById("addDonorForm").addEventListener("submit", function(e){
     });
 });
 
-document.getElementById("addAmbulanceForm").addEventListener("submit", function(e){
+document.getElementById("addAmbulanceForm").addEventListener("submit",function(e){
     e.preventDefault();
     if(!window.firebaseDb) return;
     const { db, ref, push, set } = window.firebaseDb;
