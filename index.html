@@ -271,7 +271,6 @@ input:focus,select:focus,textarea:focus{
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:15px;
-    margin-top: 15px;
 }
 
 .stat{
@@ -285,77 +284,123 @@ input:focus,select:focus,textarea:focus{
     color:#9b267e;
 }
 
-/* Live Map Animation Container */
-.map-animation-box {
-    background: #0f1715;
-    border-radius: 24px;
-    padding: 20px;
-    color: #fff;
-    margin-bottom: 20px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+/* Live Map & Animation Styling for Stats Section */
+.stats-map-wrapper {
+    background: #0f172a;
+    border-radius: 28px;
+    padding: 25px;
+    color: white;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
     border: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 25px;
     position: relative;
     overflow: hidden;
 }
 
-.map-badge {
-    display: inline-flex;
+.map-header {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 6px;
-    background: rgba(0, 166, 81, 0.2);
-    color: #00ff88;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.map-badge {
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
     padding: 6px 14px;
     border-radius: 20px;
     font-size: 13px;
-    font-weight: 700;
-    border: 1px solid rgba(0, 255, 136, 0.3);
-    margin-bottom: 15px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid rgba(52, 211, 153, 0.3);
 }
 
-.map-badge span {
+.map-badge::before {
+    content: "";
     width: 8px;
     height: 8px;
-    background: #00ff88;
+    background: #34d399;
     border-radius: 50%;
-    box-shadow: 0 0 8px #00ff88;
+    display: inline-block;
     animation: pulse-dot 1.5s infinite;
 }
 
 @keyframes pulse-dot {
-    0% { transform: scale(0.95); opacity: 0.8; }
-    50% { transform: scale(1.4); opacity: 1; box-shadow: 0 0 12px #00ff88; }
-    100% { transform: scale(0.95); opacity: 0.8; }
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
 }
 
-.map-svg-container {
+.map-container {
+    position: relative;
     width: 100%;
-    height: 280px;
+    height: 320px;
+    background: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
+    border-radius: 20px;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
+    border: 1px solid rgba(255,255,255,0.05);
 }
 
-/* Map Pulse Animation Nodes */
-.pulse-node {
-    animation: radar-pulse 2s infinite;
-    transform-origin: center;
+/* Bangladesh SVG Map styling inside animation */
+.bd-map-svg {
+    width: 100%;
+    height: 100%;
+    max-height: 290px;
+    opacity: 0.85;
+    filter: drop-shadow(0 0 10px rgba(225, 29, 72, 0.3));
 }
 
-@keyframes radar-pulse {
-    0% { r: 3px; opacity: 1; stroke-width: 1px; stroke: #ff3366; }
-    70% { r: 18px; opacity: 0; stroke-width: 3px; stroke: #ff3366; }
-    100% { r: 18px; opacity: 0; stroke-width: 0px; }
+/* Radar Pulse Waves */
+.radar-wave {
+    position: absolute;
+    border: 2px solid rgba(225, 29, 72, 0.6);
+    border-radius: 50%;
+    animation: radar-expand 3s infinite linear;
+    pointer-events: none;
 }
 
+@keyframes radar-expand {
+    0% { width: 0px; height: 0px; opacity: 1; }
+    100% { width: 180px; height: 180px; opacity: 0; }
+}
+
+/* Glowing Nodes */
+.map-node {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #f43f5e;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #f43f5e, 0 0 20px #f43f5e;
+    animation: node-glow 2s infinite alternate;
+}
+
+@keyframes node-glow {
+    0% { transform: scale(0.8); opacity: 0.6; }
+    100% { transform: scale(1.3); opacity: 1; }
+}
+
+/* Connecting Laser/Pulse Lines */
 .connection-line {
-    stroke: rgba(255, 51, 102, 0.4);
-    stroke-dasharray: 4;
-    animation: dash-flow 3s linear infinite;
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #38bdf8, transparent);
+    transform-origin: left center;
+    animation: line-flash 2.5s infinite;
+    pointer-events: none;
 }
 
-@keyframes dash-flow {
-    to { stroke-dashoffset: -20; }
+@keyframes line-flash {
+    0% { opacity: 0.1; }
+    50% { opacity: 0.9; }
+    100% { opacity: 0.1; }
 }
 
 /* Yellow Fund Section Design */
@@ -871,48 +916,46 @@ footer{
         </div>
     </section>
 
-    <!-- STATS & LIVE ANIMATION MAP SECTION -->
+    <!-- STATS WITH LIVE MAP ANIMATION -->
     <section id="stats">
         <h2 class="section-title">📊 রক্তদাতা ও রক্তের অনুরোধের তথ্য</h2>
 
-        <!-- Live Animation Map Container (Like Provided Video) -->
-        <div class="map-animation-box">
-            <div class="map-badge">
-                <span></span> লাইভ রক্তদাতা ও নেটওয়ার্ক নেটওয়ার্ক
+        <!-- Live Animation Map Card -->
+        <div class="stats-map-wrapper">
+            <div class="map-header">
+                <div>
+                    <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 4px;">দেশজুড়ে রক্তদাতা ও রিকোয়েস্ট নেটওয়ার্ক</h3>
+                    <p style="font-size: 12px; color: #94a3b8;">প্রতিটি বিন্দু একটি লাইভ আপডেট। রিয়েল-টাইম সংযোগগুলো দেশের বিভিন্ন প্রান্ত থেকে যুক্ত হচ্ছে।</p>
+                </div>
+                <div class="map-badge">
+                    লাইভ নেটওয়ার্ক সচল
+                </div>
             </div>
-            <h3 style="font-size: 18px; margin-bottom: 5px;">দেশ জুড়ে রক্তের সংযোগ</h3>
-            <p style="font-size: 13px; color: #a0aec0; margin-bottom: 15px;">প্রতিটি বিন্দু একটি এলাকা। লাইভ নোড ও সিগন্যাল দিয়ে রক্তদাতা ও জরুরি রিকোয়েস্টগুলো সংযুক্ত হচ্ছে।</p>
-            
-            <div class="map-svg-container">
-                <svg viewBox="0 0 400 300" width="100%" height="100%">
-                    <!-- Connection Network Lines -->
-                    <line x1="200" y1="150" x2="130" y2="100" class="connection-line" />
-                    <line x1="200" y1="150" x2="270" y2="120" class="connection-line" />
-                    <line x1="200" y1="150" x2="170" y2="220" class="connection-line" />
-                    <line x1="200" y1="150" x2="260" y2="200" class="connection-line" />
-                    <line x1="130" y1="100" x2="90" y2="80" class="connection-line" />
-                    <line x1="270" y1="120" x2="320" y2="90" class="connection-line" />
 
-                    <!-- Background Map Nodes -->
-                    <circle cx="130" cy="100" r="3" fill="#ff3366" />
-                    <circle cx="270" cy="120" r="3" fill="#ffb703" />
-                    <circle cx="170" cy="220" r="3" fill="#00ff88" />
-                    <circle cx="260" cy="200" r="3" fill="#ff3366" />
-                    <circle cx="90" cy="80" r="2" fill="#a0aec0" />
-                    <circle cx="320" cy="90" r="2" fill="#a0aec0" />
-                    <circle cx="110" cy="180" r="2.5" fill="#ffb703" />
-                    <circle cx="290" cy="160" r="2.5" fill="#00ff88" />
-
-                    <!-- Central Active Hub Pulse -->
-                    <circle cx="200" cy="150" class="pulse-node" />
-                    <circle cx="200" cy="150" r="6" fill="#ff3366" />
-
-                    <!-- Outer Animated Pulse Nodes -->
-                    <circle cx="130" cy="100" class="pulse-node" style="animation-delay: 0.5s;" />
-                    <circle cx="270" cy="120" class="pulse-node" style="animation-delay: 1s;" />
-                    <circle cx="170" cy="220" class="pulse-node" style="animation-delay: 1.5s;" />
+            <div class="map-container">
+                <!-- Bangladesh Map Outline SVG or stylized backdrop representation -->
+                <svg class="bd-map-svg" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M250 80 C290 90, 340 110, 360 150 C380 190, 390 230, 350 280 C310 330, 270 380, 220 420 C180 390, 140 340, 130 280 C120 220, 160 150, 210 110 Z" stroke="rgba(244, 63, 94, 0.25)" stroke-dasharray="6 6" stroke-width="2" fill="rgba(244, 63, 94, 0.03)"/>
                 </svg>
+
+                <!-- Animated Nodes and Radar Pulses -->
+                <div class="map-node" style="top: 35%; left: 48%;"></div>
+                <div class="radar-wave" style="top: calc(35% - 90px); left: calc(48% - 90px);"></div>
+
+                <div class="map-node" style="top: 55%; left: 35%;"></div>
+                <div class="radar-wave" style="top: calc(55% - 90px); left: calc(35% - 90px); animation-delay: 1s;"></div>
+
+                <div class="map-node" style="top: 45%; left: 65%;"></div>
+                <div class="radar-wave" style="top: calc(45% - 90px); left: calc(65% - 90px); animation-delay: 2s;"></div>
+
+                <div class="map-node" style="top: 70%; left: 55%;"></div>
+
+                <!-- Connecting laser/pulse lines -->
+                <div class="connection-line" style="top: 35%; left: 48%; width: 90px; transform: rotate(35deg);"></div>
+                <div class="connection-line" style="top: 45%; left: 65%; width: 110px; transform: rotate(155deg);"></div>
             </div>
+            
+            <p style="text-align: center; font-size: 11px; color: #64748b; margin-top: 12px;">ম্যাপটি ডাইনামিক লাইভ আপডেট সিগন্যাল প্রদর্শন করছে।</p>
         </div>
 
         <div class="stats">
@@ -1079,13 +1122,13 @@ footer{
     </div>
 </div>
 
-<!-- Payment Details Instruction Modal -->
+<!-- Payment Details Instruction Modal (Appears when Pay is clicked) -->
 <div id="detailsModal" class="gateway-modal">
     <div class="gateway-box" style="text-align:center; padding:25px;">
         <h3 id="detailsTitle" style="color:#008751; margin-bottom:15px;">পেমেন্ট নির্দেশনা</h3>
         
         <div id="detailsInstructionBox" style="background:#f8fafc; border-radius:16px; padding:18px; text-align:left; font-size:15px; margin-bottom:20px; border:1px solid #e2e8f0; line-height:1.6;">
-            <!-- Dynamic instructions -->
+            <!-- Dynamic instructions with account number -->
         </div>
 
         <button class="yellow-btn" onclick="completePayment()">হোমে ফিরে যান</button>
@@ -1096,6 +1139,7 @@ footer{
     <b>🩸 MB Blood Bank</b><br>
     বৃহত্তম ব্লাড ব্যাংক
 </footer>
+
 
 <script type="module">
 /* =========================
@@ -1115,26 +1159,34 @@ const firebaseConfig = {
   measurementId: "G-D4FJTMQ17C"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 </script>
 
 <script>
+
 /* =========================
    BANGLADESH LOCATION DATA
 ========================= */
-const LOCATION_URL = "https://iqbalhasandev.github.io/bangladesh-geo-json/bangladesh-geo.json";
+
+const LOCATION_URL =
+"https://iqbalhasandev.github.io/bangladesh-geo-json/bangladesh-geo.json";
+
 let locations = [];
 
 async function loadLocations(){
     try{
         const res = await fetch(LOCATION_URL);
         locations = await res.json();
+
         fillDivisions("searchDivision");
         fillDivisions("dDivision");
         fillDivisions("rDivision");
+
     }catch(error){
         console.error(error);
+        alert("বিভাগ/জেলা/উপজেলার তথ্য লোড হয়নি। Internet connection পরীক্ষা করুন।");
     }
 }
 
@@ -1157,6 +1209,7 @@ function getDistrict(div,name){
 }
 
 function setupLocation(divId,districtId,upazilaId){
+
     const div=document.getElementById(divId);
     const dis=document.getElementById(districtId);
     const up=document.getElementById(upazilaId);
@@ -1164,7 +1217,9 @@ function setupLocation(divId,districtId,upazilaId){
     div.addEventListener("change",()=>{
         dis.innerHTML='<option value="">জেলা নির্বাচন করুন</option>';
         up.innerHTML='<option value="">উপজেলা নির্বাচন করুন</option>';
+
         const d=getDivision(div.value);
+
         d?.districts?.forEach(x=>{
             const o=document.createElement("option");
             o.value=x.name;
@@ -1175,8 +1230,10 @@ function setupLocation(divId,districtId,upazilaId){
 
     dis.addEventListener("change",()=>{
         up.innerHTML='<option value="">উপজেলা নির্বাচন করুন</option>';
+
         const d=getDivision(div.value);
         const district=getDistrict(d,dis.value);
+
         district?.upazilas?.forEach(x=>{
             const o=document.createElement("option");
             o.value=x.name;
@@ -1190,10 +1247,14 @@ setupLocation("searchDivision","searchDistrict","searchUpazila");
 setupLocation("dDivision","dDistrict","dUpazila");
 setupLocation("rDivision","rDistrict","rUpazila");
 
+
+/* Menu */
+
 function toggleMenu(){
     document.getElementById("sideMenu").classList.toggle("active");
 }
 
+/* Ambulance Modal Functions */
 function openAmbulanceModal(){
     renderAmbulanceList();
     document.getElementById("ambulanceModal").style.display = "block";
@@ -1213,6 +1274,7 @@ window.onclick = function(event) {
     if (event.target == detailsModal) detailsModal.style.display = "none";
 }
 
+/* Gateway Modal Logic */
 let selectedChannelName = "";
 let selectedAccountNumber = "";
 let currentAmount = 0;
@@ -1231,6 +1293,7 @@ function openGatewayModal(){
     document.getElementById("displayAmount").textContent = "৳ " + Number(amount).toLocaleString();
     document.getElementById("gatewayModal").style.display = "block";
     
+    // Reset selection
     document.querySelectorAll(".channel-card").forEach(c => c.classList.remove("active"));
     const btn = document.getElementById("payActionBtn");
     btn.style.opacity = "0.5";
@@ -1281,6 +1344,7 @@ function selectChannel(cardElement, name, account){
 
 function proceedToPaymentDetails(){
     closeGatewayModal();
+    
     document.getElementById("detailsTitle").textContent = `${selectedChannelName} পেমেন্ট নির্দেশনা`;
     document.getElementById("detailsInstructionBox").innerHTML = `
         <b>নির্বাচিত মাধ্যম:</b> ${selectedChannelName}<br>
@@ -1291,6 +1355,7 @@ function proceedToPaymentDetails(){
         </div>
         <small style="color:#64748b;">❤ MB মানবতা ফান্ডে সহযোগিতার জন্য আপনাকে আন্তরিক ধন্যবাদ</small>
     `;
+
     document.getElementById("detailsModal").style.display = "block";
 }
 
@@ -1301,6 +1366,8 @@ function completePayment(){
     document.getElementById("fundAmount").value = "";
 }
 
+
+/* Render Ambulance List from LocalStorage */
 function renderAmbulanceList(){
     const container = document.getElementById("ambulanceListContainer");
     const ambulances = JSON.parse(localStorage.getItem("mb_ambulances") || "[]");
@@ -1319,6 +1386,9 @@ function renderAmbulanceList(){
     `).join("");
 }
 
+
+/* Local storage */
+
 function getDonors(){
     return JSON.parse(localStorage.getItem("mb_donors")||"[]");
 }
@@ -1331,6 +1401,9 @@ function getRequests(){
     return JSON.parse(localStorage.getItem("mb_requests")||"[]");
 }
 
+
+/* Donor Registration */
+
 function fileToBase64(file){
     return new Promise((resolve,reject)=>{
         const reader=new FileReader();
@@ -1341,8 +1414,11 @@ function fileToBase64(file){
 }
 
 document.getElementById("donorForm").addEventListener("submit",async function(e){
+
     e.preventDefault();
+
     const donors=getDonors();
+
     const id="MB-"+Date.now().toString().slice(-8);
 
     const donor={
@@ -1360,6 +1436,7 @@ document.getElementById("donorForm").addEventListener("submit",async function(e)
     };
 
     const photoFile=document.getElementById("dPhoto").files[0];
+
     if(photoFile){
         donor.photo=await fileToBase64(photoFile);
     }
@@ -1367,13 +1444,24 @@ document.getElementById("donorForm").addEventListener("submit",async function(e)
     donors.push(donor);
     saveDonors(donors);
 
-    alert("আপনার নিবন্ধনের অনুরোধ পাঠানো হয়েছে।\n\nDonor ID: "+id+"\nStatus: Pending");
+    alert(
+      "আপনার নিবন্ধনের অনুরোধ পাঠানো হয়েছে।\n\n"+
+      "Donor ID: "+id+
+      "\nStatus: Pending\n\n"+
+      "Admin যাচাই করে Approve করার পর আপনার Profile তালিকায় প্রদর্শিত হবে।"
+    );
+
     this.reset();
     updateStats();
 });
 
+
+/* Emergency Request */
+
 document.getElementById("requestForm").addEventListener("submit",function(e){
+
     e.preventDefault();
+
     const requests=getRequests();
 
     requests.push({
@@ -1394,12 +1482,18 @@ document.getElementById("requestForm").addEventListener("submit",function(e){
     });
 
     localStorage.setItem("mb_requests",JSON.stringify(requests));
+
     alert("🚨 আপনার রক্তের অনুরোধ সফলভাবে পাঠানো হয়েছে।");
+
     this.reset();
     updateStats();
 });
 
+
+/* Donor Search */
+
 function searchDonors(){
+
     const blood=document.getElementById("searchBlood").value;
     const division=document.getElementById("searchDivision").value;
     const district=document.getElementById("searchDistrict").value;
@@ -1416,25 +1510,43 @@ function searchDonors(){
     const box=document.getElementById("donorResults");
 
     if(!donors.length){
-        box.innerHTML=`<div class="notice full">কোনো Approved Donor পাওয়া যায়নি।</div>`;
+        box.innerHTML=
+          `<div class="notice full">
+             কোনো Approved Donor পাওয়া যায়নি।
+           </div>`;
         return;
     }
 
     box.innerHTML=donors.map(d=>`
+
         <div class="donor-card">
-            ${d.photo ? `<img src="${d.photo}" style="width:75px;height:75px;border-radius:50%;object-fit:cover;margin-bottom:10px">` : `<div class="blood">${d.blood}</div>`}
+
+            ${
+              d.photo
+              ? `<img src="${d.photo}"
+                     style="width:75px;height:75px;border-radius:50%;object-fit:cover;margin-bottom:10px">`
+              : `<div class="blood">${d.blood}</div>`
+            }
+
             <h3>${escapeHtml(d.name)}</h3>
+
             <p><b>🩸 Blood:</b> ${d.blood}</p>
             <p><b>📍</b> ${escapeHtml(d.district)}, ${escapeHtml(d.upazila)}</p>
             <p><b>🏠</b> ${escapeHtml(d.address)}</p>
             <p><b>🆔</b> ${d.id}</p>
+
             <div class="card-actions">
                 <a class="small-btn" href="tel:${d.phone}">📞 Call</a>
-                <a class="small-btn" href="https://wa.me/88${d.phone.replace(/\D/g,'')}" target="_blank">💬 WhatsApp</a>
+                <a class="small-btn"
+                   href="https://wa.me/88${d.phone.replace(/\D/g,'')}"
+                   target="_blank">💬 WhatsApp</a>
             </div>
+
         </div>
+
     `).join("");
 }
+
 
 function escapeHtml(text){
     return String(text||"")
@@ -1444,17 +1556,27 @@ function escapeHtml(text){
       .replace(/"/g,"&quot;");
 }
 
+
+/* Statistics */
+
 function updateStats(){
+
     const donors=getDonors();
     const requests=getRequests();
 
-    document.getElementById("approvedCount").textContent=donors.filter(x=>x.status==="approved").length;
-    document.getElementById("pendingCount").textContent=donors.filter(x=>x.status==="pending").length;
-    document.getElementById("requestCount").textContent=requests.length;
+    document.getElementById("approvedCount").textContent=
+        donors.filter(x=>x.status==="approved").length;
+
+    document.getElementById("pendingCount").textContent=
+        donors.filter(x=>x.status==="pending").length;
+
+    document.getElementById("requestCount").textContent=
+        requests.length;
 }
 
 loadLocations();
 updateStats();
+
 </script>
 
 </body>
