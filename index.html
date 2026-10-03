@@ -521,76 +521,6 @@ input:focus,select:focus,textarea:focus{
     word-break: break-word;
 }
 
-/* --- Steadfast Style Moving Ambulance Animation Styles --- */
-.ambulance-animation-container {
-    margin-top: 18px;
-    width: 100%;
-    height: 140px;
-    background: linear-gradient(135deg, #f3ebfc, #e5d4f8);
-    border-radius: 18px;
-    overflow: hidden;
-    position: relative;
-    border: 1px solid rgba(124, 30, 175, 0.2);
-    box-shadow: inset 0 4px 10px rgba(0,0,0,0.04);
-}
-
-.road {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 35px;
-    background: #2c223b;
-    border-top: 3px dashed #ffffff;
-}
-
-.moving-ambulance {
-    position: absolute;
-    bottom: 22px;
-    left: -120px;
-    font-size: 34px;
-    animation: driveAmbulance 7s linear infinite;
-    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
-}
-
-@keyframes driveAmbulance {
-    0% {
-        left: -120px;
-        transform: scaleX(1);
-    }
-    48% {
-        left: calc(100% - 60px);
-        transform: scaleX(1);
-    }
-    50% {
-        left: calc(100% - 60px);
-        transform: scaleX(-1); /* ঘুরে দাঁড়াবে */
-    }
-    98% {
-        left: -120px;
-        transform: scaleX(-1);
-    }
-    100% {
-        left: -120px;
-        transform: scaleX(1);
-    }
-}
-
-.animated-city-bg {
-    position: absolute;
-    bottom: 35px;
-    width: 200%;
-    display: flex;
-    justify-content: space-around;
-    font-size: 22px;
-    opacity: 0.6;
-    animation: moveBg 14s linear infinite;
-}
-
-@keyframes moveBg {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
 /* Modal Styling */
 .modal{
     display:none;
@@ -991,20 +921,11 @@ footer{
             <p style="text-align:center; margin-bottom: 15px; font-weight: 700;">
                 জরুরি প্রয়োজনে এম্বুলেন্স বুকিং বা যোগাযোগের জন্য নিচের অপশনটিতে ক্লিক করুন
             </p>
-            <div style="display:flex; justify-content:center; margin-bottom: 15px;">
+            <div style="display:flex; justify-content:center;">
                 <div class="contact-card" onclick="openAmbulanceModal()" style="max-width:280px; width:100%;">
                     <div class="contact-icon">🚑</div>
                     <div class="contact-text">এম্বুলেন্স কল করুন</div>
                 </div>
-            </div>
-
-            <!-- Steadfast স্টাইলে এম্বুলেন্স মুভিং এনিমেশন সেকশন -->
-            <div class="ambulance-animation-container">
-                <div class="animated-city-bg">
-                    🏥 🏢 🏨 🏪 🏫 🏡 🏥 🏢 🏨 🏪 🏫 🏡
-                </div>
-                <div class="road"></div>
-                <div class="moving-ambulance">🚑</div>
             </div>
         </div>
     </section>
@@ -1355,7 +1276,7 @@ function selectChannel(cardElement, name, account){
     const btn = document.getElementById("payActionBtn");
     btn.style.opacity = "1";
     btn.style.pointerEvents = "auto";
-    btn.textContent = `Pay ৳${Number(currentAmount).toLocaleString()} via${name}`;
+    btn.textContent = `Pay ৳${Number(currentAmount).toLocaleString()} via ${name}`;
 }
 
 function proceedToPaymentDetails(){
@@ -1547,7 +1468,7 @@ function searchDonors(){
             <h3>${escapeHtml(d.name)}</h3>
 
             <p><b>🩸 Blood:</b> ${d.blood}</p>
-            <p><b>📍</b> ${escapeHtml(d.district)},${escapeHtml(d.upazila)}</p>
+            <p><b>📍</b> ${escapeHtml(d.district)}, ${escapeHtml(d.upazila)}</p>
             <p><b>🏠</b> ${escapeHtml(d.address)}</p>
             <p><b>🆔</b> ${d.id}</p>
 
@@ -1642,7 +1563,7 @@ function animateNetwork() {
         ctx.shadowBlur = 0; // reset
     }
 
-    // Draw connectinglines
+    // Draw connecting lines
     for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
             let dx = particles[i].x - particles[j].x;
@@ -1651,7 +1572,7 @@ function animateNetwork() {
 
             if (dist < maxDistance) {
                 ctx.beginPath();
-                `, moveTo(particles[i].x, particles[i].y);
+                ctx.moveTo(particles[i].x, particles[i].y);
                 ctx.lineTo(particles[j].x, particles[j].y);
                 let alpha = (1 - (dist / maxDistance)) * 0.35;
                 ctx.strokeStyle = `rgba(0, 255, 136, ${alpha})`;
