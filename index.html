@@ -405,94 +405,6 @@ input:focus,select:focus,textarea:focus{
     margin-top: 10px;
 }
 
-/* ==========================================================
-   NEW BLOOD & AMBULANCE DELIVERY ANIMATION BANNER STYLES
-========================================================== */
-.delivery-animation-container {
-    background: #111b15;
-    border-radius: 20px;
-    overflow: hidden;
-    position: relative;
-    height: 160px;
-    margin-bottom: 15px;
-    border: 1px solid rgba(0, 255, 128, 0.15);
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
-    display: flex;
-    align-items: flex-end;
-}
-
-.delivery-sky {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, #0f1f17, #1a2e23);
-}
-
-/* Moving Road */
-.delivery-road {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 35px;
-    background: #27272a;
-    border-top: 3px solid #3f3f46;
-}
-
-.road-stripe {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100%;
-    height: 4px;
-    background: repeating-linear-gradient(
-        to right,
-        #facc15,
-        #facc15 30px,
-        transparent 30px,
-        transparent 60px
-    );
-    animation: moveRoad 1.2s linear infinite;
-}
-
-@keyframes moveRoad {
-    0% { background-position: 0 0; }
-    100% { background-position: -60px 0; }
-}
-
-/* Animated Elements on Road */
-.anim-elements {
-    position: absolute;
-    bottom: 8px;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-end;
-    padding: 0 20px;
-    z-index: 2;
-}
-
-.station-hub {
-    font-size: 24px;
-    background: #008751;
-    padding: 6px 10px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    border: 1px solid #4ade80;
-}
-
-.ambulance-van {
-    font-size: 28px;
-    animation: driveVan 3s ease-in-out infinite alternate;
-}
-
-@keyframes driveVan {
-    0% { transform: translateX(-30px); }
-    100% { transform: translateX(30px); }
-}
-
-.hospital-destination {
-    font-size: 24px;
-}
-
 /* Yellow Fund Section Design */
 .yellow-fund-box {
     background: linear-gradient(135deg, #fce38a, #f38181);
@@ -650,6 +562,82 @@ input:focus,select:focus,textarea:focus{
     font-size: 13px;
     color: #29123f;
     word-break: break-word;
+}
+
+/* =========================================
+   STEADFAST STYLE AMBULANCE ANIMATION CSS
+========================================= */
+.delivery-animation-container {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 15px 10px 10px;
+    position: relative;
+    overflow: hidden;
+    height: 140px;
+    display: flex;
+    align-items: flex-end;
+    border: 1px solid rgba(124, 30, 175, 0.15);
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.03);
+    margin-bottom: 12px;
+}
+
+.delivery-road {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 14px;
+    background: #2b2b2b;
+    border-top: 3px solid #e11d48;
+}
+
+.delivery-road::before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, #fff, #fff 15px, transparent 15px, transparent 30px);
+    animation: roadMove 1s linear infinite;
+}
+
+@keyframes roadMove {
+    0% { background-position: 0 0; }
+    100% { background-position: -30px 0; }
+}
+
+.moving-ambulance {
+    position: absolute;
+    bottom: 12px;
+    left: -80px;
+    font-size: 38px;
+    animation: driveAmbulance 5s linear infinite;
+    filter: drop-shadow(2px 3px 4px rgba(0,0,0,0.2));
+    z-index: 3;
+}
+
+@keyframes driveAmbulance {
+    0% { left: -80px; transform: scaleX(1); }
+    50% { left: calc(100% - 70px); transform: scaleX(1); }
+    50.1% { left: calc(100% - 70px); transform: scaleX(-1); }
+    100% { left: -80px; transform: scaleX(-1); }
+}
+
+.roadside-hospital {
+    position: absolute;
+    bottom: 14px;
+    right: 15px;
+    font-size: 32px;
+    opacity: 0.85;
+}
+
+.roadside-store {
+    position: absolute;
+    bottom: 14px;
+    left: 15px;
+    font-size: 28px;
+    opacity: 0.85;
 }
 
 /* Modal Styling */
@@ -1114,28 +1102,24 @@ footer{
         </div>
     </section>
 
-    <!-- AMBULANCE -->
+    <!-- AMBULANCE WITH STEADFAST STYLE ANIMATION -->
     <section id="ambulance">
         <h2 class="section-title">🚑 এম্বুলেন্স সেবা</h2>
 
         <div class="glass form-box">
-            <!-- রক্ত ও এম্বুলেন্স ডেলিভারি অ্যানিমেশন -->
-            <div class="delivery-animation-container">
-                <div class="delivery-sky"></div>
-                <div class="anim-elements">
-                    <div class="station-hub" title="ব্লাড ব্যাংক পয়েন্ট">🩸</div>
-                    <div class="ambulance-van" title="এম্বুলেন্স সেবা">🚑</div>
-                    <div class="hospital-destination" title="হাসপাতাল">🏥</div>
-                </div>
-                <div class="delivery-road">
-                    <div class="road-stripe"></div>
-                </div>
-            </div>
-
             <p style="text-align:center; margin-bottom: 15px; font-weight: 700;">
                 জরুরি প্রয়োজনে এম্বুলেন্স বুকিং বা যোগাযোগের জন্য নিচের অপশনটিতে ক্লিক করুন
             </p>
-            <div style="display:flex; justify-content:center;">
+
+            <!-- Steadfast স্টাইলের চলমান এম্বুলেন্স অ্যানিমেশন বক্স -->
+            <div class="delivery-animation-container">
+                <div class="roadside-store">🏥</div>
+                <div class="moving-ambulance">🚑</div>
+                <div class="roadside-hospital">🏠</div>
+                <div class="delivery-road"></div>
+            </div>
+
+            <div style="display:flex; justify-content:center; margin-top: 10px;">
                 <div class="contact-card" onclick="openAmbulanceModal()" style="max-width:280px; width:100%;">
                     <div class="contact-icon">🚑</div>
                     <div class="contact-text">এম্বুলেন্স কল করুন</div>
@@ -1151,11 +1135,13 @@ footer{
         <div class="glass form-box">
             <div class="contact-grid">
 
+                <!-- 1. Phone Call -->
                 <a class="contact-card" href="tel:01726232108">
                     <div class="contact-icon">📞</div>
                     <div class="contact-text">01726232108</div>
                 </a>
 
+                <!-- 2. WhatsApp -->
                 <a class="contact-card" href="https://wa.me/8801726232108" target="_blank">
                     <div class="contact-icon">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
@@ -1163,16 +1149,19 @@ footer{
                     <div class="contact-text">WhatsApp</div>
                 </a>
 
+                <!-- 3. SMS -->
                 <a class="contact-card" href="sms:01726232108">
                     <div class="contact-icon">✉️</div>
                     <div class="contact-text">SMS</div>
                 </a>
 
+                <!-- 4. Email -->
                 <a class="contact-card" href="mailto:mbbloodbank@gmail.com">
                     <div class="contact-icon">📧</div>
                     <div class="contact-text">mbbloodbank@gmail.com</div>
                 </a>
 
+                <!-- 5. Facebook Page -->
                 <a class="contact-card" href="https://www.facebook.com/share/14nUzxo73ig/" target="_blank">
                     <div class="contact-icon">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook Page">
@@ -1180,6 +1169,7 @@ footer{
                     <div class="contact-text">Facebook Page</div>
                 </a>
 
+                <!-- 6. Facebook Group -->
                 <a class="contact-card" href="https://www.facebook.com/share/g/1JuuUhn4pe/" target="_blank">
                     <div class="contact-icon">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook Group">
@@ -1223,6 +1213,7 @@ footer{
             <div class="gateway-tab" id="tabNet" onclick="switchGatewayTab('net')">Net Banking</div>
         </div>
 
+        <!-- Mobile Banking Channels -->
         <div id="mobileChannels" class="channel-grid">
             <div class="channel-card" onclick="selectChannel(this, 'bKash', '01726232108')">
                 <span style="font-size:16px; font-weight:bold; color:#e2136e;">bKash</span>
@@ -1242,6 +1233,7 @@ footer{
             </div>
         </div>
 
+        <!-- Net Banking Channels -->
         <div id="netChannels" class="channel-grid" style="display:none;">
             <div class="channel-card" onclick="selectChannel(this, 'DBBL Net Banking', '123.105.XXXXX')">
                 <span style="font-size:15px; font-weight:bold; color:#0055a5;">DBBL Bank</span>
@@ -1265,6 +1257,7 @@ footer{
     </div>
 </div>
 
+<!-- Payment Details Instruction Modal -->
 <div id="detailsModal" class="gateway-modal">
     <div class="gateway-box" style="text-align:center; padding:25px;">
         <h3 id="detailsTitle" style="color:#008751; margin-bottom:15px;">পেমেন্ট নির্দেশনা</h3>
@@ -1280,7 +1273,6 @@ footer{
     <b>🩸 MB Blood Bank</b><br>
     বৃহত্তম ব্লাড ব্যাংক
 </footer>
-
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -1302,23 +1294,18 @@ const analytics = getAnalytics(app);
 </script>
 
 <script>
-const LOCATION_URL =
-"https://iqbalhasandev.github.io/bangladesh-geo-json/bangladesh-geo.json";
-
+const LOCATION_URL = "https://iqbalhasandev.github.io/bangladesh-geo-json/bangladesh-geo.json";
 let locations = [];
 
 async function loadLocations(){
     try{
         const res = await fetch(LOCATION_URL);
         locations = await res.json();
-
         fillDivisions("searchDivision");
         fillDivisions("dDivision");
         fillDivisions("rDivision");
-
     }catch(error){
         console.error(error);
-        alert("বিভাগ/জেলা/উপজেলার তথ্য লোড হয়নি। Internet connection পরীক্ষা করুন।");
     }
 }
 
@@ -1348,9 +1335,7 @@ function setupLocation(divId,districtId,upazilaId){
     div.addEventListener("change",()=>{
         dis.innerHTML='<option value="">জেলা নির্বাচন করুন</option>';
         up.innerHTML='<option value="">উপজেলা নির্বাচন করুন</option>';
-
         const d=getDivision(div.value);
-
         d?.districts?.forEach(x=>{
             const o=document.createElement("option");
             o.value=x.name;
@@ -1361,10 +1346,8 @@ function setupLocation(divId,districtId,upazilaId){
 
     dis.addEventListener("change",()=>{
         up.innerHTML='<option value="">উপজেলা নির্বাচন করুন</option>';
-
         const d=getDivision(div.value);
         const district=getDistrict(d,dis.value);
-
         district?.upazilas?.forEach(x=>{
             const o=document.createElement("option");
             o.value=x.name;
@@ -1377,7 +1360,6 @@ function setupLocation(divId,districtId,upazilaId){
 setupLocation("searchDivision","searchDistrict","searchUpazila");
 setupLocation("dDivision","dDistrict","dUpazila");
 setupLocation("rDivision","rDistrict","rUpazila");
-
 
 function toggleMenu(){
     document.getElementById("sideMenu").classList.toggle("active");
@@ -1533,7 +1515,6 @@ function fileToBase64(file){
 
 document.getElementById("donorForm").addEventListener("submit",async function(e){
     e.preventDefault();
-
     const id="MB-"+Date.now().toString().slice(-8);
 
     const donor={
@@ -1551,7 +1532,6 @@ document.getElementById("donorForm").addEventListener("submit",async function(e)
     };
 
     const photoFile=document.getElementById("dPhoto").files[0];
-
     if(photoFile){
         donor.photo=await fileToBase64(photoFile);
     }
@@ -1560,20 +1540,13 @@ document.getElementById("donorForm").addEventListener("submit",async function(e)
     donors.push(donor);
     saveDonors(donors);
 
-    alert(
-      "আপনার নিবন্ধনের অনুরোধ পাঠানো হয়েছে।\n\n"+
-      "Donor ID: "+id+
-      "\nStatus: Pending\n\n"+
-      "Admin যাচাই করে Approve করার পর আপনার Profile তালিকায় প্রদর্শিত হবে।"
-    );
-
+    alert("আপনার নিবন্ধনের অনুরোধ পাঠানো হয়েছে।\n\nDonor ID: "+id+"\nStatus: Pending");
     this.reset();
     updateStats();
 });
 
 document.getElementById("requestForm").addEventListener("submit",function(e){
     e.preventDefault();
-
     const requests=getRequests();
 
     requests.push({
@@ -1594,9 +1567,7 @@ document.getElementById("requestForm").addEventListener("submit",function(e){
     });
 
     localStorage.setItem("mb_requests",JSON.stringify(requests));
-
     alert("🚨 আপনার রক্তের অনুরোধ সফলভাবে পাঠানো হয়েছে।");
-
     this.reset();
     updateStats();
 });
@@ -1618,34 +1589,21 @@ function searchDonors(){
     const box=document.getElementById("donorResults");
 
     if(!donors.length){
-        box.innerHTML=
-          `<div class="notice full">
-             কোনো Approved Donor পাওয়া যায়নি।
-           </div>`;
+        box.innerHTML=`<div class="notice full">কোনো Approved Donor পাওয়া যায়নি।</div>`;
         return;
     }
 
     box.innerHTML=donors.map(d=>`
         <div class="donor-card">
-            ${
-              d.photo
-              ? `<img src="${d.photo}"
-                     style="width:75px;height:75px;border-radius:50%;object-fit:cover;margin-bottom:10px">`
-              : `<div class="blood">${d.blood}</div>`
-            }
-
+            ${d.photo ? `<img src="${d.photo}" style="width:75px;height:75px;border-radius:50%;object-fit:cover;margin-bottom:10px">` : `<div class="blood">${d.blood}</div>`}
             <h3>${escapeHtml(d.name)}</h3>
-
             <p><b>🩸 Blood:</b> ${d.blood}</p>
             <p><b>📍</b> ${escapeHtml(d.district)}, ${escapeHtml(d.upazila)}</p>
             <p><b>🏠</b> ${escapeHtml(d.address)}</p>
             <p><b>🆔</b> ${d.id}</p>
-
             <div class="card-actions">
                 <a class="small-btn" href="tel:${d.phone}">📞 Call</a>
-                <a class="small-btn"
-                   href="https://wa.me/88${d.phone.replace(/\D/g,'')}"
-                   target="_blank">💬 WhatsApp</a>
+                <a class="small-btn" href="https://wa.me/88${d.phone.replace(/\D/g,'')}" target="_blank">💬 WhatsApp</a>
             </div>
         </div>
     `).join("");
@@ -1663,14 +1621,9 @@ function updateStats(){
     const donors=getDonors();
     const requests=getRequests();
 
-    document.getElementById("approvedCount").textContent=
-        donors.filter(x=>x.status==="approved").length;
-
-    document.getElementById("pendingCount").textContent=
-        donors.filter(x=>x.status==="pending").length;
-
-    document.getElementById("requestCount").textContent=
-        requests.length;
+    document.getElementById("approvedCount").textContent=donors.filter(x=>x.status==="approved").length;
+    document.getElementById("pendingCount").textContent=donors.filter(x=>x.status==="pending").length;
+    document.getElementById("requestCount").textContent=requests.length;
 }
 
 loadLocations();
