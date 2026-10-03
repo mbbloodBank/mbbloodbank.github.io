@@ -284,84 +284,6 @@ input:focus,select:focus,textarea:focus{
     color:#9b267e;
 }
 
-/* --- Live Network Animation Card Styles --- */
-.live-network-section {
-    margin-top: 20px;
-    background: #12081f;
-    border-radius: 28px;
-    padding: 25px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #fff;
-    text-align: center;
-}
-
-.live-network-section h3 {
-    font-size: 24px;
-    font-weight: 800;
-    margin-bottom: 6px;
-    color: #ffffff;
-}
-
-.live-network-section p.sub-title {
-    font-size: 14px;
-    color: #bfa1d9;
-    margin-bottom: 18px;
-}
-
-.live-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(0, 200, 100, 0.15);
-    border: 1px solid rgba(0, 200, 100, 0.3);
-    color: #00ff88;
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 700;
-    margin-bottom: 18px;
-}
-
-.live-dot {
-    width: 9px;
-    height: 9px;
-    background-color: #00ff88;
-    border-radius: 50%;
-    box-shadow: 0 0 10px #00ff88;
-    animation: pulse-dot 1.5s infinite;
-}
-
-@keyframes pulse-dot {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(0, 255, 136, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
-}
-
-.canvas-container {
-    width: 100%;
-    height: 320px;
-    background: #0b0412;
-    border-radius: 20px;
-    overflow: hidden;
-    position: relative;
-    border: 1px solid rgba(255,255,255,0.06);
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
-}
-
-.canvas-container canvas {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
-.network-desc {
-    font-size: 13px;
-    color: #cfb2e6;
-    margin-top: 15px;
-    line-height: 1.5;
-}
-
 /* Yellow Fund Section Design */
 .yellow-fund-box {
     background: linear-gradient(135deg, #fce38a, #f38181);
@@ -895,27 +817,16 @@ footer{
                 Blood Request
             </div>
         </div>
-
-        <!-- লাইভ নেটওয়ার্ক অ্যানিমেশন কার্ড -->
-        <div class="live-network-section">
-            <h3>দেশ জুড়ে লাইভ নেটওয়ার্ক</h3>
-            <p class="sub-title">রক্তদাতা ও জরুরি রক্তের অনুরোধের ডিজিটাল সংযোগ মাধ্যম</p>
-            
-            <div class="live-badge">
-                <span class="live-dot"></span> লাইভ নেটওয়ার্ক সক্রিয়
-            </div>
-
-            <div class="canvas-container">
-                <canvas id="networkCanvas"></canvas>
-            </div>
-
-            <p class="network-desc">প্রতিটি বিন্দু হলো একটি রক্তদাতা বা রক্তের অনুরোধ। সংযোগ রেখাগুলো লাইভ আপডেট নির্দেশ করে।</p>
-        </div>
     </section>
 
     <!-- AMBULANCE -->
     <section id="ambulance">
         <h2 class="section-title">🚑 এম্বুলেন্স সেবা</h2>
+
+        <!-- এম্বুলেন্স সেবা লেখার নিচে এনিমেশন ভিডিও -->
+        <div style="width:100%; max-width:600px; margin:0 auto 20px auto; border-radius:20px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.15);">
+            <video src="http://googleusercontent.com/generated_video_content/4200506770304212428" autoplay loop muted playsinline style="width:100%; display:block; border-radius:20px;"></video>
+        </div>
 
         <div class="glass form-box">
             <p style="text-align:center; margin-bottom: 15px; font-weight: 700;">
@@ -1513,79 +1424,6 @@ function updateStats(){
 
 loadLocations();
 updateStats();
-
-
-/* --- Live Network Canvas Animation Script --- */
-const canvas = document.getElementById('networkCanvas');
-const ctx = canvas.getContext('2d');
-
-let particles = [];
-const particleCount = 28;
-const maxDistance = 110;
-
-function resizeCanvas() {
-    canvas.width = canvas.parentElement.clientWidth;
-    canvas.height = canvas.parentElement.clientHeight;
-}
-
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-for (let i = 0; i < particleCount; i++) {
-    particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.7,
-        vy: (Math.random() - 0.5) * 0.7,
-        radius: Math.random() * 2.5 + 1.5,
-        color: Math.random() > 0.4 ? '#ff3366' : '#00ff88'
-    });
-}
-
-function animateNetwork() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Update and draw particles
-    for (let i = 0; i < particles.length; i++) {
-        let p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = p.color;
-        ctx.fill();
-        ctx.shadowBlur = 0; // reset
-    }
-
-    // Draw connecting lines
-    for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-            let dx = particles[i].x - particles[j].x;
-            let dy = particles[i].y - particles[j].y;
-            let dist = Math.sqrt(dx * dx + dy * dy);
-
-            if (dist < maxDistance) {
-                ctx.beginPath();
-                ctx.moveTo(particles[i].x, particles[i].y);
-                ctx.lineTo(particles[j].x, particles[j].y);
-                let alpha = (1 - (dist / maxDistance)) * 0.35;
-                ctx.strokeStyle = `rgba(0, 255, 136, ${alpha})`;
-                ctx.lineWidth = 1;
-                ctx.stroke();
-            }
-        }
-    }
-
-    requestAnimationFrame(animateNetwork);
-}
-
-animateNetwork();
 
 </script>
 
