@@ -266,143 +266,100 @@ input:focus,select:focus,textarea:focus{
     font-weight:700;
 }
 
-/* stats & map animation container */
-.stats-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    align-items: center;
-}
-
+/* stats */
 .stats{
     display:grid;
-    grid-template-columns:1fr;
+    grid-template-columns:repeat(3,1fr);
     gap:15px;
 }
 
 .stat{
-    padding:20px;
+    padding:25px;
     text-align:center;
 }
 
 .stat strong{
     display:block;
-    font-size:32px;
+    font-size:35px;
     color:#9b267e;
 }
 
-/* Bangladesh Map Animation Box Styles */
-.map-animation-box {
-    background: #0d1b12;
-    border-radius: 24px;
-    padding: 20px;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(0, 255, 128, 0.2);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+/* --- Live Network Animation Card Styles --- */
+.live-network-section {
+    margin-top: 20px;
+    background: #12081f;
+    border-radius: 28px;
+    padding: 25px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     color: #fff;
-    min-height: 380px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    text-align: center;
 }
 
-.map-header {
-    z-index: 2;
+.live-network-section h3 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    color: #ffffff;
 }
 
-.map-header h3 {
-    font-size: 18px;
-    color: #4ade80;
-    margin-bottom: 5px;
+.live-network-section p.sub-title {
+    font-size: 14px;
+    color: #bfa1d9;
+    margin-bottom: 18px;
 }
 
-.map-header p {
-    font-size: 12px;
-    color: #94a3b8;
-    line-height: 1.4;
-}
-
-.badge-live {
+.live-badge {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    background: rgba(34, 197, 94, 0.15);
-    color: #4ade80;
-    padding: 4px 10px;
+    gap: 8px;
+    background: rgba(0, 200, 100, 0.15);
+    border: 1px solid rgba(0, 200, 100, 0.3);
+    color: #00ff88;
+    padding: 6px 16px;
     border-radius: 20px;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
-    margin-bottom: 8px;
-    border: 1px solid rgba(34, 197, 94, 0.3);
+    margin-bottom: 18px;
 }
 
-.badge-live::before {
-    content: "";
-    width: 7px;
-    height: 7px;
-    background: #22c55e;
+.live-dot {
+    width: 9px;
+    height: 9px;
+    background-color: #00ff88;
     border-radius: 50%;
+    box-shadow: 0 0 10px #00ff88;
     animation: pulse-dot 1.5s infinite;
 }
 
 @keyframes pulse-dot {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(0, 255, 136, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
 }
 
-/* SVG Map styling */
-.map-svg-container {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.85;
+.canvas-container {
+    width: 100%;
+    height: 320px;
+    background: #0b0412;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
 }
 
-.map-svg-container svg {
-    width: 85%;
-    height: 85%;
-    max-height: 300px;
+.canvas-container canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
-.radar-ring {
-    animation: radarPulse 3s infinite ease-out;
-    transform-origin: center;
-}
-
-@keyframes radarPulse {
-    0% { r: 5; opacity: 0.8; stroke-width: 2px; }
-    100% { r: 35; opacity: 0; stroke-width: 1px; }
-}
-
-.node-upazila {
-    fill: #f97316;
-    transition: 0.3s;
-}
-
-.node-division {
-    fill: #22c55e;
-    filter: drop-shadow(0 0 6px #22c55e);
-}
-
-.flow-line {
-    stroke-dasharray: 6;
-    animation: flowDash 2.5s linear infinite;
-}
-
-@keyframes flowDash {
-    to { stroke-dashoffset: -24; }
-}
-
-.map-footer-note {
-    font-size: 10px;
-    color: #64748b;
-    z-index: 2;
-    text-align: center;
-    margin-top: 10px;
+.network-desc {
+    font-size: 13px;
+    color: #cfb2e6;
+    margin-top: 15px;
+    line-height: 1.5;
 }
 
 /* Yellow Fund Section Design */
@@ -564,82 +521,6 @@ input:focus,select:focus,textarea:focus{
     word-break: break-word;
 }
 
-/* =========================================
-   STEADFAST STYLE AMBULANCE ANIMATION CSS
-========================================= */
-.delivery-animation-container {
-    background: #ffffff;
-    border-radius: 20px;
-    padding: 15px 10px 10px;
-    position: relative;
-    overflow: hidden;
-    height: 140px;
-    display: flex;
-    align-items: flex-end;
-    border: 1px solid rgba(124, 30, 175, 0.15);
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.03);
-    margin-bottom: 12px;
-}
-
-.delivery-road {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 14px;
-    background: #2b2b2b;
-    border-top: 3px solid #e11d48;
-}
-
-.delivery-road::before {
-    content: "";
-    position: absolute;
-    top: 4px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: repeating-linear-gradient(90deg, #fff, #fff 15px, transparent 15px, transparent 30px);
-    animation: roadMove 1s linear infinite;
-}
-
-@keyframes roadMove {
-    0% { background-position: 0 0; }
-    100% { background-position: -30px 0; }
-}
-
-.moving-ambulance {
-    position: absolute;
-    bottom: 12px;
-    left: -80px;
-    font-size: 38px;
-    animation: driveAmbulance 5s linear infinite;
-    filter: drop-shadow(2px 3px 4px rgba(0,0,0,0.2));
-    z-index: 3;
-}
-
-@keyframes driveAmbulance {
-    0% { left: -80px; transform: scaleX(1); }
-    50% { left: calc(100% - 70px); transform: scaleX(1); }
-    50.1% { left: calc(100% - 70px); transform: scaleX(-1); }
-    100% { left: -80px; transform: scaleX(-1); }
-}
-
-.roadside-hospital {
-    position: absolute;
-    bottom: 14px;
-    right: 15px;
-    font-size: 32px;
-    opacity: 0.85;
-}
-
-.roadside-store {
-    position: absolute;
-    bottom: 14px;
-    left: 15px;
-    font-size: 28px;
-    opacity: 0.85;
-}
-
 /* Modal Styling */
 .modal{
     display:none;
@@ -706,12 +587,6 @@ footer{
 @media(min-width: 768px){
     .contact-grid {
         grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media(max-width:768px){
-    .stats-layout {
-        grid-template-columns: 1fr;
     }
 }
 
@@ -1000,109 +875,45 @@ footer{
         </div>
     </section>
 
-    <!-- STATS WITH BANGLADESH MAP ANIMATION -->
+    <!-- STATS -->
     <section id="stats">
         <h2 class="section-title">📊 রক্তদাতা ও রক্তের অনুরোধের তথ্য</h2>
 
-        <div class="stats-layout">
-            <!-- Stats Counters -->
-            <div class="stats">
-                <div class="glass stat">
-                    <strong id="approvedCount">0</strong>
-                    Approved Donor
-                </div>
-
-                <div class="glass stat">
-                    <strong id="pendingCount">0</strong>
-                    Pending Donor
-                </div>
-
-                <div class="glass stat">
-                    <strong id="requestCount">0</strong>
-                    Blood Request
-                </div>
+        <div class="stats">
+            <div class="glass stat">
+                <strong id="approvedCount">0</strong>
+                Approved Donor
             </div>
 
-            <!-- Map Animation Box with Divisions, Districts & Upazilas -->
-            <div class="map-animation-box">
-                <div class="map-header">
-                    <div class="badge-live">নেটওয়ার্ক সচল</div>
-                    <h3>দেশ জুড়ে রক্ত নেটওয়ার্ক</h3>
-                    <p>প্রতিটি বিন্দু একটি উপজেলা। কমলা বিন্দুগুলো আউটলেট,বিভাগীয় </p>
-                </div>
-
-                <div class="map-svg-container">
-                    <svg viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg">
-                        <g fill="none" stroke="rgba(34, 197, 94, 0.4)" stroke-width="1.5">
-                            <path class="flow-line" d="M140,80 Q170,120 190,160" />
-                            <path class="flow-line" d="M140,80 Q100,110 80,150" />
-                            <path class="flow-line" d="M190,160 Q210,210 220,260" />
-                            <path class="flow-line" d="M80,150 Q90,200 110,240" />
-                            <path class="flow-line" d="M190,160 Q150,200 130,220" />
-                            <path class="flow-line" d="M140,80 L140,160" />
-                        </g>
-
-                        <g>
-                            <circle cx="140" cy="160" r="16" fill="none" stroke="#22c55e" class="radar-ring" style="animation-delay: 0s;" />
-                            <circle cx="140" cy="160" r="4" class="node-division" />
-                            
-                            <circle cx="190" cy="210" r="18" fill="none" stroke="#22c55e" class="radar-ring" style="animation-delay: 0.6s;" />
-                            <circle cx="190" cy="210" r="4" class="node-division" />
-
-                            <circle cx="90" cy="110" r="15" fill="none" stroke="#22c55e" class="radar-ring" style="animation-delay: 1.2s;" />
-                            <circle cx="90" cy="110" r="4" class="node-division" />
-
-                            <circle cx="210" cy="100" r="15" fill="none" stroke="#22c55e" class="radar-ring" style="animation-delay: 0.8s;" />
-                            <circle cx="210" cy="100" r="4" class="node-division" />
-
-                            <circle cx="100" cy="220" r="15" fill="none" stroke="#22c55e" class="radar-ring" style="animation-delay: 1.5s;" />
-                            <circle cx="100" cy="220" r="4" class="node-division" />
-
-                            <circle cx="140" cy="240" r="14" fill="none" stroke="#22c55e" class="radar-ring" style="animation-delay: 0.3s;" />
-                            <circle cx="140" cy="240" r="4" class="node-division" />
-
-                            <circle cx="90" cy="60" r="12" fill="none" stroke="#22c55e" class="radar-ring" style="animation-delay: 1.8s;" />
-                            <circle cx="90" cy="60" r="3.5" class="node-division" />
-
-                            <circle cx="150" cy="100" r="12" fill="none" stroke="#22c55e" class="radar-ring" style="animation-delay: 0.9s;" />
-                            <circle cx="150" cy="100" r="3.5" class="node-division" />
-                        </g>
-
-                        <g>
-                            <circle cx="130" cy="150" r="2" class="node-upazila" />
-                            <circle cx="150" cy="170" r="2" class="node-upazila" />
-                            <circle cx="145" cy="145" r="2.5" class="node-upazila" />
-                            <circle cx="135" cy="175" r="2" class="node-upazila" />
-
-                            <circle cx="180" cy="200" r="2" class="node-upazila" />
-                            <circle cx="200" cy="225" r="2.5" class="node-upazila" />
-                            <circle cx="185" cy="230" r="2" class="node-upazila" />
-
-                            <circle cx="75" cy="100" r="2" class="node-upazila" />
-                            <circle cx="105" cy="120" r="2" class="node-upazila" />
-                            <circle cx="85" cy="70" r="2" class="node-upazila" />
-                            <circle cx="100" cy="50" r="2" class="node-upazila" />
-
-                            <circle cx="225" cy="90" r="2" class="node-upazila" />
-                            <circle cx="200" cy="115" r="2" class="node-upazila" />
-                            <circle cx="160" cy="90" r="2" class="node-upazila" />
-
-                            <circle cx="85" cy="210" r="2" class="node-upazila" />
-                            <circle cx="115" cy="235" r="2" class="node-upazila" />
-                            <circle cx="130" cy="255" r="2" class="node-upazila" />
-                            <circle cx="155" cy="230" r="2" class="node-upazila" />
-                        </g>
-                    </svg>
-                </div>
-
-                <div class="map-footer-note">
-                    রুটগুলো উদাহরণস্বরূপ। সীমানা © geoBoundaries, CC BY 4.0
-                </div>
+            <div class="glass stat">
+                <strong id="pendingCount">0</strong>
+                Pending Donor
             </div>
+
+            <div class="glass stat">
+                <strong id="requestCount">0</strong>
+                Blood Request
+            </div>
+        </div>
+
+        <!-- লাইভ নেটওয়ার্ক অ্যানিমেশন কার্ড -->
+        <div class="live-network-section">
+            <h3>দেশ জুড়ে লাইভ নেটওয়ার্ক</h3>
+            <p class="sub-title">রক্তদাতা ও জরুরি রক্তের অনুরোধের ডিজিটাল সংযোগ মাধ্যম</p>
+            
+            <div class="live-badge">
+                <span class="live-dot"></span> লাইভ নেটওয়ার্ক সক্রিয়
+            </div>
+
+            <div class="canvas-container">
+                <canvas id="networkCanvas"></canvas>
+            </div>
+
+            <p class="network-desc">প্রতিটি বিন্দু হলো একটি রক্তদাতা বা রক্তের অনুরোধ। সংযোগ রেখাগুলো লাইভ আপডেট নির্দেশ করে।</p>
         </div>
     </section>
 
-    <!-- AMBULANCE WITH STEADFAST STYLE ANIMATION -->
+    <!-- AMBULANCE -->
     <section id="ambulance">
         <h2 class="section-title">🚑 এম্বুলেন্স সেবা</h2>
 
@@ -1110,16 +921,7 @@ footer{
             <p style="text-align:center; margin-bottom: 15px; font-weight: 700;">
                 জরুরি প্রয়োজনে এম্বুলেন্স বুকিং বা যোগাযোগের জন্য নিচের অপশনটিতে ক্লিক করুন
             </p>
-
-            <!-- Steadfast স্টাইলের চলমান এম্বুলেন্স অ্যানিমেশন বক্স -->
-            <div class="delivery-animation-container">
-                <div class="roadside-store">🏥</div>
-                <div class="moving-ambulance">🚑</div>
-                <div class="roadside-hospital">🏠</div>
-                <div class="delivery-road"></div>
-            </div>
-
-            <div style="display:flex; justify-content:center; margin-top: 10px;">
+            <div style="display:flex; justify-content:center;">
                 <div class="contact-card" onclick="openAmbulanceModal()" style="max-width:280px; width:100%;">
                     <div class="contact-icon">🚑</div>
                     <div class="contact-text">এম্বুলেন্স কল করুন</div>
@@ -1257,12 +1059,13 @@ footer{
     </div>
 </div>
 
-<!-- Payment Details Instruction Modal -->
+<!-- Payment Details Instruction Modal (Appears when Pay is clicked) -->
 <div id="detailsModal" class="gateway-modal">
     <div class="gateway-box" style="text-align:center; padding:25px;">
         <h3 id="detailsTitle" style="color:#008751; margin-bottom:15px;">পেমেন্ট নির্দেশনা</h3>
         
         <div id="detailsInstructionBox" style="background:#f8fafc; border-radius:16px; padding:18px; text-align:left; font-size:15px; margin-bottom:20px; border:1px solid #e2e8f0; line-height:1.6;">
+            <!-- Dynamic instructions with account number -->
         </div>
 
         <button class="yellow-btn" onclick="completePayment()">হোমে ফিরে যান</button>
@@ -1274,7 +1077,11 @@ footer{
     বৃহত্তম ব্লাড ব্যাংক
 </footer>
 
+
 <script type="module">
+/* =========================
+   FIREBASE INITIALIZATION
+========================= */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
 
@@ -1289,23 +1096,34 @@ const firebaseConfig = {
   measurementId: "G-D4FJTMQ17C"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 </script>
 
 <script>
-const LOCATION_URL = "https://iqbalhasandev.github.io/bangladesh-geo-json/bangladesh-geo.json";
+
+/* =========================
+   BANGLADESH LOCATION DATA
+========================= */
+
+const LOCATION_URL =
+"https://iqbalhasandev.github.io/bangladesh-geo-json/bangladesh-geo.json";
+
 let locations = [];
 
 async function loadLocations(){
     try{
         const res = await fetch(LOCATION_URL);
         locations = await res.json();
+
         fillDivisions("searchDivision");
         fillDivisions("dDivision");
         fillDivisions("rDivision");
+
     }catch(error){
         console.error(error);
+        alert("বিভাগ/জেলা/উপজেলার তথ্য লোড হয়নি। Internet connection পরীক্ষা করুন।");
     }
 }
 
@@ -1328,6 +1146,7 @@ function getDistrict(div,name){
 }
 
 function setupLocation(divId,districtId,upazilaId){
+
     const div=document.getElementById(divId);
     const dis=document.getElementById(districtId);
     const up=document.getElementById(upazilaId);
@@ -1335,7 +1154,9 @@ function setupLocation(divId,districtId,upazilaId){
     div.addEventListener("change",()=>{
         dis.innerHTML='<option value="">জেলা নির্বাচন করুন</option>';
         up.innerHTML='<option value="">উপজেলা নির্বাচন করুন</option>';
+
         const d=getDivision(div.value);
+
         d?.districts?.forEach(x=>{
             const o=document.createElement("option");
             o.value=x.name;
@@ -1346,8 +1167,10 @@ function setupLocation(divId,districtId,upazilaId){
 
     dis.addEventListener("change",()=>{
         up.innerHTML='<option value="">উপজেলা নির্বাচন করুন</option>';
+
         const d=getDivision(div.value);
         const district=getDistrict(d,dis.value);
+
         district?.upazilas?.forEach(x=>{
             const o=document.createElement("option");
             o.value=x.name;
@@ -1361,10 +1184,14 @@ setupLocation("searchDivision","searchDistrict","searchUpazila");
 setupLocation("dDivision","dDistrict","dUpazila");
 setupLocation("rDivision","rDistrict","rUpazila");
 
+
+/* Menu */
+
 function toggleMenu(){
     document.getElementById("sideMenu").classList.toggle("active");
 }
 
+/* Ambulance Modal Functions */
 function openAmbulanceModal(){
     renderAmbulanceList();
     document.getElementById("ambulanceModal").style.display = "block";
@@ -1384,6 +1211,7 @@ window.onclick = function(event) {
     if (event.target == detailsModal) detailsModal.style.display = "none";
 }
 
+/* Gateway Modal Logic */
 let selectedChannelName = "";
 let selectedAccountNumber = "";
 let currentAmount = 0;
@@ -1402,6 +1230,7 @@ function openGatewayModal(){
     document.getElementById("displayAmount").textContent = "৳ " + Number(amount).toLocaleString();
     document.getElementById("gatewayModal").style.display = "block";
     
+    // Reset selection
     document.querySelectorAll(".channel-card").forEach(c => c.classList.remove("active"));
     const btn = document.getElementById("payActionBtn");
     btn.style.opacity = "0.5";
@@ -1474,6 +1303,8 @@ function completePayment(){
     document.getElementById("fundAmount").value = "";
 }
 
+
+/* Render Ambulance List from LocalStorage */
 function renderAmbulanceList(){
     const container = document.getElementById("ambulanceListContainer");
     const ambulances = JSON.parse(localStorage.getItem("mb_ambulances") || "[]");
@@ -1492,6 +1323,9 @@ function renderAmbulanceList(){
     `).join("");
 }
 
+
+/* Local storage */
+
 function getDonors(){
     return JSON.parse(localStorage.getItem("mb_donors")||"[]");
 }
@@ -1504,6 +1338,9 @@ function getRequests(){
     return JSON.parse(localStorage.getItem("mb_requests")||"[]");
 }
 
+
+/* Donor Registration */
+
 function fileToBase64(file){
     return new Promise((resolve,reject)=>{
         const reader=new FileReader();
@@ -1514,7 +1351,11 @@ function fileToBase64(file){
 }
 
 document.getElementById("donorForm").addEventListener("submit",async function(e){
+
     e.preventDefault();
+
+    const donors=getDonors();
+
     const id="MB-"+Date.now().toString().slice(-8);
 
     const donor={
@@ -1532,21 +1373,32 @@ document.getElementById("donorForm").addEventListener("submit",async function(e)
     };
 
     const photoFile=document.getElementById("dPhoto").files[0];
+
     if(photoFile){
         donor.photo=await fileToBase64(photoFile);
     }
 
-    const donors=getDonors();
     donors.push(donor);
     saveDonors(donors);
 
-    alert("আপনার নিবন্ধনের অনুরোধ পাঠানো হয়েছে।\n\nDonor ID: "+id+"\nStatus: Pending");
+    alert(
+      "আপনার নিবন্ধনের অনুরোধ পাঠানো হয়েছে।\n\n"+
+      "Donor ID: "+id+
+      "\nStatus: Pending\n\n"+
+      "Admin যাচাই করে Approve করার পর আপনার Profile তালিকায় প্রদর্শিত হবে।"
+    );
+
     this.reset();
     updateStats();
 });
 
+
+/* Emergency Request */
+
 document.getElementById("requestForm").addEventListener("submit",function(e){
+
     e.preventDefault();
+
     const requests=getRequests();
 
     requests.push({
@@ -1567,12 +1419,18 @@ document.getElementById("requestForm").addEventListener("submit",function(e){
     });
 
     localStorage.setItem("mb_requests",JSON.stringify(requests));
+
     alert("🚨 আপনার রক্তের অনুরোধ সফলভাবে পাঠানো হয়েছে।");
+
     this.reset();
     updateStats();
 });
 
+
+/* Donor Search */
+
 function searchDonors(){
+
     const blood=document.getElementById("searchBlood").value;
     const division=document.getElementById("searchDivision").value;
     const district=document.getElementById("searchDistrict").value;
@@ -1589,25 +1447,43 @@ function searchDonors(){
     const box=document.getElementById("donorResults");
 
     if(!donors.length){
-        box.innerHTML=`<div class="notice full">কোনো Approved Donor পাওয়া যায়নি।</div>`;
+        box.innerHTML=
+          `<div class="notice full">
+             কোনো Approved Donor পাওয়া যায়নি।
+           </div>`;
         return;
     }
 
     box.innerHTML=donors.map(d=>`
+
         <div class="donor-card">
-            ${d.photo ? `<img src="${d.photo}" style="width:75px;height:75px;border-radius:50%;object-fit:cover;margin-bottom:10px">` : `<div class="blood">${d.blood}</div>`}
+
+            ${
+              d.photo
+              ? `<img src="${d.photo}"
+                     style="width:75px;height:75px;border-radius:50%;object-fit:cover;margin-bottom:10px">`
+              : `<div class="blood">${d.blood}</div>`
+            }
+
             <h3>${escapeHtml(d.name)}</h3>
+
             <p><b>🩸 Blood:</b> ${d.blood}</p>
             <p><b>📍</b> ${escapeHtml(d.district)}, ${escapeHtml(d.upazila)}</p>
             <p><b>🏠</b> ${escapeHtml(d.address)}</p>
             <p><b>🆔</b> ${d.id}</p>
+
             <div class="card-actions">
                 <a class="small-btn" href="tel:${d.phone}">📞 Call</a>
-                <a class="small-btn" href="https://wa.me/88${d.phone.replace(/\D/g,'')}" target="_blank">💬 WhatsApp</a>
+                <a class="small-btn"
+                   href="https://wa.me/88${d.phone.replace(/\D/g,'')}"
+                   target="_blank">💬 WhatsApp</a>
             </div>
+
         </div>
+
     `).join("");
 }
+
 
 function escapeHtml(text){
     return String(text||"")
@@ -1617,17 +1493,100 @@ function escapeHtml(text){
       .replace(/"/g,"&quot;");
 }
 
+
+/* Statistics */
+
 function updateStats(){
+
     const donors=getDonors();
     const requests=getRequests();
 
-    document.getElementById("approvedCount").textContent=donors.filter(x=>x.status==="approved").length;
-    document.getElementById("pendingCount").textContent=donors.filter(x=>x.status==="pending").length;
-    document.getElementById("requestCount").textContent=requests.length;
+    document.getElementById("approvedCount").textContent=
+        donors.filter(x=>x.status==="approved").length;
+
+    document.getElementById("pendingCount").textContent=
+        donors.filter(x=>x.status==="pending").length;
+
+    document.getElementById("requestCount").textContent=
+        requests.length;
 }
 
 loadLocations();
 updateStats();
+
+
+/* --- Live Network Canvas Animation Script --- */
+const canvas = document.getElementById('networkCanvas');
+const ctx = canvas.getContext('2d');
+
+let particles = [];
+const particleCount = 28;
+const maxDistance = 110;
+
+function resizeCanvas() {
+    canvas.width = canvas.parentElement.clientWidth;
+    canvas.height = canvas.parentElement.clientHeight;
+}
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+for (let i = 0; i < particleCount; i++) {
+    particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.7,
+        vy: (Math.random() - 0.5) * 0.7,
+        radius: Math.random() * 2.5 + 1.5,
+        color: Math.random() > 0.4 ? '#ff3366' : '#00ff88'
+    });
+}
+
+function animateNetwork() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Update and draw particles
+    for (let i = 0; i < particles.length; i++) {
+        let p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = p.color;
+        ctx.fill();
+        ctx.shadowBlur = 0; // reset
+    }
+
+    // Draw connecting lines
+    for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+            let dx = particles[i].x - particles[j].x;
+            let dy = particles[i].y - particles[j].y;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < maxDistance) {
+                ctx.beginPath();
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                let alpha = (1 - (dist / maxDistance)) * 0.35;
+                ctx.strokeStyle = `rgba(0, 255, 136, ${alpha})`;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+        }
+    }
+
+    requestAnimationFrame(animateNetwork);
+}
+
+animateNetwork();
+
 </script>
 
 </body>
