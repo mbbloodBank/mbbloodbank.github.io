@@ -266,11 +266,12 @@ input:focus,select:focus,textarea:focus{
     font-weight:700;
 }
 
-/* stats */
+/* stats & map styles */
 .stats{
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:15px;
+    margin-bottom: 25px;
 }
 
 .stat{
@@ -284,48 +285,56 @@ input:focus,select:focus,textarea:focus{
     color:#9b267e;
 }
 
-/* Live Map & Animation Styling for Stats Section */
-.stats-map-wrapper {
-    background: #0f172a;
+/* Bangladesh Map Animation Container Styling */
+.map-animation-container {
+    background: #0f1715;
     border-radius: 28px;
-    padding: 25px;
-    color: white;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    padding: 30px 20px;
+    color: #ffffff;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
     border: 1px solid rgba(255,255,255,0.1);
-    margin-bottom: 25px;
     position: relative;
     overflow: hidden;
 }
 
 .map-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    flex-wrap: wrap;
-    gap: 10px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.map-badge {
-    background: rgba(16, 185, 129, 0.2);
-    color: #34d399;
+.map-header h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #f8fafc;
+    margin-bottom: 8px;
+}
+
+.map-header p {
+    font-size: 14px;
+    color: #94a3b8;
+    line-height: 1.6;
+}
+
+.network-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
     padding: 6px 14px;
     border-radius: 20px;
     font-size: 13px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    border: 1px solid rgba(52, 211, 153, 0.3);
+    color: #34d399;
+    font-weight: 600;
+    margin-bottom: 15px;
 }
 
-.map-badge::before {
-    content: "";
+.network-status-badge span {
     width: 8px;
     height: 8px;
     background: #34d399;
     border-radius: 50%;
-    display: inline-block;
+    box-shadow: 0 0 10px #34d399;
     animation: pulse-dot 1.5s infinite;
 }
 
@@ -335,72 +344,28 @@ input:focus,select:focus,textarea:focus{
     100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
 }
 
-.map-container {
+.map-box-wrapper {
     position: relative;
     width: 100%;
-    height: 320px;
-    background: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
-    border-radius: 20px;
-    overflow: hidden;
+    max-width: 500px;
+    margin: 0 auto;
+    aspect-ratio: 1 / 1.1;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(255,255,255,0.05);
 }
 
-/* Bangladesh SVG Map styling inside animation */
-.bd-map-svg {
+.map-svg-bg {
     width: 100%;
     height: 100%;
-    max-height: 290px;
-    opacity: 0.85;
-    filter: drop-shadow(0 0 10px rgba(225, 29, 72, 0.3));
+    filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.2));
 }
 
-/* Radar Pulse Waves */
-.radar-wave {
-    position: absolute;
-    border: 2px solid rgba(225, 29, 72, 0.6);
-    border-radius: 50%;
-    animation: radar-expand 3s infinite linear;
-    pointer-events: none;
-}
-
-@keyframes radar-expand {
-    0% { width: 0px; height: 0px; opacity: 1; }
-    100% { width: 180px; height: 180px; opacity: 0; }
-}
-
-/* Glowing Nodes */
-.map-node {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: #f43f5e;
-    border-radius: 50%;
-    box-shadow: 0 0 10px #f43f5e, 0 0 20px #f43f5e;
-    animation: node-glow 2s infinite alternate;
-}
-
-@keyframes node-glow {
-    0% { transform: scale(0.8); opacity: 0.6; }
-    100% { transform: scale(1.3); opacity: 1; }
-}
-
-/* Connecting Laser/Pulse Lines */
-.connection-line {
-    position: absolute;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #38bdf8, transparent);
-    transform-origin: left center;
-    animation: line-flash 2.5s infinite;
-    pointer-events: none;
-}
-
-@keyframes line-flash {
-    0% { opacity: 0.1; }
-    50% { opacity: 0.9; }
-    100% { opacity: 0.1; }
+.map-footer-note {
+    text-align: center;
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 15px;
 }
 
 /* Yellow Fund Section Design */
@@ -916,47 +881,9 @@ footer{
         </div>
     </section>
 
-    <!-- STATS WITH LIVE MAP ANIMATION -->
+    <!-- STATS & MAP ANIMATION -->
     <section id="stats">
         <h2 class="section-title">📊 রক্তদাতা ও রক্তের অনুরোধের তথ্য</h2>
-
-        <!-- Live Animation Map Card -->
-        <div class="stats-map-wrapper">
-            <div class="map-header">
-                <div>
-                    <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 4px;">দেশজুড়ে রক্তদাতা ও রিকোয়েস্ট নেটওয়ার্ক</h3>
-                    <p style="font-size: 12px; color: #94a3b8;">প্রতিটি বিন্দু একটি লাইভ আপডেট। রিয়েল-টাইম সংযোগগুলো দেশের বিভিন্ন প্রান্ত থেকে যুক্ত হচ্ছে।</p>
-                </div>
-                <div class="map-badge">
-                    লাইভ নেটওয়ার্ক সচল
-                </div>
-            </div>
-
-            <div class="map-container">
-                <!-- Bangladesh Map Outline SVG or stylized backdrop representation -->
-                <svg class="bd-map-svg" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M250 80 C290 90, 340 110, 360 150 C380 190, 390 230, 350 280 C310 330, 270 380, 220 420 C180 390, 140 340, 130 280 C120 220, 160 150, 210 110 Z" stroke="rgba(244, 63, 94, 0.25)" stroke-dasharray="6 6" stroke-width="2" fill="rgba(244, 63, 94, 0.03)"/>
-                </svg>
-
-                <!-- Animated Nodes and Radar Pulses -->
-                <div class="map-node" style="top: 35%; left: 48%;"></div>
-                <div class="radar-wave" style="top: calc(35% - 90px); left: calc(48% - 90px);"></div>
-
-                <div class="map-node" style="top: 55%; left: 35%;"></div>
-                <div class="radar-wave" style="top: calc(55% - 90px); left: calc(35% - 90px); animation-delay: 1s;"></div>
-
-                <div class="map-node" style="top: 45%; left: 65%;"></div>
-                <div class="radar-wave" style="top: calc(45% - 90px); left: calc(65% - 90px); animation-delay: 2s;"></div>
-
-                <div class="map-node" style="top: 70%; left: 55%;"></div>
-
-                <!-- Connecting laser/pulse lines -->
-                <div class="connection-line" style="top: 35%; left: 48%; width: 90px; transform: rotate(35deg);"></div>
-                <div class="connection-line" style="top: 45%; left: 65%; width: 110px; transform: rotate(155deg);"></div>
-            </div>
-            
-            <p style="text-align: center; font-size: 11px; color: #64748b; margin-top: 12px;">ম্যাপটি ডাইনামিক লাইভ আপডেট সিগন্যাল প্রদর্শন করছে।</p>
-        </div>
 
         <div class="stats">
             <div class="glass stat">
@@ -972,6 +899,91 @@ footer{
             <div class="glass stat">
                 <strong id="requestCount">0</strong>
                 Blood Request
+            </div>
+        </div>
+
+        <!-- Bangladesh Interactive Pulse Map Animation Component -->
+        <div class="map-animation-container">
+            <div class="map-header">
+                <div class="network-status-badge"><span></span> লাইভ নেটওয়ার্ক সচল</div>
+                <h3>দেশ জুড়ে রক্তের নেটওয়ার্ক</h3>
+                <p>প্রতিটি বিন্দু একটি উপজেলা। কমলা বিন্দুগুলো আউটলেট ও বিভাগীয় হাব — সব লাইভ আপডেট এখান দিয়েই যায়।</p>
+            </div>
+
+            <div class="map-box-wrapper">
+                <!-- Bangladesh SVG Map with Pulsing Dots & Hub Animations -->
+                <svg class="map-svg-bg" viewBox="0 0 500 550" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Bangladesh Simplified Map Outline (Stylized Path) -->
+                    <path d="M220,40 C245,35 270,55 285,75 C310,70 330,85 345,110 C365,115 375,130 385,150 C410,165 425,185 435,210 C450,225 455,250 440,270 C425,290 410,310 395,330 C380,360 365,390 350,420 C335,445 320,470 305,495 C295,505 285,520 270,525 C255,530 240,515 235,500 C220,475 210,450 200,425 C185,410 175,390 165,370 C150,350 140,330 135,305 C125,290 115,270 120,250 C130,230 145,220 160,205 C175,190 185,170 195,150 C205,120 210,80 220,40 Z" fill="#14261f" stroke="#34d399" stroke-width="2.5" stroke-dasharray="6 4" opacity="0.85"/>
+
+                    <!-- Internal Network Connecting Pulse Lines -->
+                    <g stroke="#34d399" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.6">
+                        <line x1="260" y1="210" x2="330" y2="130" />
+                        <line x1="260" y1="210" x2="180" y2="280" />
+                        <line x1="260" y1="210" x2="280" y2="350" />
+                        <line x1="260" y1="210" x2="330" y2="440" />
+                    </g>
+
+                    <!-- Upazila Small Dots -->
+                    <g fill="#34d399" opacity="0.7">
+                        <circle cx="280" cy="100" r="3" />
+                        <circle cx="310" cy="90" r="2.5" />
+                        <circle cx="340" cy="150" r="3" />
+                        <circle cx="390" cy="190" r="3" />
+                        <circle cx="410" cy="240" r="2.5" />
+                        <circle cx="360" cy="260" r="3" />
+                        <circle cx="310" cy="290" r="3" />
+                        <circle cx="380" cy="350" r="3" />
+                        <circle cx="330" cy="410" r="2.5" />
+                        <circle cx="290" cy="460" r="3" />
+                        <circle cx="230" cy="480" r="2.5" />
+                        <circle cx="160" cy="330" r="3" />
+                        <circle cx="190" cy="270" r="3" />
+                        <circle cx="210" cy="180" r="2.5" />
+                    </g>
+
+                    <!-- Major Regional Hubs (Orange/Yellow Glowing Pulses) -->
+                    <g>
+                        <!-- Dhaka Hub (Center) -->
+                        <circle cx="260" cy="210" r="16" fill="#f59e0b" opacity="0.25">
+                            <animate attributeName="r" values="8;24;8" dur="2.5s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" values="0.6;0;0.6" dur="2.5s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="260" cy="210" r="6" fill="#f59e0b" stroke="#ffffff" stroke-width="1.5"/>
+
+                        <!-- Chittagong Hub (Southeast) -->
+                        <circle cx="330" cy="350" r="14" fill="#f59e0b" opacity="0.25">
+                            <animate attributeName="r" values="6;22;6" dur="3s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" values="0.6;0;0.6" dur="3s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="330" cy="350" r="5" fill="#f59e0b" stroke="#ffffff" stroke-width="1.5"/>
+
+                        <!-- Sylhet Hub (Northeast) -->
+                        <circle cx="330" cy="130" r="12" fill="#f59e0b" opacity="0.25">
+                            <animate attributeName="r" values="6;20;6" dur="2.8s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" values="0.6;0;0.6" dur="2.8s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="330" cy="130" r="5" fill="#f59e0b" stroke="#ffffff" stroke-width="1.5"/>
+
+                        <!-- Rajshahi Hub (Northwest) -->
+                        <circle cx="180" cy="160" r="12" fill="#f59e0b" opacity="0.25">
+                            <animate attributeName="r" values="6;20;6" dur="2.2s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" values="0.6;0;0.6" dur="2.2s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="180" cy="160" r="5" fill="#f59e0b" stroke="#ffffff" stroke-width="1.5"/>
+
+                        <!-- Khulna Hub (Southwest) -->
+                        <circle cx="180" cy="320" r="12" fill="#f59e0b" opacity="0.25">
+                            <animate attributeName="r" values="6;20;6" dur="2.6s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" values="0.6;0;0.6" dur="2.6s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="180" cy="320" r="5" fill="#f59e0b" stroke="#ffffff" stroke-width="1.5"/>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="map-footer-note">
+                রিয়েলটাইম ডেটা নেটওয়ার্ক। সীমানা © geoBoundaries, CC BY 4.0
             </div>
         </div>
     </section>
