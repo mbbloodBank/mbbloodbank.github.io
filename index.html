@@ -368,7 +368,6 @@ input:focus,select:focus,textarea:focus{
     max-height: 300px;
 }
 
-/* Pulsing radar waves on map nodes */
 .radar-ring {
     animation: radarPulse 3s infinite ease-out;
     transform-origin: center;
@@ -404,6 +403,94 @@ input:focus,select:focus,textarea:focus{
     z-index: 2;
     text-align: center;
     margin-top: 10px;
+}
+
+/* ==========================================================
+   NEW BLOOD & AMBULANCE DELIVERY ANIMATION BANNER STYLES
+========================================================== */
+.delivery-animation-container {
+    background: #111b15;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    height: 160px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(0, 255, 128, 0.15);
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+    display: flex;
+    align-items: flex-end;
+}
+
+.delivery-sky {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, #0f1f17, #1a2e23);
+}
+
+/* Moving Road */
+.delivery-road {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 35px;
+    background: #27272a;
+    border-top: 3px solid #3f3f46;
+}
+
+.road-stripe {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 4px;
+    background: repeating-linear-gradient(
+        to right,
+        #facc15,
+        #facc15 30px,
+        transparent 30px,
+        transparent 60px
+    );
+    animation: moveRoad 1.2s linear infinite;
+}
+
+@keyframes moveRoad {
+    0% { background-position: 0 0; }
+    100% { background-position: -60px 0; }
+}
+
+/* Animated Elements on Road */
+.anim-elements {
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding: 0 20px;
+    z-index: 2;
+}
+
+.station-hub {
+    font-size: 24px;
+    background: #008751;
+    padding: 6px 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    border: 1px solid #4ade80;
+}
+
+.ambulance-van {
+    font-size: 28px;
+    animation: driveVan 3s ease-in-out infinite alternate;
+}
+
+@keyframes driveVan {
+    0% { transform: translateX(-30px); }
+    100% { transform: translateX(30px); }
+}
+
+.hospital-destination {
+    font-size: 24px;
 }
 
 /* Yellow Fund Section Design */
@@ -953,12 +1040,11 @@ footer{
                 <div class="map-header">
                     <div class="badge-live">নেটওয়ার্ক সচল</div>
                     <h3>দেশ জুড়ে রক্ত নেটওয়ার্ক</h3>
-                    <p>প্রতিটি বিন্দু একটি উপজেলা। কমলা বিন্দুগুলো আউটলেট, বিভাগীয় </p>
+                    <p>প্রতিটি বিন্দু একটি উপজেলা। কমলা বিন্দুগুলো আউটলেট, বিভাগীয় hubs — সব প্যানেল এখান দিয়েই যায়।</p>
                 </div>
 
                 <div class="map-svg-container">
                     <svg viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Connecting Data Flow Network Lines -->
                         <g fill="none" stroke="rgba(34, 197, 94, 0.4)" stroke-width="1.5">
                             <path class="flow-line" d="M140,80 Q170,120 190,160" />
                             <path class="flow-line" d="M140,80 Q100,110 80,150" />
@@ -968,33 +1054,25 @@ footer{
                             <path class="flow-line" d="M140,80 L140,160" />
                         </g>
 
-                        <!-- Division Hubs (Green glowing nodes) -->
                         <g>
-                            <!-- Dhaka Hub -->
                             <circle cx="140" cy="160" r="16" fill="none" stroke="#22c55e" class="radar-ring" style="animation-delay: 0s;" />
                             <circle cx="140" cy="160" r="4" class="node-division" />
                             
-                            <!-- Chattogram Hub -->
                             <circle cx="190" cy="210" r="18" fill="none" stroke="#22c55e" class="radar-ring" style="animation-delay: 0.6s;" />
                             <circle cx="190" cy="210" r="4" class="node-division" />
 
-                            <!-- Rajshahi Hub -->
                             <circle cx="90" cy="110" r="15" fill="none" stroke="#22c55e" class="radar-ring" style="animation-delay: 1.2s;" />
                             <circle cx="90" cy="110" r="4" class="node-division" />
 
-                            <!-- Sylhet Hub -->
                             <circle cx="210" cy="100" r="15" fill="none" stroke="#22c55e" class="radar-ring" style="animation-delay: 0.8s;" />
                             <circle cx="210" cy="100" r="4" class="node-division" />
 
-                            <!-- Khulna Hub -->
                             <circle cx="100" cy="220" r="15" fill="none" stroke="#22c55e" class="radar-ring" style="animation-delay: 1.5s;" />
                             <circle cx="100" cy="220" r="4" class="node-division" />
 
-                            <!-- Barishal Hub -->
                             <circle cx="140" cy="240" r="14" fill="none" stroke="#22c55e" class="radar-ring" style="animation-delay: 0.3s;" />
                             <circle cx="140" cy="240" r="4" class="node-division" />
 
-                            <!-- Rangpur & Mymensingh Hubs -->
                             <circle cx="90" cy="60" r="12" fill="none" stroke="#22c55e" class="radar-ring" style="animation-delay: 1.8s;" />
                             <circle cx="90" cy="60" r="3.5" class="node-division" />
 
@@ -1002,31 +1080,25 @@ footer{
                             <circle cx="150" cy="100" r="3.5" class="node-division" />
                         </g>
 
-                        <!-- District & Upazila Nodes (Orange pulsing nodes) -->
                         <g>
-                            <!-- Dhaka District/Upazilas -->
                             <circle cx="130" cy="150" r="2" class="node-upazila" />
                             <circle cx="150" cy="170" r="2" class="node-upazila" />
                             <circle cx="145" cy="145" r="2.5" class="node-upazila" />
                             <circle cx="135" cy="175" r="2" class="node-upazila" />
 
-                            <!-- Chattogram District/Upazilas -->
                             <circle cx="180" cy="200" r="2" class="node-upazila" />
                             <circle cx="200" cy="225" r="2.5" class="node-upazila" />
                             <circle cx="185" cy="230" r="2" class="node-upazila" />
 
-                            <!-- Rajshahi & Rangpur Upazilas -->
                             <circle cx="75" cy="100" r="2" class="node-upazila" />
                             <circle cx="105" cy="120" r="2" class="node-upazila" />
                             <circle cx="85" cy="70" r="2" class="node-upazila" />
                             <circle cx="100" cy="50" r="2" class="node-upazila" />
 
-                            <!-- Sylhet & Mymensingh Upazilas -->
                             <circle cx="225" cy="90" r="2" class="node-upazila" />
                             <circle cx="200" cy="115" r="2" class="node-upazila" />
                             <circle cx="160" cy="90" r="2" class="node-upazila" />
 
-                            <!-- Khulna & Barishal Upazilas -->
                             <circle cx="85" cy="210" r="2" class="node-upazila" />
                             <circle cx="115" cy="235" r="2" class="node-upazila" />
                             <circle cx="130" cy="255" r="2" class="node-upazila" />
@@ -1047,6 +1119,19 @@ footer{
         <h2 class="section-title">🚑 এম্বুলেন্স সেবা</h2>
 
         <div class="glass form-box">
+            <!-- রক্ত ও এম্বুলেন্স ডেলিভারি অ্যানিমেশন -->
+            <div class="delivery-animation-container">
+                <div class="delivery-sky"></div>
+                <div class="anim-elements">
+                    <div class="station-hub" title="ব্লাড ব্যাংক পয়েন্ট">🩸</div>
+                    <div class="ambulance-van" title="এম্বুলেন্স সেবা">🚑</div>
+                    <div class="hospital-destination" title="হাসপাতাল">🏥</div>
+                </div>
+                <div class="delivery-road">
+                    <div class="road-stripe"></div>
+                </div>
+            </div>
+
             <p style="text-align:center; margin-bottom: 15px; font-weight: 700;">
                 জরুরি প্রয়োজনে এম্বুলেন্স বুকিং বা যোগাযোগের জন্য নিচের অপশনটিতে ক্লিক করুন
             </p>
@@ -1066,13 +1151,11 @@ footer{
         <div class="glass form-box">
             <div class="contact-grid">
 
-                <!-- 1. Phone Call -->
                 <a class="contact-card" href="tel:01726232108">
                     <div class="contact-icon">📞</div>
                     <div class="contact-text">01726232108</div>
                 </a>
 
-                <!-- 2. WhatsApp -->
                 <a class="contact-card" href="https://wa.me/8801726232108" target="_blank">
                     <div class="contact-icon">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
@@ -1080,19 +1163,16 @@ footer{
                     <div class="contact-text">WhatsApp</div>
                 </a>
 
-                <!-- 3. SMS -->
                 <a class="contact-card" href="sms:01726232108">
                     <div class="contact-icon">✉️</div>
                     <div class="contact-text">SMS</div>
                 </a>
 
-                <!-- 4. Email -->
                 <a class="contact-card" href="mailto:mbbloodbank@gmail.com">
                     <div class="contact-icon">📧</div>
                     <div class="contact-text">mbbloodbank@gmail.com</div>
                 </a>
 
-                <!-- 5. Facebook Page -->
                 <a class="contact-card" href="https://www.facebook.com/share/14nUzxo73ig/" target="_blank">
                     <div class="contact-icon">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook Page">
@@ -1100,7 +1180,6 @@ footer{
                     <div class="contact-text">Facebook Page</div>
                 </a>
 
-                <!-- 6. Facebook Group -->
                 <a class="contact-card" href="https://www.facebook.com/share/g/1JuuUhn4pe/" target="_blank">
                     <div class="contact-icon">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook Group">
@@ -1144,7 +1223,6 @@ footer{
             <div class="gateway-tab" id="tabNet" onclick="switchGatewayTab('net')">Net Banking</div>
         </div>
 
-        <!-- Mobile Banking Channels -->
         <div id="mobileChannels" class="channel-grid">
             <div class="channel-card" onclick="selectChannel(this, 'bKash', '01726232108')">
                 <span style="font-size:16px; font-weight:bold; color:#e2136e;">bKash</span>
@@ -1164,7 +1242,6 @@ footer{
             </div>
         </div>
 
-        <!-- Net Banking Channels -->
         <div id="netChannels" class="channel-grid" style="display:none;">
             <div class="channel-card" onclick="selectChannel(this, 'DBBL Net Banking', '123.105.XXXXX')">
                 <span style="font-size:15px; font-weight:bold; color:#0055a5;">DBBL Bank</span>
@@ -1188,13 +1265,11 @@ footer{
     </div>
 </div>
 
-<!-- Payment Details Instruction Modal (Appears when Pay is clicked) -->
 <div id="detailsModal" class="gateway-modal">
     <div class="gateway-box" style="text-align:center; padding:25px;">
         <h3 id="detailsTitle" style="color:#008751; margin-bottom:15px;">পেমেন্ট নির্দেশনা</h3>
         
         <div id="detailsInstructionBox" style="background:#f8fafc; border-radius:16px; padding:18px; text-align:left; font-size:15px; margin-bottom:20px; border:1px solid #e2e8f0; line-height:1.6;">
-            <!-- Dynamic instructions with account number -->
         </div>
 
         <button class="yellow-btn" onclick="completePayment()">হোমে ফিরে যান</button>
@@ -1208,9 +1283,6 @@ footer{
 
 
 <script type="module">
-/* =========================
-   FIREBASE INITIALIZATION
-========================= */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
 
@@ -1225,17 +1297,11 @@ const firebaseConfig = {
   measurementId: "G-D4FJTMQ17C"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 </script>
 
 <script>
-
-/* =========================
-   BANGLADESH LOCATION DATA
-========================= */
-
 const LOCATION_URL =
 "https://iqbalhasandev.github.io/bangladesh-geo-json/bangladesh-geo.json";
 
@@ -1275,7 +1341,6 @@ function getDistrict(div,name){
 }
 
 function setupLocation(divId,districtId,upazilaId){
-
     const div=document.getElementById(divId);
     const dis=document.getElementById(districtId);
     const up=document.getElementById(upazilaId);
@@ -1314,13 +1379,10 @@ setupLocation("dDivision","dDistrict","dUpazila");
 setupLocation("rDivision","rDistrict","rUpazila");
 
 
-/* Menu */
-
 function toggleMenu(){
     document.getElementById("sideMenu").classList.toggle("active");
 }
 
-/* Ambulance Modal Functions */
 function openAmbulanceModal(){
     renderAmbulanceList();
     document.getElementById("ambulanceModal").style.display = "block";
@@ -1340,7 +1402,6 @@ window.onclick = function(event) {
     if (event.target == detailsModal) detailsModal.style.display = "none";
 }
 
-/* Gateway Modal Logic */
 let selectedChannelName = "";
 let selectedAccountNumber = "";
 let currentAmount = 0;
@@ -1359,7 +1420,6 @@ function openGatewayModal(){
     document.getElementById("displayAmount").textContent = "৳ " + Number(amount).toLocaleString();
     document.getElementById("gatewayModal").style.display = "block";
     
-    // Reset selection
     document.querySelectorAll(".channel-card").forEach(c => c.classList.remove("active"));
     const btn = document.getElementById("payActionBtn");
     btn.style.opacity = "0.5";
@@ -1432,8 +1492,6 @@ function completePayment(){
     document.getElementById("fundAmount").value = "";
 }
 
-
-/* Render Ambulance List from LocalStorage */
 function renderAmbulanceList(){
     const container = document.getElementById("ambulanceListContainer");
     const ambulances = JSON.parse(localStorage.getItem("mb_ambulances") || "[]");
@@ -1452,9 +1510,6 @@ function renderAmbulanceList(){
     `).join("");
 }
 
-
-/* Local storage */
-
 function getDonors(){
     return JSON.parse(localStorage.getItem("mb_donors")||"[]");
 }
@@ -1467,9 +1522,6 @@ function getRequests(){
     return JSON.parse(localStorage.getItem("mb_requests")||"[]");
 }
 
-
-/* Donor Registration */
-
 function fileToBase64(file){
     return new Promise((resolve,reject)=>{
         const reader=new FileReader();
@@ -1480,10 +1532,7 @@ function fileToBase64(file){
 }
 
 document.getElementById("donorForm").addEventListener("submit",async function(e){
-
     e.preventDefault();
-
-    TheDonors=getDonors();
 
     const id="MB-"+Date.now().toString().slice(-8);
 
@@ -1522,11 +1571,7 @@ document.getElementById("donorForm").addEventListener("submit",async function(e)
     updateStats();
 });
 
-
-/* Emergency Request */
-
 document.getElementById("requestForm").addEventListener("submit",function(e){
-
     e.preventDefault();
 
     const requests=getRequests();
@@ -1556,11 +1601,7 @@ document.getElementById("requestForm").addEventListener("submit",function(e){
     updateStats();
 });
 
-
-/* Donor Search */
-
 function searchDonors(){
-
     const blood=document.getElementById("searchBlood").value;
     const division=document.getElementById("searchDivision").value;
     const district=document.getElementById("searchDistrict").value;
@@ -1585,9 +1626,7 @@ function searchDonors(){
     }
 
     box.innerHTML=donors.map(d=>`
-
         <div class="donor-card">
-
             ${
               d.photo
               ? `<img src="${d.photo}"
@@ -1608,12 +1647,9 @@ function searchDonors(){
                    href="https://wa.me/88${d.phone.replace(/\D/g,'')}"
                    target="_blank">💬 WhatsApp</a>
             </div>
-
         </div>
-
     `).join("");
 }
-
 
 function escapeHtml(text){
     return String(text||"")
@@ -1623,11 +1659,7 @@ function escapeHtml(text){
       .replace(/"/g,"&quot;");
 }
 
-
-/* Statistics */
-
 function updateStats(){
-
     const donors=getDonors();
     const requests=getRequests();
 
@@ -1643,7 +1675,6 @@ function updateStats(){
 
 loadLocations();
 updateStats();
-
 </script>
 
 </body>
