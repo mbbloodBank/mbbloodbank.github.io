@@ -379,8 +379,8 @@ textarea:focus{
 }
 
 @keyframes mapLightMove{
-    0%{ transform:translateX(-100%); }
-    100%{ transform:translateX(100%); }
+    0%{transform:translateX(-100%);}
+    100%{transform:translateX(100%);}
 }
 
 .mb-map-header{
@@ -415,8 +415,8 @@ textarea:focus{
 }
 
 @keyframes statusBlink{
-    0%,100%{ opacity:1; }
-    50%{ opacity:.35; }
+    0%,100%{opacity:1;}
+    50%{opacity:.35;}
 }
 
 .mb-map-svg{
@@ -457,8 +457,8 @@ textarea:focus{
 }
 
 @keyframes dotTwinkle{
-    0%,100%{ opacity:.38; }
-    50%{ opacity:1; }
+    0%,100%{opacity:.38;}
+    50%{opacity:1;}
 }
 
 .map-pulse-ring{
@@ -471,13 +471,13 @@ textarea:focus{
     animation:locationPulse 2.2s ease-out infinite;
 }
 
-.map-pulse-ring.second{ animation-delay:.65s; }
-.map-pulse-ring.third{ animation-delay:1.25s; }
+.map-pulse-ring.second{animation-delay:.65s;}
+.map-pulse-ring.third{animation-delay:1.25s;}
 
 @keyframes locationPulse{
-    0%{ opacity:.75; transform:scale(.25); }
-    65%{ opacity:.18; transform:scale(1.5); }
-    100%{ opacity:0; transform:scale(1.9); }
+    0%{opacity:.75;transform:scale(.25);}
+    65%{opacity:.18;transform:scale(1.5);}
+    100%{opacity:0;transform:scale(1.9);}
 }
 
 .map-location-dot{
@@ -489,8 +489,8 @@ textarea:focus{
 }
 
 @keyframes locationGlow{
-    0%,100%{ opacity:.7; }
-    50%{ opacity:1; }
+    0%,100%{opacity:.7;}
+    50%{opacity:1;}
 }
 
 .map-central-core{
@@ -502,8 +502,8 @@ textarea:focus{
 }
 
 @keyframes centralCore{
-    0%,100%{ transform:scale(.8); transform-box:fill-box; transform-origin:center; }
-    50%{ transform:scale(1.2); transform-box:fill-box; transform-origin:center; }
+    0%,100%{transform:scale(.8);transform-box:fill-box;transform-origin:center;}
+    50%{transform:scale(1.2);transform-box:fill-box;transform-origin:center;}
 }
 
 .map-scan-line{
@@ -514,10 +514,10 @@ textarea:focus{
 }
 
 @keyframes mapScan{
-    0%{ opacity:0; transform:translateY(-280px); }
-    20%{ opacity:.35; }
-    70%{ opacity:.18; }
-    100%{ opacity:0; transform:translateY(280px); }
+    0%{opacity:0;transform:translateY(-280px);}
+    20%{opacity:.35;}
+    70%{opacity:.18;}
+    100%{opacity:0;transform:translateY(280px);}
 }
 
 .map-ray{
@@ -530,13 +530,13 @@ textarea:focus{
     animation:rayRotate 2.8s linear infinite;
 }
 
-.map-ray.r2{ animation-delay:-.7s; }
-.map-ray.r3{ animation-delay:-1.4s; }
+.map-ray.r2{animation-delay:-.7s;}
+.map-ray.r3{animation-delay:-1.4s;}
 
 @keyframes rayRotate{
-    0%{ opacity:.15; transform:rotate(0deg) scale(.7); }
-    50%{ opacity:.85; transform:rotate(180deg) scale(1); }
-    100%{ opacity:.15; transform:rotate(360deg) scale(.7); }
+    0%{opacity:.15;transform:rotate(0deg) scale(.7);}
+    50%{opacity:.85;transform:rotate(180deg) scale(1);}
+    100%{opacity:.15;transform:rotate(360deg) scale(.7);}
 }
 
 .map-connection{
@@ -549,7 +549,7 @@ textarea:focus{
 }
 
 @keyframes connectionMove{
-    to{ stroke-dashoffset:-60; }
+    to{stroke-dashoffset:-60;}
 }
 
 .map-caption{
@@ -560,6 +560,7 @@ textarea:focus{
     color:#728579;
     font-size:11px;
 }
+
 
 /* =========================
    YELLOW FUND SECTION
@@ -593,6 +594,7 @@ textarea:focus{
     background:#006c40;
     transform:translateY(-2px);
 }
+
 
 /* =========================
    GATEWAY MODAL
@@ -672,6 +674,7 @@ textarea:focus{
     background:#f0fdf4;
 }
 
+
 /* =========================
    CONTACT & AMBULANCE
 ========================= */
@@ -731,8 +734,42 @@ textarea:focus{
     word-break:break-word;
 }
 
+
 /* =========================
-   MODAL & EMERGENCY DIRECTORY STYLES
+   EMERGENCY DIRECTORY (NEW)
+========================= */
+
+.directory-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin-top:15px;
+}
+
+.directory-card{
+    background:rgba(255,255,255,.65);
+    padding:20px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(70,20,100,.08);
+    border:1px solid rgba(255,255,255,.9);
+}
+
+.directory-card h4{
+    font-size:16px;
+    color:#7c1eaf;
+    margin-bottom:8px;
+}
+
+.directory-card span{
+    font-size:24px;
+    font-weight:800;
+    color:#9b267e;
+}
+
+
+/* =========================
+   MODAL
 ========================= */
 
 .modal{
@@ -747,8 +784,8 @@ textarea:focus{
 }
 
 .modal-box{
-    width:min(650px,100%);
-    margin:50px auto;
+    width:min(600px,100%);
+    margin:60px auto;
     padding:25px;
     position:relative;
     background:#ffffff;
@@ -768,78 +805,10 @@ textarea:focus{
     font-weight:bold;
 }
 
-/* Directory Filter Tabs Style */
-.directory-filters {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-    overflow-x: auto;
-    padding-bottom: 5px;
-}
 
-.dir-filter-btn {
-    padding: 8px 16px;
-    border: 1px solid #d8b4e2;
-    border-radius: 12px;
-    background: #f9f5ff;
-    color: #7c1eaf;
-    font-weight: 700;
-    font-family: inherit;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-}
-
-.dir-filter-btn.active, .dir-filter-btn:hover {
-    background: #7c1eaf;
-    color: #fff;
-    border-color: #7c1eaf;
-}
-
-.ambulance-list-item{
-    background:#f9f5ff;
-    padding:15px;
-    border-radius:14px;
-    margin-bottom:12px;
-    border-left:4px solid #7c1eaf;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.ambulance-list-item div h4{
-    color:#7c1eaf;
-    margin-bottom:6px;
-    font-size:16px;
-}
-
-.ambulance-list-item div p{
-    font-size:14px;
-    margin:3px 0;
-    color:#29123f;
-}
-
-.call-now-btn {
-    padding: 8px 14px;
-    background: #008751;
-    color: white;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 700;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: 0.2s;
-}
-
-.call-now-btn:hover {
-    background: #006c40;
-}
-
-
-/* =========================
+/* =========================================================
    AMBULANCE VIDEO STYLE ANIMATION
-========================= */
+========================================================= */
 
 .mb-video-animation{
     width:100%;
@@ -864,8 +833,8 @@ textarea:focus{
 }
 
 @keyframes roadMove{
-    from{ transform:translateX(0); }
-    to{ transform:translateX(-120px); }
+    from{transform:translateX(0);}
+    to{transform:translateX(-120px);}
 }
 
 .mb-ambulance-car{
@@ -874,8 +843,8 @@ textarea:focus{
 }
 
 @keyframes ambulanceBounce{
-    from{ transform:translateY(0); }
-    to{ transform:translateY(-2px); }
+    from{transform:translateY(0);}
+    to{transform:translateY(-2px);}
 }
 
 .ambulance-wheel{
@@ -885,7 +854,7 @@ textarea:focus{
 }
 
 @keyframes wheelRotate{
-    to{ transform:rotate(360deg); }
+    to{transform:rotate(360deg);}
 }
 
 .walk-person{
@@ -893,8 +862,8 @@ textarea:focus{
 }
 
 @keyframes personWalk{
-    from{ transform:translateY(0); }
-    to{ transform:translateY(-2px); }
+    from{transform:translateY(0);}
+    to{transform:translateY(-2px);}
 }
 
 
@@ -910,6 +879,7 @@ footer{
     color:white;
 }
 
+
 /* =========================
    RESPONSIVE
 ========================= */
@@ -918,10 +888,13 @@ footer{
     .contact-grid{
         grid-template-columns:repeat(3,1fr);
     }
+    .directory-grid{
+        grid-template-columns:repeat(4,1fr);
+    }
 }
 
 @media(max-width:480px){
-    .grid{
+    .grid, .directory-grid{
         grid-template-columns:1fr;
     }
     .full{
@@ -937,44 +910,85 @@ footer{
 </style>
 </head>
 
+
 <body>
 
 <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
+
 <div id="sideMenu" class="side-menu">
+
     <h2>☰ Menu</h2>
+
     <a href="#home" onclick="toggleMenu()">🏠 হোম পেজ</a>
-    <a href="#search" onclick="toggleMenu()">🩸 রক্তদাতা খুঁজুন 🔎</a>
-    <a href="#register" onclick="toggleMenu()">📝 রক্তদাতা হিসেবে নিবন্ধন</a>
-    <a href="#request" onclick="toggleMenu()">🚨 জরুরি রক্তের অনুরোধ</a>
-    <a href="#stats" onclick="toggleMenu()">📊 রক্তদাতা ও রক্তের অনুরোধের তথ্য</a>
-    <a href="#ambulance" onclick="toggleMenu()">🚑 এম্বুলেন্স সেবা</a>
-    <a href="#fund" onclick="toggleMenu()">❤ MB মানবতা ফান্ড</a>
-    <a href="#contact" onclick="toggleMenu()">📞 যোগাযোগ করুন</a>
+
+    <a href="#search" onclick="toggleMenu()">
+        🩸 রক্তদাতা খুঁজুন 🔎
+    </a>
+
+    <a href="#register" onclick="toggleMenu()">
+        📝 রক্তদাতা হিসেবে নিবন্ধন
+    </a>
+
+    <a href="#request" onclick="toggleMenu()">
+        🚨 জরুরি রক্তের অনুরোধ
+    </a>
+
+    <a href="#stats" onclick="toggleMenu()">
+        📊 রক্তদাতা ও রক্তের অনুরোধের তথ্য
+    </a>
+
+    <a href="#directory" onclick="toggleMenu()">
+        📂 ইমারজেন্সি ডিরেক্টরি
+    </a>
+
+    <a href="#ambulance" onclick="toggleMenu()">
+        🚑 এম্বুলেন্স সেবা
+    </a>
+
+    <a href="#fund" onclick="toggleMenu()">
+        ❤ MB মানবতা ফান্ড
+    </a>
+
+    <a href="#contact" onclick="toggleMenu()">
+        📞 যোগাযোগ করুন
+    </a>
+
 </div>
 
+
 <main class="container" id="home">
+
 
 <!-- =====================================================
      BANNER
 ===================================================== -->
+
 <div class="banner">
     <img src="1742.png" alt="MB Blood Bank Banner">
 </div>
 
+
 <!-- =====================================================
      SEARCH
 ===================================================== -->
+
 <section id="search">
-    <h2 class="section-title">🩸 রক্তদাতা খুঁজুন 🔎</h2>
+
+    <h2 class="section-title">
+        🩸 রক্তদাতা খুঁজুন 🔎
+    </h2>
+
     <div class="warning">
         ⚠️ আর্থিক লেনদেন হতে সাবধান<br>
         আর্থিক কোনো লেনদেন হলে MB Blood Bank কর্তৃপক্ষ দায়ী নয়
     </div>
+
     <div class="glass form-box">
         <p style="text-align:center;margin-bottom:18px;font-weight:700">
             রক্তের গ্রুপ ও এলাকার মাধ্যমে Donor Search করুন
         </p>
+
         <div class="grid">
             <div>
                 <label>রক্তের গ্রুপ</label>
@@ -986,157 +1000,351 @@ footer{
                     <option>O+</option><option>O-</option>
                 </select>
             </div>
+
             <div>
                 <label>বিভাগ নির্বাচন</label>
-                <select id="searchDivision"><option value="">বিভাগ নির্বাচন করুন</option></select>
+                <select id="searchDivision">
+                    <option value="">বিভাগ নির্বাচন করুন</option>
+                </select>
             </div>
+
             <div>
                 <label>জেলা নির্বাচন</label>
-                <select id="searchDistrict"><option value="">জেলা নির্বাচন করুন</option></select>
+                <select id="searchDistrict">
+                    <option value="">জেলা নির্বাচন করুন</option>
+                </select>
             </div>
+
             <div>
                 <label>উপজেলা নির্বাচন</label>
-                <select id="searchUpazila"><option value="">উপজেলা নির্বাচন করুন</option></select>
+                <select id="searchUpazila">
+                    <option value="">উপজেলা নির্বাচন করুন</option>
+                </select>
             </div>
+
             <div class="full" style="text-align:center">
-                <button class="btn" onclick="searchDonors()">🔎 Donor Search</button>
+                <button class="btn" onclick="searchDonors()">
+                    🔎 Donor Search
+                </button>
             </div>
         </div>
+
         <div id="donorResults"></div>
     </div>
+
 </section>
+
 
 <!-- =====================================================
      REGISTER
 ===================================================== -->
+
 <section id="register">
-    <h2 class="section-title">📝 রক্তদাতা হিসেবে নিবন্ধন</h2>
+
+    <h2 class="section-title">
+        📝 রক্তদাতা হিসেবে নিবন্ধন
+    </h2>
+
     <div class="notice">
-        ⚠️ নিবন্ধনের পর আপনার Account/Donor/Profile সরাসরি active হবে না। Admin যাচাই ও Approved করার পর আপনার তথ্য রক্তদাতার তালিকায় প্রদর্শিত হবে।
+        ⚠️ নিবন্ধনের পর আপনার Account/Donor/Profile সরাসরি active হবে না।
+        Admin যাচাই ও Approved করার পর আপনার তথ্য রক্তদাতার তালিকায় প্রদর্শিত হবে।
     </div>
+
     <div class="glass form-box">
         <form id="donorForm">
             <div class="grid">
-                <div><label>নাম *</label><input id="dName" required></div>
-                <div><label>যোগাযোগ নম্বর *</label><input id="dPhone" type="tel" required></div>
+                <div>
+                    <label>নাম *</label>
+                    <input id="dName" required>
+                </div>
+
+                <div>
+                    <label>যোগাযোগ নম্বর *</label>
+                    <input id="dPhone" type="tel" required>
+                </div>
+
                 <div>
                     <label>রক্তের গ্রুপ *</label>
                     <select id="dBlood" required>
                         <option value="">নির্বাচন করুন</option>
-                        <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
-                        <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+                        <option>A+</option><option>A-</option>
+                        <option>B+</option><option>B-</option>
+                        <option>AB+</option><option>AB-</option>
+                        <option>O+</option><option>O-</option>
                     </select>
                 </div>
-                <div><label>বিভাগ *</label><select id="dDivision" required><option value="">নির্বাচন করুন</option></select></div>
-                <div><label>জেলা *</label><select id="dDistrict" required><option value="">নির্বাচন করুন</option></select></div>
-                <div><label>উপজেলা *</label><select id="dUpazila" required><option value="">নির্বাচন করুন</option></select></div>
-                <div class="full"><label>ঠিকানা *</label><textarea id="dAddress" required></textarea></div>
-                <div class="full"><label>ছবি</label><input id="dPhoto" type="file" accept="image/*"></div>
-                <div class="full" style="text-align:center"><button class="btn" type="submit">📝 নিবন্ধনের অনুরোধ পাঠান</button></div>
+
+                <div>
+                    <label>বিভাগ *</label>
+                    <select id="dDivision" required>
+                        <option value="">নির্বাচন করুন</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>জেলা *</label>
+                    <select id="dDistrict" required>
+                        <option value="">নির্বাচন করুন</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>উপজেলা *</label>
+                    <select id="dUpazila" required>
+                        <option value="">নির্বাচন করুন</option>
+                    </select>
+                </div>
+
+                <div class="full">
+                    <label>ঠিকানা *</label>
+                    <textarea id="dAddress" required></textarea>
+                </div>
+
+                <div class="full">
+                    <label>ছবি</label>
+                    <input id="dPhoto" type="file" accept="image/*">
+                </div>
+
+                <div class="full" style="text-align:center">
+                    <button class="btn" type="submit">
+                        📝 নিবন্ধনের অনুরোধ পাঠান
+                    </button>
+                </div>
             </div>
         </form>
     </div>
+
 </section>
+
 
 <!-- =====================================================
      EMERGENCY REQUEST
 ===================================================== -->
+
 <section id="request">
-    <h2 class="section-title">🚨 জরুরি রক্তের অনুরোধ</h2>
+
+    <h2 class="section-title">
+        🚨 জরুরি রক্তের অনুরোধ
+    </h2>
+
     <div class="glass form-box">
         <form id="requestForm">
             <div class="grid">
-                <div><label>রোগীর নাম *</label><input id="rName" required></div>
-                <div><label>যোগাযোগ নম্বর *</label><input id="rPhone" required></div>
+                <div>
+                    <label>রোগীর নাম *</label>
+                    <input id="rName" required>
+                </div>
+
+                <div>
+                    <label>যোগাযোগ নম্বর *</label>
+                    <input id="rPhone" required>
+                </div>
+
                 <div>
                     <label>রক্তের গ্রুপ *</label>
                     <select id="rBlood" required>
                         <option value="">রক্তের গ্রুপ নির্বাচন করুন</option>
-                        <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
-                        <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+                        <option>A+</option><option>A-</option>
+                        <option>B+</option><option>B-</option>
+                        <option>AB+</option><option>AB-</option>
+                        <option>O+</option><option>O-</option>
                     </select>
                 </div>
-                <div><label>কত ব্যাগ *</label><input id="rBags" type="number" min="1" required></div>
-                <div><label>বিভাগ নির্বাচন করুন *</label><select id="rDivision" required><option value="">নির্বাচন করুন</option></select></div>
-                <div><label>জেলা নির্বাচন করুন *</label><select id="rDistrict" required><option value="">নির্বাচন করুন</option></select></div>
-                <div><label>উপজেলা নির্বাচন করুন *</label><select id="rUpazila" required><option value="">নির্বাচন করুন</option></select></div>
-                <div><label>হাসপাতাল/স্থান *</label><input id="rHospital" required></div>
-                <div><label>প্রয়োজনের তারিখ *</label><input id="rDate" type="date" required></div>
+
+                <div>
+                    <label>কত ব্যাগ *</label>
+                    <input id="rBags" type="number" min="1" required>
+                </div>
+
+                <div>
+                    <label>বিভাগ নির্বাচন করুন *</label>
+                    <select id="rDivision" required>
+                        <option value="">নির্বাচন করুন</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>জেলা নির্বাচন করুন *</label>
+                    <select id="rDistrict" required>
+                        <option value="">নির্বাচন করুন</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>উপজেলা নির্বাচন করুন *</label>
+                    <select id="rUpazila" required>
+                        <option value="">নির্বাচন করুন</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>হাসপাতাল/স্থান *</label>
+                    <input id="rHospital" required>
+                </div>
+
+                <div>
+                    <label>প্রয়োজনের তারিখ *</label>
+                    <input id="rDate" type="date" required>
+                </div>
+
                 <div>
                     <label>জরুরিতার মাত্রা *</label>
                     <select id="rUrgency" required>
-                        <option>অতি জরুরি</option><option>জরুরি</option><option>সাধারণ</option>
+                        <option>অতি জরুরি</option>
+                        <option>জরুরি</option>
+                        <option>সাধারণ</option>
                     </select>
                 </div>
-                <div class="full"><label>অতিরিক্ত তথ্য</label><textarea id="rInfo"></textarea></div>
-                <div class="full" style="text-align:center"><button class="btn" type="submit">🚨 রিকোয়েস্ট পাঠান</button></div>
+
+                <div class="full">
+                    <label>অতিরিক্ত তথ্য</label>
+                    <textarea id="rInfo"></textarea>
+                </div>
+
+                <div class="full" style="text-align:center">
+                    <button class="btn" type="submit">
+                        🚨 রিকোয়েস্ট পাঠান
+                    </button>
+                </div>
             </div>
         </form>
     </div>
+
 </section>
+
 
 <!-- =====================================================
      MB MANOBOTA FUND
 ===================================================== -->
+
 <section id="fund">
-    <h2 class="section-title">❤ MB মানবতা ফান্ড</h2>
+
+    <h2 class="section-title">
+        ❤ MB মানবতা ফান্ড
+    </h2>
+
     <div class="yellow-fund-box">
-        <h2 style="text-align:center;font-size:24px;color:#29123f;margin-bottom:20px;">আপনার অনুদান প্রদান করুন</h2>
+        <h2 style="text-align:center;font-size:24px;color:#29123f;margin-bottom:20px;">
+            আপনার অনুদান প্রদান করুন
+        </h2>
+
         <div style="margin-bottom:15px;">
-            <label style="color:#29123f;font-weight:800;margin-bottom:5px;display:block;">তহবিল *</label>
+            <label style="color:#29123f;font-weight:800;margin-bottom:5px;display:block;">
+                তহবিল *
+            </label>
             <select id="fundType" style="width:100%;padding:14px;border-radius:14px;border:1px solid #ccc;background:#fff;font-size:15px;">
                 <option value="">নির্বাচন করুন</option>
                 <option value="Blood Donation">রক্তদান কার্যক্রম ফান্ড</option>
                 <option value="Emergency Patient">জরুরি রোগী সহায়তা ফান্ড</option>
             </select>
         </div>
+
         <div style="margin-bottom:15px;">
-            <label style="color:#29123f;font-weight:800;margin-bottom:5px;display:block;">মোবাইল / ইমেইল *</label>
+            <label style="color:#29123f;font-weight:800;margin-bottom:5px;display:block;">
+                মোবাইল / ইমেইল *
+            </label>
             <input id="fundContact" placeholder="মোবাইল নম্বর / ইমেইল লিখুন" style="width:100%;padding:14px;border-radius:14px;border:1px solid #ccc;background:#fff;font-size:15px;">
         </div>
+
         <div style="margin-bottom:20px;">
-            <label style="color:#29123f;font-weight:800;margin-bottom:5px;display:block;">পরিমাণ *</label>
+            <label style="color:#29123f;font-weight:800;margin-bottom:5px;display:block;">
+                পরিমাণ *
+            </label>
             <input id="fundAmount" type="number" placeholder="৳ সংখ্যায় লিখুন" style="width:100%;padding:14px;border-radius:14px;border:1px solid #ccc;background:#fff;font-size:15px;">
         </div>
-        <button class="yellow-btn" onclick="openGatewayModal()">দান করুন</button>
+
+        <button class="yellow-btn" onclick="openGatewayModal()">
+            দান করুন
+        </button>
+
         <p style="text-align:center;margin-top:15px;font-weight:700;color:#29123f;">
             আপনার ছোট্ট অনুদানে সচল থাকতে পারে আমাদের রক্তদানের কার্যক্রম।
         </p>
     </div>
+
 </section>
 
+
 <!-- =====================================================
-     STATS & MAP
+     STATS
 ===================================================== -->
+
 <section id="stats">
-    <h2 class="section-title">📊 রক্তদাতা ও রক্তের অনুরোধের তথ্য</h2>
+
+    <h2 class="section-title">
+        📊 রক্তদাতা ও রক্তের অনুরোধের তথ্য
+    </h2>
+
     <div class="stats">
-        <div class="glass stat"><strong id="approvedCount">0</strong>Approved Donor</div>
-        <div class="glass stat"><strong id="pendingCount">0</strong>Pending Donor</div>
-        <div class="glass stat"><strong id="requestCount">0</strong>Blood Request</div>
+        <div class="glass stat">
+            <strong id="approvedCount">0</strong>
+            Approved Donor
+        </div>
+
+        <div class="glass stat">
+            <strong id="pendingCount">0</strong>
+            Pending Donor
+        </div>
+
+        <div class="glass stat">
+            <strong id="requestCount">0</strong>
+            Blood Request
+        </div>
     </div>
+
 </section>
 
+
 <!-- =====================================================
-     AMBULANCE SERVICE SECTION
+     EMERGENCY DIRECTORY (ইমারজেন্সি ডিরেক্টরি)
 ===================================================== -->
+
+<section id="directory">
+
+    <h2 class="section-title">
+        📂 ইমারজেন্সি ডিরেক্টরি
+    </h2>
+
+    <div class="glass form-box">
+        <div class="directory-grid">
+            <div class="directory-card">
+                <h4>📄 সব সংখ্যা</h4>
+                <span>0</span>
+            </div>
+            <div class="directory-card">
+                <h4>🏨 হাসপাতাল</h4>
+                <span>0</span>
+            </div>
+            <div class="directory-card">
+                <h4>🏥 ক্লিনিক</h4>
+                <span>0</span>
+            </div>
+            <div class="directory-card">
+                <h4>🚑 এম্বুলেন্স</h4>
+                <span>0</span>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     AMBULANCE
+===================================================== -->
+
 <section id="ambulance">
-    <h2 class="section-title">🚑 এম্বুলেন্স সেবা</h2>
+
+    <h2 class="section-title">
+        🚑 এম্বুলেন্স সেবা
+    </h2>
+
     <div class="glass form-box">
         <p style="text-align:center;margin-bottom:15px;font-weight:700;">
             জরুরি প্রয়োজনে এম্বুলেন্স বুকিং বা যোগাযোগের জন্য নিচের অপশনটিতে ক্লিক করুন
         </p>
 
-        <!-- VIDEO STYLE ANIMATION -->
-        <div class="mb-video-animation">
-            <svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg">
-                <rect x="0" y="0" width="720" height="360" fill="#ffffff"/>
-                <!-- (Animation graphics elements retained as provided) -->
-                <rect x="0" y="300" width="720" height="5" fill="#087f4f"/>
-                <rect x="0" y="305" width="720" height="55" fill="#292929"/>
-            </svg>
-        </div>
-
+        <!-- AMBULANCE BUTTON -->
         <div style="display:flex;justify-content:center;">
             <div class="contact-card" onclick="openAmbulanceModal()" style="max-width:280px;width:100%;">
                 <div class="contact-icon">🚑</div>
@@ -1144,93 +1352,102 @@ footer{
             </div>
         </div>
     </div>
+
 </section>
+
 
 <!-- =====================================================
      CONTACT
 ===================================================== -->
+
 <section id="contact">
-    <h2 class="section-title">📞 যোগাযোগ করুন</h2>
+
+    <h2 class="section-title">
+        📞 যোগাযোগ করুন
+    </h2>
+
     <div class="glass form-box">
         <div class="contact-grid">
             <a class="contact-card" href="tel:01726232108">
                 <div class="contact-icon">📞</div>
                 <div class="contact-text">01726232108</div>
             </a>
+
             <a class="contact-card" href="https://wa.me/8801726232108" target="_blank">
                 <div class="contact-icon">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
                 </div>
                 <div class="contact-text">WhatsApp</div>
             </a>
+
             <a class="contact-card" href="sms:01726232108">
                 <div class="contact-icon">✉️</div>
                 <div class="contact-text">SMS</div>
             </a>
+
             <a class="contact-card" href="mailto:mbbloodbank@gmail.com">
                 <div class="contact-icon">📧</div>
                 <div class="contact-text">mbbloodbank@gmail.com</div>
             </a>
+
             <a class="contact-card" href="https://www.facebook.com/share/14nUzxo73ig/" target="_blank">
                 <div class="contact-icon">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook Page">
                 </div>
                 <div class="contact-text">Facebook Page</div>
             </a>
+
             <a class="contact-card" href="https://www.facebook.com/share/g/1JuuUhn4pe/" target="_blank">
                 <div class="contact-icon">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Group">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook Group">
                 </div>
                 <div class="contact-text">Facebook Group</div>
             </a>
         </div>
     </div>
+
 </section>
+
 
 </main>
 
+
 <!-- =====================================================
-     AMBULANCE & EMERGENCY DIRECTORY MODAL
+     AMBULANCE MODAL
 ===================================================== -->
+
 <div id="ambulanceModal" class="modal">
     <div class="modal-box">
         <button class="close" onclick="closeAmbulanceModal()">&times;</button>
-        
         <h3 style="color:#7c1eaf;margin-bottom:15px;text-align:center;">
-            🚨 ইমারজেন্সি ডিরেক্টরি
+            🚑 এম্বুলেন্স তালিকা
         </h3>
-
-        <!-- Directory Filter Options -->
-        <div class="directory-filters">
-            <button class="dir-filter-btn active" onclick="filterDirectory('all', this)">📄 সব</button>
-            <button class="dir-filter-btn" onclick="filterDirectory('hospital', this)">🏨 হাসপাতাল</button>
-            <button class="dir-filter-btn" onclick="filterDirectory('clinic', this)">🏥 ক্লিনিক</button>
-            <button class="dir-filter-btn" onclick="filterDirectory('ambulance', this)">🚑 এম্বুলেন্স</button>
-        </div>
-
-        <div id="directoryListContainer">
-            <!-- Dynamic Directory Items Will Load Here -->
-        </div>
+        <div id="ambulanceListContainer"></div>
     </div>
 </div>
 
+
 <!-- =====================================================
-     PAYMENT GATEWAY MODAL
+     PAYMENT GATEWAY
 ===================================================== -->
+
 <div id="gatewayModal" class="gateway-modal">
     <div class="gateway-box">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
             <h4 style="font-size:16px;color:#333;">অনুদানের পেমেন্ট করুন</h4>
             <button class="close" style="position:static;" onclick="closeGatewayModal()">&times;</button>
         </div>
+
         <div style="background:#f1f5f9;padding:15px;border-radius:12px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;">
             <span id="displayAmount" style="font-size:22px;font-weight:bold;color:#0f172a;">৳0.00</span>
             <span style="font-size:12px;background:#e2e8f0;padding:4px 8px;border-radius:6px;">MB Fund</span>
         </div>
+
         <div class="gateway-tabs">
             <div class="gateway-tab active" id="tabMobile" onclick="switchGatewayTab('mobile')">Mobile Banking</div>
             <div class="gateway-tab" id="tabNet" onclick="switchGatewayTab('net')">Net Banking</div>
         </div>
+
         <div id="mobileChannels" class="channel-grid">
             <div class="channel-card" onclick="selectChannel(this,'bKash','01726232108')">
                 <span style="font-size:16px;font-weight:bold;color:#e2136e;">bKash</span>
@@ -1240,75 +1457,100 @@ footer{
                 <span style="font-size:16px;font-weight:bold;color:#f7931e;">Nagad</span>
                 <span style="font-size:12px;color:#555;">নগদ</span>
             </div>
+            <div class="channel-card" onclick="selectChannel(this,'Rocket','01726232108-0')">
+                <span style="font-size:16px;font-weight:bold;color:#8a2be2;">Rocket</span>
+                <span style="font-size:12px;color:#555;">রকেট</span>
+            </div>
+            <div class="channel-card" onclick="selectChannel(this,'Upay','01726232108')">
+                <span style="font-size:16px;font-weight:bold;color:#00a651;">Upay</span>
+                <span style="font-size:12px;color:#555;">উপায়</span>
+            </div>
         </div>
-        <button id="payActionBtn" class="yellow-btn" style="margin-top:20px;opacity:.5;pointer-events:none;" onclick="proceedToPaymentDetails()">Pay ৳0.00</button>
+
+        <div id="netChannels" class="channel-grid" style="display:none;">
+            <div class="channel-card" onclick="selectChannel(this,'DBBL Net Banking','123.105.XXXXX')">
+                <span style="font-size:15px;font-weight:bold;color:#0055a5;">DBBL Bank</span>
+                <span style="font-size:11px;color:#555;">Dutch Bangla</span>
+            </div>
+            <div class="channel-card" onclick="selectChannel(this,'Islami Bank Net Banking','456.789.XXXXX')">
+                <span style="font-size:15px;font-weight:bold;color:#008751;">Islami Bank</span>
+                <span style="font-size:11px;color:#555;">IBBL</span>
+            </div>
+            <div class="channel-card" onclick="selectChannel(this,'MTB Net Banking','789.123.XXXXX')">
+                <span style="font-size:15px;font-weight:bold;color:#cc0000;">MTB Bank</span>
+                <span style="font-size:11px;color:#555;">Mutual Trust</span>
+            </div>
+            <div class="channel-card" onclick="selectChannel(this,'AB Bank Net Banking','321.654.XXXXX')">
+                <span style="font-size:15px;font-weight:bold;color:#e11d48;">AB Bank</span>
+                <span style="font-size:11px;color:#555;">AB Direct</span>
+            </div>
+        </div>
+
+        <button id="payActionBtn" class="yellow-btn" style="margin-top:20px;opacity:.5;pointer-events:none;" onclick="proceedToPaymentDetails()">
+            Pay ৳0.00
+        </button>
     </div>
 </div>
+
+
+<!-- =====================================================
+     PAYMENT DETAILS
+===================================================== -->
+
+<div id="detailsModal" class="gateway-modal">
+    <div class="gateway-box" style="text-align:center;padding:25px;">
+        <h3 id="detailsTitle" style="color:#008751;margin-bottom:15px;">পেমেন্ট নির্দেশনা</h3>
+        <div id="detailsInstructionBox" style="background:#f8fafc;border-radius:16px;padding:18px;text-align:left;font-size:15px;margin-bottom:20px;border:1px solid #e2e8f0;line-height:1.6;"></div>
+        <button class="yellow-btn" onclick="completePayment()">হোমে ফিরে যান</button>
+    </div>
+</div>
+
 
 <!-- =====================================================
      FOOTER
 ===================================================== -->
+
 <footer>
-    <b>🩸 MB Blood Bank</b><br>বৃহত্তম ব্লাড ব্যাংক
+    <b>🩸 MB Blood Bank</b><br>
+    বৃহত্তম ব্লাড ব্যাংক
 </footer>
 
+
 <script>
-/* =====================================================
-   DIRECTORY DATA (Hospital, Clinic, Ambulance)
-===================================================== */
-const emergencyDirectoryData = [
-    { type: 'ambulance', name: 'MB ফ্রি এম্বুলেন্স সেবা', details: '২৪ ঘণ্টা প্রস্তুত', phone: '01726232108' },
-    { type: 'ambulance', name: 'Al-Madina Ambulance', details: 'এসি ও নন-এসি এম্বুলেন্স', phone: '01811223344' },
-    { type: 'hospital', name: 'সদর জেনারেল হাসপাতাল', details: 'জরুরি বিভাগ ও ব্লাড ব্যাংক', phone: '01911223344' },
-    { type: 'hospital', name: 'সিটি মেডিকেল কলেজ হাসপাতাল', details: 'বিশেষজ্ঞ চিকিৎসায় নিয়োজিত', phone: '01611223344' },
-    { type: 'clinic', name: 'মডার্ন ডায়াগনস্টিক অ্যান্ড ক্লিনিক', details: 'টেস্ট ও কেবিন সুবিধা', phone: '01511223344' }
-];
+// LOCATION LOAD AND OTHER SCRIPTS
+const LOCATION_URL = "https://iqbalhasandev.github.io/bangladesh-geo-json/bangladesh-geo.json";
+let locations = [];
 
-function renderDirectory(filter = 'all') {
-    const container = document.getElementById("directoryListContainer");
-    container.innerHTML = "";
-
-    const filteredData = filter === 'all' 
-        ? emergencyDirectoryData 
-        : emergencyDirectoryData.filter(item => item.type === filter);
-
-    if(filteredData.length === 0) {
-        container.innerHTML = `<p style="text-align:center;color:#666;padding:20px;">কোন তথ্য পাওয়া যায়নি।</p>`;
-        return;
+async function loadLocations(){
+    try{
+        const res = await fetch(LOCATION_URL);
+        locations = await res.json();
+        fillDivisions("searchDivision");
+        fillDivisions("dDivision");
+        fillDivisions("rDivision");
+    }catch(error){
+        console.error(error);
     }
+}
+loadLocations();
 
-    filteredData.forEach(item => {
-        let icon = '🚑';
-        if(item.type === 'hospital') icon = '🏨';
-        if(item.type === 'clinic') icon = '🏥';
-
-        const div = document.createElement("div");
-        div.className = "ambulance-list-item";
-        div.innerHTML = `
-            <div>
-                <h4>${icon} ${item.name}</h4>
-                <p>বিবরণ: ${item.details}</p>
-                <p>হটলাইন/নম্বর: ${item.phone}</p>
-            </div>
-            <a href="tel:${item.phone}" class="call-now-btn">📞 কল করুন</a>
-        `;
-        container.appendChild(div);
+function fillDivisions(id){
+    const select = document.getElementById(id);
+    if(!select) return;
+    locations.forEach(d=>{
+        const o = document.createElement("option");
+        o.value = d.name;
+        o.textContent = `${d.bn_name} (${d.name})`;
+        select.appendChild(o);
     });
 }
 
-function filterDirectory(type, btnElement) {
-    document.querySelectorAll('.dir-filter-btn').forEach(btn => btn.classList.remove('active'));
-    btnElement.classList.add('active');
-    renderDirectory(type);
+function toggleMenu(){
+    document.getElementById("sideMenu").classList.toggle("active");
 }
 
 function openAmbulanceModal(){
-    renderDirectory('all');
-    // Reset active button to 'all'
-    document.querySelectorAll('.dir-filter-btn').forEach((btn, idx) => {
-        if(idx === 0) btn.classList.add('active');
-        else btn.classList.remove('active');
-    });
+    renderAmbulanceList();
     document.getElementById("ambulanceModal").style.display = "block";
 }
 
@@ -1316,18 +1558,36 @@ function closeAmbulanceModal(){
     document.getElementById("ambulanceModal").style.display = "none";
 }
 
-// Menu Toggle
-function toggleMenu(){
-    document.getElementById("sideMenu").classList.toggle("active");
-}
-
-// Payment Gateway functions setup
-function openGatewayModal(){
-    const amount = document.getElementById("fundAmount").value.trim();
-    if(!amount || amount <= 0){
-        alert("দয়া করে সঠিক পরিমাণ পূরণ করুন।");
+function renderAmbulanceList(){
+    const container = document.getElementById("ambulanceListContainer");
+    const ambulances = JSON.parse(localStorage.getItem("mb_ambulances") || "[]");
+    if(!ambulances.length){
+        container.innerHTML = `<p style="text-align:center;padding:10px;color:#555;">কোনো এম্বুলেন্সের তথ্য পাওয়া যায়নি।</p>`;
         return;
     }
+    container.innerHTML = ambulances.map(a => `
+        <div class="ambulance-list-item" style="background:#f9f5ff;padding:15px;border-radius:14px;margin-bottom:12px;border-left:4px solid #7c1eaf;">
+            <h4 style="color:#7c1eaf;margin-bottom:6px;font-size:16px;">🚑 এম্বুলেন্স এর নাম: ${a.name}</h4>
+            <p style="font-size:14px;margin:3px 0;"><b>📞 নাম্বার:</b> <a href="tel:${a.phone}" style="color:#7c1eaf;font-weight:bold;">${a.phone}</a></p>
+            <p style="font-size:14px;margin:3px 0;"><b>📍 ঠিকানা:</b> ${a.address}</p>
+        </div>
+    `).join("");
+}
+
+// Payment Gateway functions
+let selectedChannelName = "";
+let selectedAccountNumber = "";
+let currentAmount = 0;
+
+function openGatewayModal(){
+    const fundType = document.getElementById("fundType").value;
+    const contact = document.getElementById("fundContact").value.trim();
+    const amount = document.getElementById("fundAmount").value.trim();
+    if(!fundType || !contact || !amount || amount <= 0){
+        alert("দয়া করে তহবিল, মোবাইল/ইমেইল এবং সঠিক পরিমাণ পূরণ করুন।");
+        return;
+    }
+    currentAmount = amount;
     document.getElementById("displayAmount").textContent = "৳ " + Number(amount).toLocaleString();
     document.getElementById("gatewayModal").style.display = "block";
 }
@@ -1337,28 +1597,54 @@ function closeGatewayModal(){
 }
 
 function switchGatewayTab(tab){
-    document.getElementById("tabMobile").classList.toggle("active", tab === 'mobile');
-    document.getElementById("tabNet").classList.toggle("active", tab === 'net');
+    const tabMobile = document.getElementById("tabMobile");
+    const tabNet = document.getElementById("tabNet");
+    const mobileChannels = document.getElementById("mobileChannels");
+    const netChannels = document.getElementById("netChannels");
+
+    if(tab === "mobile"){
+        tabMobile.classList.add("active");
+        tabNet.classList.remove("active");
+        mobileChannels.style.display = "grid";
+        netChannels.style.display = "none";
+    }else{
+        tabNet.classList.add("active");
+        tabMobile.classList.remove("active");
+        netChannels.style.display = "grid";
+        mobileChannels.style.display = "none";
+    }
 }
 
 function selectChannel(cardElement, name, account){
     document.querySelectorAll(".channel-card").forEach(c => c.classList.remove("active"));
     cardElement.classList.add("active");
+    selectedChannelName = name;
+    selectedAccountNumber = account;
     const btn = document.getElementById("payActionBtn");
     btn.style.opacity = "1";
     btn.style.pointerEvents = "auto";
+    btn.textContent = `Pay ৳${Number(currentAmount).toLocaleString()} via ${name}`;
 }
 
 function proceedToPaymentDetails(){
-    alert("পেমেন্ট প্রসেসিং সম্পন্ন হয়েছে। ধন্যবাদ!");
     closeGatewayModal();
+    document.getElementById("detailsTitle").textContent = `${selectedChannelName} পেমেন্ট নির্দেশনা`;
+    document.getElementById("detailsInstructionBox").innerHTML = `
+        <b>নির্বাচিত মাধ্যম:</b> ${selectedChannelName}<br>
+        <b>পরিমাণ:</b> ৳${Number(currentAmount).toLocaleString()}<br><br>
+        অনুগ্রহ করে আপনার ${selectedChannelName} অ্যাপ থেকে নিচের নম্বরে টাকা পাঠান:
+        <div style="background:#fff;padding:10px;border-radius:8px;margin:10px 0;font-size:18px;font-weight:bold;color:#008751;text-align:center;border:1px dashed #cbd5e1;">
+            ${selectedAccountNumber}
+        </div>
+    `;
+    document.getElementById("detailsModal").style.display = "block";
 }
 
-window.onclick = function(event){
-    const ambModal = document.getElementById("ambulanceModal");
-    const gatewayModal = document.getElementById("gatewayModal");
-    if(event.target == ambModal) ambModal.style.display = "none";
-    if(event.target == gatewayModal) gatewayModal.style.display = "none";
+function completePayment(){
+    document.getElementById("detailsModal").style.display = "none";
+    document.getElementById("fundType").value = "";
+    document.getElementById("fundContact").value = "";
+    document.getElementById("fundAmount").value = "";
 }
 </script>
 
