@@ -93,78 +93,6 @@ a{
 }
 
 /* =========================
-   APP DOWNLOAD DESIGN (পিকচারের মতো)
-========================= */
-
-.app-download-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: linear-gradient(135deg, #071630, #132b50, #0a1b38);
-    color: #ffffff;
-    padding: 18px 22px;
-    border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(10, 27, 56, 0.25);
-    margin-bottom: 28px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.app-download-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 20px 40px rgba(10, 27, 56, 0.35);
-}
-
-.app-download-left {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.app-download-icon {
-    width: 50px;
-    height: 50px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.15);
-}
-
-.app-download-info h3 {
-    font-size: 18px;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 3px;
-}
-
-.app-download-info p {
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.75);
-    font-weight: 500;
-}
-
-.app-download-arrow {
-    width: 36px;
-    height: 36px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    color: #ffffff;
-    transition: background 0.2s;
-}
-
-.app-download-card:hover .app-download-arrow {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-/* =========================
    MENU
 ========================= */
 
@@ -248,6 +176,82 @@ section{
     background:rgba(255,40,40,.09);
     border:1px solid rgba(200,0,0,.18);
     margin-bottom:15px;
+}
+
+/* =========================
+   APP DOWNLOAD BANNER (পিকচার স্টাইল)
+========================= */
+
+.app-banner-card{
+    background: linear-gradient(135deg, #0d233a, #16365f);
+    border-radius: 20px;
+    padding: 22px 25px;
+    color: #ffffff;
+    box-shadow: 0 15px 35px rgba(13, 35, 58, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.app-banner-card:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px rgba(13, 35, 58, 0.35);
+}
+
+.app-banner-left{
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.app-icon-box{
+    width: 52px;
+    height: 52px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    backdrop-filter: blur(10px);
+}
+
+.app-text-info h3{
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: #ffffff;
+}
+
+.app-text-info p{
+    font-size: 13px;
+    color: #cbd5e1;
+    font-weight: 500;
+}
+
+.app-arrow-box{
+    font-size: 20px;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.app-slogan{
+    text-align: center;
+    font-weight: 700;
+    font-size: 15px;
+    color: #5c1875;
+    margin-bottom: 10px;
 }
 
 /* =========================
@@ -413,6 +417,7 @@ textarea:focus{
 
 /* =========================================================
    MB BLOOD BANK MAP ANIMATION
+   ভিডিওর মতো ডার্ক ম্যাপ + GREEN DOT + ORANGE PULSE
 ========================================================= */
 
 .mb-map-animation{
@@ -1189,21 +1194,25 @@ footer{
 
 
 <!-- =====================================================
-     APP DOWNLOAD CARD (রক্তদাতা খুঁজুন এর ঠিক উপরে)
+     APP DOWNLOAD BANNER (রক্তদাতা খুঁজুন এর ঠিক উপরে)
 ===================================================== -->
 
-<a href="app.apk" class="app-download-card" download>
-    <div class="app-download-left">
-        <div class="app-download-icon">
+<div class="app-slogan">
+    📱 এক ক্লিকেই ডাউনলোড করুন আমাদের অফিসিয়াল অ্যাপ!
+</div>
+
+<a href="app.apk" class="app-banner-card" download>
+    <div class="app-banner-left">
+        <div class="app-icon-box">
             📥
         </div>
-        <div class="app-download-info">
+        <div class="app-text-info">
             <h3>অ্যাপ ডাউনলোড করুন</h3>
             <p>Android App • Free Download</p>
         </div>
     </div>
-    <div class="app-download-arrow">
-        &gt;
+    <div class="app-arrow-box">
+        ›
     </div>
 </a>
 
@@ -1995,6 +2004,7 @@ footer{
 
     <!-- =================================================
          MAP ANIMATION
+         লেখাটার নিচে ভিডিওর মতো ম্যাপ
     ================================================= -->
 
     <div class="mb-map-animation">
