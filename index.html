@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#fbf7f2">
-<meta name="description" content="MB Blood Bank — দেশজুড়ে রক্তদাতা নেটওয়ার্ক।">
+<meta name="description" content="MB Blood Bank — দেশের যেকোনো ঠিকানায় রক্তদাতা নেটওয়ার্ক।">
 <title>MB Blood Bank | সবার আগে, সবখানে</title>
 
 <style>
@@ -14,325 +14,299 @@
   --cream:#fbf7f2;
   --pink:#fbe8eb;
   --ink:#241b1b;
-  --muted:#817777;
+  --muted:#898080;
   --border:#eee7e1;
+  --white:#fff;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:85px}
 body{
   margin:0;background:var(--cream);color:var(--ink);
-  font-family:"Noto Sans Bengali",Arial,sans-serif;
-  font-size:15px;line-height:1.8
+  font-family:"Noto Sans Bengali","Arial",sans-serif;
+  font-size:14px;line-height:1.8
 }
 a{color:inherit;text-decoration:none}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
-.wrap{width:94%;max-width:1160px;margin:auto}
+img{max-width:100%}
+.wrap{width:94%;max-width:1180px;margin:auto}
 .hidden{display:none!important}
 section{scroll-margin-top:85px}
 h1,h2,h3,p{margin-top:0}
-h1{font-size:clamp(34px,5vw,57px);line-height:1.35}
-h2{font-size:clamp(25px,3.5vw,36px);line-height:1.45}
-h3{line-height:1.5}
+h2{line-height:1.45}
 .muted{color:var(--muted)}
-.eyebrow{font-size:13px;font-weight:800;color:var(--red)}
 .primary,.pill{
-  display:inline-flex;justify-content:center;align-items:center;
-  gap:8px;background:var(--red);color:white;border:0;
-  border-radius:30px;padding:12px 20px;font-weight:800;
-  box-shadow:0 7px 20px #b5103524
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:11px 18px;background:var(--red);color:white;
+  border:0;border-radius:30px;font-weight:700;
+  box-shadow:0 6px 16px #b5103522
 }
 .primary:hover,.pill:hover{background:var(--deep)}
-.secondary{
+.outline{
   display:inline-flex;align-items:center;justify-content:center;
-  padding:11px 18px;border:1px solid var(--border);
-  background:white;color:var(--red);border-radius:30px;font-weight:800
+  padding:10px 17px;border:1px solid #e9b6c1;
+  border-radius:30px;color:var(--red);font-weight:700;background:white
 }
+.eyebrow{font-size:12px;font-weight:800;color:var(--red);margin-bottom:6px}
+.section-title{font-size:clamp(25px,4vw,37px);margin-bottom:8px}
+.section-intro{color:var(--muted);max-width:700px}
+.section-head{margin-bottom:24px}
 
-/* HEADER */
+/* Header */
 header{
-  position:sticky;top:0;z-index:50;
+  position:sticky;top:0;z-index:100;
   background:#fffaf6ed;border-bottom:1px solid var(--border);
   backdrop-filter:blur(12px)
 }
-.nav{min-height:72px;display:flex;align-items:center;
-  justify-content:space-between;gap:12px;flex-wrap:wrap}
-.logo{display:flex;align-items:center;gap:10px;font-weight:900}
+.nav{
+  min-height:70px;display:flex;align-items:center;
+  justify-content:space-between;gap:15px;flex-wrap:wrap
+}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800}
 .logo-drop{
-  width:34px;height:39px;display:grid;place-items:center;
-  background:var(--red);color:white;
+  width:32px;height:38px;display:grid;place-items:center;
+  color:white;background:var(--red);
   border-radius:60% 60% 60% 10%;transform:rotate(-45deg)
 }
 .logo-drop span{transform:rotate(45deg)}
 .logo small{display:block;font-size:10px;color:var(--muted);font-weight:400}
-.links{display:flex;align-items:center;gap:5px}
-.links a{font-size:12px;padding:8px 10px;border-radius:30px}
-.links a:hover{background:var(--pink);color:var(--red)}
-.menu{display:none;background:white;border:1px solid var(--border);
-  color:var(--red);border-radius:10px;padding:6px 12px;font-size:22px}
+.nav-links{display:flex;align-items:center;gap:5px}
+.nav-links a{padding:8px 12px;border-radius:25px;font-size:12px}
+.nav-links a:hover{background:var(--pink);color:var(--red)}
+.menu{
+  display:none;background:white;border:1px solid var(--border);
+  border-radius:10px;padding:7px 12px;color:var(--red);font-size:20px
+}
 
-/* HERO */
+/* Hero */
 .hero{
-  overflow:hidden;padding:55px 0 38px;
-  background:radial-gradient(ellipse at 80% 15%,#f5dfdf 0,transparent 45%)
+  padding:55px 0 30px;
+  background:radial-gradient(ellipse at 80% 20%,#f6dfe2 0,transparent 48%)
 }
 .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
-.tag{display:inline-block;background:#fff8f8;border:1px solid #f2d8dd;
-  color:var(--red);border-radius:30px;padding:5px 12px;font-size:12px}
-.hero h1{margin:17px 0 12px}
-.hero h1 span{color:var(--red)}
-.lead{max-width:560px;color:var(--muted)}
-.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
-.hero-visual{position:relative;min-height:310px;padding:20px 8px}
-.ambulance-scene{
-  height:240px;position:relative;overflow:hidden;
-  border-radius:25px;background:linear-gradient(#fff1ee,#f5d9d4);
-  border:1px solid #f0d9d5
+.tag{
+  display:inline-block;background:#fff7f8;border:1px solid #f2d8dd;
+  color:var(--red);padding:5px 12px;border-radius:25px;font-size:12px
 }
+.hero h1{font-size:clamp(34px,5vw,55px);line-height:1.3;margin:17px 0}
+.hero h1 span{color:var(--red)}
+.hero p{color:var(--muted);max-width:550px}
+.hero-buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.hero-visual{
+  position:relative;min-height:300px;border:1px solid var(--border);
+  border-radius:25px;overflow:hidden;
+  background:linear-gradient(135deg,#fff,#fbe6e8);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:25px
+}
+.visual-heart{font-size:60px;text-align:center;color:var(--red)}
+.visual-caption{text-align:center;font-weight:800;font-size:22px}
+.visual-caption small{display:block;color:var(--muted);font-size:13px;font-weight:400}
+
+/* Ambulance animation */
+.ambulance-section{
+  margin-top:25px;padding:18px 15px 10px;
+  border:1px solid #f0dadd;border-radius:18px;
+  background:#fff;overflow:hidden
+}
+.ambulance-heading{font-weight:800;color:var(--deep);margin-bottom:12px}
 .road{
-  position:absolute;left:0;right:0;bottom:24px;height:62px;
-  background:#62595b
+  height:72px;position:relative;overflow:hidden;
+  background:linear-gradient(#fff 0 36%,#e8e0db 36% 39%,#faf7f3 39% 100%);
+  border-radius:12px
 }
 .road:before{
-  content:"";position:absolute;left:0;right:0;top:28px;
-  border-top:4px dashed white;animation:roadMove .65s linear infinite
+  content:"";position:absolute;left:0;right:0;top:49px;
+  border-top:3px dashed #c8bcb5
 }
-@keyframes roadMove{to{background-position:-55px 0}}
 .ambulance{
-  position:absolute;z-index:2;bottom:57px;left:-180px;
-  width:158px;height:77px;animation:ambulanceDrive 7s linear infinite
+  position:absolute;top:7px;left:-100px;font-size:43px;
+  animation:drive 9s linear infinite;filter:drop-shadow(0 4px 3px #0001)
 }
-.ambulance-body{
-  position:absolute;bottom:12px;left:0;width:125px;height:49px;
-  background:white;border:3px solid #e4d9d7;border-radius:8px 8px 3px 3px
+.ambulance-light{
+  position:absolute;top:2px;left:-100px;width:22px;height:7px;
+  border-radius:10px;background:#e31d42;
+  animation:drive 9s linear infinite,flash .55s linear infinite
 }
-.ambulance-cabin{
-  position:absolute;right:0;bottom:12px;width:44px;height:39px;
-  background:white;border:3px solid #e4d9d7;border-radius:7px 12px 3px 3px
+@keyframes drive{
+  0%{left:-100px}
+  100%{left:calc(100% + 100px)}
 }
-.ambulance-window{
-  position:absolute;right:5px;top:5px;width:25px;height:15px;
-  background:#bde5f2;border-radius:3px
-}
-.ambulance-cross{
-  position:absolute;left:40px;top:8px;width:29px;height:29px;
-  background:var(--red);border-radius:5px
-}
-.ambulance-cross:before,.ambulance-cross:after{
-  content:"";position:absolute;left:12px;top:4px;width:6px;height:21px;
-  background:white;border-radius:2px
-}
-.ambulance-cross:after{transform:rotate(90deg)}
-.wheel{
-  position:absolute;bottom:0;width:25px;height:25px;border-radius:50%;
-  background:#302b2c;border:5px solid #b6b1b1
-}
-.wheel.one{left:20px}.wheel.two{right:17px}
-.light{
-  position:absolute;top:3px;left:47px;width:30px;height:8px;
-  background:#ff334d;border-radius:5px;animation:flash .5s infinite alternate
-}
-@keyframes flash{to{background:#3d91ff;box-shadow:0 0 12px #3d91ff}}
-@keyframes ambulanceDrive{
-  0%{left:-180px}
-  45%{left:43%}
-  70%{left:43%}
-  100%{left:110%}
-}
-.scene-label{
-  position:absolute;left:15px;top:15px;z-index:3;
-  background:white;padding:6px 11px;border-radius:30px;
-  font-size:12px;font-weight:800;color:var(--red)
-}
-.scene-heart{
-  position:absolute;right:23px;top:48px;color:#e6a2af;
-  font-size:36px;animation:heartBeat 1.3s infinite
-}
-@keyframes heartBeat{50%{transform:scale(1.2)}}
-.scene-caption{
-  position:absolute;right:15px;bottom:10px;z-index:3;
-  font-size:11px;color:#fff
-}
-.float-note{
-  position:absolute;bottom:0;left:0;background:white;border:1px solid var(--border);
-  border-radius:14px;padding:11px 15px;box-shadow:0 8px 22px #0000000d;
-  font-size:12px
-}
-.float-note b{color:var(--red);font-size:17px}
+@keyframes flash{0%,100%{opacity:1}50%{opacity:.25}}
+.road-label{position:absolute;right:10px;bottom:1px;color:#8b7d77;font-size:10px}
 
-/* NETWORK NUMBERS */
+/* Network figures */
 .stats{background:white;border-block:1px solid var(--border)}
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr)}
-.stat{text-align:center;padding:22px 8px;border-right:1px solid var(--border)}
-.stat:last-child{border:0}
-.stat strong{display:block;font-size:clamp(25px,3vw,34px);color:var(--red)}
-.stat span{font-size:13px;color:var(--muted)}
+.stat{text-align:center;padding:22px 10px;border-right:1px solid var(--border)}
+.stat:last-child{border-right:0}
+.stat strong{display:block;font-size:clamp(25px,4vw,35px);color:var(--red);line-height:1.4}
+.stat span{font-size:12px;color:var(--muted)}
 
-/* GENERAL SECTION */
-.content{padding:55px 0}
-.section-head{text-align:center;max-width:720px;margin:0 auto 27px}
-.section-head h2{margin:7px 0}
-.section-head p{color:var(--muted);margin-bottom:0}
-
-/* THREE SERVICES */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+/* Three steps */
+.content{padding:48px 0}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
 .step{
-  background:white;border:1px solid var(--border);border-radius:19px;
-  padding:23px;transition:.25s
+  background:white;border:1px solid var(--border);border-radius:18px;
+  padding:21px;transition:transform .2s,border-color .2s
 }
-.step:hover{transform:translateY(-4px);border-color:#e6a5b4}
+.step:hover{transform:translateY(-3px);border-color:#e6a9b6}
 .step-icon{
-  width:48px;height:48px;display:grid;place-items:center;
-  background:var(--pink);color:var(--red);border-radius:14px;font-size:25px
+  width:46px;height:46px;display:grid;place-items:center;
+  background:var(--pink);color:var(--red);border-radius:14px;font-size:24px
 }
-.step h3{font-size:19px;margin:15px 0 6px}
-.step p{color:var(--muted);font-size:13px;margin-bottom:14px}
-.step a{color:var(--red);font-size:13px;font-weight:800}
+.step h3{font-size:18px;margin:13px 0 6px}
+.step p{color:var(--muted);font-size:13px;margin-bottom:12px}
+.step a{color:var(--red);font-weight:800;font-size:12px}
 
-/* MAP */
+/* Bangladesh map animation */
 .map-panel{
-  background:white;border:1px solid var(--border);
-  border-radius:26px;padding:22px;overflow:hidden
+  background:#fff;border:1px solid var(--border);
+  border-radius:24px;padding:25px;overflow:hidden
 }
-.map-heading{display:flex;justify-content:space-between;align-items:center;
-  gap:15px;flex-wrap:wrap}
-.map-heading h2{margin:5px 0}
-.live{font-size:12px;color:#168347;font-weight:800}
-.live:before{content:"";display:inline-block;width:8px;height:8px;
-  background:#19a85d;border-radius:50%;margin-right:7px;
-  animation:livePulse 1s infinite}
-@keyframes livePulse{50%{opacity:.35;transform:scale(.7)}}
-.map-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:center}
-.map-canvas{
-  min-height:340px;position:relative;overflow:hidden;border-radius:20px;
-  background:radial-gradient(ellipse at center,#fff5ee,#fffdfb 72%);
-  display:grid;place-items:center
+.map-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:25px;align-items:center}
+.map-stage{
+  min-height:340px;position:relative;display:grid;place-items:center;
+  background:radial-gradient(ellipse,#fbe8eb 0,transparent 70%);
+  overflow:hidden;border-radius:18px
 }
-.bd-map{width:100%;max-width:410px;height:auto;overflow:visible}
-.bd-shape{fill:#f7d9d3;stroke:#d89ca5;stroke-width:2}
-.map-dot{fill:var(--red);opacity:.85;animation:dotPulse 2s ease-in-out infinite}
-.map-dot.hub{fill:#f28a35;stroke:white;stroke-width:2}
-.map-dot:nth-child(3n){animation-delay:.4s}
-.map-dot:nth-child(4n){animation-delay:.8s}
-@keyframes dotPulse{0%,100%{opacity:.45}50%{opacity:1}}
-.route{fill:none;stroke:#eaa1ac;stroke-width:2;stroke-dasharray:5 7;
-  animation:routeMove 2s linear infinite}
-@keyframes routeMove{to{stroke-dashoffset:-24}}
-.map-legend{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;
-  font-size:11px;color:var(--muted);margin-top:7px}
-.legend-dot{display:inline-block;width:9px;height:9px;border-radius:50%;
-  background:var(--red);margin-right:5px}
-.legend-dot.orange{background:#f28a35}
-.map-info h3{font-size:21px;margin-bottom:8px}
-.map-info>p{font-size:13px;color:var(--muted)}
-.map-numbers{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:15px}
-.map-number{background:#fff8f6;border:1px solid #f4e6e2;border-radius:13px;padding:12px}
-.map-number strong{display:block;font-size:24px;color:var(--red)}
-.map-number span{font-size:12px;color:var(--muted)}
-.map-footnote{font-size:11px;color:var(--muted);margin:15px 0 0}
+.bd-map{width:min(100%,390px);height:auto;overflow:visible}
+.bd-shape{
+  fill:#f6cbd3;stroke:#b51035;stroke-width:2.5;
+  stroke-linejoin:round;stroke-dasharray:5 3
+}
+.map-dot{fill:#b51035;animation:dotPulse 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.map-dot.orange{fill:#f18a24;animation-delay:.3s}
+.map-dot:nth-of-type(3n){animation-delay:.6s}
+.map-dot:nth-of-type(4n){animation-delay:.9s}
+@keyframes dotPulse{
+  0%,100%{opacity:.65;transform:scale(.8)}
+  50%{opacity:1;transform:scale(1.35)}
+}
+.map-route{stroke:#e28b4e;stroke-width:2;stroke-dasharray:5 5;fill:none;animation:routeMove 3s linear infinite}
+@keyframes routeMove{to{stroke-dashoffset:-40}}
+.map-legend{display:flex;gap:15px;flex-wrap:wrap;font-size:11px;color:var(--muted);justify-content:center}
+.legend-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--red);margin-right:5px}
+.legend-dot.orange{background:#f18a24}
+.map-copy h3{font-size:22px;margin-bottom:8px}
+.map-copy p{color:var(--muted);font-size:13px}
+.map-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}
+.metric{background:#fff7f8;border:1px solid #f2dfe2;border-radius:13px;padding:13px}
+.metric strong{display:block;color:var(--red);font-size:23px}
+.metric span{font-size:11px;color:var(--muted)}
+.map-note{font-size:11px;color:var(--muted);margin-top:12px}
 
-/* DIRECT LINKS */
-.direct-panel{
-  margin-top:18px;background:var(--deep);color:white;border-radius:22px;
-  padding:24px;display:flex;align-items:center;justify-content:space-between;
-  gap:18px;flex-wrap:wrap
+/* Network services */
+.service-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:22px}
+.service{
+  padding:18px;background:white;border:1px solid var(--border);
+  border-radius:16px;text-align:center
 }
-.direct-panel h3{font-size:22px;margin-bottom:4px}
-.direct-panel p{font-size:13px;color:#f2cbd3;margin:0}
-.direct-panel .primary{background:white;color:var(--deep);box-shadow:none}
+.service span{display:block;font-size:25px}
+.service h3{font-size:15px;margin:8px 0 5px}
+.service p{font-size:12px;color:var(--muted);margin:0}
 
-/* PARTNER ORGANIZATIONS */
-.partner-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+/* Partner organizations */
+.partners{background:#fff;border-block:1px solid var(--border)}
+.partner-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:13px}
 .partner{
-  background:white;border:1px solid var(--border);border-radius:17px;
-  padding:15px 10px;text-align:center;min-width:0
+  background:#fffaf8;border:1px solid var(--border);border-radius:16px;
+  min-height:145px;padding:15px 10px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px
 }
 .partner-logo{
-  width:64px;height:64px;border-radius:50%;margin:0 auto 10px;
-  display:grid;place-items:center;background:var(--pink);
-  border:1px solid #f1d3d9;color:var(--red);font-size:28px;
-  font-weight:900
+  width:58px;height:58px;border-radius:50%;display:grid;place-items:center;
+  background:var(--pink);border:2px solid white;outline:1px solid #efd5da;
+  color:var(--red);font-size:19px;font-weight:900
 }
-.partner:nth-child(3n) .partner-logo{background:#fff1df;color:#c66b1a}
-.partner:nth-child(3n + 1) .partner-logo{background:#e7f5ed;color:#16834b}
-.partner h3{font-size:12px;line-height:1.6;margin:0;overflow-wrap:anywhere}
-.partner-caption{font-size:12px;color:var(--muted);text-align:center;margin-top:15px}
+.partner p{font-size:12px;font-weight:700;line-height:1.55;margin:0}
+.partner small{font-size:10px;color:var(--muted)}
 
-/* FINAL CTA */
-.final-cta{
-  margin:10px auto 55px;padding:35px;border-radius:26px;
-  background:linear-gradient(125deg,#fbe8eb,#fff2ec);
-  border:1px solid #f1d4da;text-align:center
+/* CTA */
+.cta{
+  background:var(--pink);border:1px solid #f2d7dc;border-radius:24px;
+  padding:30px;display:flex;align-items:center;justify-content:space-between;
+  gap:20px
 }
-.final-cta h2{margin:8px 0}
-.final-cta p{color:var(--muted);margin-bottom:18px}
+.cta h2{font-size:clamp(25px,4vw,36px);margin-bottom:5px}
+.cta p{color:var(--muted);margin-bottom:0}
+.cta-actions{display:flex;gap:9px;flex-wrap:wrap}
 
-/* INNER TOOLS — HOME PAGE-এ লুকানো */
-#memberArea{padding:35px 0 55px}
-.inner-card{
-  background:white;border:1px solid var(--border);border-radius:20px;
-  padding:22px;margin:18px 0
-}
-.inner-card h2{font-size:24px}
-.inner-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+/* Member panel: hidden until user opens it */
+#memberPanel{padding:35px 0 55px}
+.panel-card{background:white;border:1px solid var(--border);border-radius:20px;padding:24px}
+.panel-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+label{display:block;font-weight:700;font-size:12px;margin-bottom:6px}
 input,select,textarea{
   width:100%;padding:11px 12px;border:1px solid var(--border);
   border-radius:11px;background:white;color:var(--ink);outline:none
 }
 input:focus,select:focus,textarea:focus{border-color:var(--red)}
-label{display:block;font-size:12px;font-weight:800;margin:8px 0 5px}
-.notice{background:#fff6f6;border:1px solid #f2d7dc;color:var(--deep);
-  padding:12px 14px;border-radius:12px;font-size:12px;margin:12px 0}
-.status{font-size:12px;color:var(--muted);overflow-wrap:anywhere;margin-top:12px}
+.status{font-size:12px;color:var(--muted);margin-top:12px;overflow-wrap:anywhere}
+.notice{
+  background:#fff6f6;border:1px solid #f2d7dc;color:var(--deep);
+  border-radius:12px;padding:12px 14px;font-size:12px;margin:12px 0
+}
+.panel-menu{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.panel-menu button{
+  border:1px solid var(--border);background:white;color:var(--red);
+  border-radius:25px;padding:9px 13px
+}
+.panel-menu button.active{background:var(--red);color:white}
+.panel-section{margin-top:15px}
+.panel-section h3{font-size:20px}
+.panel-section .primary{margin-top:14px}
+.back-btn{
+  background:white;border:1px solid var(--border);border-radius:25px;
+  color:var(--red);padding:9px 14px;font-weight:700
+}
 
-/* FOOTER */
-footer{background:#211516;color:white;padding:32px 0 14px}
-.footer-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:25px}
-footer p,footer a{font-size:12px;color:#cbbfc0}
+/* Footer */
+footer{background:#211516;color:white;padding:32px 0 15px}
+.footer-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:25px}
 footer h3{font-size:15px}
-.footer-links{display:flex;gap:15px;flex-wrap:wrap}
-.copyright{border-top:1px solid #3c2e30;margin-top:24px;padding-top:13px;
-  text-align:center;color:#bbaeb0;font-size:11px}
+footer p,footer a{font-size:12px;color:#cbbfc0}
+footer a{display:block;margin:6px 0}
+.copyright{
+  border-top:1px solid #3c2e30;margin-top:24px;padding-top:14px;
+  text-align:center;font-size:11px;color:#bbaeb0
+}
 
 @media(max-width:850px){
-  .links a{font-size:11px;padding:8px 6px}
+  .hero-grid,.map-layout{grid-template-columns:1fr}
+  .hero-visual{min-height:220px}
   .partner-grid{grid-template-columns:repeat(3,1fr)}
-  .map-layout{grid-template-columns:1fr}
-  .map-canvas{min-height:300px}
+  .map-stage{min-height:280px}
 }
 @media(max-width:620px){
-  .nav{min-height:62px;padding:9px 0}
+  .nav{min-height:62px;padding:8px 0}
   .menu{display:block}
-  .links{display:none;flex-direction:column;align-items:stretch;width:100%;
-    padding:0 0 10px}
-  .links.open{display:flex}
-  .links a{font-size:13px;padding:10px}
-  .hero{padding:30px 0}
-  .hero-grid{grid-template-columns:1fr;gap:8px}
-  .hero h1{font-size:39px}
-  .hero-visual{min-height:270px;padding:10px 0 15px}
-  .ambulance-scene{height:225px}
+  .nav-links{display:none;width:100%;flex-direction:column;align-items:stretch;padding-bottom:8px}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:10px;font-size:13px}
+  .hero{padding:30px 0 22px}
+  .hero h1{font-size:38px}
+  .hero-visual{min-height:205px}
+  .visual-heart{font-size:44px}
+  .visual-caption{font-size:18px}
   .stats-grid{grid-template-columns:1fr}
-  .stat{border-right:0;border-bottom:1px solid var(--border);padding:14px}
+  .stat{border-right:0;border-bottom:1px solid var(--border);padding:15px}
   .stat:last-child{border-bottom:0}
-  .content{padding:38px 0}
-  .steps{grid-template-columns:1fr}
-  .step{padding:20px}
-  .map-panel{padding:14px}
-  .map-canvas{min-height:240px}
-  .map-numbers{grid-template-columns:repeat(2,1fr)}
-  .partner-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-  .partner{padding:13px 7px}
-  .partner-logo{width:55px;height:55px;font-size:24px}
-  .partner h3{font-size:11px}
-  .direct-panel{padding:20px}
-  .final-cta{padding:25px 17px;margin-bottom:35px}
-  .inner-grid{grid-template-columns:1fr}
-  .footer-grid{grid-template-columns:1fr}
+  .content{padding:34px 0}
+  .steps,.service-strip{grid-template-columns:1fr}
+  .map-panel{padding:15px}
+  .map-stage{min-height:245px}
+  .map-metrics{gap:7px}
+  .metric{padding:10px}
+  .partner-grid{grid-template-columns:repeat(2,1fr);gap:9px}
+  .partner{min-height:135px}
+  .cta{align-items:flex-start;flex-direction:column;padding:22px}
+  .footer-grid{grid-template-columns:1fr;gap:15px}
+  .panel-card{padding:16px}
+  .panel-grid{grid-template-columns:1fr}
 }
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;
-    animation-iteration-count:1!important;scroll-behavior:auto!important}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}
 }
 </style>
 </head>
@@ -344,512 +318,463 @@ footer h3{font-size:15px}
       <span class="logo-drop"><span>♥</span></span>
       <span>MB Blood Bank<small>এক ফোঁটা রক্ত, একটি জীবন</small></span>
     </a>
-
-    <button class="menu" id="menuBtn" aria-label="মেনু খুলুন"
-      aria-expanded="false">☰</button>
-
-    <nav class="links" id="navLinks">
+    <button class="menu" id="menuBtn" aria-label="মেনু খুলুন" aria-expanded="false">☰</button>
+    <nav class="nav-links" id="navLinks">
       <a href="#" data-home>হোম</a>
-      <a href="#network" data-home-link>আমাদের নেটওয়ার্ক</a>
-      <a href="#partners" data-home-link>আমাদের সহযোগী</a>
+      <a href="#network" data-home-link>আমাদের নেটওয়ার্ক</a>
+      <a href="#partners" data-home-link>সংযুক্ত সংগঠন</a>
       <a href="#join" data-home-link>যোগ দিন</a>
-      <a href="#memberArea" id="memberNav">সদস্য অপশন</a>
-      <a href="#join" class="pill" data-home-link>ডোনার হতে চান?</a>
+      <a href="#memberPanel" id="memberNav" class="pill">ডোনার প্যানেল</a>
     </nav>
   </div>
 </header>
 
-<!-- হোমপেজে শুধু নিচের নির্ধারিত অংশগুলো থাকবে -->
+<!-- হোমপেজে শুধু চাওয়া অংশগুলো -->
 <main id="homeView">
 
-  <!-- HERO: অ্যাম্বুলেন্স অ্যানিমেশন -->
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <span class="tag">♥ MB BLOOD BANK · দেশজুড়ে নেটওয়ার্ক</span>
-        <h1>দেশের যেকোনো ঠিকানায়,<br><span>সময়মতো</span></h1>
-        <p class="lead">
-          ৪৯৫টি উপজেলা, ১০০০ পয়েন্ট, ৭০০ জন মাঠে —
-          আর একটাই নেটওয়ার্ক।
-        </p>
-        <p class="muted">
-          এসএমএসে পাওয়া লিংক খুলতে বা গ্রুপ অ্যাকাউন্ট তৈরি করতে হবে না।
-          সরাসরি ওয়েবসাইট থেকেই প্রয়োজনীয় অপশন ব্যবহার করুন।
-        </p>
-        <div class="hero-actions">
-          <a class="primary" href="https://mbbloodbank.github.io/#donorRegistration/">
-            🩸 ডোনার হতে চান?
-          </a>
-          <a class="secondary" href="#network">নেটওয়ার্ক দেখুন ↓</a>
-        </div>
-      </div>
+<section class="hero">
+ <div class="wrap hero-grid">
+  <div>
+   <span class="tag">🩸 MB BLOOD BANK · মানবতার নেটওয়ার্ক</span>
+   <h1>দেশের যেকোনো ঠিকানায়,<br><span>সময়মতো</span></h1>
+   <p>
+    ৪৯৫টি উপজেলা, ১০০০ পয়েন্ট, ৭০০ জন মাঠে — আর একটাই নেটওয়ার্ক।
+    রক্তের প্রয়োজনে ডোনার খুঁজুন, নিবন্ধন করুন এবং জরুরি অনুরোধ জানান।
+   </p>
+   <div class="hero-buttons">
+    <a class="primary" href="#join">ডোনার হতে চান? →</a>
+    <a class="outline" href="#network">নেটওয়ার্ক দেখুন</a>
+   </div>
+   <p class="status">এসএমএসে পাওয়া লিংক বা গ্রুপ অ্যাড ছাড়াই এই ওয়েবসাইট থেকে প্রয়োজনীয় অপশন ব্যবহার করার ব্যবস্থা রাখা হবে।</p>
+  </div>
 
-      <div class="hero-visual">
-        <div class="ambulance-scene" role="img"
-          aria-label="চলন্ত অ্যাম্বুলেন্সের অ্যানিমেশন">
-          <span class="scene-label">🚨 জরুরি সেবা</span>
-          <span class="scene-heart">♥</span>
-          <div class="road"></div>
-          <div class="ambulance">
-            <div class="light"></div>
-            <div class="ambulance-body">
-              <div class="ambulance-cross"></div>
-            </div>
-            <div class="ambulance-cabin">
-              <div class="ambulance-window"></div>
-            </div>
-            <div class="wheel one"></div>
-            <div class="wheel two"></div>
-          </div>
-          <span class="scene-caption">সময়মতো সহায়তা · মানবতার পাশে</span>
-        </div>
-        <div class="float-note">
-          <b>♥</b> একটি নেটওয়ার্ক<br>
-          <span class="muted">রক্তদাতা ও মানুষের সংযোগ</span>
-        </div>
-      </div>
+  <div class="hero-visual">
+   <div class="visual-heart">♥</div>
+   <div class="visual-caption">একটি নেটওয়ার্ক, একটাই লক্ষ্য
+    <small>সময়মতো রক্তদাতার সঙ্গে যোগাযোগ</small>
+   </div>
+   <div class="ambulance-section">
+    <div class="ambulance-heading">🚑 জরুরি সেবার পথে</div>
+    <div class="road" aria-label="চলন্ত অ্যাম্বুলেন্স অ্যানিমেশন">
+     <span class="ambulance" aria-hidden="true">🚑</span>
+     <span class="ambulance-light" aria-hidden="true"></span>
+     <span class="road-label">সেবার পথে · MB Blood Bank</span>
     </div>
-  </section>
+   </div>
+  </div>
+ </div>
+</section>
 
-  <!-- তিনটি প্রধান সংখ্যা -->
-  <section class="stats" aria-label="নেটওয়ার্কের প্রধান সংখ্যা">
-    <div class="wrap stats-grid">
-      <div class="stat"><strong>৪৯৫</strong><span>উপজেলা</span></div>
-      <div class="stat"><strong>১০০০</strong><span>ডোনার পয়েন্ট</span></div>
-      <div class="stat"><strong>৭০০</strong><span>কর্মী</span></div>
+<div class="stats">
+ <div class="wrap stats-grid">
+  <div class="stat"><strong>৪৯৫</strong><span>উপজেলা</span></div>
+  <div class="stat"><strong>১০০০</strong><span>ডোনার পয়েন্ট</span></div>
+  <div class="stat"><strong>৭০০</strong><span>কর্মী</span></div>
+ </div>
+</div>
+
+<section class="content" id="network">
+ <div class="wrap">
+  <div class="section-head">
+   <div class="eyebrow">একটি নেটওয়ার্ক</div>
+   <h2 class="section-title">তিনটা কাজ, একটাই নেটওয়ার্ক</h2>
+   <p class="section-intro">
+    একটা রিকুয়েস্ট হোক বা মাসে একহাজার রিকুয়েস্ট — একই ডোনার, একই রক্তদাতা।
+   </p>
+  </div>
+  <div class="steps">
+   <article class="step">
+    <div class="step-icon">♥</div>
+    <h3>ডোনার হোন</h3>
+    <p>একজন থেকে আরেকজনে বা হাসপাতাল থেকে ক্লিনিকের কাছে, দেশের যেকোনো জায়গায় রক্তদাতার সঙ্গে যোগাযোগ সহজ করার লক্ষ্য।</p>
+    <a href="#join">দেখুন →</a>
+   </article>
+   <article class="step">
+    <div class="step-icon">✍</div>
+    <h3>ডোনার নিবন্ধন করুন</h3>
+    <p>এই ওয়েবসাইটের নিবন্ধন অপশন থেকে আপনার তথ্য দিন। নিবন্ধনের পর যাচাই ও অনুমোদনের প্রক্রিয়া প্রয়োজন।</p>
+    <a href="#join">দেখুন →</a>
+   </article>
+   <article class="step">
+    <div class="step-icon">⌕</div>
+    <h3>রক্তদাতার জন্য</h3>
+    <p>ডোনার খোঁজা, রক্তের জরুরি অনুরোধ এবং নিবন্ধনের অপশন এক জায়গায় রাখার পরিকল্পনা।</p>
+    <a href="#join">দেখুন →</a>
+   </article>
+  </div>
+ </div>
+</section>
+
+<section class="content">
+ <div class="wrap map-panel">
+  <div class="map-layout">
+   <div>
+    <div class="eyebrow">দেশ জুড়ে এমবি ব্লাড ব্যাংক</div>
+    <h2 class="section-title">বাংলাদেশের প্রতিটি অঞ্চলে, মানবতার বন্ধন</h2>
+    <p class="section-intro">প্রতিটি বিন্দু একটি উপজেলা বোঝানোর প্রতীকী অ্যানিমেশন। কমলা বিন্দুগুলো বিভাগীয় কেন্দ্র বোঝায়। রুটগুলো উদাহরণস্বরূপ দেখানো হয়েছে।</p>
+    <div class="map-legend">
+     <span><i class="legend-dot"></i>উপজেলা/নেটওয়ার্ক পয়েন্ট</span>
+     <span><i class="legend-dot orange"></i>বিভাগীয় কেন্দ্র</span>
     </div>
-  </section>
+   </div>
 
-  <!-- তিনটা কাজ -->
-  <section class="content" id="services">
-    <div class="wrap">
-      <div class="section-head">
-        <div class="eyebrow">এক নেটওয়ার্ক, তিনটি কাজ</div>
-        <h2>তিনটা কাজ, একটাই নেটওয়ার্ক</h2>
-        <p>একটা রিকুয়েস্ট হোক বা মাসে দশ হাজার রিকুয়েস্ট —
-          একই নেটওয়ার্কে রক্তদাতা ও রক্তের প্রয়োজন থাকা মানুষকে যুক্ত করার লক্ষ্য।</p>
-      </div>
+   <div class="map-stage">
+    <!-- এটি একটি প্রতীকী SVG মানচিত্র; সরকারি সীমানার নির্ভুল GIS মানচিত্র নয় -->
+    <svg class="bd-map" viewBox="0 0 330 390" role="img" aria-label="বাংলাদেশের প্রতীকী মানচিত্র ও নেটওয়ার্ক বিন্দু">
+     <defs>
+      <clipPath id="mapClip">
+       <path d="M103 17 L139 28 160 51 181 56 188 77 213 91 224 113 213 133 235 152 224 171 240 194 226 214 240 232 222 247 218 271 196 282 188 307 164 323 148 352 126 366 112 347 94 339 86 316 70 299 76 279 61 264 70 244 53 222 65 199 57 178 72 160 63 139 80 117 75 97 91 82 88 59 100 44 Z"/>
+      </clipPath>
+     </defs>
+     <path class="bd-shape" d="M103 17 L139 28 160 51 181 56 188 77 213 91 224 113 213 133 235 152 224 171 240 194 226 214 240 232 222 247 218 271 196 282 188 307 164 323 148 352 126 366 112 347 94 339 86 316 70 299 76 279 61 264 70 244 53 222 65 199 57 178 72 160 63 139 80 117 75 97 91 82 88 59 100 44 Z"/>
+     <g clip-path="url(#mapClip)">
+      <path class="map-route" d="M105 62 Q140 110 100 155 T130 240 T166 322"/>
+      <path class="map-route" d="M180 80 Q130 150 210 190 T150 300"/>
+      <path class="map-route" d="M80 205 Q160 180 220 230"/>
+      <g>
+       <circle class="map-dot orange" cx="110" cy="72" r="5"/>
+       <circle class="map-dot" cx="142" cy="92" r="3"/>
+       <circle class="map-dot" cx="175" cy="91" r="3"/>
+       <circle class="map-dot" cx="200" cy="112" r="3"/>
+       <circle class="map-dot orange" cx="190" cy="140" r="5"/>
+       <circle class="map-dot" cx="160" cy="130" r="3"/>
+       <circle class="map-dot" cx="123" cy="123" r="3"/>
+       <circle class="map-dot" cx="93" cy="145" r="3"/>
+       <circle class="map-dot" cx="112" cy="164" r="3"/>
+       <circle class="map-dot orange" cx="150" cy="174" r="5"/>
+       <circle class="map-dot" cx="187" cy="180" r="3"/>
+       <circle class="map-dot" cx="211" cy="196" r="3"/>
+       <circle class="map-dot" cx="173" cy="209" r="3"/>
+       <circle class="map-dot" cx="135" cy="204" r="3"/>
+       <circle class="map-dot orange" cx="95" cy="218" r="5"/>
+       <circle class="map-dot" cx="112" cy="237" r="3"/>
+       <circle class="map-dot" cx="150" cy="245" r="3"/>
+       <circle class="map-dot" cx="192" cy="240" r="3"/>
+       <circle class="map-dot" cx="210" cy="260" r="3"/>
+       <circle class="map-dot orange" cx="170" cy="275" r="5"/>
+       <circle class="map-dot" cx="133" cy="281" r="3"/>
+       <circle class="map-dot" cx="102" cy="273" r="3"/>
+       <circle class="map-dot" cx="120" cy="310" r="3"/>
+       <circle class="map-dot" cx="156" cy="317" r="3"/>
+       <circle class="map-dot orange" cx="144" cy="340" r="5"/>
+       <circle class="map-dot" cx="95" cy="300" r="3"/>
+       <circle class="map-dot" cx="184" cy="300" r="3"/>
+       <circle class="map-dot" cx="82" cy="184" r="3"/>
+       <circle class="map-dot" cx="218" cy="150" r="3"/>
+       <circle class="map-dot" cx="80" cy="250" r="3"/>
+      </g>
+     </g>
+    </svg>
+   </div>
+  </div>
 
-      <div class="steps">
-        <article class="step">
-          <div class="step-icon">♥</div>
-          <h3>ডোনার হোন</h3>
-          <p>একজন থেকে আরেকজনে বা হাসপাতাল থেকে ক্লিনিকের কাছে,
-            দেশের যেকোনো জায়গায় রক্তদানের সংযোগ তৈরি করুন।</p>
-          <a href="https://mbbloodbank.github.io/#donorRegistration/">
-            দেখুন →
-          </a>
-        </article>
+  <div class="map-metrics">
+   <div class="metric"><strong>১০০০</strong><span>ডেলিভারি পয়েন্ট</span></div>
+   <div class="metric"><strong>৭০০</strong><span>ডেলিভারি কর্মী</span></div>
+   <div class="metric"><strong>৮</strong><span>বিভাগ</span></div>
+   <div class="metric"><strong>৬৪</strong><span>জেলা</span></div>
+   <div class="metric"><strong>৪৯৫</strong><span>উপজেলা</span></div>
+   <div class="metric"><strong>৩৩০</strong><span>পৌরসভা</span></div>
+  </div>
+  <p class="map-note">নোট: নেটওয়ার্কের পরিসংখ্যান আপনার দেওয়া তথ্য অনুযায়ী প্রদর্শিত। প্রকৃত কার্যক্রম ও মানচিত্রের সীমানা যাচাই করে প্রকাশ করুন। বিন্দু ও রুটগুলো ডেমো অ্যানিমেশন।</p>
+ </div>
+</section>
 
-        <article class="step">
-          <div class="step-icon">📝</div>
-          <h3>ডোনার নিবন্ধন করুন</h3>
-          <p>ওয়েবসাইট থেকেই নিবন্ধনের তথ্য দিন।
-            অ্যাকাউন্ট ছাড়াই নিবন্ধন অনুরোধ পাঠানোর ব্যবস্থা রাখা যাবে।</p>
-          <a href="https://mbbloodbank.github.io/#donorRegistration/">
-            দেখুন →
-          </a>
-        </article>
-
-        <article class="step">
-          <div class="step-icon">🩸</div>
-          <h3>রক্তদাতার জন্য</h3>
-          <p>রক্তের প্রয়োজন হলে নেটওয়ার্কের মাধ্যমে উপযুক্ত
-            রক্তদাতার সঙ্গে যোগাযোগ করার সুযোগ।</p>
-          <a href="#memberArea" id="serviceMemberLink">দেখুন →</a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- বাংলাদেশের ম্যাপ অ্যানিমেশন -->
-  <section class="content" id="network">
-    <div class="wrap">
-      <div class="section-head">
-        <div class="eyebrow">দেশজুড়ে MB BLOOD BANK</div>
-        <h2>দেশ জুড়ে এমবি ব্লাড ব্যাংক</h2>
-        <p>বাংলাদেশজুড়ে রক্তদাতা নেটওয়ার্ক গড়ে তোলার লক্ষ্য —
-          প্রতিটি অঞ্চলে যোগাযোগের সুযোগ তৈরি করা।</p>
-      </div>
-
-      <div class="map-panel">
-        <div class="map-heading">
-          <div>
-            <div class="eyebrow">বাংলাদেশ নেটওয়ার্ক</div>
-            <h2>এক মানচিত্র, সারা দেশ</h2>
-          </div>
-          <span class="live">নেটওয়ার্কের প্রতীকী অ্যানিমেশন</span>
-        </div>
-
-        <div class="map-layout">
-          <div>
-            <div class="map-canvas">
-              <!-- প্রতীকী বাংলাদেশ-আকৃতির SVG ও চলমান বিন্দু -->
-              <svg class="bd-map" viewBox="0 0 360 410"
-                xmlns="http://www.w3.org/2000/svg"
-                role="img" aria-label="বাংলাদেশের প্রতীকী নেটওয়ার্ক ম্যাপ">
-                <defs>
-                  <clipPath id="bangladeshClip">
-                    <path d="M116 23 L155 31 L172 49 L204 44 L222 64
-                    L252 73 L267 94 L250 117 L269 139 L252 164
-                    L264 184 L245 204 L253 230 L232 249 L238 274
-                    L220 295 L216 321 L198 344 L180 366 L165 348
-                    L157 324 L143 304 L135 282 L119 265 L113 241
-                    L95 222 L91 198 L75 178 L80 154 L64 137
-                    L73 112 L86 96 L84 72 L99 54 Z"/>
-                  </clipPath>
-                </defs>
-                <path class="bd-shape" d="M116 23 L155 31 L172 49 L204 44
-                L222 64 L252 73 L267 94 L250 117 L269 139 L252 164
-                L264 184 L245 204 L253 230 L232 249 L238 274
-                L220 295 L216 321 L198 344 L180 366 L165 348
-                L157 324 L143 304 L135 282 L119 265 L113 241
-                L95 222 L91 198 L75 178 L80 154 L64 137
-                L73 112 L86 96 L84 72 L99 54 Z"/>
-                <g clip-path="url(#bangladeshClip)">
-                  <path class="route" d="M90 115 Q160 90 240 130"/>
-                  <path class="route" d="M98 185 Q165 155 239 205"/>
-                  <path class="route" d="M120 245 Q160 275 213 300"/>
-                  <path class="route" d="M132 70 Q170 165 180 340"/>
-                  <path class="route" d="M230 90 Q170 190 105 225"/>
-                  <path class="route" d="M100 145 Q175 215 230 250"/>
-                  <g id="mapDots"></g>
-                </g>
-                <text x="180" y="393" text-anchor="middle"
-                  font-size="12" fill="#800d25" font-weight="700">
-                  BANGLADESH · NETWORK
-                </text>
-              </svg>
-            </div>
-            <div class="map-legend">
-              <span><i class="legend-dot"></i>উপজেলা নেটওয়ার্কের প্রতীকী বিন্দু</span>
-              <span><i class="legend-dot orange"></i>বিভাগীয় হাবের প্রতীকী বিন্দু</span>
-            </div>
-          </div>
-
-          <div class="map-info">
-            <h3>প্রতিটি অঞ্চল, একই লক্ষ্য</h3>
-            <p>
-              প্রতিটি বিন্দু একটি উপজেলা নেটওয়ার্কের ধারণা বোঝায়।
-              কমলা বিন্দুগুলো আটটি বিভাগীয় হাবকে প্রতীকীভাবে দেখায়।
-              বাস্তব লোকেশন ও রুট দেখাতে যাচাইকৃত স্থানাঙ্কের ডেটা প্রয়োজন।
-            </p>
-
-            <div class="map-numbers">
-              <div class="map-number"><strong>১০০০</strong><span>ডেলিভারি পয়েন্ট</span></div>
-              <div class="map-number"><strong>৭০০</strong><span>ডেলিভারি কর্মী</span></div>
-              <div class="map-number"><strong>৮</strong><span>বিভাগ</span></div>
-              <div class="map-number"><strong>৬৪</strong><span>জেলা</span></div>
-              <div class="map-number"><strong>৪৯৫</strong><span>উপজেলা</span></div>
-              <div class="map-number"><strong>৩৩০</strong><span>পৌরসভা</span></div>
-            </div>
-          </div>
-        </div>
-
-        <p class="map-footnote">
-          নোট: ম্যাপের আকৃতি, বিন্দু ও রুটগুলো ভিজ্যুয়াল প্রদর্শনের জন্য
-          প্রতীকী। এগুলো বাস্তব ডোনার পয়েন্ট বা লাইভ রুটের নিশ্চয়তা নয়।
-          প্রকাশের আগে সংখ্যাগুলো ও নেটওয়ার্কের তথ্য যাচাই করে নিন।
-        </p>
-      </div>
-
-      <div class="direct-panel">
-        <div>
-          <h3>নিজের সাইট থেকেই প্রয়োজনীয় সেবা</h3>
-          <p>রক্তদাতা নিবন্ধন, জরুরি রিকুয়েস্ট এবং ডোনার খোঁজার ব্যবস্থা।</p>
-        </div>
-        <a class="primary" href="https://mbbloodbank.github.io/#donorRegistration/">
-          ডোনার নিবন্ধন করুন →
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- যুক্ত সংগঠনগুলো -->
-  <section class="content" id="partners">
-    <div class="wrap">
-      <div class="section-head">
-        <div class="eyebrow">আমাদের সহযোগী</div>
-        <h2>যারা আমাদের সাথে যুক্ত আছেন</h2>
-        <p>দেশের বিভিন্ন অঞ্চলে রক্তদাতা ও মানবিক উদ্যোগের সঙ্গে সংযোগ।</p>
-      </div>
-
-      <div class="partner-grid">
-        <article class="partner"><div class="partner-logo">♥</div><h3>রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন</h3></article>
-        <article class="partner"><div class="partner-logo">♥</div><h3>বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন</h3></article>
-        <article class="partner"><div class="partner-logo">+</div><h3>হিউম্যান অপ বাংলাদেশ</h3></article>
-        <article class="partner"><div class="partner-logo">♥</div><h3>ইউনাইটেড ব্লাড ডোনেশন</h3></article>
-        <article class="partner"><div class="partner-logo">🩸</div><h3>Mymensingh Blood Donation</h3></article>
-        <article class="partner"><div class="partner-logo">♥</div><h3>রক্তের সন্ধানে আমরা</h3></article>
-        <article class="partner"><div class="partner-logo">+</div><h3>Blood Donation Cumilla</h3></article>
-        <article class="partner"><div class="partner-logo">♥</div><h3>রক্ত সেবা বাংলাদেশ</h3></article>
-        <article class="partner"><div class="partner-logo">♥</div><h3>রংপুর রক্ত দান যুব সামাজিক সংগঠন</h3></article>
-        <article class="partner"><div class="partner-logo">🩸</div><h3>FREE Blood Donation Mymensingh</h3></article>
-        <article class="partner"><div class="partner-logo">♥</div><h3>বন্ধু মহল ব্লাড ডোনার সোসাইটি</h3></article>
-        <article class="partner"><div class="partner-logo">+</div><h3>অসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন</h3></article>
-        <article class="partner"><div class="partner-logo">♥</div><h3>রক্তদানে আমরা ময়মনসিংহ</h3></article>
-        <article class="partner"><div class="partner-logo">♥</div><h3>Bangladesh Blood Donors Club</h3></article>
-        <article class="partner"><div class="partner-logo">🩸</div><h3>বাংলাদেশ কওমি ব্লাড ডোনার পরিষদ</h3></article>
-      </div>
-      <p class="partner-caption">
-        এখানে আপাতত প্রতীকী চিহ্ন দেখানো হয়েছে। প্রতিটি সংগঠনের আসল ছবি
-        বা লোগো বসাতে হলে সংশ্লিষ্ট সংগঠনের অনুমোদিত ছবি যুক্ত করুন।
-      </p>
-    </div>
-  </section>
-
-  <!-- শেষ CTA -->
-  <section class="wrap final-cta" id="join">
-    <div class="eyebrow">মানবতার পাশে থাকুন</div>
+<section class="content" id="join">
+ <div class="wrap">
+  <div class="eyebrow">সরাসরি ওয়েবসাইট থেকে</div>
+  <h2 class="section-title">আপনার প্রয়োজনীয় সেবা এক জায়গায়</h2>
+  <p class="section-intro">রক্তদাতা নিবন্ধন, জরুরি রক্তের অনুরোধ এবং ডোনার খোঁজার অপশন ডোনার প্যানেলের ভেতরে রাখা হয়েছে—হোমপেজে আলাদা ফর্ম দেখানো হচ্ছে না।</p>
+  <div class="service-strip">
+   <article class="service"><span>🩸</span><h3>রক্তদাতা নিবন্ধন</h3><p>নতুন ডোনার হিসেবে নিবন্ধনের অনুরোধ দিন।</p></article>
+   <article class="service"><span>🚨</span><h3>জরুরি রক্তের অনুরোধ</h3><p>রক্তের প্রয়োজনের তথ্য দিয়ে অনুরোধ তৈরি করুন।</p></article>
+   <article class="service"><span>🔎</span><h3>ডোনার খুঁজুন</h3><p>রক্তের গ্রুপ ও এলাকার ভিত্তিতে অনুসন্ধানের ব্যবস্থা।</p></article>
+  </div>
+  <div class="cta" style="margin-top:22px">
+   <div>
     <h2>সবার আগে, সবখানে।</h2>
-    <p>আজই নিবন্ধন করুন, জরুরি রক্তের অনুরোধ জানান এবং রক্তদাতা নেটওয়ার্কে যুক্ত হন।</p>
-    <div class="hero-actions" style="justify-content:center">
-      <a class="primary" href="https://mbbloodbank.github.io/#donorRegistration/">
-        🩸 আজই নিবন্ধন করুন
-      </a>
-      <a class="secondary" href="#memberArea" id="ctaMemberLink">
-        জরুরি রিকুয়েস্ট / সদস্য অপশন
-      </a>
-    </div>
-  </section>
+    <p>আজই নিবন্ধন করুন, জরুরি রক্তের অনুরোধ জানান।</p>
+   </div>
+   <div class="cta-actions">
+    <button class="primary" id="openRegister">ডোনার নিবন্ধন →</button>
+    <button class="outline" id="openPanel">ডোনার প্যানেল</button>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="content partners" id="partners">
+ <div class="wrap">
+  <div class="section-head">
+   <div class="eyebrow">একসঙ্গে মানবতার সেবায়</div>
+   <h2 class="section-title">দেশের বড় বড় ব্লাড সংস্থা আমাদের সাথে যুক্ত</h2>
+   <p class="section-intro">তোমার দেওয়া সংগঠনগুলোর নাম এখানে রাখা হয়েছে। প্রতিটি সংগঠনের আসল লোগো বা ছবি পেলে আদ্যক্ষরের জায়গায় বসানো যাবে।</p>
+  </div>
+  <div class="partner-grid" id="partnerGrid"></div>
+ </div>
+</section>
 </main>
 
-<!--
-  হোমপেজে রক্তদাতা খোঁজা, নিবন্ধন ফর্ম এবং জরুরি ফর্ম দেখানো হচ্ছে না।
-  এই ভেতরের অংশটি আলাদা সদস্য অপশন হিসেবে রাখা হয়েছে।
-  প্রকৃত লগইন ও অনুমোদনের জন্য সার্ভার-সাইড authentication প্রয়োজন।
--->
-<main id="memberArea" class="hidden">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="eyebrow">MB BLOOD BANK</div>
-      <h2>সদস্য অপশন</h2>
-      <p>নিচের ফর্মগুলো হলো ফ্রন্টএন্ডের নমুনা। ডেটাবেস সংযুক্ত না থাকলে
-        তথ্য সংরক্ষণ বা Admin approval সম্পন্ন হবে না.</p>
-    </div>
+<!-- ডোনার প্যানেল: হোমপেজে দেখা যায় না -->
+<main id="memberPanel" class="hidden">
+ <div class="wrap">
+  <div class="panel-card">
+   <button class="back-btn" id="backHome">← হোমপেজে ফিরে যান</button>
+   <div class="eyebrow" style="margin-top:20px">MB BLOOD BANK</div>
+   <h1 style="font-size:clamp(27px,4vw,38px);margin-bottom:5px">ডোনার প্যানেল</h1>
+   <p class="muted">নিবন্ধন, রক্তদাতা খোঁজা ও জরুরি অনুরোধের অপশন এখানে রাখা হয়েছে।</p>
+   <div class="notice">⚠️ নিরাপত্তা নোট: এই এক-ফাইল ডেমোতে প্রকৃত লগইন, ডেটাবেস, ডোনার যাচাই বা Admin approval সংযুক্ত নেই। প্রকাশিত ওয়েবসাইটে চালু করার আগে ব্যাকএন্ড সংযোগ প্রয়োজন।</div>
 
-    <div class="inner-card">
-      <h2>🩸 রক্তদাতা খুঁজুন</h2>
-      <form id="searchForm">
-        <div class="inner-grid">
-          <div>
-            <label for="searchBlood">রক্তের গ্রুপ</label>
-            <select id="searchBlood" name="blood">
-              <option value="">সব রক্তের গ্রুপ</option>
-              <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
-              <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
-            </select>
-          </div>
-          <div>
-            <label for="searchArea">এলাকা</label>
-            <input id="searchArea" name="area" placeholder="জেলা বা উপজেলার নাম">
-          </div>
-        </div>
-        <button class="primary" type="submit" style="margin-top:15px">🔎 Donor Search</button>
-        <p id="searchStatus" class="status" aria-live="polite"></p>
-      </form>
-    </div>
+   <div class="panel-menu">
+    <button class="active" data-panel="registerPanel">ডোনার নিবন্ধন</button>
+    <button data-panel="searchPanel">ডোনার খুঁজুন</button>
+    <button data-panel="emergencyPanel">জরুরি অনুরোধ</button>
+   </div>
 
-    <div class="inner-card" id="donorRegistration">
-      <h2>📝 রক্তদাতা হিসেবে নিবন্ধন</h2>
-      <div class="notice">
-        আপনার নিবন্ধনের অনুরোধ Pending থাকবে।
-        Admin যাচাই ও Approved করার পর আপনার তথ্য রক্তদাতার তালিকায় প্রদর্শিত হবে।
-      </div>
-      <form id="registrationForm">
-        <div class="inner-grid">
-          <div><label for="donorName">আপনার নাম *</label><input id="donorName" name="name" required></div>
-          <div><label for="donorPhone">মোবাইল নম্বর *</label><input id="donorPhone" name="phone" type="tel" required></div>
-          <div><label for="donorBlood">রক্তের গ্রুপ *</label>
-            <select id="donorBlood" name="blood" required>
-              <option value="">নির্বাচন করুন</option>
-              <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
-              <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
-            </select>
-          </div>
-          <div><label for="donorArea">জেলা / উপজেলা *</label><input id="donorArea" name="area" required></div>
-        </div>
-        <button class="primary" type="submit" style="margin-top:15px">নিবন্ধনের অনুরোধ পাঠান</button>
-        <p id="regStatus" class="status" aria-live="polite"></p>
-      </form>
-    </div>
+   <section class="panel-section" id="registerPanel">
+    <h3>📝 রক্তদাতা হিসেবে নিবন্ধন</h3>
+    <div class="notice">আপনার নিবন্ধন Admin যাচাই না করা পর্যন্ত Pending থাকবে। অনুমোদন ছাড়া তথ্যকে অনুমোদিত ডোনার তালিকায় দেখানো যাবে না।</div>
+    <form id="registrationForm">
+     <div class="panel-grid">
+      <div><label for="donorName">আপনার নাম *</label><input id="donorName" name="name" required placeholder="পূর্ণ নাম"></div>
+      <div><label for="donorPhone">মোবাইল নম্বর *</label><input id="donorPhone" name="phone" type="tel" required placeholder="01XXXXXXXXX"></div>
+      <div><label for="donorBlood">রক্তের গ্রুপ *</label><select id="donorBlood" name="bloodGroup" required><option value="">নির্বাচন করুন</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option></select></div>
+      <div><label for="donorDivision">বিভাগ *</label><select id="donorDivision" required><option value="">বিভাগ নির্বাচন করুন</option></select></div>
+      <div><label for="donorDistrict">জেলা *</label><select id="donorDistrict" required disabled><option value="">আগে বিভাগ নির্বাচন করুন</option></select></div>
+      <div><label for="donorUpazila">উপজেলা *</label><select id="donorUpazila" required disabled><option value="">আগে জেলা নির্বাচন করুন</option></select></div>
+     </div>
+     <button class="primary" type="submit">নিবন্ধনের অনুরোধ পাঠান</button>
+     <p class="status" id="registrationStatus" aria-live="polite"></p>
+    </form>
+   </section>
 
-    <div class="inner-card" id="emergency">
-      <h2>🚨 জরুরি রক্তের অনুরোধ</h2>
-      <div class="notice">
-        ⚠️ আর্থিক লেনদেনের ক্ষেত্রে সতর্ক থাকুন। আর্থিক লেনদেনের জন্য
-        MB Blood Bank কর্তৃপক্ষ দায়ী নয়।
-      </div>
-      <form id="emergencyForm">
-        <div class="inner-grid">
-          <div><label for="patientName">রোগীর নাম *</label><input id="patientName" name="patientName" required></div>
-          <div><label for="patientPhone">যোগাযোগ নম্বর *</label><input id="patientPhone" name="phone" type="tel" required></div>
-          <div><label for="patientBlood">রক্তের গ্রুপ *</label>
-            <select id="patientBlood" name="blood" required>
-              <option value="">নির্বাচন করুন</option>
-              <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
-              <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
-            </select>
-          </div>
-          <div><label for="hospital">হাসপাতাল / স্থান *</label><input id="hospital" name="hospital" required></div>
-          <div><label for="neededDate">রক্ত প্রয়োজনের তারিখ *</label><input id="neededDate" name="date" type="date" required></div>
-          <div><label for="requestArea">জেলা / উপজেলা *</label><input id="requestArea" name="area" required></div>
-        </div>
-        <button class="primary" type="submit" style="margin-top:15px">জরুরি অনুরোধ পাঠান</button>
-        <p id="emergencyStatus" class="status" aria-live="polite"></p>
-      </form>
-    </div>
+   <section class="panel-section hidden" id="searchPanel">
+    <h3>🔎 রক্তদাতা খুঁজুন</h3>
+    <form id="searchForm">
+     <div class="panel-grid">
+      <div><label for="searchBlood">রক্তের গ্রুপ</label><select id="searchBlood"><option value="">সব গ্রুপ</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option></select></div>
+      <div><label for="searchDivision">বিভাগ</label><select id="searchDivision"><option value="">সব বিভাগ</option></select></div>
+      <div><label for="searchDistrict">জেলা</label><select id="searchDistrict" disabled><option value="">আগে বিভাগ নির্বাচন করুন</option></select></div>
+      <div><label for="searchUpazila">উপজেলা</label><select id="searchUpazila" disabled><option value="">আগে জেলা নির্বাচন করুন</option></select></div>
+     </div>
+     <button class="primary" type="submit">🔎 Donor Search</button>
+     <p class="status" id="searchStatus" aria-live="polite"></p>
+    </form>
+   </section>
 
-    <button type="button" class="secondary" id="backHome">← হোম পেজে ফিরে যান</button>
+   <section class="panel-section hidden" id="emergencyPanel">
+    <h3>🚨 জরুরি রক্তের অনুরোধ</h3>
+    <div class="notice">⚠️ আর্থিক লেনদেনে সতর্ক থাকুন। আর্থিক লেনদেনের জন্য MB Blood Bank কর্তৃপক্ষ দায়ী নয়।</div>
+    <form id="emergencyForm">
+     <div class="panel-grid">
+      <div><label for="patientName">রোগীর নাম *</label><input id="patientName" name="patientName" required></div>
+      <div><label for="patientPhone">যোগাযোগ নম্বর *</label><input id="patientPhone" name="phone" type="tel" required></div>
+      <div><label for="patientBlood">রক্তের গ্রুপ *</label><select id="patientBlood" required><option value="">নির্বাচন করুন</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option></select></div>
+      <div><label for="patientHospital">হাসপাতাল / স্থান *</label><input id="patientHospital" required></div>
+      <div><label for="requestDivision">বিভাগ *</label><select id="requestDivision" required><option value="">বিভাগ নির্বাচন করুন</option></select></div>
+      <div><label for="requestDistrict">জেলা *</label><select id="requestDistrict" required disabled><option value="">আগে বিভাগ নির্বাচন করুন</option></select></div>
+      <div><label for="requestUpazila">উপজেলা *</label><select id="requestUpazila" required disabled><option value="">আগে জেলা নির্বাচন করুন</option></select></div>
+      <div><label for="neededDate">রক্ত প্রয়োজনের তারিখ *</label><input id="neededDate" type="date" required></div>
+     </div>
+     <button class="primary" type="submit">জরুরি অনুরোধ পাঠান</button>
+     <p class="status" id="emergencyStatus" aria-live="polite"></p>
+    </form>
+   </section>
   </div>
+ </div>
 </main>
 
 <footer>
-  <div class="wrap">
-    <div class="footer-grid">
-      <div>
-        <a href="#" class="logo" style="color:white" data-home>
-          <span class="logo-drop"><span>♥</span></span>
-          <span>MB Blood Bank<small>এক ফোঁটা রক্ত, একটি জীবন</small></span>
-        </a>
-        <p style="margin-top:13px">মানবতার সেবায়, রক্তদাতার পাশে।</p>
-      </div>
-      <div>
-        <h3>দ্রুত লিংক</h3>
-        <div class="footer-links">
-          <a href="#network" data-home-link>নেটওয়ার্ক</a>
-          <a href="#partners" data-home-link>সহযোগী সংগঠন</a>
-          <a href="#join" data-home-link>ডোনার হোন</a>
-          <a href="#memberArea" id="footerMemberLink">সদস্য অপশন</a>
-        </div>
-      </div>
-    </div>
-    <div class="copyright">© 2026 MB Blood Bank · মানবতার সেবায়</div>
+ <div class="wrap">
+  <div class="footer-grid">
+   <div>
+    <a class="logo" href="#" data-home style="color:white">
+     <span class="logo-drop"><span>♥</span></span>
+     <span>MB Blood Bank<small>এক ফোঁটা রক্ত, একটি জীবন</small></span>
+    </a>
+    <p style="margin-top:14px">স্বেচ্ছাসেবী রক্তদাতা ও রক্তের প্রয়োজন রয়েছে এমন মানুষের মাঝে মানবতার সেতুবন্ধন।</p>
+   </div>
+   <div>
+    <h3>দ্রুত লিংক</h3>
+    <a href="#network" data-home-link>আমাদের নেটওয়ার্ক</a>
+    <a href="#partners" data-home-link>সংযুক্ত সংগঠন</a>
+    <a href="#join" data-home-link>ডোনার নিবন্ধন</a>
+   </div>
+   <div>
+    <h3>জরুরি তথ্য</h3>
+    <p>রক্তদানের আগে হাসপাতাল বা চিকিৎসাকর্মীর পরামর্শ নিন।</p>
+    <p>রক্তদাতার পরিচয় ও তথ্য যাচাই করে যোগাযোগ করুন।</p>
+   </div>
   </div>
+  <div class="copyright">© 2026 MB Blood Bank · মানবতার সেবায়</div>
+ </div>
 </footer>
 
 <script>
 "use strict";
-
 const $ = id => document.getElementById(id);
-const homeView = $("homeView");
-const memberArea = $("memberArea");
-const navLinks = $("navLinks");
-const menuBtn = $("menuBtn");
 
+/* মোবাইল মেনু */
+const menuBtn = $("menuBtn");
+const navLinks = $("navLinks");
+menuBtn.addEventListener("click",()=>{
+  const open = navLinks.classList.toggle("open");
+  menuBtn.setAttribute("aria-expanded",String(open));
+});
 function closeMenu(){
   navLinks.classList.remove("open");
   menuBtn.setAttribute("aria-expanded","false");
 }
 
-menuBtn.addEventListener("click",()=>{
-  const opened = navLinks.classList.toggle("open");
-  menuBtn.setAttribute("aria-expanded",String(opened));
-});
-
+/* Home ও Donor Panel */
 function showHome(target){
-  homeView.classList.remove("hidden");
-  memberArea.classList.add("hidden");
+  $("homeView").classList.remove("hidden");
+  $("memberPanel").classList.add("hidden");
   closeMenu();
-
   if(target){
     setTimeout(()=>{
-      const el = $(target);
+      const el=$(target);
       if(el) el.scrollIntoView({behavior:"smooth",block:"start"});
     },50);
   }else{
     window.scrollTo({top:0,behavior:"smooth"});
   }
 }
-
-function showMember(){
-  homeView.classList.add("hidden");
-  memberArea.classList.remove("hidden");
+function showPanel(sectionId){
+  $("homeView").classList.add("hidden");
+  $("memberPanel").classList.remove("hidden");
   closeMenu();
+  document.querySelectorAll("[data-panel]").forEach(btn=>{
+    btn.classList.toggle("active",btn.dataset.panel===sectionId);
+  });
+  document.querySelectorAll("#memberPanel .panel-section").forEach(sec=>{
+    sec.classList.toggle("hidden",sec.id!==sectionId);
+  });
   window.scrollTo({top:0,behavior:"smooth"});
 }
+$("homeLogo").addEventListener("click",e=>{e.preventDefault();showHome();});
+$("backHome").addEventListener("click",()=>showHome());
+$("memberNav").addEventListener("click",e=>{e.preventDefault();showPanel("registerPanel");});
+$("openRegister").addEventListener("click",()=>showPanel("registerPanel"));
+$("openPanel").addEventListener("click",()=>showPanel("registerPanel"));
 
-$("homeLogo").addEventListener("click",e=>{
-  e.preventDefault();
-  showHome();
+document.querySelectorAll("[data-panel]").forEach(btn=>{
+  btn.addEventListener("click",()=>showPanel(btn.dataset.panel));
 });
-
-document.querySelectorAll("[data-home]").forEach(link=>{
-  link.addEventListener("click",e=>{
-    e.preventDefault();
-    showHome();
-  });
+document.querySelectorAll("[data-home]").forEach(a=>{
+  a.addEventListener("click",e=>{e.preventDefault();showHome();});
 });
-
-document.querySelectorAll("[data-home-link]").forEach(link=>{
-  link.addEventListener("click",e=>{
+document.querySelectorAll("[data-home-link]").forEach(a=>{
+  a.addEventListener("click",e=>{
     e.preventDefault();
-    const target=(link.getAttribute("href")||"").replace("#","");
+    const target=(a.getAttribute("href")||"").replace("#","");
     showHome(target);
   });
 });
 
-["memberNav","serviceMemberLink","ctaMemberLink","footerMemberLink"].forEach(id=>{
-  $(id).addEventListener("click",e=>{
-    e.preventDefault();
-    showMember();
-  });
+/* সংগঠনের নামগুলো */
+const partners=[
+ "রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন",
+ "বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন",
+ "হিউম্যান অপ বাংলাদেশ",
+ "ইউনাইটেড ব্লাড ডোনেশন",
+ "Mymensingh Blood Donation",
+ "রক্তের সন্ধানে আমরা",
+ "Blood Donation Cumilla",
+ "রক্ত সেবা বাংলাদেশ",
+ "রংপুর রক্ত দান যাব সামাজিক সংগঠন",
+ "FREE Blood Donation Mymensingh",
+ "বন্ধু মহল ব্লাড ডোনার সোসাইটি",
+ "অসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন",
+ "রক্তদানে আমরা ময়মনসিংহ",
+ "Bangladesh Blood Donors Club",
+ "বাংলাদেশ কওমি ব্লাড ডোনার পরিষদ"
+];
+function initials(name){
+  const words=name.trim().split(/\s+/).filter(Boolean);
+  if(words.length===1) return words[0].slice(0,2);
+  return (words[0][0]+words[1][0]).toUpperCase();
+}
+const partnerGrid=$("partnerGrid");
+partners.forEach((name,index)=>{
+  const card=document.createElement("article");
+  card.className="partner";
+  const logo=document.createElement("div");
+  logo.className="partner-logo";
+  logo.textContent=initials(name);
+  logo.setAttribute("aria-hidden","true");
+  const title=document.createElement("p");
+  title.textContent=name;
+  const note=document.createElement("small");
+  note.textContent="সংগঠনের লোগো যোগ করা যাবে";
+  card.append(logo,title,note);
+  partnerGrid.appendChild(card);
 });
 
-$("backHome").addEventListener("click",()=>showHome());
+/* বাংলাদেশের বিভাগ-জেলা-উপজেলা ডেটা
+   এই ডেমোতে বিভাগগুলো দেওয়া আছে। সব জেলা ও উপজেলা চালু করতে
+   পূর্ণ, যাচাইকৃত বাংলাদেশ লোকেশন JSON সংযুক্ত করতে হবে। */
+const divisions=[
+ "ঢাকা","চট্টগ্রাম","রাজশাহী","খুলনা",
+ "বরিশাল","সিলেট","রংপুর","ময়মনসিংহ"
+];
+function fillDivision(id,allLabel){
+  const select=$(id);
+  if(!select)return;
+  select.replaceChildren(new Option(allLabel,""));
+  divisions.forEach(name=>select.add(new Option(name,name)));
+}
+["donorDivision","searchDivision","requestDivision"].forEach(id=>{
+  fillDivision(id,id==="searchDivision"?"সব বিভাগ":"বিভাগ নির্বাচন করুন");
+});
 
-/* বাংলাদেশের প্রতীকী ম্যাপের চলমান বিন্দু তৈরি।
-   এগুলো illustrative dots; বাস্তব ৪৯৫ উপজেলা স্থানাঙ্ক নয়। */
-(function createMapDots(){
-  const svgNS="http://www.w3.org/2000/svg";
-  const container=$("mapDots");
-  const hubs=[
-    [119,82],[177,110],[220,145],[145,166],
-    [196,205],[125,231],[204,268],[171,310]
-  ];
-
-  hubs.forEach(([x,y],index)=>{
-    const circle=document.createElementNS(svgNS,"circle");
-    circle.setAttribute("cx",x);
-    circle.setAttribute("cy",y);
-    circle.setAttribute("r","6");
-    circle.setAttribute("class","map-dot hub");
-    circle.style.animationDelay=(index*.17)+"s";
-    container.appendChild(circle);
+/* জেলা/উপজেলার জন্য যাচাইকৃত পূর্ণ ডেটাসেট না থাকলে
+   ভুল অপশন দেখানো হবে না। */
+function resetLocationSelect(id,label){
+  const select=$(id);
+  if(!select)return;
+  select.replaceChildren(new Option(label,""));
+  select.disabled=true;
+}
+function setupLocationPair(prefix,divisionId,districtId,upazilaId){
+  const div=$(divisionId),dist=$(districtId),upa=$(upazilaId);
+  if(!div||!dist||!upa)return;
+  div.addEventListener("change",()=>{
+    resetLocationSelect(districtId,"জেলার ডেটাসেট সংযুক্ত করুন");
+    resetLocationSelect(upazilaId,"আগে জেলা নির্বাচন করুন");
+    if(div.value){
+      dist.disabled=false;
+      dist.replaceChildren(new Option("জেলা নির্বাচন করুন",""));
+      dist.add(new Option("জেলার পূর্ণ তালিকা JSON সংযুক্ত করতে হবে",""));
+      dist.disabled=true;
+      const status=prefix==="search"?"searchStatus":prefix==="donor"?"registrationStatus":"emergencyStatus";
+      const el=$(status);
+      if(el) el.textContent="বিভাগ নির্বাচন হয়েছে। পূর্ণ জেলা ও উপজেলা তালিকা চালু করতে যাচাইকৃত লোকেশন ডেটাসেট যুক্ত করতে হবে।";
+    }
   });
+}
+setupLocationPair("donor","donorDivision","donorDistrict","donorUpazila");
+setupLocationPair("search","searchDivision","searchDistrict","searchUpazila");
+setupLocationPair("request","requestDivision","requestDistrict","requestUpazila");
 
-  /* দৃষ্টিনন্দন অ্যানিমেশনের জন্য প্রতীকী বিন্দু */
-  for(let i=0;i<70;i++){
-    const x=86+((i*37)%158);
-    const y=58+((i*53)%265);
-    const circle=document.createElementNS(svgNS,"circle");
-    circle.setAttribute("cx",x);
-    circle.setAttribute("cy",y);
-    circle.setAttribute("r",i%7===0?"3.2":"2.3");
-    circle.setAttribute("class","map-dot");
-    circle.style.animationDelay=((i%12)*.13)+"s";
-    container.appendChild(circle);
-  }
-})();
-
-/* ফর্মগুলো এখন শুধু নমুনা। সার্ভার বা ডেটাবেস যুক্ত না হওয়া পর্যন্ত
-   কোনো তথ্য স্থায়ীভাবে সংরক্ষিত হয় না। */
+/* ফর্ম যাচাই: ব্যাকএন্ড ছাড়া ডেটা সংরক্ষণ হয় না */
+$("registrationForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  $("registrationStatus").textContent=
+    "ফর্মের তথ্য পূরণ হয়েছে, কিন্তু সার্ভার/ডেটাবেস সংযুক্ত না থাকায় নিবন্ধন সংরক্ষণ হয়নি। প্রকৃত Pending ও Admin approval চালু করতে ব্যাকএন্ড সংযোগ প্রয়োজন।";
+  $("registrationStatus").style.color="#b51035";
+});
 $("searchForm").addEventListener("submit",e=>{
   e.preventDefault();
   $("searchStatus").textContent=
-    "অনুসন্ধানের জন্য ডেটাবেসে অনুমোদিত রক্তদাতার তথ্য যুক্ত করতে হবে।";
+    "ডোনার খোঁজার জন্য অনুমোদিত ডোনার ডেটাবেস সংযুক্ত করতে হবে। এই ডেমো কোনো প্রকৃত ডোনারের তথ্য দেখায় না।";
+  $("searchStatus").style.color="#b51035";
 });
-
-$("registrationForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  $("regStatus").textContent=
-    "ফর্ম যাচাই হয়েছে, কিন্তু এখনো সংরক্ষিত হয়নি। প্রকৃত Pending আবেদন ও Admin approval চালু করতে ব্যাকএন্ড সংযোগ প্রয়োজন।";
-});
-
 $("emergencyForm").addEventListener("submit",e=>{
   e.preventDefault();
   $("emergencyStatus").textContent=
-    "ফর্ম যাচাই হয়েছে, কিন্তু জরুরি অনুরোধ সংরক্ষিত হয়নি। ডেটাবেস সংযোগ প্রয়োজন।";
+    "ফর্ম পূরণ হয়েছে, কিন্তু ডেটাবেস/সার্ভার সংযোগ ছাড়া জরুরি অনুরোধ জমা হয়নি।";
+  $("emergencyStatus").style.color="#b51035";
 });
 </script>
 </body>
