@@ -120,9 +120,8 @@ select:disabled{background:#f4f1ef;color:#aaa}
 #aboutPage{padding:32px 0 55px;min-height:70vh} 
 .about-top{ display:grid;grid-template-columns:1fr 1fr;gap:28px; align-items:center;background:#fff;border:1px solid var(--border); border-radius:24px;padding:25px;overflow:hidden } 
 .about-photo{ position:relative;min-height:390px;border-radius:19px;overflow:hidden; background:linear-gradient(135deg,#f1d8dc,#f9eee8) } 
-.about-photo img{ width:100%;height:100%;min-height:390px;display:block; object-fit:cover;object-position:center top } 
-.about-photo-caption{ position:absolute;left:15px;right:15px;bottom:15px; background:#fffef5ed;border-radius:13px;padding:12px 15px; font-weight:800;color:var(--deep);display:flex;align-items:center;gap:10px; } 
-.about-photo-caption img { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; } 
+.about-photo img{ width:100%;height:100%;min-height:390px;max-height:390px;display:block; object-fit:cover;object-position:center top } 
+.about-photo-caption{ position:absolute;left:15px;right:15px;bottom:15px; background:#fffef5ed;border-radius:13px;padding:12px 15px; font-weight:800;color:var(--deep) } 
 .about-title{font-size:clamp(30px,4vw,48px);line-height:1.45;margin:12px 0} 
 .about-title span{color:var(--red)} 
 .about-intro{font-size:clamp(16px,1.6vw,20px);line-height:1.95;color:#625757} 
@@ -470,12 +469,11 @@ section.content{padding:34px 0}
 <span class="about-location">বাংলাদেশের প্রতিটি প্রান্তে মানবতার বন্ধন</span> 
 </div> 
 
-<!-- লেখার পাশে ডোনারের ছবি এবং রক্তদানের পিকচার এখানে বসানো হয়েছে --> 
+<!-- এখানে donor.jpeg ছবি যোগ করা হয়েছে --> 
 <div class="about-photo"> 
-<img src="donor.jpeg" alt="MB Blood Bank-এর ডোনার" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#f1d8dc,#f9eee8)'"> 
+<img src="donor.jpeg" alt="MB Blood Bank-এর ডোনার" onerror="this.style.display='none'"> 
 <div class="about-photo-caption"> 
-<img src="donor.jpeg" alt="রক্তদান" onerror="this.style.display='none'"> 
-<span>❤️ রক্তদান করুন, জীবন বাঁচান</span> 
+❤️ রক্তদান করুন, জীবন বাঁচান 
 </div> 
 </div> 
 </div> 
@@ -490,7 +488,7 @@ section.content{padding:34px 0}
 <section> 
 <div class="eyebrow">আমাদের উদ্দেশ্য</div> 
 <h2 class="about-heading">আমাদের মিশন ও ভিশন</h2> 
-<p class="about-copy"> দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে তোলাই আমাদের ভিশন। </p> 
+<p class="about-copy"> দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে توলাই আমাদের ভিশন। </p> 
 <div class="about-columns"> 
 <article class="about-panel"> 
 <h3>🎯 আমাদের মিশন</h3> 
@@ -803,5 +801,4 @@ btn.addEventListener("click",() => showCompat(btn.dataset.compat));
 }); 
 showCompat("B+"); 
 </script> 
-</body> 
-</html>
+</body> </html>
