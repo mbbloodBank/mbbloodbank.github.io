@@ -111,14 +111,11 @@ select:disabled{background:#f4f1ef;color:#aaa}
 .blood-btn.active{background:var(--red);color:#fff;border-color:var(--red)}
 .search-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:12px}
 .photo{
-  height:360px;border-radius:25px;border:5px solid #fff;
+  height:310px;border-radius:25px;border:5px solid #fff;
   background:linear-gradient(135deg,#f0ded5,#ead6d0);
   overflow:hidden;box-shadow:0 18px 35px #39201d1b
 }
-.photo img{
-  width:100%;height:100%;object-fit:cover;
-  object-position:center;display:block
-}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
 .hero-image{position:relative;padding:10px}
 .float-card{
   position:absolute;bottom:-5px;left:-5px;background:#fff;
@@ -205,18 +202,56 @@ select:disabled{background:#f4f1ef;color:#aaa}
   align-items:center;background:#fff;border:1px solid var(--border);
   border-radius:24px;padding:25px;overflow:hidden
 }
+
+/* উপরের পরিচিতি লেখার পাশে শুধু ডোনার ব্যানার */
 .about-photo{
-  position:relative;min-height:390px;border-radius:19px;overflow:hidden;
+  position:relative;min-height:390px;height:390px;
+  border-radius:19px;overflow:hidden;
   background:linear-gradient(135deg,#f1d8dc,#f9eee8)
 }
 .about-photo img{
   width:100%;height:100%;min-height:390px;display:block;
-  object-fit:cover;object-position:center top
+  object-fit:cover;object-position:center;
 }
-.about-photo-caption{
-  position:absolute;left:15px;right:15px;bottom:15px;
-  background:#fffef5ed;border-radius:13px;padding:12px 15px;
-  font-weight:800;color:var(--deep)
+.donor-banner-overlay{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:25px;
+  background:linear-gradient(
+    180deg,
+    transparent 25%,
+    #240b12a6 100%
+  );
+  color:#fff;
+}
+.donor-banner-overlay .banner-label{
+  align-self:flex-start;background:#fff;color:var(--red);
+  border-radius:30px;padding:5px 12px;font-size:12px;font-weight:800;
+  margin-bottom:10px
+}
+.donor-banner-overlay h2{
+  font-size:clamp(25px,3vw,36px);line-height:1.35;margin:0 0 8px;
+  color:#fff
+}
+.donor-banner-overlay p{
+  font-size:14px;margin:0;color:#fff;line-height:1.8
+}
+
+/* প্রতিষ্ঠাতার ছবির জন্য আলাদা কার্ড */
+.founder-profile{
+  display:grid;grid-template-columns:150px minmax(0,1fr);
+  gap:22px;align-items:center
+}
+.founder-profile-photo{
+  width:150px;height:175px;object-fit:cover;object-position:center top;
+  display:block;border-radius:14px;border:1px solid var(--border);
+  background:#f8eeee
+}
+.founder-profile-name{
+  font-size:24px;color:var(--ink);margin:0 0 5px
+}
+.founder-profile-role{
+  color:var(--red);font-weight:800;margin-bottom:10px
 }
 .about-title{font-size:clamp(30px,4vw,48px);line-height:1.45;margin:12px 0}
 .about-title span{color:var(--red)}
@@ -287,7 +322,7 @@ footer a{display:block;margin:5px 0}
 
 @media(max-width:850px){
   .links{gap:0}.links a{padding:8px 7px;font-size:11px}
-  .hero-grid{gap:15px}.photo{height:300px}
+  .hero-grid{gap:15px}.photo{height:250px}
   .requests{grid-template-columns:repeat(2,1fr)}
   .work-grid{grid-template-columns:repeat(2,1fr)}
 }
@@ -302,7 +337,7 @@ footer a{display:block;margin:5px 0}
   .hero-grid{grid-template-columns:1fr}
   h1{font-size:39px;margin:12px 0}
   .hero-image{padding:0;margin-top:14px}
-  .photo{height:280px}
+  .photo{height:230px}
   .float-card{left:8px;bottom:-8px}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .stat:nth-child(2){border-right:0}
@@ -321,7 +356,11 @@ footer a{display:block;margin:5px 0}
   .results{grid-template-columns:1fr}
   .search-row{grid-template-columns:1fr}
   .about-top{grid-template-columns:1fr;padding:15px}
-  .about-photo,.about-photo img{min-height:300px;height:300px}
+  .about-photo{min-height:300px;height:300px}
+  .about-photo img{min-height:300px;height:300px}
+  .donor-banner-overlay{padding:17px}
+  .donor-banner-overlay h2{font-size:27px}
+  .donor-banner-overlay p{font-size:13px}
   .about-title{font-size:32px}
   .about-intro{font-size:16px}
   .about-stats{grid-template-columns:repeat(2,1fr);gap:8px}
@@ -332,6 +371,9 @@ footer a{display:block;margin:5px 0}
   .founder-quote{padding:20px}
   .form-grid{grid-template-columns:1fr}
   .form-card{padding:16px}
+  .founder-profile{grid-template-columns:100px minmax(0,1fr);gap:14px}
+  .founder-profile-photo{width:100px;height:125px}
+  .founder-profile-name{font-size:19px}
 }
 </style>
 </head>
@@ -407,14 +449,10 @@ footer a{display:block;margin:5px 0}
    </div>
   </div>
 
-  <!-- উপরের ডোনার ব্যানার: donor-banner.jpg -->
   <div class="hero-image">
    <div class="photo">
-    <img
-      src="./donor-banner.jpg"
-      alt="MB Blood Bank ডোনার ব্যানার"
-      onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=900&q=85';"
-    >
+    <img src="https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=900&q=85"
+      alt="রক্তদানের প্রতীকী ছবি">
    </div>
    <div class="float-card">
     <strong>♡</strong>
@@ -626,16 +664,17 @@ footer a{display:block;margin:5px 0}
     <span class="about-location">বাংলাদেশের প্রতিটি প্রান্তে মানবতার বন্ধন</span>
    </div>
 
-   <!-- প্রতিষ্ঠাতার ছবি: Funder.jpeg -->
+   <!-- এখানে শুধু রক্তদাতার ব্যানার থাকবে -->
    <div class="about-photo">
     <img
-      src="./Funder.jpeg"
-      alt="MB Blood Bank-এর প্রতিষ্ঠাতা Monir Ahmed Shakib"
-      onerror="this.onerror=null;this.src='https://placehold.co/700x800/fbe8eb/800d25?text=Monir+Ahmed+Shakib';"
-    >
-    <div class="about-photo-caption">
-     প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক<br>
-     <span style="color:#b51035">Monir Ahmed Shakib</span>
+      src="https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=1200&q=90"
+      alt="স্বেচ্ছাসেবী রক্তদাতা ও রক্তদানের ব্যানার"
+      onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=90'">
+
+    <div class="donor-banner-overlay">
+     <span class="banner-label">❤️ MB Blood Bank</span>
+     <h2>রক্ত দিন, জীবন বাঁচান</h2>
+     <p>আপনার এক ব্যাগ রক্ত একজন মানুষের জীবনে নতুন আশার আলো হতে পারে।</p>
     </div>
    </div>
   </div>
@@ -720,18 +759,22 @@ footer a{display:block;margin:5px 0}
   <section style="margin-top:35px">
    <div class="eyebrow">নেতৃত্ব</div>
    <h2 class="about-heading">প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক</h2>
-   <div class="about-panel" style="display:grid;grid-template-columns:130px 1fr;gap:20px;align-items:center">
+
+   <!-- নিচে প্রতিষ্ঠাতার আসল ছবি Funder.jpeg থাকবে -->
+   <div class="about-panel founder-profile">
     <img
-      src="./Funder.jpeg"
-      alt="Monir Ahmed Shakib"
-      style="width:130px;height:150px;object-fit:cover;object-position:center top;border-radius:14px"
-      onerror="this.onerror=null;this.src='https://placehold.co/300x350/fbe8eb/800d25?text=Monir+Ahmed+Shakib';"
-    >
+      class="founder-profile-photo"
+      src="Funder.jpeg"
+      alt="MB Blood Bank-এর প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক Monir Ahmed Shakib"
+      onerror="this.onerror=null;this.alt='Funder.jpeg ফাইলটি পাওয়া যায়নি';this.style.objectFit='contain';this.style.padding='8px';this.style.background='#fbe8eb'">
+
     <div>
-     <h3 style="font-size:24px;color:#241b1b;margin-bottom:5px">Monir Ahmed Shakib</h3>
+     <p class="founder-profile-role">প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক</p>
+     <h3 class="founder-profile-name">Monir Ahmed Shakib</h3>
      <p class="about-copy">
-      MB Blood Bank-এর প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক।
-      মানুষের পাশে থাকা এবং রক্তদানের তথ্য সহজলভ্য করাই
+      ২০২৫ সালে ঢাকায় MB Blood Bank প্রতিষ্ঠার মাধ্যমে রক্তদাতা ও
+      রক্তের প্রয়োজন রয়েছে এমন মানুষের মধ্যে যোগাযোগ সহজ করার উদ্যোগ
+      শুরু হয়। মানুষের পাশে থাকা এবং রক্তদানের তথ্য সহজলভ্য করাই
       এই উদ্যোগের মূল উদ্দেশ্য।
      </p>
     </div>
