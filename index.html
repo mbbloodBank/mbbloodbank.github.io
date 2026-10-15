@@ -40,14 +40,25 @@ header{
   min-height:70px;display:flex;align-items:center;
   justify-content:space-between;gap:14px;flex-wrap:wrap
 }
-.logo{display:flex;align-items:center;gap:9px;font-weight:800;white-space:nowrap}
-.logo-drop{
-  width:31px;height:37px;display:grid;place-items:center;
-  background:var(--red);color:#fff;border-radius:60% 60% 60% 10%;
-  transform:rotate(-45deg);font-size:17px;flex-shrink:0
+
+/* ORIGINAL MB BLOOD BANK LOGO */
+.logo{
+  display:flex;align-items:center;gap:9px;
+  font-weight:800;white-space:nowrap
 }
-.logo-drop span{transform:rotate(45deg)}
-.logo small{display:block;font-size:9px;color:var(--muted);font-weight:400}
+.logo img{
+  width:58px;height:58px;
+  display:block;object-fit:contain;
+  flex-shrink:0;border-radius:8px
+}
+.logo-text{display:block}
+.logo small{
+  display:block;font-size:9px;color:var(--muted);font-weight:400
+}
+
+/* পুরোনো CSS হার্ট লোগোর বদলে অরিজিনাল ইমেজ */
+.logo-drop{display:none!important}
+
 .links{display:flex;align-items:center;gap:4px}
 .links a{padding:9px 12px;border-radius:30px;font-size:12px}
 .links a:hover,.links a.active{background:var(--pink);color:var(--red)}
@@ -202,8 +213,6 @@ select:disabled{background:#f4f1ef;color:#aaa}
   align-items:center;background:#fff;border:1px solid var(--border);
   border-radius:24px;padding:25px;overflow:hidden
 }
-
-/* উপরের পরিচিতি লেখার পাশে শুধু ডোনার ব্যানার */
 .about-photo{
   position:relative;min-height:390px;height:390px;
   border-radius:19px;overflow:hidden;
@@ -217,11 +226,7 @@ select:disabled{background:#f4f1ef;color:#aaa}
   position:absolute;inset:0;
   display:flex;flex-direction:column;justify-content:flex-end;
   padding:25px;
-  background:linear-gradient(
-    180deg,
-    transparent 25%,
-    #240b12a6 100%
-  );
+  background:linear-gradient(180deg,transparent 25%,#240b12a6 100%);
   color:#fff;
 }
 .donor-banner-overlay .banner-label{
@@ -328,7 +333,11 @@ footer a{display:block;margin:5px 0}
 }
 @media(max-width:620px){
   .wrap{width:94%}
-  .nav{min-height:61px;padding:10px 0}
+  .nav{min-height:61px;padding:8px 0}
+  .logo{gap:7px}
+  .logo img{width:46px;height:46px}
+  .logo-text{font-size:13px}
+  .logo small{font-size:8px}
   .menu{display:block}
   .links{display:none;flex-direction:column;align-items:stretch;width:100%;padding-bottom:8px}
   .links.open{display:flex}
@@ -382,8 +391,8 @@ footer a{display:block;margin:5px 0}
 <header>
   <div class="wrap nav">
     <a href="#home" class="logo" data-page="home">
-      <span class="logo-drop"><span>♥</span></span>
-      <span>MB Blood Bank<small>এক ফোঁটা রক্ত, একটি জীবন</small></span>
+      <img src="mb-blood-bank-logo.png" alt="MB Blood Bank অরিজিনাল লোগো">
+      <span class="logo-text">MB Blood Bank<small>এক ফোঁটা রক্ত, একটি জীবন</small></span>
     </a>
 
     <button class="menu" id="menuBtn" aria-label="মেনু খুলুন"
@@ -664,7 +673,6 @@ footer a{display:block;margin:5px 0}
     <span class="about-location">বাংলাদেশের প্রতিটি প্রান্তে মানবতার বন্ধন</span>
    </div>
 
-   <!-- এখানে শুধু রক্তদাতার ব্যানার থাকবে -->
    <div class="about-photo">
     <img
       src="https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=1200&q=90"
@@ -760,7 +768,6 @@ footer a{display:block;margin:5px 0}
    <div class="eyebrow">নেতৃত্ব</div>
    <h2 class="about-heading">প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক</h2>
 
-   <!-- নিচে প্রতিষ্ঠাতার আসল ছবি Funder.jpeg থাকবে -->
    <div class="about-panel founder-profile">
     <img
       class="founder-profile-photo"
@@ -805,8 +812,8 @@ footer a{display:block;margin:5px 0}
   <div class="footer-grid">
    <div>
     <a class="logo" href="#home" data-page="home" style="color:white">
-     <span class="logo-drop"><span>♥</span></span>
-     <span>MB Blood Bank<small>এক ফোঁটা রক্ত, একটি জীবন</small></span>
+     <img src="mb-blood-bank-logo.png" alt="MB Blood Bank অরিজিনাল লোগো">
+     <span class="logo-text">MB Blood Bank<small>এক ফোঁটা রক্ত, একটি জীবন</small></span>
     </a>
     <p style="margin-top:15px">স্বেচ্ছাসেবী রক্তদাতা ও রোগীর মাঝে মানবতার সেতুবন্ধন।</p>
    </div>
