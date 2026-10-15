@@ -202,19 +202,51 @@ select:disabled{background:#f4f1ef;color:#aaa}
   align-items:center;background:#fff;border:1px solid var(--border);
   border-radius:24px;padding:25px;overflow:hidden
 }
+
+/* নতুন ছবি বিন্যাস: Donor.jpeg উপরে, Funder.jpeg নিচে */
 .about-photo{
-  position:relative;min-height:390px;border-radius:19px;overflow:hidden;
-  background:linear-gradient(135deg,#f1d8dc,#f9eee8)
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  min-width:0;
+  background:transparent;
 }
-.about-photo img{
-  width:100%;height:100%;min-height:390px;display:block;
-  object-fit:cover;object-position:center top
+.donor-banner{
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:contain;
+  object-position:center;
+  border-radius:19px;
+  border:1px solid var(--border);
+  background:#fff;
+}
+.founder-photo-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:19px;
+  padding:14px;
+  text-align:center;
+  overflow:hidden;
+}
+.founder-main-photo{
+  display:block;
+  width:100%;
+  max-width:300px;
+  height:300px;
+  margin:0 auto 12px;
+  object-fit:cover;
+  object-position:center top;
+  border-radius:15px;
+  background:#f9eee8;
 }
 .about-photo-caption{
-  position:absolute;left:15px;right:15px;bottom:15px;
-  background:#fffef5ed;border-radius:13px;padding:12px 15px;
-  font-weight:800;color:var(--deep)
+  font-weight:800;
+  color:var(--deep);
+  font-size:15px;
+  line-height:1.9;
 }
+.about-photo-caption span{color:var(--red)}
 .about-title{font-size:clamp(30px,4vw,48px);line-height:1.45;margin:12px 0}
 .about-title span{color:var(--red)}
 .about-intro{font-size:clamp(16px,1.6vw,20px);line-height:1.95;color:#625757}
@@ -318,7 +350,10 @@ footer a{display:block;margin:5px 0}
   .results{grid-template-columns:1fr}
   .search-row{grid-template-columns:1fr}
   .about-top{grid-template-columns:1fr;padding:15px}
-  .about-photo,.about-photo img{min-height:300px;height:300px}
+  .about-photo{min-height:0}
+  .donor-banner{width:100%;height:auto}
+  .founder-photo-card{padding:12px}
+  .founder-main-photo{height:280px;max-width:100%}
   .about-title{font-size:32px}
   .about-intro{font-size:16px}
   .about-stats{grid-template-columns:repeat(2,1fr);gap:8px}
@@ -619,13 +654,25 @@ footer a{display:block;margin:5px 0}
     <span class="about-location">বাংলাদেশের প্রতিটি প্রান্তে মানবতার বন্ধন</span>
    </div>
 
-   <!-- লেখার পাশে ডোনারের ছবি -->
+   <!-- প্রথমে Donor.jpeg ব্যানার, তার নিচে Funder.jpeg -->
    <div class="about-photo">
-    <img src="donor.jpeg"
-      alt="MB Blood Bank-এর ডোনার"
-      onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#f1d8dc,#f9eee8)'">
-    <div class="about-photo-caption">
-     ❤️ রক্তদান করুন, জীবন বাঁচান
+    <img
+      class="donor-banner"
+      src="Donor.jpeg"
+      alt="MB Blood Bank রক্তদানের ব্যানার"
+      onerror="this.alt='Donor.jpeg ফাইলটি পাওয়া যায়নি';this.style.minHeight='100px';this.style.background='#fbe8eb'">
+
+    <div class="founder-photo-card">
+     <img
+       class="founder-main-photo"
+       src="Funder.jpeg"
+       alt="MB Blood Bank-এর প্রতিষ্ঠাতা Monir Ahmed Shakib"
+       onerror="this.alt='Funder.jpeg ফাইলটি পাওয়া যায়নি';this.style.background='#fbe8eb'">
+
+     <div class="about-photo-caption">
+      প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক<br>
+      <span>Monir Ahmed Shakib</span>
+     </div>
     </div>
    </div>
   </div>
@@ -710,19 +757,16 @@ footer a{display:block;margin:5px 0}
   <section style="margin-top:35px">
    <div class="eyebrow">নেতৃত্ব</div>
    <h2 class="about-heading">প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক</h2>
-
    <div class="about-panel" style="display:grid;grid-template-columns:130px 1fr;gap:20px;align-items:center">
-    <!-- প্রতিষ্ঠাতার ছবি -->
-    <img src="funder.jpeg"
-      alt="Monir Ahmed Shakib — প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক"
+    <img src="Funder.jpeg" alt="Monir Ahmed Shakib"
       style="width:130px;height:150px;object-fit:cover;object-position:center top;border-radius:14px"
       onerror="this.style.display='none'">
-
     <div>
      <h3 style="font-size:24px;color:#241b1b;margin-bottom:5px">Monir Ahmed Shakib</h3>
      <p class="about-copy">
-      প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক, MB Blood Bank।
-      মানুষের পাশে থাকা এবং রক্তদানের তথ্য সহজলভ্য করাই
+      ২০২৫ সালে ঢাকায় MB Blood Bank প্রতিষ্ঠার মাধ্যমে রক্তদাতা ও
+      রক্তের প্রয়োজন রয়েছে এমন মানুষের মধ্যে যোগাযোগ সহজ করার উদ্যোগ
+      শুরু হয়। মানুষের পাশে থাকা এবং রক্তদানের তথ্য সহজলভ্য করাই
       এই উদ্যোগের মূল উদ্দেশ্য।
      </p>
     </div>
