@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -304,72 +305,134 @@ select:disabled{background:#f4f1ef;color:#aaa}
 .about-final h2{font-size:clamp(24px,3vw,33px);margin-bottom:10px}
 .about-final p{font-size:15px;color:#6e5057}
 
-/* শুধু যাত্রার লেখার পাশে অভিনন্দন ব্যানার */
-.journey-row{
+/* NEW: JOURNEY SECTION WITH 3D VOLUNTEER BANNER */
+.journey-layout{
   display:grid;
-  grid-template-columns:minmax(0,1.5fr) minmax(260px,.85fr);
-  gap:22px;
-  align-items:stretch;
+  grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);
+  gap:28px;
+  align-items:center;
+  margin-top:18px
 }
 .journey-copy{min-width:0}
-.congrats-banner{
+.journey-copy .about-copy:last-child{margin-bottom:0}
+.volunteer-3d-wrap{
+  min-width:0;
+  perspective:1000px;
+  padding:18px 10px 24px
+}
+.volunteer-3d-banner{
   position:relative;
-  overflow:hidden;
+  min-height:300px;
+  padding:28px 23px;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
   text-align:center;
-  min-height:210px;
-  padding:25px 20px;
-  border-radius:20px;
-  border:1px solid #f0c4cd;
+  overflow:hidden;
+  isolation:isolate;
+  color:#fff;
+  border:1px solid #ffffff65;
+  border-radius:22px;
   background:
-    radial-gradient(circle at 10% 10%,#ffffffd9 0 3px,transparent 4px),
-    radial-gradient(circle at 90% 85%,#ffffffc9 0 4px,transparent 5px),
-    linear-gradient(135deg,#fff7f8 0%,#fbe0e6 48%,#f5c4d0 100%);
-  box-shadow:0 12px 28px #b5103518;
+    radial-gradient(ellipse at 15% 15%,#ffb5c6 0,transparent 32%),
+    radial-gradient(ellipse at 90% 90%,#e74267 0,transparent 42%),
+    linear-gradient(145deg,#a9082c 0%,#d51943 48%,#790b27 100%);
+  box-shadow:
+    0 25px 35px #4a0b1b35,
+    inset 0 2px 1px #ffffff75,
+    inset 0 -7px 15px #52051d70;
+  transform:rotateY(-5deg) rotateX(2deg);
+  transform-style:preserve-3d;
+  transition:transform .35s ease,box-shadow .35s ease
 }
-.congrats-banner::before,
-.congrats-banner::after{
-  content:"✦";
+.volunteer-3d-banner:hover{
+  transform:rotateY(0deg) rotateX(0deg) translateY(-4px);
+  box-shadow:0 30px 42px #4a0b1b40,inset 0 2px 1px #ffffff75
+}
+.volunteer-3d-banner::before{
+  content:"";
   position:absolute;
-  color:#b51035;
-  font-size:28px;
-  opacity:.7;
-}
-.congrats-banner::before{top:13px;left:17px}
-.congrats-banner::after{right:17px;bottom:10px}
-.congrats-icon{
-  width:54px;
-  height:54px;
-  display:grid;
-  place-items:center;
+  z-index:-1;
+  width:210px;height:210px;
+  top:-85px;right:-60px;
+  border:24px solid #ffffff17;
   border-radius:50%;
-  background:#fff;
-  color:var(--red);
-  font-size:27px;
-  box-shadow:0 5px 15px #b5103520;
-  margin-bottom:12px;
+  box-shadow:0 0 0 18px #ffffff0b,0 0 0 36px #ffffff08;
+  transform:translateZ(18px)
 }
-.congrats-banner .congrats-small{
+.volunteer-3d-banner::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  width:180px;height:180px;
+  bottom:-110px;left:-45px;
+  border-radius:50%;
+  background:#ffffff12;
+  box-shadow:0 0 35px #ffffff15;
+  transform:translateZ(12px)
+}
+.volunteer-symbol{
+  width:76px;height:76px;
+  margin-bottom:15px;
+  display:grid;place-items:center;
+  border-radius:22px;
+  background:linear-gradient(145deg,#fff,#ffe1e7);
   color:var(--red);
-  font-size:12px;
+  font-size:42px;
+  line-height:1;
+  text-shadow:0 2px 0 #e7b3bd;
+  box-shadow:
+    0 10px 0 #73051f,
+    0 16px 22px #39041165,
+    inset 0 2px 3px #fff;
+  transform:translateZ(35px) rotate(-5deg)
+}
+.volunteer-3d-banner .volunteer-label{
+  display:inline-block;
+  padding:5px 13px;
+  margin-bottom:9px;
+  border:1px solid #ffffff65;
+  border-radius:30px;
+  background:#ffffff20;
+  color:#fff;
+  font-size:11px;
   font-weight:800;
   letter-spacing:.5px;
-  margin-bottom:4px;
+  box-shadow:0 4px 10px #50051c25;
+  transform:translateZ(25px)
 }
-.congrats-banner h3{
-  color:var(--deep);
-  font-size:clamp(23px,2.5vw,31px);
-  line-height:1.4;
+.volunteer-3d-banner h3{
   margin:0 0 8px;
+  color:#fff;
+  font-size:clamp(25px,3vw,35px);
+  font-weight:900;
+  line-height:1.4;
+  text-shadow:0 3px 0 #750b25,0 7px 15px #48061780;
+  transform:translateZ(38px)
 }
-.congrats-banner p{
-  color:#6e3d49;
-  font-size:13px;
-  line-height:1.8;
+.volunteer-3d-banner p{
+  max-width:320px;
   margin:0;
+  color:#fff1f4;
+  font-size:13px;
+  line-height:1.9;
+  transform:translateZ(22px)
+}
+.volunteer-3d-banner .volunteer-bottom{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  margin-top:17px;
+  padding:8px 15px;
+  border-radius:30px;
+  background:linear-gradient(180deg,#fff,#ffe3e9);
+  color:#a30c2d;
+  font-size:12px;
+  font-weight:900;
+  box-shadow:0 5px 0 #8b0929,0 9px 14px #3c06175c;
+  transform:translateZ(30px)
 }
 
 /* FORMS */
@@ -396,7 +459,8 @@ footer a{display:block;margin:5px 0}
   .hero-grid{gap:15px}.photo{height:250px}
   .requests{grid-template-columns:repeat(2,1fr)}
   .work-grid{grid-template-columns:repeat(2,1fr)}
-  .journey-row{grid-template-columns:minmax(0,1.2fr) minmax(230px,.8fr);gap:15px}
+  .journey-layout{grid-template-columns:minmax(0,1fr) minmax(250px,.85fr);gap:16px}
+  .volunteer-3d-banner{min-height:285px;padding:22px 16px}
 }
 @media(max-width:620px){
   .wrap{width:94%}
@@ -450,8 +514,16 @@ footer a{display:block;margin:5px 0}
   .founder-profile{grid-template-columns:100px minmax(0,1fr);gap:14px}
   .founder-profile-photo{width:100px;height:125px}
   .founder-profile-name{font-size:19px}
-  .journey-row{grid-template-columns:1fr}
-  .congrats-banner{min-height:190px}
+
+  /* মোবাইলে ব্যানার লেখার নিচে সুন্দরভাবে থাকবে */
+  .journey-layout{grid-template-columns:1fr;gap:12px}
+  .volunteer-3d-wrap{padding:8px 4px 18px}
+  .volunteer-3d-banner{
+    min-height:275px;
+    transform:none;
+    padding:25px 18px
+  }
+  .volunteer-3d-banner:hover{transform:translateY(-3px)}
 }
 </style>
 </head>
@@ -817,12 +889,13 @@ footer a{display:block;margin:5px 0}
    </div>
   </section>
 
-  <!-- আমাদের যাত্রা: লেখার পাশে অভিনন্দন ব্যানার -->
+  <!-- JOURNEY SECTION: ONLY THE VOLUNTEER BANNER IS ADDED BESIDE THE TEXT -->
   <section>
-   <div class="journey-row">
+   <div class="eyebrow">আমাদের যাত্রা</div>
+   <h2 class="about-heading">যেভাবে শুরু</h2>
+
+   <div class="journey-layout">
     <div class="journey-copy">
-     <div class="eyebrow">আমাদের যাত্রা</div>
-     <h2 class="about-heading">যেভাবে শুরু</h2>
      <p class="about-copy">
       ২০২৫ সালে ঢাকায় একদল রক্তদাতা ও একটি প্রতিশ্রুতি নিয়ে MB Blood Bank-এর
       যাত্রা শুরু—প্রয়োজনের সময়ে রক্তদাতার সঙ্গে যোগাযোগ সহজ করা।
@@ -836,12 +909,15 @@ footer a{display:block;margin:5px 0}
      </p>
     </div>
 
-    <aside class="congrats-banner" aria-label="অভিনন্দন ব্যানার">
-     <div class="congrats-icon">🎉</div>
-     <div class="congrats-small">MB BLOOD BANK</div>
-     <h3>অভিনন্দন!</h3>
-     <p>মানবতার সেবায় আমাদের এই পথচলায় পাশে থাকার জন্য সবাইকে আন্তরিক শুভেচ্ছা ও ধন্যবাদ।</p>
-    </aside>
+    <div class="volunteer-3d-wrap">
+     <div class="volunteer-3d-banner">
+      <div class="volunteer-symbol" aria-hidden="true">🤝</div>
+      <span class="volunteer-label">MB BLOOD BANK</span>
+      <h3>স্বেচ্ছাসেবী<br>মানবতার বন্ধন</h3>
+      <p>একসাথে এগিয়ে আসি, রক্তদানের মাধ্যমে মানুষের পাশে দাঁড়াই। আপনার সহযোগিতাই হতে পারে কারও নতুন জীবনের আশা।</p>
+      <span class="volunteer-bottom">❤️ রক্ত দিন, জীবন বাঁচান</span>
+     </div>
+    </div>
    </div>
   </section>
 
