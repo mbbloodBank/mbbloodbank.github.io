@@ -304,94 +304,72 @@ select:disabled{background:#f4f1ef;color:#aaa}
 .about-final h2{font-size:clamp(24px,3vw,33px);margin-bottom:10px}
 .about-final p{font-size:15px;color:#6e5057}
 
-/* নতুন: আমাদের যাত্রার লেখার পাশে নিবন্ধন ব্যানার */
-.journey-registration-layout{
+/* শুধু যাত্রার লেখার পাশে অভিনন্দন ব্যানার */
+.journey-row{
   display:grid;
-  grid-template-columns:minmax(0,1.55fr) minmax(260px,.85fr);
-  gap:24px;
+  grid-template-columns:minmax(0,1.5fr) minmax(260px,.85fr);
+  gap:22px;
   align-items:stretch;
-  margin-top:18px;
 }
-.journey-story{
-  min-width:0;
-}
-.journey-story .about-copy{
-  line-height:1.95;
-}
-.journey-registration-banner{
+.journey-copy{min-width:0}
+.congrats-banner{
   position:relative;
   overflow:hidden;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  align-items:flex-start;
-  padding:25px;
-  min-height:100%;
+  align-items:center;
+  text-align:center;
+  min-height:210px;
+  padding:25px 20px;
   border-radius:20px;
-  color:#fff;
+  border:1px solid #f0c4cd;
   background:
-    radial-gradient(circle at 100% 0%,#ffffff25 0,transparent 38%),
-    linear-gradient(140deg,var(--red),var(--deep));
-  box-shadow:0 12px 28px #800d2524;
+    radial-gradient(circle at 10% 10%,#ffffffd9 0 3px,transparent 4px),
+    radial-gradient(circle at 90% 85%,#ffffffc9 0 4px,transparent 5px),
+    linear-gradient(135deg,#fff7f8 0%,#fbe0e6 48%,#f5c4d0 100%);
+  box-shadow:0 12px 28px #b5103518;
 }
-.journey-registration-banner::after{
-  content:"";
+.congrats-banner::before,
+.congrats-banner::after{
+  content:"✦";
   position:absolute;
-  width:145px;
-  height:145px;
-  border:22px solid #ffffff12;
-  border-radius:50%;
-  right:-48px;
-  bottom:-55px;
-  pointer-events:none;
+  color:#b51035;
+  font-size:28px;
+  opacity:.7;
 }
-.journey-registration-banner .journey-banner-label{
-  display:inline-block;
-  background:#ffffff20;
-  border:1px solid #ffffff40;
-  color:#fff;
-  border-radius:30px;
-  padding:5px 11px;
-  font-size:11px;
-  font-weight:800;
+.congrats-banner::before{top:13px;left:17px}
+.congrats-banner::after{right:17px;bottom:10px}
+.congrats-icon{
+  width:54px;
+  height:54px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:#fff;
+  color:var(--red);
+  font-size:27px;
+  box-shadow:0 5px 15px #b5103520;
   margin-bottom:12px;
 }
-.journey-registration-banner h3{
-  font-size:clamp(22px,2.5vw,29px);
-  line-height:1.5;
-  color:#fff;
-  margin:0 0 10px;
-  position:relative;
-  z-index:1;
-}
-.journey-registration-banner p{
-  font-size:13px;
-  line-height:1.9;
-  color:#ffe9ed;
-  margin:0 0 19px;
-  position:relative;
-  z-index:1;
-}
-.journey-registration-banner .journey-register-btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  background:#fff;
-  color:var(--deep);
-  border:1px solid #fff;
-  border-radius:30px;
-  padding:11px 17px;
-  font-size:13px;
+.congrats-banner .congrats-small{
+  color:var(--red);
+  font-size:12px;
   font-weight:800;
-  box-shadow:0 6px 16px #36000d26;
-  position:relative;
-  z-index:2;
-  transition:transform .2s,background .2s;
+  letter-spacing:.5px;
+  margin-bottom:4px;
 }
-.journey-registration-banner .journey-register-btn:hover{
-  background:#fff1f3;
-  transform:translateY(-2px);
+.congrats-banner h3{
+  color:var(--deep);
+  font-size:clamp(23px,2.5vw,31px);
+  line-height:1.4;
+  margin:0 0 8px;
+}
+.congrats-banner p{
+  color:#6e3d49;
+  font-size:13px;
+  line-height:1.8;
+  margin:0;
 }
 
 /* FORMS */
@@ -418,8 +396,7 @@ footer a{display:block;margin:5px 0}
   .hero-grid{gap:15px}.photo{height:250px}
   .requests{grid-template-columns:repeat(2,1fr)}
   .work-grid{grid-template-columns:repeat(2,1fr)}
-  .journey-registration-layout{grid-template-columns:minmax(0,1.2fr) minmax(230px,.8fr);gap:16px}
-  .journey-registration-banner{padding:20px}
+  .journey-row{grid-template-columns:minmax(0,1.2fr) minmax(230px,.8fr);gap:15px}
 }
 @media(max-width:620px){
   .wrap{width:94%}
@@ -473,8 +450,8 @@ footer a{display:block;margin:5px 0}
   .founder-profile{grid-template-columns:100px minmax(0,1fr);gap:14px}
   .founder-profile-photo{width:100px;height:125px}
   .founder-profile-name{font-size:19px}
-  .journey-registration-layout{grid-template-columns:1fr;gap:15px}
-  .journey-registration-banner{padding:23px;min-height:0}
+  .journey-row{grid-template-columns:1fr}
+  .congrats-banner{min-height:190px}
 }
 </style>
 </head>
@@ -840,12 +817,11 @@ footer a{display:block;margin:5px 0}
    </div>
   </section>
 
-  <!-- আমাদের যাত্রা: লেখার পাশে নতুন নিবন্ধন ব্যানার -->
+  <!-- আমাদের যাত্রা: লেখার পাশে অভিনন্দন ব্যানার -->
   <section>
-   <div class="eyebrow">আমাদের যাত্রা</div>
-
-   <div class="journey-registration-layout">
-    <div class="journey-story">
+   <div class="journey-row">
+    <div class="journey-copy">
+     <div class="eyebrow">আমাদের যাত্রা</div>
      <h2 class="about-heading">যেভাবে শুরু</h2>
      <p class="about-copy">
       ২০২৫ সালে ঢাকায় একদল রক্তদাতা ও একটি প্রতিশ্রুতি নিয়ে MB Blood Bank-এর
@@ -860,18 +836,11 @@ footer a{display:block;margin:5px 0}
      </p>
     </div>
 
-    <aside class="journey-registration-banner">
-     <span class="journey-banner-label">❤️ MB Blood Bank</span>
-     <h3>আপনিও হোন একজন স্বেচ্ছাসেবী রক্তদাতা</h3>
-     <p>
-      আপনার দেওয়া তথ্যের মাধ্যমে জরুরি প্রয়োজনে রক্তদাতার সঙ্গে
-      যোগাযোগ সহজ করতে সাহায্য করুন। আজই রক্তদাতা হিসেবে নিবন্ধন করুন।
-     </p>
-     <a class="journey-register-btn"
-        href="#donorRegistration"
-        data-page="home">
-      রক্তদাতা নিবন্ধন করুন <span aria-hidden="true">→</span>
-     </a>
+    <aside class="congrats-banner" aria-label="অভিনন্দন ব্যানার">
+     <div class="congrats-icon">🎉</div>
+     <div class="congrats-small">MB BLOOD BANK</div>
+     <h3>অভিনন্দন!</h3>
+     <p>মানবতার সেবায় আমাদের এই পথচলায় পাশে থাকার জন্য সবাইকে আন্তরিক শুভেচ্ছা ও ধন্যবাদ।</p>
     </aside>
    </div>
   </section>
