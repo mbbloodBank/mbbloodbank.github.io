@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -1062,6 +1061,57 @@ let geoData = [];
 const geoURL =
   "https://raw.githubusercontent.com/sohag-pro/BD-JSON/master/bd.json";
 
+/* ঢাকা মহানগরের থানা — শুধু ঢাকা বিভাগে জেলা তালিকার সঙ্গে দেখানো হবে */
+const dhakaMetroThanas = [
+  "আদাবর",
+  "বিমানবন্দর",
+  "বাড্ডা",
+  "বনানী",
+  "বংশাল",
+  "ভাষানটেক",
+  "ক্যান্টনমেন্ট",
+  "চকবাজার",
+  "দক্ষিণখান",
+  "দারুস সালাম",
+  "ডেমরা",
+  "ধানমন্ডি",
+  "গেন্ডারিয়া",
+  "গুলশান",
+  "হাজারীবাগ",
+  "যাত্রাবাড়ী",
+  "কদমতলী",
+  "কাফরুল",
+  "কলাবাগান",
+  "কামরাঙ্গীরচর",
+  "খিলগাঁও",
+  "খিলক্ষেত",
+  "কোতোয়ালি",
+  "লালবাগ",
+  "মিরপুর মডেল",
+  "মোহাম্মদপুর",
+  "মতিঝিল",
+  "মুগদা",
+  "নিউমার্কেট",
+  "পল্লবী",
+  "পল্টন",
+  "রমনা",
+  "রামপুরা",
+  "রূপনগর",
+  "সবুজবাগ",
+  "শাহ আলী",
+  "শাহবাগ",
+  "শেরেবাংলা নগর",
+  "শ্যামপুর",
+  "সূত্রাপুর",
+  "তেজগাঁও",
+  "তেজগাঁও শিল্পাঞ্চল",
+  "তুরাগ",
+  "উত্তরা পূর্ব",
+  "উত্তরা পশ্চিম",
+  "ভাটারা",
+  "ওয়ারী"
+];
+
 function resetSelect(el, label) {
   el.replaceChildren(new Option(label, ""));
 }
@@ -1077,6 +1127,11 @@ function fillSelect(el, items, label) {
     const name = itemName(item);
     if (name) el.add(new Option(name, name));
   });
+}
+
+/* ঢাকা মহানগরের থানা জেলা ড্রপডাউনে যুক্ত করা */
+function isDhakaDivision(name) {
+  return ["ঢাকা", "Dhaka"].includes(String(name || "").trim());
 }
 
 function setupCascade(divisionId, districtId, upazilaId) {
@@ -1097,7 +1152,15 @@ function setupCascade(divisionId, districtId, upazilaId) {
       : [];
 
     fillSelect(dist, districts, "জেলা নির্বাচন করুন");
-    dist.disabled = districts.length === 0;
+
+    /* ঢাকা বিভাগ হলে জেলার পরে মহানগরের থানাগুলোও দেখাবে */
+    if (isDhakaDivision(div.value)) {
+      dhakaMetroThanas.forEach(thana => {
+        dist.add(new Option(thana + " (ঢাকা মহানগর)", thana));
+      });
+    }
+
+    dist.disabled = dist.options.length <= 1;
     resetSelect(upa, "আগে জেলা নির্বাচন করুন");
     upa.disabled = true;
   });
@@ -1108,6 +1171,14 @@ function setupCascade(divisionId, districtId, upazilaId) {
       ? (division.districts || division.district || [])
       : [];
     const district = districts.find(x => itemName(x) === dist.value);
+
+    /* মহানগরের থানা বাছাই করলে উপজেলা হিসেবে ঢাকা মহানগর দেখাবে */
+    if (isDhakaDivision(div.value) && dhakaMetroThanas.includes(dist.value)) {
+      fillSelect(upa, ["ঢাকা মহানগর"], "এলাকা নির্বাচন করুন");
+      upa.disabled = false;
+      return;
+    }
+
     const upazilas = district
       ? (district.upazilas || district.upazillas || district.upazila || [])
       : [];
@@ -1134,7 +1205,7 @@ async function loadLocations() {
     setupCascade("regDivision","regDistrict","regUpazila");
     setupCascade("reqDivision","reqDistrict","reqUpazila");
 
-    status.textContent = "বিভাগের তালিকা লোড হয়েছে। বিভাগ নির্বাচন করে জেলা ও উপজেলা বাছুন।";
+    status.textContent = "বিভাগের তালিকা লোড হয়েছে। বিভাগ নির্বাচন করে জেলা, উপজেলা অথবা ঢাকা মহানগরের থানা বাছুন।";
     status.style.color = "#14783d";
   } catch (error) {
     console.error(error);
