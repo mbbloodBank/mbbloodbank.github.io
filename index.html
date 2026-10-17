@@ -55,8 +55,6 @@ header{
 .logo small{
   display:block;font-size:9px;color:var(--muted);font-weight:400
 }
-
-/* পুরোনো CSS হার্ট লোগোর বদলে অরিজিনাল ইমেজ */
 .logo-drop{display:none!important}
 
 .links{display:flex;align-items:center;gap:4px}
@@ -241,8 +239,6 @@ select:disabled{background:#f4f1ef;color:#aaa}
 .donor-banner-overlay p{
   font-size:14px;margin:0;color:#fff;line-height:1.8
 }
-
-/* প্রতিষ্ঠাতার ছবির জন্য আলাদা কার্ড */
 .founder-profile{
   display:grid;grid-template-columns:150px minmax(0,1fr);
   gap:22px;align-items:center
@@ -306,6 +302,76 @@ select:disabled{background:#f4f1ef;color:#aaa}
 .about-final h2{font-size:clamp(24px,3vw,33px);margin-bottom:10px}
 .about-final p{font-size:15px;color:#6e5057}
 
+/* JOURNEY SECTION */
+.journey-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);
+  gap:28px;
+  align-items:center;
+  margin-top:18px
+}
+.journey-copy{min-width:0}
+.journey-copy .about-copy:last-child{margin-bottom:0}
+.volunteer-3d-wrap{min-width:0;perspective:1000px;padding:18px 10px 24px}
+.volunteer-3d-banner{
+  position:relative;min-height:300px;padding:28px 23px;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;overflow:hidden;isolation:isolate;color:#fff;
+  border:1px solid #ffffff65;border-radius:22px;
+  background:
+    radial-gradient(ellipse at 15% 15%,#ffb5c6 0,transparent 32%),
+    radial-gradient(ellipse at 90% 90%,#e74267 0,transparent 42%),
+    linear-gradient(145deg,#a9082c 0%,#d51943 48%,#790b27 100%);
+  box-shadow:0 25px 35px #4a0b1b35,inset 0 2px 1px #ffffff75,inset 0 -7px 15px #52051d70;
+  transform:rotateY(-5deg) rotateX(2deg);
+  transform-style:preserve-3d;
+  transition:transform .35s ease,box-shadow .35s ease
+}
+.volunteer-3d-banner:hover{
+  transform:rotateY(0deg) rotateX(0deg) translateY(-4px);
+  box-shadow:0 30px 42px #4a0b1b40,inset 0 2px 1px #ffffff75
+}
+.volunteer-3d-banner::before{
+  content:"";position:absolute;z-index:-1;width:210px;height:210px;
+  top:-85px;right:-60px;border:24px solid #ffffff17;border-radius:50%;
+  box-shadow:0 0 0 18px #ffffff0b,0 0 0 36px #ffffff08;
+  transform:translateZ(18px)
+}
+.volunteer-3d-banner::after{
+  content:"";position:absolute;z-index:-1;width:180px;height:180px;
+  bottom:-110px;left:-45px;border-radius:50%;background:#ffffff12;
+  box-shadow:0 0 35px #ffffff15;transform:translateZ(12px)
+}
+.volunteer-symbol{
+  width:76px;height:76px;margin-bottom:15px;display:grid;place-items:center;
+  border-radius:22px;background:linear-gradient(145deg,#fff,#ffe1e7);
+  color:var(--red);font-size:42px;line-height:1;text-shadow:0 2px 0 #e7b3bd;
+  box-shadow:0 10px 0 #73051f,0 16px 22px #39041165,inset 0 2px 3px #fff;
+  transform:translateZ(35px) rotate(-5deg)
+}
+.volunteer-3d-banner .volunteer-label{
+  display:inline-block;padding:5px 13px;margin-bottom:9px;
+  border:1px solid #ffffff65;border-radius:30px;background:#ffffff20;
+  color:#fff;font-size:11px;font-weight:800;letter-spacing:.5px;
+  box-shadow:0 4px 10px #50051c25;transform:translateZ(25px)
+}
+.volunteer-3d-banner h3{
+  margin:0 0 8px;color:#fff;font-size:clamp(25px,3vw,35px);
+  font-weight:900;line-height:1.4;text-shadow:0 3px 0 #750b25,0 7px 15px #48061780;
+  transform:translateZ(38px)
+}
+.volunteer-3d-banner p{
+  max-width:320px;margin:0;color:#fff1f4;font-size:13px;line-height:1.9;
+  transform:translateZ(22px)
+}
+.volunteer-3d-banner .volunteer-bottom{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  margin-top:17px;padding:8px 15px;border-radius:30px;
+  background:linear-gradient(180deg,#fff,#ffe3e9);color:#a30c2d;
+  font-size:12px;font-weight:900;
+  box-shadow:0 5px 0 #8b0929,0 9px 14px #3c06175c;transform:translateZ(30px)
+}
+
 /* FORMS */
 .notice{
   background:#fff6f6;border:1px solid #f2d7dc;color:var(--deep);
@@ -325,11 +391,55 @@ footer a{display:block;margin:5px 0}
   text-align:center;color:#bbaeb0;font-size:11px
 }
 
+/* FOOTER FACEBOOK ICONS */
+.footer-tagline{
+  margin:15px 0 10px;
+  color:#cbbfc0;
+  font-size:12px;
+  line-height:1.9
+}
+.footer-socials{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:8px
+}
+.footer-social-link{
+  width:42px;
+  height:42px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin:0;
+  padding:0;
+  border-radius:50%;
+  background:#fff;
+  color:#0866ff;
+  border:1px solid #ffffff35;
+  transition:transform .2s ease,background .2s ease;
+}
+.footer-social-link:hover{
+  background:#eaf1ff;
+  transform:translateY(-3px)
+}
+.footer-social-link svg{
+  display:block;
+  width:27px;
+  height:27px;
+  fill:currentColor
+}
+.footer-social-link.group-link svg{
+  width:29px;
+  height:29px
+}
+
 @media(max-width:850px){
   .links{gap:0}.links a{padding:8px 7px;font-size:11px}
   .hero-grid{gap:15px}.photo{height:250px}
   .requests{grid-template-columns:repeat(2,1fr)}
   .work-grid{grid-template-columns:repeat(2,1fr)}
+  .journey-layout{grid-template-columns:minmax(0,1fr) minmax(250px,.85fr);gap:16px}
+  .volunteer-3d-banner{min-height:285px;padding:22px 16px}
 }
 @media(max-width:620px){
   .wrap{width:94%}
@@ -383,6 +493,10 @@ footer a{display:block;margin:5px 0}
   .founder-profile{grid-template-columns:100px minmax(0,1fr);gap:14px}
   .founder-profile-photo{width:100px;height:125px}
   .founder-profile-name{font-size:19px}
+  .journey-layout{grid-template-columns:1fr;gap:12px}
+  .volunteer-3d-wrap{padding:8px 4px 18px}
+  .volunteer-3d-banner{min-height:275px;transform:none;padding:25px 18px}
+  .volunteer-3d-banner:hover{transform:translateY(-3px)}
 }
 </style>
 </head>
@@ -443,7 +557,7 @@ footer a{display:block;margin:5px 0}
       <button class="primary" type="submit">⌕ রক্তদাতা খুঁজুন</button>
      </div>
      <div class="search-row">
-      <select id="searchDistrict" aria-label="জেলা নির্বাচন" disabled>
+      <select id="searchDistrict" aria-label="জেলা অথবা থানা নির্বাচন" disabled>
        <option value="">আগে বিভাগ নির্বাচন করুন</option>
       </select>
       <select id="searchUpazila" aria-label="উপজেলা নির্বাচন" disabled>
@@ -611,7 +725,7 @@ footer a{display:block;margin:5px 0}
      <select id="regDistrict" name="district" required disabled>
       <option value="">আগে বিভাগ নির্বাচন করুন</option>
      </select>
-     <select id="regUpazila" name="upazila" required disabled>
+     <select id="regUpazila" name="upazila" disabled>
       <option value="">আগে জেলা নির্বাচন করুন</option>
      </select>
     </div>
@@ -641,7 +755,7 @@ footer a{display:block;margin:5px 0}
      <select id="reqDistrict" name="district" required disabled>
       <option value="">আগে বিভাগ নির্বাচন করুন</option>
      </select>
-     <select id="reqUpazila" name="upazila" required disabled>
+     <select id="reqUpazila" name="upazila" disabled>
       <option value="">আগে জেলা নির্বাচন করুন</option>
      </select>
      <input name="neededDate" type="date" aria-label="রক্ত প্রয়োজনের তারিখ" required>
@@ -751,17 +865,32 @@ footer a{display:block;margin:5px 0}
   <section>
    <div class="eyebrow">আমাদের যাত্রা</div>
    <h2 class="about-heading">যেভাবে শুরু</h2>
-   <p class="about-copy">
-    ২০২৫ সালে ঢাকায় একদল রক্তদাতা ও একটি প্রতিশ্রুতি নিয়ে MB Blood Bank-এর
-    যাত্রা শুরু—প্রয়োজনের সময়ে রক্তদাতার সঙ্গে যোগাযোগ সহজ করা।
-    সেই লক্ষ্য থেকেই দেশের বিভিন্ন জেলা ও এলাকায় রক্তদাতা নেটওয়ার্ক
-    গড়ে তোলার স্বপ্ন নিয়ে আমাদের পথচলা।
-   </p>
-   <p class="about-copy">
-    আমাদের লক্ষ্য হলো বিভাগ, জেলা, উপজেলা, ইউনিয়ন ও গ্রামের মানুষের
-    কাছে রক্তদানের তথ্য পৌঁছে দেওয়া এবং জরুরি প্রয়োজনে যোগাযোগের
-    সুযোগ সহজ করা।
-   </p>
+
+   <div class="journey-layout">
+    <div class="journey-copy">
+     <p class="about-copy">
+      ২০২৫ সালে ঢাকায় একদল রক্তদাতা ও একটি প্রতিশ্রুতি নিয়ে MB Blood Bank-এর
+      যাত্রা শুরু—প্রয়োজনের সময়ে রক্তদাতার সঙ্গে যোগাযোগ সহজ করা।
+      সেই লক্ষ্য থেকেই দেশের বিভিন্ন জেলা ও এলাকায় রক্তদাতা নেটওয়ার্ক
+      গড়ে তোলার স্বপ্ন নিয়ে আমাদের পথচলা।
+     </p>
+     <p class="about-copy">
+      আমাদের লক্ষ্য হলো বিভাগ, জেলা, উপজেলা, ইউনিয়ন ও গ্রামের মানুষের
+      কাছে রক্তদানের তথ্য পৌঁছে দেওয়া এবং জরুরি প্রয়োজনে যোগাযোগের
+      সুযোগ সহজ করা।
+     </p>
+    </div>
+
+    <div class="volunteer-3d-wrap">
+     <div class="volunteer-3d-banner">
+      <div class="volunteer-symbol" aria-hidden="true">🤝</div>
+      <span class="volunteer-label">MB BLOOD BANK</span>
+      <h3>স্বেচ্ছাসেবী<br>মানবতার বন্ধন</h3>
+      <p>একসাথে এগিয়ে আসি, রক্তদানের মাধ্যমে মানুষের পাশে দাঁড়াই। আপনার সহযোগিতাই হতে পারে কারও নতুন জীবনের আশা।</p>
+      <span class="volunteer-bottom">❤️ রক্ত দিন, জীবন বাঁচান</span>
+     </div>
+    </div>
+   </div>
   </section>
 
   <section style="margin-top:35px">
@@ -815,8 +944,43 @@ footer a{display:block;margin:5px 0}
      <img src="mb-blood-bank-logo.png" alt="MB Blood Bank অরিজিনাল লোগো">
      <span class="logo-text">MB Blood Bank<small>এক ফোঁটা রক্ত, একটি জীবন</small></span>
     </a>
-    <p style="margin-top:15px">স্বেচ্ছাসেবী রক্তদাতা ও রোগীর মাঝে মানবতার সেতুবন্ধন।</p>
+
+    <p class="footer-tagline">
+     স্বেচ্ছাসেবী রক্তদাতা ও রোগীর মাঝে মানবতার সেতুবন্ধন।
+    </p>
+
+    <!-- Facebook এবং Facebook Group: পাশাপাশি শুধু আইকন, কোনো নাম নেই -->
+    <div class="footer-socials">
+     <a
+       class="footer-social-link"
+       href="https://www.facebook.com/share/19S774qsfr/"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="MB Blood Bank Facebook"
+       title="Facebook"
+     >
+      <!-- Facebook-এর f আইকন -->
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+       <path d="M13.4 21v-8.2h2.8l.4-3.2h-3.2V7.55c0-.93.26-1.56 1.6-1.56h1.7V3.13c-.3-.04-1.34-.13-2.55-.13-2.52 0-4.25 1.54-4.25 4.37V9.6H7.05v3.2h2.85V21h3.5z"/>
+      </svg>
+     </a>
+
+     <a
+       class="footer-social-link group-link"
+       href="https://www.facebook.com/share/g/1DVmaSEs3f/"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="MB Blood Bank Facebook Group"
+       title="Facebook Group"
+     >
+      <!-- Facebook Group-এর মানুষ/গ্রুপ আইকন -->
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+       <path d="M9 11.2a3.1 3.1 0 1 0 0-6.2 3.1 3.1 0 0 0 0 6.2zm6.7-.4a2.6 2.6 0 1 0-.1-5.2 2.6 2.6 0 0 0 .1 5.2zM9 13c-3 0-6 1.5-6 4.1V20h12v-2.9C15 14.5 12 13 9 13zm6.7-.2c-.5 0-1 .05-1.5.15 1.5.9 2.3 2.2 2.3 4.1V20h4.5v-2.6c0-2.8-2.7-4.6-5.3-4.6z"/>
+      </svg>
+     </a>
+    </div>
    </div>
+
    <div>
     <h3>দ্রুত লিংক</h3>
     <a href="#search" data-page="home">রক্তদাতা খুঁজুন</a>
@@ -898,12 +1062,63 @@ window.addEventListener("popstate", () => {
   else showPage("home", location.hash);
 });
 
-/* বিভাগ-জেলা-উপজেলা তালিকা */
+/* বিভাগ-জেলা-উপজেলা এবং Inside Dhaka-থানা তালিকা */
 let selectedBlood = "";
 let geoData = [];
 
 const geoURL =
   "https://raw.githubusercontent.com/sohag-pro/BD-JSON/master/bd.json";
+
+const dhakaMetroThanas = [
+  "Adabor",
+  "Airport",
+  "Badda",
+  "Banani",
+  "Bangshal",
+  "Bhashantek",
+  "Cantonment",
+  "Chawkbazar",
+  "Dakshinkhan",
+  "Darus-Salam",
+  "Demra",
+  "Dhanmondi",
+  "Gandaria",
+  "Gulshan",
+  "Hazaribagh",
+  "Jatrabari",
+  "Kadamtali",
+  "Kafrul",
+  "Kalabagan",
+  "Kamrangirchar",
+  "Khilgaon",
+  "Khilkhet",
+  "Kotwali",
+  "Lalbagh",
+  "Mirpur Model",
+  "Mohammadpur",
+  "Motijheel",
+  "Mugda",
+  "New Market",
+  "Pallabi",
+  "Paltan",
+  "Ramna",
+  "Rampura",
+  "Sabujbagh",
+  "Shah Ali",
+  "Shahbagh",
+  "Sher-e-Bangla Nagar",
+  "Shyampur",
+  "Sutrapur",
+  "Tejgaon",
+  "Tejgaon Industrial Area",
+  "Turag",
+  "Uttara East",
+  "Uttara West",
+  "Vatara",
+  "Wari"
+];
+
+const INSIDE_DHAKA_VALUE = "__inside_dhaka__";
 
 function resetSelect(el, label) {
   el.replaceChildren(new Option(label, ""));
@@ -922,35 +1137,81 @@ function fillSelect(el, items, label) {
   });
 }
 
+function addInsideDhakaOption(divisionSelect) {
+  const exists = Array.from(divisionSelect.options).some(
+    option => option.value === INSIDE_DHAKA_VALUE
+  );
+
+  if (!exists) {
+    divisionSelect.add(
+      new Option("Inside Dhaka — ঢাকা মহানগরের থানা", INSIDE_DHAKA_VALUE)
+    );
+  }
+}
+
+function isInsideDhaka(value) {
+  return value === INSIDE_DHAKA_VALUE;
+}
+
 function setupCascade(divisionId, districtId, upazilaId) {
   const div = $(divisionId);
   const dist = $(districtId);
   const upa = $(upazilaId);
 
   fillSelect(div, geoData, "বিভাগ নির্বাচন করুন");
+  addInsideDhakaOption(div);
+
   resetSelect(dist, "আগে বিভাগ নির্বাচন করুন");
   resetSelect(upa, "আগে জেলা নির্বাচন করুন");
   dist.disabled = true;
   upa.disabled = true;
 
   div.addEventListener("change", () => {
-    const division = geoData.find(x => itemName(x) === div.value);
+    const divisionValue = div.value;
+
+    if (isInsideDhaka(divisionValue)) {
+      fillSelect(dist, dhakaMetroThanas, "ঢাকা মহানগরের থানা নির্বাচন করুন");
+      dist.disabled = false;
+
+      resetSelect(upa, "Inside Dhaka-তে উপজেলা নির্বাচন প্রয়োজন নেই");
+      upa.disabled = true;
+      return;
+    }
+
+    const division = geoData.find(
+      x => itemName(x) === divisionValue
+    );
+
     const districts = division
       ? (division.districts || division.district || [])
       : [];
 
     fillSelect(dist, districts, "জেলা নির্বাচন করুন");
     dist.disabled = districts.length === 0;
+
     resetSelect(upa, "আগে জেলা নির্বাচন করুন");
     upa.disabled = true;
   });
 
   dist.addEventListener("change", () => {
-    const division = geoData.find(x => itemName(x) === div.value);
+    if (isInsideDhaka(div.value)) {
+      resetSelect(upa, "Inside Dhaka-তে উপজেলা নির্বাচন প্রয়োজন নেই");
+      upa.disabled = true;
+      return;
+    }
+
+    const division = geoData.find(
+      x => itemName(x) === div.value
+    );
+
     const districts = division
       ? (division.districts || division.district || [])
       : [];
-    const district = districts.find(x => itemName(x) === dist.value);
+
+    const district = districts.find(
+      x => itemName(x) === dist.value
+    );
+
     const upazilas = district
       ? (district.upazilas || district.upazillas || district.upazila || [])
       : [];
@@ -973,11 +1234,13 @@ async function loadLocations() {
     }
 
     geoData = data;
+
     setupCascade("searchDivision","searchDistrict","searchUpazila");
     setupCascade("regDivision","regDistrict","regUpazila");
     setupCascade("reqDivision","reqDistrict","reqUpazila");
 
-    status.textContent = "বিভাগের তালিকা লোড হয়েছে। বিভাগ নির্বাচন করে জেলা ও উপজেলা বাছুন।";
+    status.textContent =
+      "লোকেশন তালিকা লোড হয়েছে। ঢাকা বিভাগ নির্বাচন করলে জেলার তালিকা এবং Inside Dhaka নির্বাচন করলে ঢাকা মহানগরের থানা দেখাবে।";
     status.style.color = "#14783d";
   } catch (error) {
     console.error(error);
@@ -1006,12 +1269,22 @@ $("searchForm").addEventListener("submit", event => {
   const district = $("searchDistrict").value;
   const upazila = $("searchUpazila").value;
 
+  let locationText;
+
+  if (isInsideDhaka(division)) {
+    locationText = "Inside Dhaka · থানা: " + (district || "সব থানা");
+  } else {
+    locationText =
+      (division || "সব বিভাগ") +
+      " · " + (district || "সব জেলা") +
+      " · " + (upazila || "সব উপজেলা");
+  }
+
   $("searchStatus").textContent =
     "আপনার নির্বাচন: " + (selectedBlood || "সব রক্তের গ্রুপ") +
-    " · " + (division || "সব বিভাগ") +
-    " · " + (district || "সব জেলা") +
-    " · " + (upazila || "সব উপজেলা") +
+    " · " + locationText +
     "। প্রকৃত অনুমোদিত রক্তদাতার তালিকা দেখাতে ডেটাবেস সংযোগ প্রয়োজন।";
+
   $("searchStatus").style.color = "#b51035";
 });
 
