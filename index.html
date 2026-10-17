@@ -448,6 +448,32 @@ footer{background:#211516;color:#fff;padding:35px 0 15px}
 footer h3{font-size:16px}
 footer p,footer a{color:#cbbfc0;font-size:12px}
 footer a{display:block;margin:5px 0}
+
+/* FOOTER FACEBOOK LINKS */
+.footer-social{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:10px;
+  margin-top:12px
+}
+.footer-social a{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  margin:0;
+  color:#fff;
+  font-size:13px;
+  font-weight:700;
+  transition:opacity .2s ease
+}
+.footer-social a:hover{opacity:.8}
+.facebook-brand-icon{
+  width:25px;
+  height:25px;
+  flex-shrink:0;
+  display:block
+}
 .copyright{
   border-top:1px solid #3c2e30;margin-top:25px;padding-top:14px;
   text-align:center;color:#bbaeb0;font-size:11px
@@ -970,8 +996,41 @@ footer a{display:block;margin:5px 0}
      <img src="mb-blood-bank-logo.png" alt="MB Blood Bank অরিজিনাল লোগো">
      <span class="logo-text">MB Blood Bank<small>এক ফোঁটা রক্ত, একটি জীবন</small></span>
     </a>
+
     <p style="margin-top:15px">স্বেচ্ছাসেবী রক্তদাতা ও রোগীর মাঝে মানবতার সেতুবন্ধন।</p>
+
+    <!-- Facebook Page ও Facebook Group লিংক -->
+    <div class="footer-social">
+     <a href="https://www.facebook.com/share/19S774qsfr/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="MB Blood Bank Facebook Page">
+      <svg class="facebook-brand-icon"
+           xmlns="http://www.w3.org/2000/svg"
+           viewBox="0 0 24 24"
+           aria-hidden="true">
+       <path fill="#1877F2" d="M24 12a12 12 0 1 0-13.875 11.85v-8.38H7.078V12h3.047V9.356c0-3.007 1.792-4.668 4.533-4.668 1.312 0 2.686.234 2.686.234v2.953h-1.513c-1.49 0-1.956.925-1.956 1.874V12h3.328l-.532 3.47h-2.796v8.38A12.002 12.002 0 0 0 24 12"/>
+       <path fill="#fff" d="M16.671 15.47 17.203 12h-3.328V9.749c0-.95.466-1.874 1.956-1.874h1.513V4.922s-1.374-.234-2.686-.234c-2.741 0-4.533 1.661-4.533 4.668V12H7.078v3.47h3.047v8.38a12.1 12.1 0 0 0 3.75 0v-8.38z"/>
+      </svg>
+      <span>Facebook Page</span>
+     </a>
+
+     <a href="https://www.facebook.com/share/g/1DVmaSEs3f/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="MB Blood Bank Facebook Group">
+      <svg class="facebook-brand-icon"
+           xmlns="http://www.w3.org/2000/svg"
+           viewBox="0 0 24 24"
+           aria-hidden="true">
+       <path fill="#1877F2" d="M24 12a12 12 0 1 0-13.875 11.85v-8.38H7.078V12h3.047V9.356c0-3.007 1.792-4.668 4.533-4.668 1.312 0 2.686.234 2.686.234v2.953h-1.513c-1.49 0-1.956.925-1.956 1.874V12h3.328l-.532 3.47h-2.796v8.38A12.002 12.002 0 0 0 24 12"/>
+       <path fill="#fff" d="M16.671 15.47 17.203 12h-3.328V9.749c0-.95.466-1.874 1.956-1.874h1.513V4.922s-1.374-.234-2.686-.234c-2.741 0-4.533 1.661-4.533 4.668V12H7.078v3.47h3.047v8.38a12.1 12.1 0 0 0 3.75 0v-8.38z"/>
+      </svg>
+      <span>Facebook Group</span>
+     </a>
+    </div>
    </div>
+
    <div>
     <h3>দ্রুত লিংক</h3>
     <a href="#search" data-page="home">রক্তদাতা খুঁজুন</a>
