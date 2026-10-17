@@ -239,8 +239,6 @@ select:disabled{background:#f4f1ef;color:#aaa}
 .donor-banner-overlay p{
   font-size:14px;margin:0;color:#fff;line-height:1.8
 }
-
-/* প্রতিষ্ঠাতার ছবির জন্য আলাদা কার্ড */
 .founder-profile{
   display:grid;grid-template-columns:150px minmax(0,1fr);
   gap:22px;align-items:center
@@ -304,7 +302,7 @@ select:disabled{background:#f4f1ef;color:#aaa}
 .about-final h2{font-size:clamp(24px,3vw,33px);margin-bottom:10px}
 .about-final p{font-size:15px;color:#6e5057}
 
-/* NEW: JOURNEY SECTION WITH 3D VOLUNTEER BANNER */
+/* JOURNEY SECTION */
 .journey-layout{
   display:grid;
   grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);
@@ -314,33 +312,17 @@ select:disabled{background:#f4f1ef;color:#aaa}
 }
 .journey-copy{min-width:0}
 .journey-copy .about-copy:last-child{margin-bottom:0}
-.volunteer-3d-wrap{
-  min-width:0;
-  perspective:1000px;
-  padding:18px 10px 24px
-}
+.volunteer-3d-wrap{min-width:0;perspective:1000px;padding:18px 10px 24px}
 .volunteer-3d-banner{
-  position:relative;
-  min-height:300px;
-  padding:28px 23px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  overflow:hidden;
-  isolation:isolate;
-  color:#fff;
-  border:1px solid #ffffff65;
-  border-radius:22px;
+  position:relative;min-height:300px;padding:28px 23px;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;overflow:hidden;isolation:isolate;color:#fff;
+  border:1px solid #ffffff65;border-radius:22px;
   background:
     radial-gradient(ellipse at 15% 15%,#ffb5c6 0,transparent 32%),
     radial-gradient(ellipse at 90% 90%,#e74267 0,transparent 42%),
     linear-gradient(145deg,#a9082c 0%,#d51943 48%,#790b27 100%);
-  box-shadow:
-    0 25px 35px #4a0b1b35,
-    inset 0 2px 1px #ffffff75,
-    inset 0 -7px 15px #52051d70;
+  box-shadow:0 25px 35px #4a0b1b35,inset 0 2px 1px #ffffff75,inset 0 -7px 15px #52051d70;
   transform:rotateY(-5deg) rotateX(2deg);
   transform-style:preserve-3d;
   transition:transform .35s ease,box-shadow .35s ease
@@ -350,88 +332,44 @@ select:disabled{background:#f4f1ef;color:#aaa}
   box-shadow:0 30px 42px #4a0b1b40,inset 0 2px 1px #ffffff75
 }
 .volunteer-3d-banner::before{
-  content:"";
-  position:absolute;
-  z-index:-1;
-  width:210px;height:210px;
-  top:-85px;right:-60px;
-  border:24px solid #ffffff17;
-  border-radius:50%;
+  content:"";position:absolute;z-index:-1;width:210px;height:210px;
+  top:-85px;right:-60px;border:24px solid #ffffff17;border-radius:50%;
   box-shadow:0 0 0 18px #ffffff0b,0 0 0 36px #ffffff08;
   transform:translateZ(18px)
 }
 .volunteer-3d-banner::after{
-  content:"";
-  position:absolute;
-  z-index:-1;
-  width:180px;height:180px;
-  bottom:-110px;left:-45px;
-  border-radius:50%;
-  background:#ffffff12;
-  box-shadow:0 0 35px #ffffff15;
-  transform:translateZ(12px)
+  content:"";position:absolute;z-index:-1;width:180px;height:180px;
+  bottom:-110px;left:-45px;border-radius:50%;background:#ffffff12;
+  box-shadow:0 0 35px #ffffff15;transform:translateZ(12px)
 }
 .volunteer-symbol{
-  width:76px;height:76px;
-  margin-bottom:15px;
-  display:grid;place-items:center;
-  border-radius:22px;
-  background:linear-gradient(145deg,#fff,#ffe1e7);
-  color:var(--red);
-  font-size:42px;
-  line-height:1;
-  text-shadow:0 2px 0 #e7b3bd;
-  box-shadow:
-    0 10px 0 #73051f,
-    0 16px 22px #39041165,
-    inset 0 2px 3px #fff;
+  width:76px;height:76px;margin-bottom:15px;display:grid;place-items:center;
+  border-radius:22px;background:linear-gradient(145deg,#fff,#ffe1e7);
+  color:var(--red);font-size:42px;line-height:1;text-shadow:0 2px 0 #e7b3bd;
+  box-shadow:0 10px 0 #73051f,0 16px 22px #39041165,inset 0 2px 3px #fff;
   transform:translateZ(35px) rotate(-5deg)
 }
 .volunteer-3d-banner .volunteer-label{
-  display:inline-block;
-  padding:5px 13px;
-  margin-bottom:9px;
-  border:1px solid #ffffff65;
-  border-radius:30px;
-  background:#ffffff20;
-  color:#fff;
-  font-size:11px;
-  font-weight:800;
-  letter-spacing:.5px;
-  box-shadow:0 4px 10px #50051c25;
-  transform:translateZ(25px)
+  display:inline-block;padding:5px 13px;margin-bottom:9px;
+  border:1px solid #ffffff65;border-radius:30px;background:#ffffff20;
+  color:#fff;font-size:11px;font-weight:800;letter-spacing:.5px;
+  box-shadow:0 4px 10px #50051c25;transform:translateZ(25px)
 }
 .volunteer-3d-banner h3{
-  margin:0 0 8px;
-  color:#fff;
-  font-size:clamp(25px,3vw,35px);
-  font-weight:900;
-  line-height:1.4;
-  text-shadow:0 3px 0 #750b25,0 7px 15px #48061780;
+  margin:0 0 8px;color:#fff;font-size:clamp(25px,3vw,35px);
+  font-weight:900;line-height:1.4;text-shadow:0 3px 0 #750b25,0 7px 15px #48061780;
   transform:translateZ(38px)
 }
 .volunteer-3d-banner p{
-  max-width:320px;
-  margin:0;
-  color:#fff1f4;
-  font-size:13px;
-  line-height:1.9;
+  max-width:320px;margin:0;color:#fff1f4;font-size:13px;line-height:1.9;
   transform:translateZ(22px)
 }
 .volunteer-3d-banner .volunteer-bottom{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:7px;
-  margin-top:17px;
-  padding:8px 15px;
-  border-radius:30px;
-  background:linear-gradient(180deg,#fff,#ffe3e9);
-  color:#a30c2d;
-  font-size:12px;
-  font-weight:900;
-  box-shadow:0 5px 0 #8b0929,0 9px 14px #3c06175c;
-  transform:translateZ(30px)
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  margin-top:17px;padding:8px 15px;border-radius:30px;
+  background:linear-gradient(180deg,#fff,#ffe3e9);color:#a30c2d;
+  font-size:12px;font-weight:900;
+  box-shadow:0 5px 0 #8b0929,0 9px 14px #3c06175c;transform:translateZ(30px)
 }
 
 /* FORMS */
@@ -448,35 +386,51 @@ footer{background:#211516;color:#fff;padding:35px 0 15px}
 footer h3{font-size:16px}
 footer p,footer a{color:#cbbfc0;font-size:12px}
 footer a{display:block;margin:5px 0}
-
-/* FOOTER FACEBOOK LINKS */
-.footer-social{
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  gap:10px;
-  margin-top:12px
-}
-.footer-social a{
-  display:inline-flex;
-  align-items:center;
-  gap:9px;
-  margin:0;
-  color:#fff;
-  font-size:13px;
-  font-weight:700;
-  transition:opacity .2s ease
-}
-.footer-social a:hover{opacity:.8}
-.facebook-brand-icon{
-  width:25px;
-  height:25px;
-  flex-shrink:0;
-  display:block
-}
 .copyright{
   border-top:1px solid #3c2e30;margin-top:25px;padding-top:14px;
   text-align:center;color:#bbaeb0;font-size:11px
+}
+
+/* FOOTER FACEBOOK ICONS */
+.footer-tagline{
+  margin:15px 0 10px;
+  color:#cbbfc0;
+  font-size:12px;
+  line-height:1.9
+}
+.footer-socials{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:8px
+}
+.footer-social-link{
+  width:42px;
+  height:42px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin:0;
+  padding:0;
+  border-radius:50%;
+  background:#fff;
+  color:#0866ff;
+  border:1px solid #ffffff35;
+  transition:transform .2s ease,background .2s ease;
+}
+.footer-social-link:hover{
+  background:#eaf1ff;
+  transform:translateY(-3px)
+}
+.footer-social-link svg{
+  display:block;
+  width:27px;
+  height:27px;
+  fill:currentColor
+}
+.footer-social-link.group-link svg{
+  width:29px;
+  height:29px
 }
 
 @media(max-width:850px){
@@ -539,15 +493,9 @@ footer a{display:block;margin:5px 0}
   .founder-profile{grid-template-columns:100px minmax(0,1fr);gap:14px}
   .founder-profile-photo{width:100px;height:125px}
   .founder-profile-name{font-size:19px}
-
-  /* মোবাইলে ব্যানার লেখার নিচে সুন্দরভাবে থাকবে */
   .journey-layout{grid-template-columns:1fr;gap:12px}
   .volunteer-3d-wrap{padding:8px 4px 18px}
-  .volunteer-3d-banner{
-    min-height:275px;
-    transform:none;
-    padding:25px 18px
-  }
+  .volunteer-3d-banner{min-height:275px;transform:none;padding:25px 18px}
   .volunteer-3d-banner:hover{transform:translateY(-3px)}
 }
 </style>
@@ -997,36 +945,38 @@ footer a{display:block;margin:5px 0}
      <span class="logo-text">MB Blood Bank<small>এক ফোঁটা রক্ত, একটি জীবন</small></span>
     </a>
 
-    <p style="margin-top:15px">স্বেচ্ছাসেবী রক্তদাতা ও রোগীর মাঝে মানবতার সেতুবন্ধন।</p>
+    <p class="footer-tagline">
+     স্বেচ্ছাসেবী রক্তদাতা ও রোগীর মাঝে মানবতার সেতুবন্ধন।
+    </p>
 
-    <!-- Facebook Page ও Facebook Group লিংক -->
-    <div class="footer-social">
-     <a href="https://www.facebook.com/share/19S774qsfr/"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="MB Blood Bank Facebook Page">
-      <svg class="facebook-brand-icon"
-           xmlns="http://www.w3.org/2000/svg"
-           viewBox="0 0 24 24"
-           aria-hidden="true">
-       <path fill="#1877F2" d="M24 12a12 12 0 1 0-13.875 11.85v-8.38H7.078V12h3.047V9.356c0-3.007 1.792-4.668 4.533-4.668 1.312 0 2.686.234 2.686.234v2.953h-1.513c-1.49 0-1.956.925-1.956 1.874V12h3.328l-.532 3.47h-2.796v8.38A12.002 12.002 0 0 0 24 12"/>
-       <path fill="#fff" d="M16.671 15.47 17.203 12h-3.328V9.749c0-.95.466-1.874 1.956-1.874h1.513V4.922s-1.374-.234-2.686-.234c-2.741 0-4.533 1.661-4.533 4.668V12H7.078v3.47h3.047v8.38a12.1 12.1 0 0 0 3.75 0v-8.38z"/>
+    <!-- Facebook এবং Facebook Group: পাশাপাশি শুধু আইকন, কোনো নাম নেই -->
+    <div class="footer-socials">
+     <a
+       class="footer-social-link"
+       href="https://www.facebook.com/share/19S774qsfr/"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="MB Blood Bank Facebook"
+       title="Facebook"
+     >
+      <!-- Facebook-এর f আইকন -->
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+       <path d="M13.4 21v-8.2h2.8l.4-3.2h-3.2V7.55c0-.93.26-1.56 1.6-1.56h1.7V3.13c-.3-.04-1.34-.13-2.55-.13-2.52 0-4.25 1.54-4.25 4.37V9.6H7.05v3.2h2.85V21h3.5z"/>
       </svg>
-      <span>Facebook Page</span>
      </a>
 
-     <a href="https://www.facebook.com/share/g/1DVmaSEs3f/"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="MB Blood Bank Facebook Group">
-      <svg class="facebook-brand-icon"
-           xmlns="http://www.w3.org/2000/svg"
-           viewBox="0 0 24 24"
-           aria-hidden="true">
-       <path fill="#1877F2" d="M24 12a12 12 0 1 0-13.875 11.85v-8.38H7.078V12h3.047V9.356c0-3.007 1.792-4.668 4.533-4.668 1.312 0 2.686.234 2.686.234v2.953h-1.513c-1.49 0-1.956.925-1.956 1.874V12h3.328l-.532 3.47h-2.796v8.38A12.002 12.002 0 0 0 24 12"/>
-       <path fill="#fff" d="M16.671 15.47 17.203 12h-3.328V9.749c0-.95.466-1.874 1.956-1.874h1.513V4.922s-1.374-.234-2.686-.234c-2.741 0-4.533 1.661-4.533 4.668V12H7.078v3.47h3.047v8.38a12.1 12.1 0 0 0 3.75 0v-8.38z"/>
+     <a
+       class="footer-social-link group-link"
+       href="https://www.facebook.com/share/g/1DVmaSEs3f/"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="MB Blood Bank Facebook Group"
+       title="Facebook Group"
+     >
+      <!-- Facebook Group-এর মানুষ/গ্রুপ আইকন -->
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+       <path d="M9 11.2a3.1 3.1 0 1 0 0-6.2 3.1 3.1 0 0 0 0 6.2zm6.7-.4a2.6 2.6 0 1 0-.1-5.2 2.6 2.6 0 0 0 .1 5.2zM9 13c-3 0-6 1.5-6 4.1V20h12v-2.9C15 14.5 12 13 9 13zm6.7-.2c-.5 0-1 .05-1.5.15 1.5.9 2.3 2.2 2.3 4.1V20h4.5v-2.6c0-2.8-2.7-4.6-5.3-4.6z"/>
       </svg>
-      <span>Facebook Group</span>
      </a>
     </div>
    </div>
@@ -1119,10 +1069,6 @@ let geoData = [];
 const geoURL =
   "https://raw.githubusercontent.com/sohag-pro/BD-JSON/master/bd.json";
 
-/*
-  Inside Dhaka নির্বাচন করলে এই তালিকাটি দেখানো হবে।
-  এটি ঢাকা মহানগরের থানা-নির্বাচনের তালিকা।
-*/
 const dhakaMetroThanas = [
   "Adabor",
   "Airport",
@@ -1191,7 +1137,6 @@ function fillSelect(el, items, label) {
   });
 }
 
-/* বিভাগ ড্রপডাউনে Inside Dhaka আলাদা অপশন যোগ */
 function addInsideDhakaOption(divisionSelect) {
   const exists = Array.from(divisionSelect.options).some(
     option => option.value === INSIDE_DHAKA_VALUE
@@ -1204,7 +1149,6 @@ function addInsideDhakaOption(divisionSelect) {
   }
 }
 
-/* Inside Dhaka নির্বাচন হয়েছে কি না */
 function isInsideDhaka(value) {
   return value === INSIDE_DHAKA_VALUE;
 }
@@ -1225,7 +1169,6 @@ function setupCascade(divisionId, districtId, upazilaId) {
   div.addEventListener("change", () => {
     const divisionValue = div.value;
 
-    /* Inside Dhaka: জেলা ড্রপডাউনে ঢাকা মহানগরের থানা দেখাবে */
     if (isInsideDhaka(divisionValue)) {
       fillSelect(dist, dhakaMetroThanas, "ঢাকা মহানগরের থানা নির্বাচন করুন");
       dist.disabled = false;
@@ -1235,7 +1178,6 @@ function setupCascade(divisionId, districtId, upazilaId) {
       return;
     }
 
-    /* স্বাভাবিক বিভাগ: সংশ্লিষ্ট জেলার তালিকা দেখাবে */
     const division = geoData.find(
       x => itemName(x) === divisionValue
     );
@@ -1252,14 +1194,12 @@ function setupCascade(divisionId, districtId, upazilaId) {
   });
 
   dist.addEventListener("change", () => {
-    /* Inside Dhaka-তে থানা বেছে নেওয়া হয়েছে, উপজেলা লাগবে না */
     if (isInsideDhaka(div.value)) {
       resetSelect(upa, "Inside Dhaka-তে উপজেলা নির্বাচন প্রয়োজন নেই");
       upa.disabled = true;
       return;
     }
 
-    /* সাধারণ বিভাগের জেলা থেকে উপজেলা লোড */
     const division = geoData.find(
       x => itemName(x) === div.value
     );
