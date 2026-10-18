@@ -543,12 +543,9 @@ footer a:hover{color:#fff}
     <button class="menu" id="menuBtn" aria-label="মেনু খুলুন" aria-expanded="false">☰</button>
 
     <nav class="links" id="navLinks">
-      <a class="active" href="#home" data-page="home">হোম</a>
-      <a href="#search" data-page="home">রক্তদাতা খুঁজুন</a>
-      <a href="#requests" data-page="home">রক্তের অনুরোধ</a>
-      <a href="#donorRegistration" data-page="home">রক্তদাতা নিবন্ধন</a>
-      <a href="#aboutPage" data-page="about">আমাদের কথা</a>
-      <a href="#donorRegistration" class="pill" data-page="home">রক্তদাতা হন</a>
+      <a href="https://mbbloodbank.github.io/#donorRegistration">রক্তদাতা নিবন্ধন</a>
+      <a href="https://mbbloodbank.github.io/login">লগইন করুন</a>
+      <a href="https://mbbloodbank.github.io/ui/locale/en?redirect=%2F">EN</a>
     </nav>
   </div>
 </header>
@@ -1090,7 +1087,7 @@ async function loadLocations() {
 
     const data = await response.json();
     if (!Array.isArray(data) || !data.length) {
-      throw new Error("লোকেশন ডেটার ফরম্যাট সঠিক নয়");
+      throw new Error("লোকেশন ডেতার ফরম্যাট সঠিক নয়");
     }
 
     geoData = data;
