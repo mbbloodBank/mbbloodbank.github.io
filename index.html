@@ -433,6 +433,136 @@ footer a{display:block;margin:5px 0}
   height:29px
 }
 
+/* NEW CONTACT OPTION BESIDE QUICK LINKS */
+.footer-links-contact{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+  align-items:start;
+}
+.footer-contact-toggle{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:11px 13px;
+  margin:0 0 10px;
+  border:1px solid #5b3b40;
+  border-radius:12px;
+  background:#2e1d20;
+  color:#fff;
+  text-align:left;
+  font-weight:800;
+  font-size:13px;
+  transition:background .2s ease,border-color .2s ease;
+}
+.footer-contact-toggle:hover,
+.footer-contact-toggle[aria-expanded="true"]{
+  background:#47232c;
+  border-color:#b51035;
+}
+.footer-contact-toggle .contact-chevron{
+  display:inline-block;
+  transition:transform .2s ease;
+  font-size:16px;
+}
+.footer-contact-toggle[aria-expanded="true"] .contact-chevron{
+  transform:rotate(180deg);
+}
+.footer-contact-panel{
+  display:none;
+  padding:14px;
+  margin-top:8px;
+  border:1px solid #56373c;
+  border-radius:15px;
+  background:#2a1a1d;
+  animation:contactReveal .22s ease;
+}
+.footer-contact-panel.open{display:block}
+@keyframes contactReveal{
+  from{opacity:0;transform:translateY(-5px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.footer-contact-intro{
+  margin:0 0 13px;
+  color:#e9d9dc;
+  font-size:12px;
+  line-height:1.9;
+}
+.footer-contact-intro strong{
+  display:block;
+  color:#fff;
+  font-size:15px;
+  margin-bottom:4px;
+}
+.footer-contact-item{
+  display:block;
+  padding:12px 0;
+  margin:0;
+  border-top:1px solid #493237;
+  color:#e9d9dc;
+  font-size:12px;
+  line-height:1.85;
+  overflow-wrap:anywhere;
+}
+.footer-contact-item:first-of-type{border-top:0}
+.footer-contact-item strong{
+  display:block;
+  margin-bottom:3px;
+  color:#fff;
+  font-size:13px;
+}
+.footer-contact-item .contact-detail{
+  display:block;
+  color:#e2c9ce;
+}
+.footer-contact-item .contact-action{
+  display:inline-block;
+  margin-top:7px;
+  padding:5px 10px;
+  border-radius:20px;
+  background:#b51035;
+  color:#fff;
+  font-weight:800;
+}
+.footer-whatsapp{
+  display:block;
+  padding:13px;
+  margin-top:12px;
+  border-radius:13px;
+  background:#183d2c;
+  border:1px solid #2e6848;
+}
+.footer-whatsapp strong{
+  display:block;
+  color:#fff;
+  font-size:13px;
+  margin-bottom:5px;
+}
+.footer-whatsapp p{
+  color:#d3e9db;
+  line-height:1.9;
+  margin:0 0 9px;
+}
+.footer-whatsapp .whatsapp-action{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:7px 12px;
+  border-radius:20px;
+  background:#25d366;
+  color:#102b1b;
+  font-weight:800;
+}
+.footer-grid .footer-links-contact a{
+  color:#cbbfc0;
+}
+.footer-grid .footer-contact-panel a,
+.footer-grid .footer-whatsapp a{
+  color:#fff;
+}
+
 @media(max-width:850px){
   .links{gap:0}.links a{padding:8px 7px;font-size:11px}
   .hero-grid{gap:15px}.photo{height:250px}
@@ -440,6 +570,7 @@ footer a{display:block;margin:5px 0}
   .work-grid{grid-template-columns:repeat(2,1fr)}
   .journey-layout{grid-template-columns:minmax(0,1fr) minmax(250px,.85fr);gap:16px}
   .volunteer-3d-banner{min-height:285px;padding:22px 16px}
+  .footer-links-contact{grid-template-columns:1fr 1fr;gap:16px}
 }
 @media(max-width:620px){
   .wrap{width:94%}
@@ -472,6 +603,7 @@ footer a{display:block;margin:5px 0}
   .split{grid-template-columns:1fr;gap:18px}
   .cta{padding:23px;align-items:flex-start;flex-direction:column}
   .footer-grid{grid-template-columns:1fr;gap:18px}
+  .footer-links-contact{grid-template-columns:1fr;gap:18px}
   .results{grid-template-columns:1fr}
   .search-row{grid-template-columns:1fr}
   .about-top{grid-template-columns:1fr;padding:15px}
@@ -949,7 +1081,7 @@ footer a{display:block;margin:5px 0}
      স্বেচ্ছাসেবী রক্তদাতা ও রোগীর মাঝে মানবতার সেতুবন্ধন।
     </p>
 
-    <!-- Facebook এবং Facebook Group: পাশাপাশি শুধু আইকন, কোনো নাম নেই -->
+    <!-- Facebook এবং Facebook Group -->
     <div class="footer-socials">
      <a
        class="footer-social-link"
@@ -959,7 +1091,6 @@ footer a{display:block;margin:5px 0}
        aria-label="MB Blood Bank Facebook"
        title="Facebook"
      >
-      <!-- Facebook-এর f আইকন -->
       <svg viewBox="0 0 24 24" aria-hidden="true">
        <path d="M13.4 21v-8.2h2.8l.4-3.2h-3.2V7.55c0-.93.26-1.56 1.6-1.56h1.7V3.13c-.3-.04-1.34-.13-2.55-.13-2.52 0-4.25 1.54-4.25 4.37V9.6H7.05v3.2h2.85V21h3.5z"/>
       </svg>
@@ -973,7 +1104,6 @@ footer a{display:block;margin:5px 0}
        aria-label="MB Blood Bank Facebook Group"
        title="Facebook Group"
      >
-      <!-- Facebook Group-এর মানুষ/গ্রুপ আইকন -->
       <svg viewBox="0 0 24 24" aria-hidden="true">
        <path d="M9 11.2a3.1 3.1 0 1 0 0-6.2 3.1 3.1 0 0 0 0 6.2zm6.7-.4a2.6 2.6 0 1 0-.1-5.2 2.6 2.6 0 0 0 .1 5.2zM9 13c-3 0-6 1.5-6 4.1V20h12v-2.9C15 14.5 12 13 9 13zm6.7-.2c-.5 0-1 .05-1.5.15 1.5.9 2.3 2.2 2.3 4.1V20h4.5v-2.6c0-2.8-2.7-4.6-5.3-4.6z"/>
       </svg>
@@ -981,13 +1111,70 @@ footer a{display:block;margin:5px 0}
     </div>
    </div>
 
-   <div>
-    <h3>দ্রুত লিংক</h3>
-    <a href="#search" data-page="home">রক্তদাতা খুঁজুন</a>
-    <a href="#donorRegistration" data-page="home">রক্তদাতা হিসেবে নিবন্ধন</a>
-    <a href="#emergency" data-page="home">জরুরি রক্তের অনুরোধ</a>
-    <a href="#aboutPage" data-page="about">আমাদের কথা</a>
+   <!-- QUICK LINKS + CONTACT -->
+   <div class="footer-links-contact">
+    <div>
+     <h3>দ্রুত লিংক</h3>
+     <a href="#search" data-page="home">রক্তদাতা খুঁজুন</a>
+     <a href="#donorRegistration" data-page="home">রক্তদাতা হিসেবে নিবন্ধন</a>
+     <a href="#emergency" data-page="home">জরুরি রক্তের অনুরোধ</a>
+     <a href="#aboutPage" data-page="about">আমাদের কথা</a>
+    </div>
+
+    <div class="footer-contact">
+     <h3>যোগাযোগ</h3>
+
+     <button
+       type="button"
+       class="footer-contact-toggle"
+       id="contactToggle"
+       aria-expanded="false"
+       aria-controls="contactPanel">
+       <span>যোগাযোগ অপশন</span>
+       <span class="contact-chevron" aria-hidden="true">⌄</span>
+     </button>
+
+     <div class="footer-contact-panel" id="contactPanel">
+      <p class="footer-contact-intro">
+       <strong>একজন মানুষের সাথে কথা বলুন</strong>
+       একটাই হটলাইন — রক্তদাতা, ব্লাড ডোনার, নিবন্ধন অ্যাকাউন্ট ও অভিযোগের জন্য যোগাযোগ করুন।
+      </p>
+
+      <div class="footer-contact-item">
+       <strong>📞 হটলাইন</strong>
+       <span class="contact-detail">রক্তদাতা, ব্লাড ব্যাংক, নিবন্ধন অ্যাকাউন্ট ও অভিযোগ</span>
+       <a class="contact-action" href="tel:01726232108">01726232108 · কল করুন</a>
+      </div>
+
+      <div class="footer-contact-item">
+       <strong>✉️ ইমেইল</strong>
+       <span class="contact-detail">এক কর্মদিবসের মধ্যে উত্তর</span>
+       <a class="contact-action" href="mailto:info@mbbloodbank.com.bd">info@mbbloodbank.com.bd</a>
+      </div>
+
+      <div class="footer-contact-item">
+       <strong>📍 ব্লাড ব্যাংক অফিস</strong>
+       <span class="contact-detail">বাড়ি ৪, রোড ২/এ, গংগাচড়া, রংপুর ৪৫১০, বাংলাদেশ</span>
+       <a
+         class="contact-action"
+         href="https://maps.google.com/?q=House+4+Road+2%2FA+Gangachara+Rangpur+4510"
+         target="_blank"
+         rel="noopener noreferrer">ম্যাপে খুলুন ↗</a>
+      </div>
+
+      <div class="footer-whatsapp">
+       <strong>💬 হোয়াটসঅ্যাপে কথা বলুন</strong>
+       <p>যে রক্তদাতার অপেক্ষায় আছেন বা যাঁকে খুঁজছেন, সেই বিষয়ে সাপোর্ট টিমের কাছে পৌঁছানোর দ্রুত উপায় হলো WhatsApp।</p>
+       <a
+         class="whatsapp-action"
+         href="https://wa.me/8801726232108"
+         target="_blank"
+         rel="noopener noreferrer">WhatsApp-এ যোগাযোগ করুন ↗</a>
+      </div>
+     </div>
+    </div>
    </div>
+
    <div>
     <h3>প্রতিষ্ঠাতা</h3>
     <p>Monir Ahmed Shakib</p>
@@ -1010,6 +1197,16 @@ const navLinks = $("navLinks");
 menuBtn.addEventListener("click", () => {
   const open = navLinks.classList.toggle("open");
   menuBtn.setAttribute("aria-expanded", String(open));
+});
+
+/* ফুটারের যোগাযোগ অপশন খোলা ও বন্ধ */
+const contactToggle = $("contactToggle");
+const contactPanel = $("contactPanel");
+
+contactToggle.addEventListener("click", () => {
+  const isOpen = contactToggle.getAttribute("aria-expanded") === "true";
+  contactToggle.setAttribute("aria-expanded", String(!isOpen));
+  contactPanel.classList.toggle("open", !isOpen);
 });
 
 /* হোম ও আমাদের কথা আলাদা ভিউ */
