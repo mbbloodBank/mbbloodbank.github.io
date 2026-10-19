@@ -17,12 +17,74 @@
   --muted:#898080;
   --border:#eee7e1;
 }
+
+[data-theme="dark"]{
+  --red:#e53958;
+  --deep:#b51035;
+  --cream:#121212;
+  --pink:#2d161a;
+  --ink:#f1f1f1;
+  --muted:#a0a0a0;
+  --border:#2a2a2a;
+}
+
+[data-theme="dark"] header{
+  background:#1a1415ed !important;
+}
+
+[data-theme="dark"] .menu,
+[data-theme="dark"] .dropdown-menu,
+[data-theme="dark"] .card,
+[data-theme="dark"] .searchbox,
+[data-theme="dark"] .group-card,
+[data-theme="dark"] .request-card,
+[data-theme="dark"] .step,
+[data-theme="dark"] .fact,
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea,
+[data-theme="dark"] .about-top,
+[data-theme="dark"] .about-stat,
+[data-theme="dark"] .about-panel,
+[data-theme="dark"] .work-card,
+[data-theme="dark"] .contact-card,
+[data-theme="dark"] .form-card,
+[data-theme="dark"] .float-card{
+  background:#1e1819;
+  color:#f1f1f1;
+  border-color:#33282a;
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea{
+  color:#f1f1f1;
+}
+
+[data-theme="dark"] select:disabled{
+  background:#282022;
+  color:#777;
+}
+
+[data-theme="dark"] .blood-btn{
+  background:#261e20;
+  color:#f1f1f1;
+  border-color:#382b2d;
+}
+
+[data-theme="dark"] .blood-btn.active{
+  background:var(--red);
+  color:#fff;
+  border-color:var(--red);
+}
+
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:85px}
 body{
   margin:0;background:var(--cream);color:var(--ink);
   font-family:"Noto Sans Bengali","Arial",sans-serif;
-  font-size:14px;line-height:1.75
+  font-size:14px;line-height:1.75;
+  transition:background 0.3s ease, color 0.3s ease;
 }
 a{color:inherit;text-decoration:none}
 button,input,select,textarea{font:inherit}
@@ -52,44 +114,98 @@ header{
 .logo small{display:block;font-size:9px;color:var(--muted);font-weight:400}
 .logo-drop{display:none!important}
 
-/* Nav Actions & Dropdown Menu container */
-.nav-right {
+.nav-right-area {
   display: flex;
   align-items: center;
   gap: 10px;
+  position: relative;
 }
-.links{
-  display:none;
-  position:absolute;
-  top:100%;
-  right:0;
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:12px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.08);
-  padding:8px;
-  flex-direction:column;
-  align-items:stretch;
-  min-width:200px;
-  z-index:200;
+
+.links{display:none}
+
+/* Dropdown Menu Styles */
+.dropdown-container {
+  position: relative;
 }
-.links.open{display:flex}
-.links a{padding:10px 14px;border-radius:8px;font-size:13px}
-.links a:hover,.links a.active{background:var(--pink);color:var(--red)}
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  display: none;
+  flex-direction: column;
+  min-width: 180px;
+  padding: 8px 0;
+  z-index: 1000;
+}
+.dropdown-menu.show {
+  display: flex;
+}
+.dropdown-menu a {
+  padding: 10px 16px;
+  font-size: 13px;
+  color: var(--ink);
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s;
+}
+.dropdown-menu a:hover {
+  background: var(--pink);
+  color: var(--red);
+}
 
 .pill,.primary{
   display:inline-flex;align-items:center;justify-content:center;gap:7px;
   border:0;background:var(--red);color:#fff;border-radius:30px;
-  padding:10px 16px;box-shadow:0 6px 14px #b5103526;font-weight:700;
-  font-size:12px;
-  white-space:nowrap;
+  padding:10px 15px;box-shadow:0 6px 14px #b5103526;font-weight:700;font-size:12px;
+  white-space: nowrap;
 }
 .pill:hover,.primary:hover{background:var(--deep)}
 
+.secondary-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid var(--border);
+  background: var(--pink);
+  color: var(--red);
+  border-radius: 30px;
+  padding: 10px 14px;
+  font-weight: 700;
+  font-size: 12px;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.secondary-nav-btn:hover {
+  background: var(--border);
+}
+
 .menu{
-  display:flex;background:#fff;border:1px solid var(--border);
+  background:#fff;border:1px solid var(--border);
   border-radius:10px;padding:8px 12px;color:var(--red);font-size:20px;
-  align-items:center;justify-content:center;
+  display: flex;align-items: center;justify-content: center;
+}
+
+/* Utility buttons: Language & Dark mode */
+.util-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  color: var(--ink);
+  transition: background 0.2s;
+}
+.util-btn:hover {
+  background: var(--pink);
+  color: var(--red);
 }
 
 /* COMMON */
@@ -127,6 +243,9 @@ select:disabled{background:#f4f1ef;color:#aaa}
 .hero{
   background:radial-gradient(ellipse at 85% 25%,#f7e5e2 0,transparent 48%);
   padding:55px 0 48px
+}
+[data-theme="dark"] .hero{
+  background:radial-gradient(ellipse at 85% 25%,#2a1719 0,transparent 48%);
 }
 .hero-grid{
   display:grid;grid-template-columns:1.05fr .95fr;
@@ -270,6 +389,7 @@ select:disabled{background:#f4f1ef;color:#aaa}
 .about-title{font-size:clamp(30px,4vw,48px);line-height:1.45;margin:12px 0}
 .about-title span{color:var(--red)}
 .about-intro{font-size:clamp(16px,1.6vw,20px);line-height:1.95;color:#625757}
+[data-theme="dark"] .about-intro{color:#bbb;}
 .about-location{
   display:inline-block;background:var(--pink);color:var(--red);
   border-radius:30px;padding:8px 14px;font-weight:800;margin-top:8px
@@ -283,10 +403,12 @@ select:disabled{background:#f4f1ef;color:#aaa}
 .about-stat span{color:var(--muted);font-size:13px}
 .about-heading{font-size:clamp(25px,3vw,34px);margin-bottom:10px}
 .about-copy{color:#6e6262;font-size:15px}
+[data-theme="dark"] .about-copy{color:#aaa;}
 .about-columns{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0 38px}
 .about-panel{background:#fff;border:1px solid var(--border);border-radius:18px;padding:22px}
 .about-panel h3{font-size:20px;color:var(--red);margin-bottom:8px}
 .about-panel p{margin:0;color:#6e6262;font-size:15px}
+[data-theme="dark"] .about-panel p{color:#aaa;}
 .work-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:20px 0 38px}
 .work-card{background:#fff;border:1px solid var(--border);border-radius:17px;padding:19px}
 .work-icon{
@@ -305,6 +427,7 @@ select:disabled{background:#f4f1ef;color:#aaa}
 }
 .about-final h2{font-size:clamp(24px,3vw,33px);margin-bottom:10px}
 .about-final p{font-size:15px;color:#6e5057}
+[data-theme="dark"] .about-final p{color:#bbb;}
 
 /* JOURNEY SECTION */
 .journey-layout{
@@ -378,6 +501,10 @@ select:disabled{background:#f4f1ef;color:#aaa}
   border:1px solid var(--border);border-radius:26px;
   padding:clamp(24px,5vw,55px);margin-bottom:28px
 }
+[data-theme="dark"] .contact-hero{
+  background:radial-gradient(ellipse at 90% 10%,#35191f 0,transparent 40%),
+    linear-gradient(135deg,#1e1819,#241a1b);
+}
 .contact-hero:after{
   content:"♥";position:absolute;right:25px;bottom:-45px;
   font-size:190px;line-height:1;color:#b5103509;pointer-events:none
@@ -387,6 +514,7 @@ select:disabled{background:#f4f1ef;color:#aaa}
   margin:12px 0 10px;letter-spacing:-.5px
 }
 .contact-hero p{position:relative;z-index:1;max-width:650px;color:#716365;font-size:15px}
+[data-theme="dark"] .contact-hero p{color:#aaa;}
 .contact-heading{
   font-size:clamp(25px,4vw,38px);line-height:1.5;margin:0 0 8px
 }
@@ -416,6 +544,7 @@ select:disabled{background:#f4f1ef;color:#aaa}
   display:block;color:var(--deep);font-size:15px;font-weight:800;
   overflow-wrap:anywhere;margin:0 0 12px
 }
+[data-theme="dark"] .contact-card .contact-detail{color:var(--red);}
 .contact-action{
   display:inline-flex;align-items:center;gap:7px;
   padding:8px 13px;border-radius:30px;background:var(--red);
@@ -426,6 +555,9 @@ select:disabled{background:#f4f1ef;color:#aaa}
 .contact-note{
   margin:0 0 30px;padding:17px 20px;border-radius:15px;
   background:#fff8f8;border:1px solid #f2d8dd;color:#6e5057;font-size:13px
+}
+[data-theme="dark"] .contact-note{
+  background:#26181a;border-color:#422328;color:#d88;
 }
 .whatsapp-panel{
   display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;
@@ -454,11 +586,15 @@ select:disabled{background:#f4f1ef;color:#aaa}
   background:#fff6f6;border:1px solid #f2d7dc;color:var(--deep);
   padding:12px 14px;border-radius:12px;font-size:12px;margin:12px 0
 }
+[data-theme="dark"] .notice{
+  background:#2a181a;border-color:#442328;color:#f88;
+}
 .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .form-card{padding:24px;margin-top:20px;background:#fff;border:1px solid var(--border);border-radius:18px}
 
 /* FOOTER */
 footer{background:#211516;color:#fff;padding:35px 0 15px}
+[data-theme="dark"] footer{background:#0d0a0a;border-top:1px solid #222;}
 .footer-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:28px}
 footer h3{font-size:16px}
 footer p,footer a{color:#cbbfc0;font-size:12px}
@@ -477,9 +613,9 @@ footer a:hover{color:#fff}
 }
 .footer-social-link:hover{background:#eaf1ff;transform:translateY(-3px)}
 .footer-social-link svg{display:block;width:27px;height:27px;fill:currentColor}
-.footer-social-link.group-link svg{width:29px;height:29px}
+.footer-social-link.group-link svg{width:29px;width:29px}
 
-@media(max-width:850px){
+@media(max-width:950px){
   .hero-grid{gap:15px}.photo{height:250px}
   .requests{grid-template-columns:repeat(2,1fr)}
   .work-grid{grid-template-columns:repeat(2,1fr)}
@@ -550,6 +686,10 @@ footer a:hover{color:#fff}
   .whatsapp-panel{grid-template-columns:1fr;gap:17px;padding:24px 20px}
   .whatsapp-brand{width:65px;height:65px;border-radius:19px;grid-row:1}
   .whatsapp-brand svg{width:40px;height:40px}
+  
+  .secondary-nav-btn {
+    display: none; /* মোবাইল স্ক্রিনে জায়গা বাঁচাতে ছোট বাটন বা মেনুতে রাখা যেতে পারে চাইলে */
+  }
 }
 </style>
 </head>
@@ -562,21 +702,31 @@ footer a:hover{color:#fff}
       <span class="logo-text">MB Blood Bank<small>এক ফোঁটা রক্ত, একটি জীবন</small></span>
     </a>
 
-    <div class="nav-right" style="position:relative;">
-      <a class="primary" href="https://mbbloodbank.github.io/#donorRegistration" data-page="home">রক্তদাতা নিবন্ধন</a>
-      <a class="pill" href="https://mbbloodbank.github.io/register">নতুন একাউন্ট লগইন করুন</a>
-      <a class="pill" style="background:#555;" href="https://mbbloodbank.github.io/ui/locale/en?redirect=%2F">EN</a>
+    <div class="nav-right-area">
+      <!-- রক্তদাতা নিবন্ধন বাটন -->
+      <a href="https://mbbloodbank.github.io/donorRegistration" class="pill" target="_blank" rel="noopener noreferrer">রক্তদাতা নিবন্ধন</a>
 
-      <button class="menu" id="menuBtn" aria-label="মেনু খুলুন" aria-expanded="false">☰</button>
+      <!-- নতুন লগইন করুন বাটন -->
+      <a href="https://mbbloodbank.github.io/register" class="secondary-nav-btn" target="_blank" rel="noopener noreferrer">নতুন লগইন করুন</a>
 
-      <nav class="links" id="navLinks">
-        <a class="active" href="#home" data-page="home">হোম</a>
-        <a href="#search" data-page="home">রক্তদাতা খুঁজুন</a>
-        <a href="#requests" data-page="home">রক্তের অনুরোধ</a>
-        <a href="#donorRegistration" data-page="home">রক্তদাতা নিবন্ধন</a>
-        <a href="#aboutPage" data-page="about">আমাদের কথা</a>
-        <a href="#donorRegistration" data-page="home">রক্তদাতা হন</a>
-      </nav>
+      <!-- ভাষা অপশন বাটন -->
+      <button class="util-btn" id="langBtn" title="ভাষা পরিবর্তন" aria-label="ভাষা পরিবর্তন">বাং</button>
+
+      <!-- ডার্ক মুড বাটন -->
+      <button class="util-btn" id="darkModeBtn" title="ডার্ক মোড টগল" aria-label="ডার্ক মোড টগল">🌙</button>
+
+      <!-- থ্রি ডট মেনু কন্টেইনার -->
+      <div class="dropdown-container">
+        <button class="menu" id="menuBtn" aria-label="মেনু খুলুন" aria-expanded="false">⋮</button>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="https://mbbloodbank.github.io/#home" data-page="home">হোম</a>
+          <a href="https://mbbloodbank.github.io/#search" data-page="home">রক্তদাতা খুঁজুন</a>
+          <a href="https://mbbloodbank.github.io/#requests" data-page="home">রক্তের অনুরোধ</a>
+          <a href="https://mbbloodbank.github.io/#donorRegistration" data-page="home">রক্তদাতা নিবন্ধন</a>
+          <a href="https://mbbloodbank.github.io/#aboutPage" data-page="about">আমাদের কথা</a>
+          <a href="https://mbbloodbank.github.io/#donorRegistration" data-page="home">রক্তদাতা হন</a>
+        </div>
+      </div>
     </div>
   </div>
 </header>
@@ -915,7 +1065,7 @@ footer a:hover{color:#fff}
    <div>
     <h3>দ্রুত লিংক</h3>
     <a href="#search" data-page="home">রক্তদাতা খুঁজুন</a>
-    <a href="#donorRegistration" data-page="home">রক্তদাতা হিসেবে নিবন্ধন</a>
+    <a href="https://mbbloodbank.github.io/donorRegistration" target="_blank" rel="noopener noreferrer">রক্তদাতা হিসেবে নিবন্ধন</a>
     <a href="#emergency" data-page="home">জরুরি রক্তের অনুরোধ</a>
     <a href="#aboutPage" data-page="about">আমাদের কথা</a>
    </div>
@@ -943,21 +1093,52 @@ footer a:hover{color:#fff}
 "use strict";
 const $ = id => document.getElementById(id);
 
-/* মোবাইল মেনু */
+/* থ্রি ডট মেনু টগল */
 const menuBtn = $("menuBtn");
-const navLinks = $("navLinks");
+const dropdownMenu = $("dropdownMenu");
 
 menuBtn.addEventListener("click", (e) => {
   e.stopPropagation();
-  const open = navLinks.classList.toggle("open");
-  menuBtn.setAttribute("aria-expanded", String(open));
+  const isOpen = dropdownMenu.classList.toggle("show");
+  menuBtn.setAttribute("aria-expanded", String(isOpen));
 });
 
-// মেনুর বাইরে ক্লিক করলে থ্রি-ডট মেনু বন্ধ হয়ে যাবে
-document.addEventListener("click", (e) => {
-  if (!navLinks.contains(e.target) && e.target !== menuBtn) {
-    navLinks.classList.remove("open");
+window.addEventListener("click", () => {
+  if (dropdownMenu.classList.contains("show")) {
+    dropdownMenu.classList.remove("show");
     menuBtn.setAttribute("aria-expanded", "false");
+  }
+});
+
+/* ডার্ক মোড টগল লজিক */
+const darkModeBtn = $("darkModeBtn");
+darkModeBtn.addEventListener("click", () => {
+  const currentTheme = document.documentElement.getAttribute("data-theme");
+  if (currentTheme === "dark") {
+    document.documentElement.removeAttribute("data-theme");
+    darkModeBtn.textContent = "🌙";
+    localStorage.setItem("theme", "light");
+  } else {
+    document.documentElement.setAttribute("data-theme", "dark");
+    darkModeBtn.textContent = "☀️";
+    localStorage.setItem("theme", "dark");
+  }
+});
+
+// সংরক্ষিত থিম লোড করা
+if (localStorage.getItem("theme") === "dark") {
+  document.documentElement.setAttribute("data-theme", "dark");
+  darkModeBtn.textContent = "☀️";
+}
+
+/* ভাষা পরিবর্তন বাটন ডেমো */
+const langBtn = $("langBtn");
+langBtn.addEventListener("click", () => {
+  if (langBtn.textContent === "বাং") {
+    langBtn.textContent = "Eng";
+    // এখানে ভাষার রূপান্তর কোড যোগ করতে পারেন
+  } else {
+    langBtn.textContent = "বাং";
   }
 });
 
@@ -970,14 +1151,7 @@ function showPage(page, targetHash) {
   $("aboutPage").classList.toggle("hidden", !isAbout);
   $("contactPage").classList.toggle("hidden", !isContact);
 
-  document.querySelectorAll("#navLinks a[data-page]").forEach(link => {
-    link.classList.toggle(
-      "active",
-      link.dataset.page === page && !link.classList.contains("pill")
-    );
-  });
-
-  navLinks.classList.remove("open");
+  dropdownMenu.classList.remove("show");
   menuBtn.setAttribute("aria-expanded", "false");
 
   if (isAbout) {
@@ -1000,10 +1174,12 @@ function showPage(page, targetHash) {
 
 document.querySelectorAll("[data-page]").forEach(link => {
   link.addEventListener("click", event => {
-    event.preventDefault();
-    const page = link.dataset.page || "home";
     const href = link.getAttribute("href");
-    showPage(page, href);
+    if (href && href.startsWith("#")) {
+      event.preventDefault();
+      const page = link.dataset.page || "home";
+      showPage(page, href);
+    }
   });
 });
 
@@ -1212,7 +1388,7 @@ const compatibility = {
   "A+": {give:["A+","AB+"],receive:["O-","O+","A-","A+"]},
   "B-": {give:["B-","B+","AB-","AB+"],receive:["O-","B-"]},
   "B+": {give:["B+","AB+"],receive:["O-","O+","B-","B+"]},
-  "AB-": {give:[ "AB-","AB+"],receive:["O-","A-","B-","AB-"]},
+  "AB-": {give:["AB-","AB+"],receive:["O-","A-","B-","AB-"]},
   "AB+": {give:["AB+"],receive:["O-","O+","A-","A+","B-","B+","AB-","AB+"]}
 };
 
