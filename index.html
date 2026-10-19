@@ -720,19 +720,55 @@ footer a:hover{color:#fff}
 <section class="content" id="donorRegistration">
  <div class="wrap">
   <div class="form-card">
-   <div class="eyebrow" data-i18n="regEyebrow">রক্তদাতা নিবন্ধন</div><h2 data-i18n="regTitle">রক্তদাতা হিসেবে নিবন্ধন করুন</h2>
-   <div class="notice" data-i18n="regNotice">আপনার নিবন্ধন প্রথমে Pending থাকবে। Admin যাচাই ও Approved করার পর আপনার তথ্য রক্তদাতার তালিকায় প্রদর্শিত হওয়া উচিত। এই নমুনা কোডে ডেটাবেস সংযোগ নেই।</div>
+   <div class="eyebrow" data-i18n="regEyebrow">রক্তদাতা নিবন্ধন</div>
+   <h2 data-i18n="regTitle">রক্তদাতা হিসেবে নিবন্ধন করুন</h2>
+   <p style="font-size:13px; font-weight:700; color:var(--red); margin-bottom:8px;">সাইন-আপ দুই মিনিটের</p>
+   <div class="notice" data-i18n="regNotice">⚠️ নিবন্ধনের পর আপনার Account/Donor/Profile সরাসরি active হবে না। Admin যাচাই ও Approved করার পর আপনার তথ্য রক্তদাতার তালিকায় প্রদর্শিত হবে।</div>
    <form id="registrationForm">
     <div class="form-grid">
-     <input name="name" placeholder="আপনার নাম *" required data-i18n-placeholder="namePlaceholder">
-     <input name="phone" type="tel" placeholder="মোবাইল নম্বর *" required data-i18n-placeholder="phonePlaceholder">
-     <select name="bloodGroup" required>
-      <option value="" data-i18n="optSelectGroup">রক্তের গ্রুপ নির্বাচন করুন *</option>
-      <option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
-     </select>
-     <select id="regDivision" name="division" required><option value="" data-i18n="optSelectDivision">বিভাগ নির্বাচন করুন *</option></select>
-     <select id="regDistrict" name="district" required disabled><option value="" data-i18n="optSelectDivFirst">আগে বিভাগ নির্বাচন করুন</option></select>
-     <select id="regUpazila" name="upazila" disabled><option value="" data-i18n="optSelectDistFirst">আগে জেলা নির্বাচন করুন</option></select>
+     <div>
+      <label>নাম:</label>
+      <input name="name" placeholder="আপনার নাম *" required data-i18n-placeholder="namePlaceholder">
+     </div>
+     <div>
+      <label>যোগাযোগ নম্বর:</label>
+      <input name="phone" type="tel" placeholder="মোবাইল নম্বর *" required data-i18n-placeholder="phonePlaceholder">
+     </div>
+     <div>
+      <label>রক্তের গ্রুপ :</label>
+      <select name="bloodGroup" required>
+       <option value="" data-i18n="optSelectGroup">নির্বাচন করুন</option>
+       <option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
+      </select>
+     </div>
+     <div>
+      <label>বিভাগ :</label>
+      <select id="regDivision" name="division" required><option value="" data-i18n="optSelectDivision">নির্বাচন করুন</option></select>
+     </div>
+     <div>
+      <label>জেলা:</label>
+      <select id="regDistrict" name="district" required disabled><option value="" data-i18n="optSelectDivFirst">নির্বাচন করুন</option></select>
+     </div>
+     <div>
+      <label>উপজেলা:</label>
+      <select id="regUpazila" name="upazila" disabled><option value="" data-i18n="optSelectDistFirst">নির্বাচন করুন</option></select>
+     </div>
+     <div style="grid-column: 1 / -1;">
+      <label>ঠিকানা :</label>
+      <input name="address" placeholder="আপনার পূর্ণ ঠিকানা লিখুন">
+     </div>
+     <div style="grid-column: 1 / -1;">
+      <label>ছবি:</label>
+      <input name="photo" type="file" accept="image/*">
+     </div>
+     <div>
+      <label>ইমেইল :</label>
+      <input name="email" type="email" placeholder="ваш-email@example.com">
+     </div>
+     <div>
+      <label>পাসওয়ার্ড :</label>
+      <input name="password" type="password" placeholder="••••••••">
+     </div>
     </div>
     <button class="primary" style="margin-top:15px" type="submit" data-i18n="regSubmit">নিবন্ধনের অনুরোধ পাঠান</button>
     <p class="status" id="regStatus" aria-live="polite" data-i18n="regStatusText">নিবন্ধন সংরক্ষণ করতে Firebase/ডেটাবেস সংযোগ প্রয়োজন।</p>
@@ -1082,11 +1118,11 @@ const translations = {
     ctaButton: "নিবন্ধন করুন →",
     regEyebrow: "রক্তদাতা নিবন্ধন",
     regTitle: "রক্তদাতা হিসেবে নিবন্ধন করুন",
-    regNotice: "আপনার নিবন্ধন প্রথমে Pending থাকবে। Admin যাচাই ও Approved করার পর আপনার তথ্য রক্তদাতার তালিকায় প্রদর্শিত হওয়া উচিত। এই নমুনা কোডে ডেটাবেস সংযোগ নেই।",
+    regNotice: "⚠️ নিবন্ধনের পর আপনার Account/Donor/Profile সরাসরি active হবে না। Admin যাচাই ও Approved করার পর আপনার তথ্য রক্তদাতার তালিকায় প্রদর্শিত হবে।",
     namePlaceholder: "আপনার নাম *",
     phonePlaceholder: "মোবাইল নম্বর *",
-    optSelectGroup: "রক্তের গ্রুপ নির্বাচন করুন *",
-    optSelectDivision: "বিভাগ নির্বাচন করুন *",
+    optSelectGroup: "নির্বাচন করুন",
+    optSelectDivision: "নির্বাচন করুন",
     regSubmit: "নিবন্ধনের অনুরোধ পাঠান",
     regStatusText: "নিবন্ধন সংরক্ষণ করতে Firebase/ডেটাবেস সংযোগ প্রয়োজন।",
     emerEyebrow: "জরুরি রক্তের অনুরোধ",
@@ -1243,11 +1279,11 @@ const translations = {
     ctaButton: "Register →",
     regEyebrow: "Donor Registration",
     regTitle: "Register as a Blood Donor",
-    regNotice: "Your registration will initially be Pending. After admin verification and approval, your info should appear in the donor list. This demo code has no database connection.",
+    regNotice: "⚠️ Your registration will initially be Pending. After admin verification and approval, your info should appear in the donor list.",
     namePlaceholder: "Your Name *",
     phonePlaceholder: "Mobile Number *",
-    optSelectGroup: "Select Blood Group *",
-    optSelectDivision: "Select Division *",
+    optSelectGroup: "Select",
+    optSelectDivision: "Select",
     regSubmit: "Send Registration Request",
     regStatusText: "Firebase/Database connection required to save registration.",
     emerEyebrow: "Emergency Blood Request",
@@ -1483,12 +1519,14 @@ function setupCascade(divisionId, districtId, upazilaId) {
   const dist = $(districtId);
   const upa = $(upazilaId);
 
-  fillSelect(div, geoData, currentLang === "bn" ? "বিভাগ নির্বাচন করুন" : "Select Division");
+  fillSelect(div, geoData, currentLang === "bn" ? "নির্বাচন করুন" : "Select Division");
   addInsideDhakaOption(div);
-  resetSelect(dist, currentLang === "bn" ? "আগে বিভাগ নির্বাচন করুন" : "Select Division First");
-  resetSelect(upa, currentLang === "bn" ? "আগে জেলা নির্বাচন করুন" : "Select District First");
+  resetSelect(dist, currentLang === "bn" ? "নির্বাচন করুন" : "Select Division First");
+  if (upa) {
+    resetSelect(upa, currentLang === "bn" ? "নির্বাচন করুন" : "Select District First");
+    upa.disabled = true;
+  }
   dist.disabled = true;
-  upa.disabled = true;
 
   div.addEventListener("change", () => {
     const divisionValue = div.value;
@@ -1496,36 +1534,42 @@ function setupCascade(divisionId, districtId, upazilaId) {
     if (isInsideDhaka(divisionValue)) {
       fillSelect(dist, dhakaMetroThanas, currentLang === "bn" ? "ঢাকা মহানগরের থানা নির্বাচন করুন" : "Select Dhaka Metro Thana");
       dist.disabled = false;
-      resetSelect(upa, currentLang === "bn" ? "Inside Dhaka-তে উপজেলা নির্বাচন প্রয়োজন নেই" : "Upazila not required for Inside Dhaka");
-      upa.disabled = true;
+      if (upa) {
+        resetSelect(upa, currentLang === "bn" ? "Inside Dhaka-তে উপজেলা নির্বাচন প্রয়োজন নেই" : "Upazila not required for Inside Dhaka");
+        upa.disabled = true;
+      }
       return;
     }
 
     const division = geoData.find(x => itemName(x) === divisionValue);
     const districts = division ? (division.districts || division.district || []) : [];
-    fillSelect(dist, districts, currentLang === "bn" ? "জেলা নির্বাচন করুন" : "Select District");
+    fillSelect(dist, districts, currentLang === "bn" ? "নির্বাচন করুন" : "Select District");
     dist.disabled = districts.length === 0;
-    resetSelect(upa, currentLang === "bn" ? "আগে জেলা নির্বাচন করুন" : "Select District First");
-    upa.disabled = true;
-  });
-
-  dist.addEventListener("change", () => {
-    if (isInsideDhaka(div.value)) {
-      resetSelect(upa, currentLang === "bn" ? "Inside Dhaka-তে উপজেলা নির্বাচন প্রয়োজন নেই" : "Upazila not required for Inside Dhaka");
+    if (upa) {
+      resetSelect(upa, currentLang === "bn" ? "নির্বাচন করুন" : "Select District First");
       upa.disabled = true;
-      return;
     }
-
-    const division = geoData.find(x => itemName(x) === div.value);
-    const districts = division ? (division.districts || division.district || []) : [];
-    const district = districts.find(x => itemName(x) === dist.value);
-    const upazilas = district
-      ? (district.upazilas || district.upazillas || district.upazila || [])
-      : [];
-
-    fillSelect(upa, upazilas, currentLang === "bn" ? "উপজেলা নির্বাচন করুন" : "Select Upazila");
-    upa.disabled = upazilas.length === 0;
   });
+
+  if (upa) {
+    dist.addEventListener("change", () => {
+      if (isInsideDhaka(div.value)) {
+        resetSelect(upa, currentLang === "bn" ? "Inside Dhaka-তে উপজেলা নির্বাচন প্রয়োজন নেই" : "Upazila not required for Inside Dhaka");
+        upa.disabled = true;
+        return;
+      }
+
+      const division = geoData.find(x => itemName(x) === div.value);
+      const districts = division ? (division.districts || division.district || []) : [];
+      const district = districts.find(x => itemName(x) === dist.value);
+      const upazilas = district
+        ? (district.upazilas || district.upazillas || district.upazila || [])
+        : [];
+
+      fillSelect(upa, upazilas, currentLang === "bn" ? "নির্বাচন করুন" : "Select Upazila");
+      upa.disabled = upazilas.length === 0;
+    });
+  }
 }
 
 async function loadLocations() {
@@ -1546,11 +1590,11 @@ async function loadLocations() {
     setupCascade("reqDivision","reqDistrict","reqUpazila");
 
     status.textContent =
-      currentLang === "bn" ? "লোকেশন তালিকা লোড হয়েছে। ঢাকা বিভাগ নির্বাচন করলে জেলার তালিকা এবং Inside Dhaka নির্বাচন করলে ঢাকা মহানগরের থানা দেখাবে।" : "Location list loaded.";
+      currentLang === "bn" ? "লোকেশন তালিকা লোড হয়েছে।" : "Location list loaded.";
     status.style.color = "#14783d";
   } catch (error) {
     console.error(error);
-    status.textContent = currentLang === "bn" ? "লোকেশন তালিকা লোড হয়নি। ইন্টারনেট বা JSON ডেটার ঠিকানা পরীক্ষা করুন।" : "Location list failed to load.";
+    status.textContent = currentLang === "bn" ? "লোকেশন তালিকা লোড হয়নি।" : "Location list failed to load.";
     status.style.color = "#b51035";
   }
 }
