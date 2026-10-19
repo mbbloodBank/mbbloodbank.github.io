@@ -18,41 +18,19 @@
   --border:#eee7e1;
 }
 [data-theme="dark"]{
-  --red:#e0244d;
-  --deep:#ff4d6d;
-  --cream:#121212;
-  --pink:#2a1217;
-  --ink:#f1f1f1;
-  --muted:#a0a0a0;
-  --border:#2a2a2a;
+  --cream:#181212;
+  --ink:#f5ede8;
+  --muted:#b8abab;
+  --border:#362829;
+  --pink:#2c1519;
 }
-[data-theme="dark"] header{
-  background:#1a1213ed !important;
-}
-[data-theme="dark"] .card,[data-theme="dark"] .searchbox,[data-theme="dark"] .group-card,[data-theme="dark"] .request-card,[data-theme="dark"] .step,[data-theme="dark"] .fact,[data-theme="dark"] .about-stat,[data-theme="dark"] .about-panel,[data-theme="dark"] .work-card,[data-theme="dark"] .contact-card,[data-theme="dark"] .form-card,[data-theme="dark"] .about-top{
-  background:#1e1e1e !important;
-  color:#f1f1f1 !important;
-}
-[data-theme="dark"] input, [data-theme="dark"] select, [data-theme="dark"] textarea {
-  background: #1a1a1a;
-  color: #fff;
-}
-[data-theme="dark"] .blood-btn {
-  background: #1e1e1e;
-  color: #f1f1f1;
-  border-color: #333;
-}
-[data-theme="dark"] .menu {
-  background: #1e1e1e;
-  color: #fff;
-}
-
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:85px}
 body{
   margin:0;background:var(--cream);color:var(--ink);
   font-family:"Noto Sans Bengali","Arial",sans-serif;
-  font-size:14px;line-height:1.75
+  font-size:14px;line-height:1.75;
+  transition:background .3s,color .3s
 }
 a{color:inherit;text-decoration:none}
 button,input,select,textarea{font:inherit}
@@ -63,12 +41,12 @@ button{cursor:pointer}
 /* HEADER */
 header{
   position:sticky;top:0;z-index:100;
-  background:#fffaf6ed;border-bottom:1px solid var(--border);
+  background:var(--cream);opacity:0.98;border-bottom:1px solid var(--border);
   backdrop-filter:blur(12px)
 }
 .nav{
   min-height:70px;display:flex;align-items:center;
-  justify-content:space-between;gap:10px;flex-wrap:wrap
+  justify-content:space-between;gap:14px;flex-wrap:wrap
 }
 .logo{
   display:flex;align-items:center;gap:9px;
@@ -82,42 +60,26 @@ header{
 .logo small{display:block;font-size:9px;color:var(--muted);font-weight:400}
 .logo-drop{display:none!important}
 
-/* Header Right Area Customization */
-.header-right-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: auto;
+.nav-right-group{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap
 }
-.header-btn {
-  padding: 8px 12px;
-  border-radius: 30px;
-  font-size: 12px;
-  font-weight: 700;
-  border: 1px solid var(--border);
-  background: #fff;
-  color: var(--ink);
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
+.header-action-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:7px 12px;border-radius:20px;font-size:12px;font-weight:700;
+  background:var(--pink);color:var(--red);border:1px solid var(--border)
 }
-[data-theme="dark"] .header-btn {
-  background: #1e1e1e;
-  color: #fff;
-  border-color: #333;
+.header-action-btn:hover{background:var(--red);color:#fff}
+.utility-btn{
+  background:transparent;border:1px solid var(--border);color:var(--ink);
+  padding:6px 10px;border-radius:20px;font-size:12px;font-weight:700
 }
-.header-btn.primary-reg {
-  background: var(--red);
-  color: #fff;
-  border: 0;
-}
-.header-btn.primary-reg:hover {
-  background: var(--deep);
-}
+.utility-btn:hover{border-color:var(--red);color:var(--red)}
 
-.links{display:flex;align-items:center;gap:4px}
-.links a{padding:9px 12px;border-radius:30px;font-size:12px}
+.links{display:none;position:absolute;top:100%;left:0;right:0;background:var(--cream);border-bottom:1px solid var(--border);flex-direction:column;align-items:stretch;width:100%;padding:10px 20px;box-shadow:0 10px 20px rgba(0,0,0,0.1)}
+.links.open{display:flex}
+.links a{padding:10px 12px;border-radius:8px;font-size:13px}
 .links a:hover,.links a.active{background:var(--pink);color:var(--red)}
+
 .pill,.primary{
   display:inline-flex;align-items:center;justify-content:center;gap:7px;
   border:0;background:var(--red);color:#fff;border-radius:30px;
@@ -125,8 +87,7 @@ header{
 }
 .pill:hover,.primary:hover{background:var(--deep)}
 .menu{
-  display:inline-flex;align-items:center;justify-content:center;
-  background:#fff;border:1px solid var(--border);
+  display:block;background:var(--pink);border:1px solid var(--border);
   border-radius:10px;padding:8px 12px;color:var(--red);font-size:20px
 }
 
@@ -139,7 +100,7 @@ h2{line-height:1.45}
   display:inline-block;border:1px solid #f2d8dd;background:#fff8f8;
   color:var(--red);padding:4px 10px;border-radius:25px;font-size:11px
 }
-[data-theme="dark"] .tag { background: #2a1217; border-color: #4a1d25; }
+[data-theme="dark"] .tag{background:#2c1519;border-color:#4a1e24}
 .eyebrow{color:var(--red);font-size:12px;font-weight:800;margin-bottom:5px}
 .muted,.lead{color:var(--muted)}
 .lead{max-width:520px;font-size:14px}
@@ -151,24 +112,22 @@ section.content{padding:45px 0}
 .section-head h2{font-size:clamp(24px,3vw,32px);margin-bottom:8px}
 .section-head p{color:var(--muted);font-size:13px;margin-bottom:0}
 .card,.searchbox,.group-card,.request-card,.step,.fact{
-  background:#fff;border:1px solid var(--border);border-radius:18px
+  background:var(--cream);border:1px solid var(--border);border-radius:18px
 }
 .status{font-size:12px;color:var(--muted);margin:12px 0 0;overflow-wrap:anywhere}
 label{display:block;font-size:12px;font-weight:700;margin-bottom:7px}
 input,select,textarea{
   width:100%;padding:11px 12px;border:1px solid var(--border);
-  border-radius:11px;background:#fff;outline:none;color:var(--ink)
+  border-radius:11px;background:var(--cream);outline:none;color:var(--ink)
 }
 input:focus,select:focus,textarea:focus{border-color:var(--red)}
-select:disabled{background:#f4f1ef;color:#aaa}
-[data-theme="dark"] select:disabled { background: #1a1a1a; color: #555; }
+select:disabled{background:var(--border);color:#aaa}
 
 /* HOME HERO */
 .hero{
-  background:radial-gradient(ellipse at 85% 25%,#f7e5e2 0,transparent 48%);
+  background:radial-gradient(ellipse at 85% 25%,var(--pink) 0,transparent 48%);
   padding:55px 0 48px
 }
-[data-theme="dark"] .hero { background: radial-gradient(ellipse at 85% 25%, #2a1517 0, transparent 48%); }
 .hero-grid{
   display:grid;grid-template-columns:1.05fr .95fr;
   gap:38px;align-items:center
@@ -176,28 +135,28 @@ select:disabled{background:#f4f1ef;color:#aaa}
 .searchbox{padding:17px;margin-top:24px;box-shadow:0 15px 35px #9e213015}
 .blood-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .blood-btn{
-  padding:9px 4px;border:1px solid #f0e8e2;border-radius:10px;
-  background:#faf6f1;font-weight:800;color:#342b2b
+  padding:9px 4px;border:1px solid var(--border);border-radius:10px;
+  background:var(--cream);font-weight:800;color:var(--ink)
 }
 .blood-btn.active{background:var(--red);color:#fff;border-color:var(--red)}
 .search-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:12px}
 .photo{
-  height:310px;border-radius:25px;border:5px solid #fff;
+  height:310px;border-radius:25px;border:5px solid var(--border);
   background:linear-gradient(135deg,#f0ded5,#ead6d0);
   overflow:hidden;box-shadow:0 18px 35px #39201d1b
 }
 .photo img{width:100%;height:100%;object-fit:cover;display:block}
 .hero-image{position:relative;padding:10px}
 .float-card{
-  position:absolute;bottom:-5px;left:-5px;background:#fff;
+  position:absolute;bottom:-5px;left:-5px;background:var(--cream);
+  border:1px solid var(--border);
   border-radius:14px;padding:12px 16px;box-shadow:0 8px 24px #0001;
   display:flex;align-items:center;gap:10px;font-size:12px
 }
 .float-card strong{color:var(--red);font-size:22px}
 
 /* STATS */
-.stats{background:#fff;border-block:1px solid var(--border)}
-[data-theme="dark"] .stats { background: #1a1a1a; }
+.stats{background:var(--cream);border-block:1px solid var(--border)}
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr)}
 .stat{text-align:center;padding:19px 8px;border-right:1px solid var(--border)}
 .stat:last-child{border:0}
@@ -271,7 +230,7 @@ select:disabled{background:#f4f1ef;color:#aaa}
 #aboutPage,#contactPage{padding:32px 0 55px;min-height:70vh}
 .about-top{
   display:grid;grid-template-columns:1fr 1fr;gap:28px;
-  align-items:center;background:#fff;border:1px solid var(--border);
+  align-items:center;background:var(--cream);border:1px solid var(--border);
   border-radius:24px;padding:25px;overflow:hidden
 }
 .about-photo{
@@ -311,28 +270,26 @@ select:disabled{background:#f4f1ef;color:#aaa}
 .founder-profile-role{color:var(--red);font-weight:800;margin-bottom:10px}
 .about-title{font-size:clamp(30px,4vw,48px);line-height:1.45;margin:12px 0}
 .about-title span{color:var(--red)}
-.about-intro{font-size:clamp(16px,1.6vw,20px);line-height:1.95;color:#625757}
-[data-theme="dark"] .about-intro { color: #b0b0b0; }
+.about-intro{font-size:clamp(16px,1.6vw,20px);line-height:1.95;color:var(--muted)}
 .about-location{
   display:inline-block;background:var(--pink);color:var(--red);
   border-radius:30px;padding:8px 14px;font-weight:800;margin-top:8px
 }
 .about-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0 35px}
 .about-stat{
-  text-align:center;padding:20px 10px;background:#fff;
+  text-align:center;padding:20px 10px;background:var(--cream);
   border:1px solid var(--border);border-radius:17px
 }
 .about-stat strong{display:block;font-size:clamp(23px,3vw,34px);color:var(--red)}
 .about-stat span{color:var(--muted);font-size:13px}
 .about-heading{font-size:clamp(25px,3vw,34px);margin-bottom:10px}
-.about-copy{color:#6e6262;font-size:15px}
-[data-theme="dark"] .about-copy { color: #aaa; }
+.about-copy{color:var(--muted);font-size:15px}
 .about-columns{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0 38px}
-.about-panel{background:#fff;border:1px solid var(--border);border-radius:18px;padding:22px}
+.about-panel{background:var(--cream);border:1px solid var(--border);border-radius:18px;padding:22px}
 .about-panel h3{font-size:20px;color:var(--red);margin-bottom:8px}
-.about-panel p{margin:0;color:#6e6262;font-size:15px}
+.about-panel p{margin:0;color:var(--muted);font-size:15px}
 .work-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:20px 0 38px}
-.work-card{background:#fff;border:1px solid var(--border);border-radius:17px;padding:19px}
+.work-card{background:var(--cream);border:1px solid var(--border);border-radius:17px;padding:19px}
 .work-icon{
   width:44px;height:44px;border-radius:14px;background:var(--pink);
   display:grid;place-items:center;font-size:22px;margin-bottom:12px
@@ -348,8 +305,7 @@ select:disabled{background:#f4f1ef;color:#aaa}
   border-radius:22px;padding:25px;text-align:center;margin-top:25px
 }
 .about-final h2{font-size:clamp(24px,3vw,33px);margin-bottom:10px}
-.about-final p{font-size:15px;color:#6e5057}
-[data-theme="dark"] .about-final p { color: #b0b0b0; }
+.about-final p{font-size:15px;color:var(--muted)}
 
 /* JOURNEY SECTION */
 .journey-layout{
@@ -418,12 +374,11 @@ select:disabled{background:#f4f1ef;color:#aaa}
 /* CONTACT PAGE */
 .contact-hero{
   position:relative;overflow:hidden;
-  background:radial-gradient(ellipse at 90% 10%,#f4d4db 0,transparent 40%),
-    linear-gradient(135deg,#fff,#fbf0ed);
+  background:radial-gradient(ellipse at 90% 10%,var(--pink) 0,transparent 40%),
+    linear-gradient(135deg,var(--cream),var(--pink));
   border:1px solid var(--border);border-radius:26px;
   padding:clamp(24px,5vw,55px);margin-bottom:28px
 }
-[data-theme="dark"] .contact-hero { background: radial-gradient(ellipse at 90% 10%, #2a1517 0, transparent 40%), #1e1e1e; }
 .contact-hero:after{
   content:"♥";position:absolute;right:25px;bottom:-45px;
   font-size:190px;line-height:1;color:#b5103509;pointer-events:none
@@ -432,8 +387,7 @@ select:disabled{background:#f4f1ef;color:#aaa}
   position:relative;z-index:1;font-size:clamp(32px,5vw,52px);
   margin:12px 0 10px;letter-spacing:-.5px
 }
-.contact-hero p{position:relative;z-index:1;max-width:650px;color:#716365;font-size:15px}
-[data-theme="dark"] .contact-hero p { color: #aaa; }
+.contact-hero p{position:relative;z-index:1;max-width:650px;color:var(--muted);font-size:15px}
 .contact-heading{
   font-size:clamp(25px,4vw,38px);line-height:1.5;margin:0 0 8px
 }
@@ -444,7 +398,7 @@ select:disabled{background:#f4f1ef;color:#aaa}
 }
 .contact-card{
   display:flex;gap:16px;align-items:flex-start;min-width:0;
-  padding:23px;background:#fff;border:1px solid var(--border);
+  padding:23px;background:var(--cream);border:1px solid var(--border);
   border-radius:20px;box-shadow:0 9px 25px #3b171008;
   transition:transform .2s,border-color .2s,box-shadow .2s
 }
@@ -463,7 +417,6 @@ select:disabled{background:#f4f1ef;color:#aaa}
   display:block;color:var(--deep);font-size:15px;font-weight:800;
   overflow-wrap:anywhere;margin:0 0 12px
 }
-[data-theme="dark"] .contact-card .contact-detail { color: #ff4d6d; }
 .contact-action{
   display:inline-flex;align-items:center;gap:7px;
   padding:8px 13px;border-radius:30px;background:var(--red);
@@ -473,9 +426,8 @@ select:disabled{background:#f4f1ef;color:#aaa}
 .contact-action svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .contact-note{
   margin:0 0 30px;padding:17px 20px;border-radius:15px;
-  background:#fff8f8;border:1px solid #f2d8dd;color:#6e5057;font-size:13px
+  background:var(--pink);border:1px solid #f2d8dd;color:var(--muted);font-size:13px
 }
-[data-theme="dark"] .contact-note { background: #2a1217; border-color: #4a1d25; color: #b0b0b0; }
 .whatsapp-panel{
   display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;
   align-items:center;position:relative;overflow:hidden;
@@ -500,12 +452,11 @@ select:disabled{background:#f4f1ef;color:#aaa}
 
 /* FORMS */
 .notice{
-  background:#fff6f6;border:1px solid #f2d7dc;color:var(--deep);
+  background:var(--pink);border:1px solid #f2d7dc;color:var(--deep);
   padding:12px 14px;border-radius:12px;font-size:12px;margin:12px 0
 }
-[data-theme="dark"] .notice { background: #2a1217; border-color: #4a1d25; color: #ff4d6d; }
 .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.form-card{padding:24px;margin-top:20px;background:#fff;border:1px solid var(--border);border-radius:18px}
+.form-card{padding:24px;margin-top:20px;background:var(--cream);border:1px solid var(--border);border-radius:18px}
 
 /* FOOTER */
 footer{background:#211516;color:#fff;padding:35px 0 15px}
@@ -530,23 +481,12 @@ footer a:hover{color:#fff}
 .footer-social-link.group-link svg{width:29px;height:29px}
 
 @media(max-width:850px){
-  .links{gap:0}.links a{padding:8px 7px;font-size:11px}
   .hero-grid{gap:15px}.photo{height:250px}
   .requests{grid-template-columns:repeat(2,1fr)}
   .work-grid{grid-template-columns:repeat(2,1fr)}
   .journey-layout{grid-template-columns:minmax(0,1fr) minmax(250px,.85fr);gap:16px}
   .volunteer-3d-banner{min-height:285px;padding:22px 16px}
   .footer-grid{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:768px){
-  .links{
-    display:none;position:absolute;top:100%;left:0;width:100%;
-    background:#fff;border-bottom:1px solid var(--border);
-    flex-direction:column;align-items:stretch;padding:12px;box-shadow:0 10px 20px rgba(0,0,0,0.05);
-  }
-  [data-theme="dark"] .links { background: #1e1e1e; }
-  .links.open{display:flex}
-  .links a{font-size:13px;padding:10px}
 }
 @media(max-width:620px){
   .wrap{width:94%}
@@ -623,12 +563,11 @@ footer a:hover{color:#fff}
       <span class="logo-text">MB Blood Bank<small>এক ফোঁটা রক্ত, একটি জীবন</small></span>
     </a>
 
-    <!-- থ্রি ডট মেনু এবং তার পাশের অপশনসমূহ -->
-    <div class="header-right-group">
-      <a href="https://mbbloodbank.github.io/donorRegistration" class="header-btn primary-reg">রক্তদাতা নিবন্ধন</a>
-      <a href="https://mbbloodbank.github.io/register" class="header-btn">নতুন লগইন করুন</a>
-      <button class="header-btn" id="langBtn" aria-label="ভাষা পরিবর্তন">🌐 Lang</button>
-      <button class="header-btn" id="darkModeBtn" aria-label="ডার্ক মুড টগল">🌙</button>
+    <div class="nav-right-group">
+      <a href="https://mbbloodbank.github.io/donorRegistration" class="header-action-btn">রক্তদাতা নিবন্ধন</a>
+      <a href="https://mbbloodbank.github.io/register" class="header-action-btn">লগইন করুন</a>
+      <button class="utility-btn" id="langBtn">EN</button>
+      <button class="utility-btn" id="darkModeBtn">🌙</button>
       <button class="menu" id="menuBtn" aria-label="মেনু খুলুন" aria-expanded="false">☰</button>
     </div>
 
@@ -638,6 +577,7 @@ footer a:hover{color:#fff}
       <a href="#requests" data-page="home">রক্তের অনুরোধ</a>
       <a href="#donorRegistration" data-page="home">রক্তদাতা নিবন্ধন</a>
       <a href="#aboutPage" data-page="about">আমাদের কথা</a>
+      <a href="#donorRegistration" class="pill" data-page="home">রক্তদাতা হন</a>
     </nav>
   </div>
 </header>
@@ -649,15 +589,15 @@ footer a:hover{color:#fff}
  <div class="wrap hero-grid">
   <div>
    <span class="tag">🔴 স্বেচ্ছাসেবী রক্তদাতা নেটওয়ার্ক</span>
-   <h1>রক্ত দিন,<br><span>জীবন বাঁচান।</span></h1>
-   <p class="lead">
+   <h1 id="heroTitle">রক্ত দিন,<br><span>জীবন বাঁচান।</span></h1>
+   <p class="lead" id="heroDesc">
     MB Blood Bank রোগী ও স্বেচ্ছাসেবী রক্তদাতাদের মাঝে সেতুবন্ধন।
     রক্তের গ্রুপ ও এলাকা নির্বাচন করে রক্তদাতা খুঁজে নিন।
    </p>
 
    <div class="searchbox">
     <form id="searchForm">
-     <label>রক্তের গ্রুপ</label>
+     <label id="lblBloodGroup">রক্তের গ্রুপ</label>
      <div class="blood-grid" id="bloodButtons">
       <button class="blood-btn" type="button" data-blood="A+">A+</button>
       <button class="blood-btn" type="button" data-blood="A-">A-</button>
@@ -671,7 +611,7 @@ footer a:hover{color:#fff}
 
      <div class="search-row">
       <select id="searchDivision" aria-label="বিভাগ নির্বাচন"><option value="">সকল বিভাগ</option></select>
-      <button class="primary" type="submit">⌕ রক্তদাতা খুঁজুন</button>
+      <button class="primary" type="submit" id="searchBtnText">⌕ রক্তদাতা খুঁজুন</button>
      </div>
      <div class="search-row">
       <select id="searchDistrict" aria-label="জেলা অথবা থানা নির্বাচন" disabled><option value="">আগে বিভাগ নির্বাচন করুন</option></select>
@@ -843,7 +783,7 @@ footer a:hover{color:#fff}
 
   <section><div class="eyebrow">আমরা যা করি</div><h2 class="about-heading">রক্তদাতা ও রোগীর পাশে</h2><p class="about-copy">রক্তদাতা নিবন্ধন থেকে জরুরি রক্তের অনুরোধ—রক্তের প্রয়োজনের সময়ে প্রয়োজনীয় যোগাযোগ সহজ করাই আমাদের উদ্যোগ।</p>
    <div class="work-grid">
-    <article class="work-card"><div class="work-icon">🩸</div><h3>লাইভ ডোনার</h3><p>অনলাইন ডোনার নিবন্ধন, জরুরি অনুরোধ এবং দেশের বিভিন্ন এলাকার রক্তদatar তথ্য খুঁজে পাওয়ার ব্যবস্থা।</p></article>
+    <article class="work-card"><div class="work-icon">🩸</div><h3>লাইভ ডোনার</h3><p>অনলাইন ডোনার নিবন্ধন, জরুরি অনুরোধ এবং দেশের বিভিন্ন এলাকার রক্তদাতার তথ্য খুঁজে পাওয়ার ব্যবস্থা।</p></article>
     <article class="work-card"><div class="work-icon">🤝</div><h3>রক্তদানে সহায়তা</h3><p>রক্তের প্রয়োজন রয়েছে এমন ব্যক্তি ও স্বেচ্ছাসেবী রক্তদাতার মধ্যে যোগাযোগে সহায়তা।</p></article>
     <article class="work-card"><div class="work-icon">✓</div><h3>সঠিক ডোনার যাচাই</h3><p>নিবন্ধিত ডোনারের তথ্য প্রশাসকের মাধ্যমে যাচাই ও অনুমোদনের ব্যবস্থা রাখার লক্ষ্য।</p></article>
     <article class="work-card"><div class="work-icon">❤️</div><h3>MB Blood Bank</h3><p>রক্তের অনুরোধের তথ্য সংশ্লিষ্ট মানুষের কাছে পৌঁছে দেওয়ার জন্য একটি সহায়ক নেটওয়ার্ক।</p></article>
@@ -1004,7 +944,7 @@ footer a:hover{color:#fff}
 "use strict";
 const $ = id => document.getElementById(id);
 
-/* মোবাইল মেনু টগল */
+/* মোবাইল মেনু */
 const menuBtn = $("menuBtn");
 const navLinks = $("navLinks");
 
@@ -1013,7 +953,7 @@ menuBtn.addEventListener("click", () => {
   menuBtn.setAttribute("aria-expanded", String(open));
 });
 
-/* ডার্ক মোড এবং ভাষা পরিবর্তনের ফাংশন */
+/* ডার্ক মোড লজিক */
 const darkModeBtn = $("darkModeBtn");
 darkModeBtn.addEventListener("click", () => {
   const currentTheme = document.documentElement.getAttribute("data-theme");
@@ -1027,12 +967,23 @@ darkModeBtn.addEventListener("click", () => {
   }
 });
 
+/* ভাষা পরিবর্তন লজিক (EN/BN) */
 const langBtn = $("langBtn");
 let currentLang = "bn";
 langBtn.addEventListener("click", () => {
   currentLang = currentLang === "bn" ? "en" : "bn";
-  langBtn.textContent = currentLang === "bn" ? "🌐 Lang" : "🌐 বাং";
-  alert(currentLang === "en" ? "Language switched to English (Demo)" : "ভাষা বাংলায় পরিবর্তিত হয়েছে");
+  langBtn.textContent = currentLang === "bn" ? "EN" : "BN";
+  if (currentLang === "en") {
+    $("heroTitle").innerHTML = "Give Blood,<br><span>Save Life.</span>";
+    $("heroDesc").textContent = "MB Blood Bank is a bridge between patients and voluntary blood donors. Find blood donors by selecting blood group and area.";
+    $("lblBloodGroup").textContent = "Blood Group";
+    $("searchBtnText").textContent = "⌕ Find Donor";
+  } else {
+    $("heroTitle").innerHTML = "রক্ত দিন,<br><span>জীবন বাঁচান।</span>";
+    $("heroDesc").textContent = "MB Blood Bank রোগী ও স্বেচ্ছাসেবী রক্তদাতাদের মাঝে সেতুবন্ধন। রক্তের গ্রুপ ও এলাকা নির্বাচন করে রক্তদাতা খুঁজে নিন।";
+    $("lblBloodGroup").textContent = "রক্তের গ্রুপ";
+    $("searchBtnText").textContent = "⌕ রক্তদাতা খুঁজুন";
+  }
 });
 
 /* হোম, আমাদের কথা ও যোগাযোগ পেজ */
