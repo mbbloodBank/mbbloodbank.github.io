@@ -58,6 +58,7 @@ header{
 }
 .logo-text{display:block}
 .logo small{display:block;font-size:9px;color:var(--muted);font-weight:400}
+.logo-drop{display:none!important}
 
 .nav-right-group{
   display:flex;align-items:center;gap:8px;flex-wrap:wrap
@@ -225,36 +226,28 @@ select:disabled{background:var(--border);color:#aaa}
 }
 .cta h2{margin:0 0 5px}
 
-/* FORMS & REGISTRATION PAGE STYLES */
-#donorRegistrationPage{padding:32px 0 55px;min-height:70vh}
-.donor-reg-wrapper{
-  display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;
-  background:var(--cream);border:1px solid var(--border);border-radius:24px;padding:25px
-}
-.donor-banner-box{
-  width:100%;border-radius:18px;overflow:hidden;border:1px solid var(--border);
-  box-shadow:0 8px 20px rgba(0,0,0,0.05);position:sticky;top:95px
-}
-.donor-banner-box img{
-  width:100%;height:auto;display:block;object-fit:cover
-}
+/* FORMS & REGISTRATION BANNER */
 .notice{
   background:var(--pink);border:1px solid #f2d7dc;color:var(--deep);
-  padding:12px 14px;border-radius:12px;font-size:12px;margin:12px 0;line-height:1.6
+  padding:12px 14px;border-radius:12px;font-size:13px;margin:15px 0;line-height:1.6
 }
-.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .form-card{padding:24px;margin-top:20px;background:var(--cream);border:1px solid var(--border);border-radius:18px}
-.field-group{margin-bottom:12px}
-.field-group.full{grid-column:1 / -1}
-.password-box{position:relative}
-.password-box input{padding-right:75px}
-.toggle-pwd{
-  position:absolute;right:10px;top:50%;transform:translateY(-50%);
-  background:transparent;border:none;color:var(--red);font-size:11px;font-weight:700
+
+.donor-reg-banner{
+  width:100%;max-height:400px;object-fit:cover;border-radius:20px;
+  border:1px solid var(--border);margin-bottom:20px;display:block
 }
 
-/* ABOUT PAGE */
-#aboutPage,#contactPage{padding:32px 0 55px;min-height:70vh}
+.password-wrapper{position:relative;display:flex;align-items:center}
+.password-wrapper input{padding-right:65px}
+.toggle-pwd{
+  position:absolute;right:10px;background:none;border:none;
+  color:var(--red);font-size:12px;font-weight:700;cursor:pointer
+}
+
+/* ABOUT & CONTACT PAGES */
+#aboutPage,#contactPage,#donorRegPage{padding:32px 0 55px;min-height:70vh}
 .about-top{
   display:grid;grid-template-columns:1fr 1fr;gap:28px;
   align-items:center;background:var(--cream);border:1px solid var(--border);
@@ -506,7 +499,6 @@ footer a:hover{color:#fff}
   .journey-layout{grid-template-columns:minmax(0,1fr) minmax(250px,.85fr);gap:16px}
   .volunteer-3d-banner{min-height:285px;padding:22px 16px}
   .footer-grid{grid-template-columns:repeat(2,1fr)}
-  .donor-reg-wrapper{grid-template-columns:1fr}
 }
 @media(max-width:620px){
   .wrap{width:94%}
@@ -584,7 +576,7 @@ footer a:hover{color:#fff}
     </a>
 
     <div class="nav-right-group">
-      <a href="#donorRegistrationPage" class="header-action-btn" data-page="donorReg" data-i18n="navDonorReg">রক্তদাতা নিবন্ধন</a>
+      <a href="#donorRegPage" class="header-action-btn" data-page="donorReg" data-i18n="navDonorReg">রক্তদাতা নিবন্ধন</a>
       <a href="https://mbbloodbank.github.io/register" class="header-action-btn" data-i18n="navLogin">লগইন করুন</a>
       <button class="utility-btn" id="langBtn">EN</button>
       <button class="utility-btn" id="darkModeBtn">🌙</button>
@@ -595,9 +587,9 @@ footer a:hover{color:#fff}
       <a class="active" href="#home" data-page="home" data-i18n="menuHome">হোম</a>
       <a href="#search" data-page="home" data-i18n="menuFindDonor">রক্তদাতা খুঁজুন</a>
       <a href="#requests" data-page="home" data-i18n="menuRequests">রক্তের অনুরোধ</a>
-      <a href="#donorRegistrationPage" data-page="donorReg" data-i18n="menuDonorReg">রক্তদাতা নিবন্ধন</a>
+      <a href="#donorRegPage" data-page="donorReg" data-i18n="menuDonorReg">রক্তদাতা নিবন্ধন</a>
       <a href="#aboutPage" data-page="about" data-i18n="menuAbout">আমাদের কথা</a>
-      <a href="#donorRegistrationPage" class="pill" data-page="donorReg" data-i18n="menuBeDonor">রক্তদাতা হন</a>
+      <a href="#donorRegPage" class="pill" data-page="donorReg" data-i18n="menuBeDonor">রক্তদাতা হন</a>
     </nav>
   </div>
 </header>
@@ -679,7 +671,6 @@ footer a:hover{color:#fff}
  </div>
 </section>
 
-<!-- জরুরি রক্তের অনুরোধ (হোম পেজে সংরক্ষিত) -->
 <section class="content" id="requests">
  <div class="wrap">
   <div class="section-head">
@@ -688,28 +679,6 @@ footer a:hover{color:#fff}
   </div>
   <div class="requests" id="requestCards">
    <div class="request-card"><span class="badge" data-i18n="reqBadge">জরুরি রক্তের অনুরোধ</span><h3 data-i18n="reqCardTitle">আপনার অনুরোধ এখানে দেখানো হবে</h3><p data-i18n="reqCardDesc">অনুরোধের তালিকা দেখাতে ডেটাবেস সংযোগ প্রয়োজন।</p></div>
-  </div>
-
-  <div class="form-card" id="emergency" style="margin-top:25px;">
-   <div class="eyebrow" data-i18n="emerEyebrow">জরুরি রক্তের অনুরোধ</div><h2 data-i18n="emerTitle">রোগীর জন্য রক্তের অনুরোধ করুন</h2>
-   <div class="notice" data-i18n="emerNotice">⚠️ আর্থিক লেনদেনের ক্ষেত্রে সতর্ক থাকুন। আর্থিক লেনদেনের জন্য MB Blood Bank কর্তৃপক্ষ দায়ী নয়।</div>
-   <form id="emergencyForm">
-    <div class="form-grid">
-     <input name="patientName" placeholder="রোগীর নাম *" required data-i18n-placeholder="patientPlaceholder">
-     <input name="phone" type="tel" placeholder="যোগাযোগ নম্বর *" required data-i18n-placeholder="contactPlaceholder">
-     <select name="bloodGroup" required>
-      <option value="" data-i18n="optSelectGroup">রক্তের গ্রুপ নির্বাচন করুন *</option>
-      <option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
-     </select>
-     <input name="hospital" placeholder="হাসপাতাল / স্থান *" required data-i18n-placeholder="hospitalPlaceholder">
-     <select id="reqDivision" name="division" required><option value="" data-i18n="optSelectDivision">বিভাগ নির্বাচন করুন *</option></select>
-     <select id="reqDistrict" name="district" required disabled><option value="" data-i18n="optSelectDivFirst">আগে বিভাগ নির্বাচন করুন</option></select>
-     <select id="reqUpazila" name="upazila" disabled><option value="" data-i18n="optSelectDistFirst">আগে জেলা নির্বাচন করুন</option></select>
-     <input name="neededDate" type="date" aria-label="রক্ত প্রয়োজনের তারিখ" required>
-    </div>
-    <button class="primary" style="margin-top:15px" type="submit" data-i18n="emerSubmit">জরুরি অনুরোধ পাঠান</button>
-    <p class="status" id="emergencyStatus" aria-live="polite" data-i18n="emerStatusText">অনুরোধ সংরক্ষণ করতে Firebase/ডেটাবেস সংযোগ প্রয়োজন।</p>
-   </form>
   </div>
  </div>
 </section>
@@ -756,102 +725,126 @@ footer a:hover{color:#fff}
  </div>
 </section>
 
-<section class="wrap" id="register">
- <div class="cta"><div><h2 data-i18n="ctaTitle">আজই রক্তদাতা হিসেবে যুক্ত হন</h2><p class="muted" data-i18n="ctaDesc">আপনার একটি সিদ্ধান্ত কারও জীবনে আশার আলো হতে পারে।</p></div><a class="primary" href="#donorRegistrationPage" data-page="donorReg" data-i18n="ctaButton">নিবন্ধন করুন →</a></div>
+<section class="wrap">
+ <div class="cta"><div><h2 data-i18n="ctaTitle">আজই রক্তদাতা হিসেবে যুক্ত হন</h2><p class="muted" data-i18n="ctaDesc">আপনার একটি সিদ্ধান্ত কারও জীবনে আশার আলো হতে পারে।</p></div><a class="primary" href="#donorRegPage" data-page="donorReg" data-i18n="ctaButton">নিবন্ধন করুন →</a></div>
 </section>
 
+<section class="content">
+ <div class="wrap">
+  <div class="form-card" id="emergency">
+   <div class="eyebrow" data-i18n="emerEyebrow">জরুরি রক্তের অনুরোধ</div><h2 data-i18n="emerTitle">রোগীর জন্য রক্তের অনুরোধ করুন</h2>
+   <div class="notice" data-i18n="emerNotice">⚠️ আর্থিক লেনদেনের ক্ষেত্রে সতর্ক থাকুন। আর্থিক লেনদেনের জন্য MB Blood Bank কর্তৃপক্ষ দায়ী নয়।</div>
+   <form id="emergencyForm">
+    <div class="form-grid">
+     <input name="patientName" placeholder="রোগীর নাম *" required data-i18n-placeholder="patientPlaceholder">
+     <input name="phone" type="tel" placeholder="যোগাযোগ নম্বর *" required data-i18n-placeholder="contactPlaceholder">
+     <select name="bloodGroup" required>
+      <option value="" data-i18n="optSelectGroup">রক্তের গ্রুপ নির্বাচন করুন *</option>
+      <option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
+     </select>
+     <input name="hospital" placeholder="হাসপাতাল / স্থান *" required data-i18n-placeholder="hospitalPlaceholder">
+     <select id="reqDivision" name="division" required><option value="" data-i18n="optSelectDivision">বিভাগ নির্বাচন করুন *</option></select>
+     <select id="reqDistrict" name="district" required disabled><option value="" data-i18n="optSelectDivFirst">আগে বিভাগ নির্বাচন করুন</option></select>
+     <select id="reqUpazila" name="upazila" disabled><option value="" data-i18n="optSelectDistFirst">আগে জেলা নির্বাচন করুন</option></select>
+     <input name="neededDate" type="date" aria-label="রক্ত প্রয়োজনের তারিখ" required>
+    </div>
+    <button class="primary" style="margin-top:15px" type="submit" data-i18n="emerSubmit">জরুরি অনুরোধ পাঠান</button>
+    <p class="status" id="emergencyStatus" aria-live="polite" data-i18n="emerStatusText">অনুরোধ সংরক্ষণ করতে Firebase/ডেটাবেস সংযোগ প্রয়োজন।</p>
+   </form>
+  </div>
+ </div>
+</section>
 </main>
 
-<!-- DONOR REGISTRATION PAGE (স্বতন্ত্র পেজ) -->
-<main id="donorRegistrationPage" class="hidden">
+<!-- DONOR REGISTRATION PAGE -->
+<main id="donorRegPage" class="hidden">
  <div class="wrap">
-  <div class="donor-reg-wrapper">
+  <img src="donorRegistration.jpg" alt="রক্তদাতা নিবন্ধন ব্যানার" class="donor-reg-banner" onerror="this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=1200&q=90'">
+
+  <div class="form-card">
+   <div class="eyebrow" data-i18n="regEyebrow">রক্তদাতা নিবন্ধন</div>
+   <h2 data-i18n="regTitle">রক্তদাতা হিসেবে নিবন্ধন করুন</h2>
    
-   <!-- বাম পাশ: নিবন্ধন ফর্ম -->
-   <div>
-    <div class="eyebrow" data-i18n="regEyebrow">রক্তদাতা নিবন্ধন</div>
-    <h2 data-i18n="regTitle">রক্তদাতা হিসেবে নিবন্ধন করুন</h2>
-    <div class="notice">
-      ⚠️ নিবন্ধনের পর আপনার Account/Donor/Profile সরাসরি active হবে না। Admin যাচাই ও Approved করার পর আপনার তথ্য রক্তদাতার তালিকায় প্রদর্শিত হবে।
+   <div class="notice">
+    ⚠️ নিবন্ধনের পর আপনার Account/Donor/Profile সরাসরি active হবে না। Admin যাচাই ও Approved করার পর আপনার তথ্য রক্তদাতার তালিকায় প্রদর্শিত হবে।
+   </div>
+
+   <form id="registrationForm">
+    <div class="form-grid">
+     <div>
+      <label>নাম:</label>
+      <input name="name" placeholder="আপনার পুরো নাম লিখুন *" required>
+     </div>
+
+     <div>
+      <label>যোগাযোগ নম্বর:</label>
+      <input name="phone" type="tel" placeholder="আপনার মোবাইল নম্বর *" required>
+     </div>
+
+     <div>
+      <label>রক্তের গ্রুপ :</label>
+      <select name="bloodGroup" required>
+       <option value="">নির্বাচন করুন</option>
+       <option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
+      </select>
+     </div>
+
+     <div>
+      <label>বিভাগ :</label>
+      <select id="regDivision" name="division" required>
+       <option value="">নির্বাচন করুন</option>
+      </select>
+     </div>
+
+     <div>
+      <label>জেলা:</label>
+      <select id="regDistrict" name="district" required disabled>
+       <option value="">নির্বাচন করুন</option>
+      </select>
+     </div>
+
+     <div>
+      <label>উপজেলা:</label>
+      <select id="regUpazila" name="upazila" disabled>
+       <option value="">নির্বাচন করুন</option>
+      </select>
+     </div>
+
+     <div style="grid-column:1/-1">
+      <label>ঠিকানা :</label>
+      <textarea name="address" rows="2" placeholder="আপনার বর্তমান বিস্তারিত ঠিকানা লিখুন"></textarea>
+     </div>
+
+     <div>
+      <label>ছবি:</label>
+      <input type="file" accept="image/*" name="photo">
+     </div>
+
+     <div>
+      <label>ইমেইল :</label>
+      <input type="email" name="email" placeholder="আপনার ইমেইল এড্রেস">
+     </div>
+
+     <div>
+      <label>পাসওয়ার্ড :</label>
+      <div class="password-wrapper">
+       <input type="password" id="regPassword" name="password" placeholder="পাসওয়ার্ড লিখুন *" required>
+       <button type="button" class="toggle-pwd" onclick="togglePassword('regPassword', this)">দেখুন</button>
+      </div>
+     </div>
+
+     <div>
+      <label>পাসওয়ার্ড আবার লিখুন:</label>
+      <div class="password-wrapper">
+       <input type="password" id="regConfirmPassword" name="confirmPassword" placeholder="পাসওয়ার্ড পুনরায় লিখুন *" required>
+       <button type="button" class="toggle-pwd" onclick="togglePassword('regConfirmPassword', this)">দেখুন</button>
+      </div>
+     </div>
     </div>
-    
-    <form id="registrationForm">
-     <div class="field-group">
-       <label>নাম:</label>
-       <input name="name" placeholder="আপনার সম্পূর্ণ নাম লিখুন *" required>
-     </div>
-     
-     <div class="field-group">
-       <label>যোগাযোগ নম্বর:</label>
-       <input name="phone" type="tel" placeholder="মোবাইল নম্বর লিখুন *" required>
-     </div>
-     
-     <div class="field-group">
-       <label>রক্তের গ্রুপ :</label>
-       <select name="bloodGroup" required>
-        <option value="">নির্বাচন করুন</option>
-        <option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
-       </select>
-     </div>
-     
-     <div class="field-group">
-       <label>বিভাগ :</label>
-       <select id="regDivision" name="division" required><option value="">নির্বাচন করুন</option></select>
-     </div>
-     
-     <div class="field-group">
-       <label>জেলা:</label>
-       <select id="regDistrict" name="district" required disabled><option value="">নির্বাচন করুন</option></select>
-     </div>
-     
-     <div class="field-group">
-       <label>উপজেলা:</label>
-       <select id="regUpazila" name="upazila" disabled><option value="">নির্বাচন করুন</option></select>
-     </div>
-     
-     <div class="field-group">
-       <label>ঠিকানা :</label>
-       <textarea name="address" rows="2" placeholder="আপনার বর্তমান ঠিকানা লিখুন"></textarea>
-     </div>
-     
-     <div class="field-group">
-       <label>ছবি:</label>
-       <input type="file" name="photo" accept="image/*">
-     </div>
-     
-     <div class="field-group">
-       <label>ইমেইল :</label>
-       <input name="email" type="email" placeholder="ইমেইল ঠিকানা (ঐচ্ছিক)">
-     </div>
-     
-     <div class="form-grid">
-       <div class="field-group">
-         <label>পাসওয়ার্ড :</label>
-         <div class="password-box">
-           <input type="password" id="regPassword" name="password" placeholder="পাসওয়ার্ড" required>
-           <button type="button" class="toggle-pwd" onclick="togglePassword('regPassword', this)">দেখুন</button>
-         </div>
-       </div>
-       
-       <div class="field-group">
-         <label>পাসওয়ার্ড আবার লিখুন :</label>
-         <div class="password-box">
-           <input type="password" id="regConfirmPassword" name="confirmPassword" placeholder="পুনরায় লিখুন" required>
-           <button type="button" class="toggle-pwd" onclick="togglePassword('regConfirmPassword', this)">দেখুন</button>
-         </div>
-       </div>
-     </div>
 
-     <button class="primary" style="margin-top:15px; width:100%" type="submit" data-i18n="regSubmit">নিবন্ধনের অনুরোধ পাঠান</button>
-     <p class="status" id="regStatus" aria-live="polite" data-i18n="regStatusText">নিবন্ধন সংরক্ষণ করতে Firebase/ডেটাবেস সংযোগ প্রয়োজন।</p>
-    </form>
-   </div>
-
-   <!-- ডান পাশ: ব্যানার -->
-   <div class="donor-banner-box">
-     <img src="donorRegistration.jpeg" alt="রক্তদাতা নিবন্ধন ব্যানার" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=800&q=80';">
-   </div>
-
+    <button class="primary" style="margin-top:20px;width:100%" type="submit" data-i18n="regSubmit">নিবন্ধনের অনুরোধ পাঠান</button>
+    <p class="status" id="regStatus" aria-live="polite" data-i18n="regStatusText">নিবন্ধন সংরক্ষণ করতে Firebase/ডেটাবেস সংযোগ প্রয়োজন।</p>
+   </form>
   </div>
  </div>
 </main>
@@ -940,7 +933,7 @@ footer a:hover{color:#fff}
    <h2 data-i18n="aboutFinalTitle">প্রতিটি বিভাগ, জেলা, উপজেলা ও গ্রামের মানুষের পাশে</h2>
    <p data-i18n="aboutFinalDesc">রক্তদাতা হিসেবে নিবন্ধন করুন, জরুরি প্রয়োজনে রক্তদাতা খুঁজুন, আর অসহায় মানুষের জীবন বাঁচাতে মানবতার এই উদ্যোগে যুক্ত হোন।</p>
    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-    <a class="primary" href="#donorRegistrationPage" data-page="donorReg" data-i18n="aboutFinalBtn1">রক্তদাতা নিবন্ধন করুন →</a>
+    <a class="primary" href="#donorRegPage" data-page="donorReg" data-i18n="aboutFinalBtn1">রক্তদাতা নিবন্ধন করুন →</a>
     <a class="pill" href="#search" data-page="home" data-i18n="aboutFinalBtn2">জরুরি রক্তদাতা খুঁজুন</a>
    </div>
   </div>
@@ -1054,7 +1047,7 @@ footer a:hover{color:#fff}
    <div>
     <h3 data-i18n="fCol1Title">দ্রুত লিংক</h3>
     <a href="#search" data-page="home" data-i18n="menuFindDonor">রক্তদাতা খুঁজুন</a>
-    <a href="#donorRegistrationPage" data-page="donorReg" data-i18n="menuDonorReg">রক্তদাতা হিসেবে নিবন্ধন</a>
+    <a href="#donorRegPage" data-page="donorReg" data-i18n="menuDonorReg">রক্তদাতা হিসেবে নিবন্ধন</a>
     <a href="#emergency" data-page="home" data-i18n="reqTitle">জরুরি রক্তের অনুরোধ</a>
     <a href="#aboutPage" data-page="about" data-i18n="menuAbout">আমাদের কথা</a>
    </div>
@@ -1186,9 +1179,6 @@ const translations = {
     ctaButton: "নিবন্ধন করুন →",
     regEyebrow: "রক্তদাতা নিবন্ধন",
     regTitle: "রক্তদাতা হিসেবে নিবন্ধন করুন",
-    regNotice: "আপনার নিবন্ধন প্রথমে Pending থাকবে। Admin যাচাই ও Approved করার পর আপনার তথ্য রক্তদাতার তালিকায় প্রদর্শিত হওয়া উচিত। এই নমুনা কোডে ডেটাবেস সংযোগ নেই।",
-    namePlaceholder: "আপনার নাম *",
-    phonePlaceholder: "মোবাইল নম্বর *",
     optSelectGroup: "রক্তের গ্রুপ নির্বাচন করুন *",
     optSelectDivision: "বিভাগ নির্বাচন করুন *",
     regSubmit: "নিবন্ধনের অনুরোধ পাঠান",
@@ -1347,9 +1337,6 @@ const translations = {
     ctaButton: "Register →",
     regEyebrow: "Donor Registration",
     regTitle: "Register as a Blood Donor",
-    regNotice: "Your registration will initially be Pending. After admin verification and approval, your info should appear in the donor list. This demo code has no database connection.",
-    namePlaceholder: "Your Name *",
-    phonePlaceholder: "Mobile Number *",
     optSelectGroup: "Select Blood Group *",
     optSelectDivision: "Select Division *",
     regSubmit: "Send Registration Request",
@@ -1466,16 +1453,11 @@ langBtn.addEventListener("click", () => {
     }
   });
 
-  if (currentLang === "en") {
-    $("heroTitle").innerHTML = t.heroTitleHtml;
-    $("heroDesc").textContent = t.heroDescText;
-  } else {
-    $("heroTitle").innerHTML = t.heroTitleHtml;
-    $("heroDesc").textContent = t.heroDescText;
-  }
+  $("heroTitle").innerHTML = t.heroTitleHtml;
+  $("heroDesc").textContent = t.heroDescText;
 });
 
-/* হোম, রক্তদাতা নিবন্ধন, আমাদের কথা ও যোগাযোগ পেজ রাউটিং */
+/* পেজ পরিবর্তন ও নেভিগেশন লজিক */
 function showPage(page, targetHash) {
   const isAbout = page === "about";
   const isContact = page === "contact";
@@ -1484,7 +1466,7 @@ function showPage(page, targetHash) {
   $("homePage").classList.toggle("hidden", isAbout || isContact || isDonorReg);
   $("aboutPage").classList.toggle("hidden", !isAbout);
   $("contactPage").classList.toggle("hidden", !isContact);
-  $("donorRegistrationPage").classList.toggle("hidden", !isDonorReg);
+  $("donorRegPage").classList.toggle("hidden", !isDonorReg);
 
   document.querySelectorAll("#navLinks a[data-page]").forEach(link => {
     link.classList.toggle(
@@ -1503,7 +1485,7 @@ function showPage(page, targetHash) {
     history.replaceState(null, "", "#contactPage");
     window.scrollTo({top:0,behavior:"smooth"});
   } else if (isDonorReg) {
-    history.replaceState(null, "", "#donorRegistrationPage");
+    history.replaceState(null, "", "#donorRegPage");
     window.scrollTo({top:0,behavior:"smooth"});
   } else {
     const target = targetHash && $(targetHash.replace("#",""));
@@ -1529,14 +1511,14 @@ document.querySelectorAll("[data-page]").forEach(link => {
 window.addEventListener("load", () => {
   if (location.hash === "#aboutPage") showPage("about");
   else if (location.hash === "#contactPage") showPage("contact");
-  else if (location.hash === "#donorRegistrationPage") showPage("donorReg");
+  else if (location.hash === "#donorRegPage") showPage("donorReg");
   else showPage("home");
 });
 
 window.addEventListener("popstate", () => {
   if (location.hash === "#aboutPage") showPage("about");
   else if (location.hash === "#contactPage") showPage("contact");
-  else if (location.hash === "#donorRegistrationPage") showPage("donorReg");
+  else if (location.hash === "#donorRegPage") showPage("donorReg");
   else showPage("home", location.hash);
 });
 
@@ -1593,6 +1575,8 @@ function setupCascade(divisionId, districtId, upazilaId) {
   const div = $(divisionId);
   const dist = $(districtId);
   const upa = $(upazilaId);
+
+  if(!div) return;
 
   fillSelect(div, geoData, currentLang === "bn" ? "বিভাগ নির্বাচন করুন" : "Select Division");
   addInsideDhakaOption(div);
@@ -1656,13 +1640,17 @@ async function loadLocations() {
     setupCascade("regDivision","regDistrict","regUpazila");
     setupCascade("reqDivision","reqDistrict","reqUpazila");
 
-    status.textContent =
-      currentLang === "bn" ? "লোকেশন তালিকা লোড হয়েছে। ঢাকা বিভাগ নির্বাচন করলে জেলার তালিকা এবং Inside Dhaka নির্বাচন করলে ঢাকা মহানগরের থানা দেখাবে।" : "Location list loaded.";
-    status.style.color = "#14783d";
+    if (status) {
+      status.textContent =
+        currentLang === "bn" ? "লোকেশন তালিকা লোড হয়েছে। ঢাকা বিভাগ নির্বাচন করলে জেলার তালিকা এবং Inside Dhaka নির্বাচন করলে ঢাকা মহানগরের থানা দেখাবে।" : "Location list loaded.";
+      status.style.color = "#14783d";
+    }
   } catch (error) {
     console.error(error);
-    status.textContent = currentLang === "bn" ? "লোকেশন তালিকা লোড হয়নি। ইন্টারনেট বা JSON ডেটার ঠিকানা পরীক্ষা করুন।" : "Location list failed to load.";
-    status.style.color = "#b51035";
+    if (status) {
+      status.textContent = currentLang === "bn" ? "লোকেশন তালিকা লোড হয়নি। ইন্টারনেট বা JSON ডেটার ঠিকানা পরীক্ষা করুন।" : "Location list failed to load.";
+      status.style.color = "#b51035";
+    }
   }
 }
 loadLocations();
@@ -1710,7 +1698,7 @@ document.querySelectorAll("[data-group]").forEach(btn => {
   });
 });
 
-/* ডেমো ফর্ম: ডেটাবেসে তথ্য সংরক্ষণ করে না */
+/* ডেমো ফর্ম জমা দেওয়ার হ্যান্ডলার */
 $("registrationForm").addEventListener("submit", event => {
   event.preventDefault();
   $("regStatus").textContent =
