@@ -239,6 +239,14 @@ select:disabled{background:var(--border);color:#aaa}
   border:1px solid var(--border);margin-bottom:20px;display:block
 }
 
+.login-layout{
+  display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center
+}
+.member-banner-img{
+  width:100%;height:100%;min-height:350px;object-fit:cover;border-radius:18px;
+  border:1px solid var(--border);display:block
+}
+
 .password-wrapper{position:relative;display:flex;align-items:center}
 .password-wrapper input{padding-right:65px}
 .toggle-pwd{
@@ -247,7 +255,7 @@ select:disabled{background:var(--border);color:#aaa}
 }
 
 /* ABOUT & CONTACT PAGES */
-#aboutPage,#contactPage,#donorRegPage{padding:32px 0 55px;min-height:70vh}
+#aboutPage,#contactPage,#donorRegPage,#donorLoginPage{padding:32px 0 55px;min-height:70vh}
 .about-top{
   display:grid;grid-template-columns:1fr 1fr;gap:28px;
   align-items:center;background:var(--cream);border:1px solid var(--border);
@@ -499,6 +507,7 @@ footer a:hover{color:#fff}
   .journey-layout{grid-template-columns:minmax(0,1fr) minmax(250px,.85fr);gap:16px}
   .volunteer-3d-banner{min-height:285px;padding:22px 16px}
   .footer-grid{grid-template-columns:repeat(2,1fr)}
+  .login-layout{grid-template-columns:1fr}
 }
 @media(max-width:620px){
   .wrap{width:94%}
@@ -577,7 +586,7 @@ footer a:hover{color:#fff}
 
     <div class="nav-right-group">
       <a href="#donorRegPage" class="header-action-btn" data-page="donorReg" data-i18n="navDonorReg">রক্তদাতা নিবন্ধন</a>
-      <a href="https://mbbloodbank.github.io/register" class="header-action-btn" data-i18n="navLogin">লগইন করুন</a>
+      <a href="#donorLoginPage" class="header-action-btn" data-page="donorLogin" data-i18n="navLogin">লগইন করুন</a>
       <button class="utility-btn" id="langBtn">EN</button>
       <button class="utility-btn" id="darkModeBtn">🌙</button>
       <button class="menu" id="menuBtn" aria-label="মেনু খুলুন" aria-expanded="false">☰</button>
@@ -754,6 +763,58 @@ footer a:hover{color:#fff}
   </div>
  </div>
 </section>
+</main>
+
+<!-- DONOR LOGIN PAGE -->
+<main id="donorLoginPage" class="hidden">
+ <div class="wrap">
+  <div class="form-card">
+   <div class="login-layout">
+    <div>
+     <div class="eyebrow">রক্তদাতা পোর্টাল</div>
+     <h1 style="font-size:clamp(28px,4vw,38px);margin:5px 0 8px;color:var(--red)">রক্তদাতা লগইন</h1>
+     <p style="font-size:14px;color:var(--muted);margin-bottom:20px;font-weight:600">
+      ডোনার, ইমারজেন্সী রিকুয়েষ্ট , এম্বুলেন্স সেবা আর ক্লিনিক হসপিটাল — একই ড্যাশবোর্ডে।
+     </p>
+
+     <form id="loginForm">
+      <div style="display:grid;gap:14px">
+       <div>
+        <label>ইমেইল বা মোবাইল নাম্বার:</label>
+        <input type="text" name="loginIdentity" placeholder="আপনার ইমেইল বা মোবাইল নাম্বার লিখুন *" required>
+       </div>
+
+       <div>
+        <label>পাসওয়ার্ড:</label>
+        <div class="password-wrapper">
+         <input type="password" id="loginPassword" name="password" placeholder="পাসওয়ার্ড লিখুন *" required>
+         <button type="button" class="toggle-pwd" onclick="togglePassword('loginPassword', this)">পাসওয়ার্ড দেখুন</button>
+        </div>
+       </div>
+
+       <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-top:2px">
+        <label style="display:flex;align-items:center;gap:6px;margin:0;cursor:pointer;font-weight:normal">
+         <input type="checkbox" name="remember" style="width:auto"> এই ডিভাইসে মনে রাখুন
+        </label>
+        <a href="#" style="color:var(--red);font-weight:700" onclick="alert('পাসওয়ার্ড রিসেট সিস্টেমের জন্য ডেটাবেস সংযোগ প্রয়োজন।');return false;">পাসওয়ার্ড ভুলে গেছেন?</a>
+       </div>
+
+       <button class="primary" style="margin-top:10px;width:100%" type="submit">লগইন করুন</button>
+       
+       <div style="text-align:center;margin-top:15px;font-size:14px">
+        নতুন রক্তদাতা ? <a href="#donorRegPage" data-page="donorReg" style="color:var(--red);font-weight:800">২ মিনিটে রেজিস্টার করুন →</a>
+       </div>
+       <p class="status" id="loginStatus" aria-live="polite"></p>
+      </div>
+     </form>
+    </div>
+
+    <div>
+     <img src="member.jpg" alt="Member Banner" class="member-banner-img" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=800&q=80'">
+    </div>
+   </div>
+  </div>
+ </div>
 </main>
 
 <!-- DONOR REGISTRATION PAGE -->
@@ -1080,10 +1141,10 @@ function togglePassword(inputId, btn) {
   const input = $(inputId);
   if (input.type === "password") {
     input.type = "text";
-    btn.textContent = "লুকান";
+    btn.textContent = "পাসওয়ার্ড লুকান";
   } else {
     input.type = "password";
-    btn.textContent = "দেখুন";
+    btn.textContent = "পাসওয়ার্ড দেখুন";
   }
 }
 
@@ -1462,11 +1523,13 @@ function showPage(page, targetHash) {
   const isAbout = page === "about";
   const isContact = page === "contact";
   const isDonorReg = page === "donorReg";
+  const isDonorLogin = page === "donorLogin";
 
-  $("homePage").classList.toggle("hidden", isAbout || isContact || isDonorReg);
+  $("homePage").classList.toggle("hidden", isAbout || isContact || isDonorReg || isDonorLogin);
   $("aboutPage").classList.toggle("hidden", !isAbout);
   $("contactPage").classList.toggle("hidden", !isContact);
   $("donorRegPage").classList.toggle("hidden", !isDonorReg);
+  $("donorLoginPage").classList.toggle("hidden", !isDonorLogin);
 
   document.querySelectorAll("#navLinks a[data-page]").forEach(link => {
     link.classList.toggle(
@@ -1486,6 +1549,9 @@ function showPage(page, targetHash) {
     window.scrollTo({top:0,behavior:"smooth"});
   } else if (isDonorReg) {
     history.replaceState(null, "", "#donorRegPage");
+    window.scrollTo({top:0,behavior:"smooth"});
+  } else if (isDonorLogin) {
+    history.replaceState(null, "", "#donorLoginPage");
     window.scrollTo({top:0,behavior:"smooth"});
   } else {
     const target = targetHash && $(targetHash.replace("#",""));
@@ -1512,6 +1578,7 @@ window.addEventListener("load", () => {
   if (location.hash === "#aboutPage") showPage("about");
   else if (location.hash === "#contactPage") showPage("contact");
   else if (location.hash === "#donorRegPage") showPage("donorReg");
+  else if (location.hash === "#donorLoginPage") showPage("donorLogin");
   else showPage("home");
 });
 
@@ -1519,6 +1586,7 @@ window.addEventListener("popstate", () => {
   if (location.hash === "#aboutPage") showPage("about");
   else if (location.hash === "#contactPage") showPage("contact");
   else if (location.hash === "#donorRegPage") showPage("donorReg");
+  else if (location.hash === "#donorLoginPage") showPage("donorLogin");
   else showPage("home", location.hash);
 });
 
@@ -1704,6 +1772,13 @@ $("registrationForm").addEventListener("submit", event => {
   $("regStatus").textContent =
     currentLang === "bn" ? "ফর্ম পূরণ হয়েছে, কিন্তু Firebase/ডেটাবেস সংযোগ ছাড়া নিবন্ধন সংরক্ষণ হয়নি।" : "Form filled, but registration not saved without Firebase/Database connection.";
   $("regStatus").style.color = "#b51035";
+});
+
+$("loginForm").addEventListener("submit", event => {
+  event.preventDefault();
+  $("loginStatus").textContent =
+    currentLang === "bn" ? "লগইন তথ্য সঠিক, কিন্তু ড্যাশবোর্ডে প্রবেশের জন্য ডেটাবেস/Firebase সংযোগ প্রয়োজন।" : "Login details submitted, database required for dashboard access.";
+  $("loginStatus").style.color = "#b51035";
 });
 
 $("emergencyForm").addEventListener("submit", event => {
