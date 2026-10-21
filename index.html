@@ -215,28 +215,8 @@ select:disabled{background:var(--border);color:#aaa}
 /* ELIGIBILITY */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:35px;align-items:start}
 .facts{display:grid;gap:9px}
-.fact{
-  padding:12px 15px;display:flex;align-items:center;gap:12px;font-size:13px;
-  cursor:pointer;transition:background .2s,border-color .2s;
-}
-.fact:hover{background:var(--pink);border-color:#e8a5b3}
+.fact{padding:12px 15px;display:flex;align-items:center;gap:12px;font-size:13px}
 .fact b{color:var(--red)}
-
-/* টিপস দেখানোর স্টাইল (পপ-আপ ছাড়া নিচে প্রদর্শিত হবে) */
-.fact-tip-box {
-  margin-top: 8px;
-  padding: 10px 14px;
-  background: var(--pink);
-  border: 1px dashed var(--red);
-  border-radius: 10px;
-  font-size: 12px;
-  color: var(--deep);
-  display: none;
-}
-.fact-container {
-  display: flex;
-  flex-direction: column;
-}
 
 /* CTA */
 .cta{
@@ -245,68 +225,6 @@ select:disabled{background:var(--border);color:#aaa}
   display:flex;justify-content:space-between;align-items:center;gap:18px
 }
 .cta h2{margin:0 0 5px}
-
-/* PARTNERS / AFFILIATES SECTION STYLES */
-.partners-section {
-  padding: 40px 0 20px;
-}
-.partners-head {
-  text-align: center;
-  margin-bottom: 30px;
-}
-.partners-title {
-  font-size: clamp(28px, 4vw, 42px);
-  font-weight: 800;
-  color: var(--red);
-  margin-bottom: 8px;
-  line-height: 1.3;
-}
-.partners-sub {
-  font-size: clamp(15px, 2vw, 18px);
-  color: var(--ink);
-  font-weight: 600;
-}
-.partners-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-.partner-card {
-  background: var(--cream);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.partner-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--red);
-  box-shadow: 0 8px 25px rgba(181, 16, 53, 0.12);
-}
-.partner-banner {
-  width: 100%;
-  height: 170px;
-  object-fit: cover;
-  display: block;
-  background: var(--pink);
-  border-bottom: 1px solid var(--border);
-}
-.partner-name {
-  padding: 14px 12px;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--ink);
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 60px;
-}
 
 /* FORMS & REGISTRATION BANNER */
 .notice{
@@ -585,7 +503,6 @@ footer a:hover{color:#fff}
 @media(max-width:850px){
   .hero-grid{gap:15px}.photo{height:250px}
   .requests{grid-template-columns:repeat(2,1fr)}
-  .partners-grid{grid-template-columns:repeat(2,1fr);gap:14px}
   .work-grid{grid-template-columns:repeat(2,1fr)}
   .journey-layout{grid-template-columns:minmax(0,1fr) minmax(250px,.85fr);gap:16px}
   .volunteer-3d-banner{min-height:285px;padding:22px 16px}
@@ -614,8 +531,6 @@ footer a:hover{color:#fff}
   .group-card{padding:12px 9px;gap:9px}
   .drop{width:36px;height:42px;font-size:12px}
   .requests,.steps{grid-template-columns:1fr}
-  .partners-grid{grid-template-columns:1fr;gap:12px}
-  .partner-banner{height:150px}
   .compat{grid-template-columns:1fr;padding:22px}
   .compat h2{font-size:25px}
   .split{grid-template-columns:1fr;gap:18px}
@@ -765,6 +680,18 @@ footer a:hover{color:#fff}
  </div>
 </section>
 
+<section class="content" id="requests">
+ <div class="wrap">
+  <div class="section-head">
+   <div><div class="eyebrow" data-i18n="reqEyebrow">জরুরি</div><h2 data-i18n="reqTitle">জরুরি রক্তের অনুরোধ</h2><p data-i18n="reqDesc">রোগীর জন্য রক্ত প্রয়োজন হলে জরুরি অনুরোধ পাঠান।</p></div>
+   <a class="pill" href="#emergency" data-page="home" data-i18n="reqButton">অনুরোধ করুন →</a>
+  </div>
+  <div class="requests" id="requestCards">
+   <div class="request-card"><span class="badge" data-i18n="reqBadge">জরুরি রক্তের অনুরোধ</span><h3 data-i18n="reqCardTitle">আপনার অনুরোধ এখানে দেখানো হবে</h3><p data-i18n="reqCardDesc">অনুরোধের তালিকা দেখাতে ডেটাবেস সংযোগ প্রয়োজন।</p></div>
+  </div>
+ </div>
+</section>
+
 <section class="content" id="how">
  <div class="wrap">
   <div class="eyebrow" data-i18n="howEyebrow">কীভাবে কাজ করে</div><h2 data-i18n="howTitle">তিন ধাপে রক্তদাতা থেকে রোগী</h2>
@@ -779,7 +706,7 @@ footer a:hover{color:#fff}
 <section class="content">
  <div class="wrap compat">
   <div>
-   <div class="eyebrow" style="color:#f5b9c7" data-i18n="compatEyebrow">রক্তের সামঞ্জস্যতা</div><h2 data-i18n="compatTitle"> কে কাকে রক্ত দিতে পারে?</h2>
+   <div class="eyebrow" style="color:#f5b9c7" data-i18n="compatEyebrow">রক্তের সামঞ্জস্যতা</div><h2 data-i18n="compatTitle">কে কাকে রক্ত দিতে পারে?</h2>
    <p data-i18n="compatDesc">রক্তের গ্রুপ বেছে নিন। এটি লোহিত রক্তকণিকার সাধারণ ABO/Rh সামঞ্জস্যের তথ্য। রক্তদানের আগে হাসপাতালের ক্রসম্যাচ জরুরি।</p>
    <div class="blood-grid" id="compatButtons">
     <button class="blood-btn" type="button" data-compat="A+">A+</button><button class="blood-btn" type="button" data-compat="A-">A-</button>
@@ -797,114 +724,18 @@ footer a:hover{color:#fff}
 
 <section class="content" id="eligibility">
  <div class="wrap split">
-  <div><div class="eyebrow" data-i18n="eligEyebrow">রক্তদানের যোগ্যতা</div><h2 data-i18n="eligTitle">কারা রক্ত দিতে পারবেন?</h2><p class="muted" data-i18n="eligDesc">রক্তদানের আগে স্বাস্থ্যকর্মীর পরামর্শ নিন। চূড়ান্ত যোগ্যতা রক্তদান কেন্দ্র নির্ধারণ করবে। (নিচের নির্দেশনাগুলোতে ক্লিক করে বিস্তারিত পরামর্শ দেখুন)</p></div>
+  <div><div class="eyebrow" data-i18n="eligEyebrow">রক্তদানের যোগ্যতা</div><h2 data-i18n="eligTitle">কারা রক্ত দিতে পারবেন?</h2><p class="muted" data-i18n="eligDesc">রক্তদানের আগে স্বাস্থ্যকর্মীর পরামর্শ নিন। চূড়ান্ত যোগ্যতা রক্তদান কেন্দ্র নির্ধারণ করবে।</p></div>
   <div class="facts">
-   <div class="fact-container">
-    <div class="fact" onclick="toggleFactTip('tip1')"><b>♥</b> <span data-i18n="fact1">বয়স ও ওজন রক্তদান কেন্দ্রের নির্দেশনা অনুযায়ী হতে হবে</span></div>
-    <div id="tip1" class="fact-tip-box">পরামর্শ: সাধারণত বয়স ১৮ থেকে ৬০ বছরের মধ্যে এবং ওজন অন্তত ৪৫ কেজি হওয়া আবশ্যক।</div>
-   </div>
-   <div class="fact-container">
-    <div class="fact" onclick="toggleFactTip('tip2')"><b>♥</b> <span data-i18n="fact2">শেষ রক্তদানের পর যথেষ্ট সময় পার হতে হবে</span></div>
-    <div id="tip2" class="fact-tip-box">পরামর্শ: সাধারণত পুরুষদের ক্ষেত্রে ৩ মাস এবং নারীদের ক্ষেত্রে ৪ মাস বিরতি নিতে হয়।</div>
-   </div>
-   <div class="fact-container">
-    <div class="fact" onclick="toggleFactTip('tip3')"><b>♥</b> <span data-i18n="fact3">রক্তদানের দিন শারীরিকভাবে সুস্থ থাকতে হবে</span></div>
-    <div id="tip3" class="fact-tip-box">পরামর্শ: জ্বর, সর্দি, কাশি বা বড় কোনো ইনফেকশন থাকলে রক্তদান থেকে বিরত থাকুন এবং পর্যাপ্ত পানি ও পুষ্টিকর খাবার গ্রহণ করুন।</div>
-   </div>
-   <div class="fact-container">
-    <div class="fact" onclick="toggleFactTip('tip4')"><b>♥</b> <span data-i18n="fact4">স্বাস্থ্যকর্মীর স্ক্রিনিং সম্পন্ন করতে হবে</span></div>
-    <div id="tip4" class="fact-tip-box">পরামর্শ: রক্তদানের পূর্বে প্রেশার, হিমোগ্লোবিন ও অন্যান্য প্রাথমিক স্বাস্থ্য পরীক্ষা স্বাস্থ্যকর্মী কর্তৃক সম্পন্ন করা বাধ্যতামূলক।</div>
-   </div>
+   <div class="fact"><b>♥</b> <span data-i18n="fact1">বয়স ও ওজন রক্তদান কেন্দ্রের নির্দেশনা অনুযায়ী হতে হবে</span></div>
+   <div class="fact"><b>♥</b> <span data-i18n="fact2">শেষ রক্তদানের পর যথেষ্ট সময় পার হতে হবে</span></div>
+   <div class="fact"><b>♥</b> <span data-i18n="fact3">রক্তদানের দিন শারীরিকভাবে সুস্থ থাকতে হবে</span></div>
+   <div class="fact"><b>♥</b> <span data-i18n="fact4">স্বাস্থ্যকর্মীর স্ক্রিনিং সম্পন্ন করতে হবে</span></div>
   </div>
  </div>
 </section>
 
 <section class="wrap">
  <div class="cta"><div><h2 data-i18n="ctaTitle">আজই রক্তদাতা হিসেবে যুক্ত হন</h2><p class="muted" data-i18n="ctaDesc">আপনার একটি সিদ্ধান্ত কারও জীবনে আশার আলো হতে পারে।</p></div><a class="primary" href="#donorRegPage" data-page="donorReg" data-i18n="ctaButton">নিবন্ধন করুন →</a></div>
-</section>
-
-<!-- যারা আমাদের সাথে যুক্ত আছে (অর্গানাইজেশনাল পার্টনার সেকশন) -->
-<section class="partners-section">
- <div class="wrap">
-  <div class="partners-head">
-   <h2 class="partners-title">যারা আমাদের সাথে যুক্ত আছে</h2>
-   <p class="partners-sub">দেশের বড় বড় ব্লাড সংস্থা আমাদের সাথে যুক্ত</p>
-  </div>
-  <div class="partners-grid">
-   <div class="partner-card">
-    <img src="রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন.jpeg" alt="রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <div class="partner-name">রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন</div>
-   </div>
-   <div class="partner-card">
-    <img src="বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন.jpeg" alt="বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <div class="partner-name">বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন</div>
-   </div>
-   <div class="partner-card">
-    <img src="হিউম্যান অপ বাংলাদেশ.jpeg" alt="হিউম্যান অপ বাংলাদেশ" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <div class="partner-name">হিউম্যান অপ বাংলাদেশ</div>
-   </div>
-   <div class="partner-card">
-    <img src="ইউনাইটেড ব্লাড ডোনেশন.jpeg" alt="ইউনাইটেড ব্লাড ডোনেশন" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <div class="partner-name">ইউনাইটেড ব্লাড ডোনেশন</div>
-   </div>
-   <div class="partner-card">
-    <img src="Mymensingh Blood Donation.jpeg" alt="Mymensingh Blood Donation" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <div class="partner-name">Mymensingh Blood Donation</div>
-   </div>
-   <div class="partner-card">
-    <img src="রক্তের সন্ধানে আমরা.jpeg" alt="রক্তের সন্ধানে আমরা" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <div class="partner-name">রক্তের সন্ধানে আমরা</div>
-   </div>
-   <div class="partner-card">
-    <img src="Blood Donation Cumilla.jpeg" alt="Blood Donation Cumilla" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <div class="partner-name">Blood Donation Cumilla</div>
-   </div>
-   <div class="partner-card">
-    <img src="রক্ত সেবা বাংলাদেশ.jpeg" alt="রক্ত সেবা বাংলাদেশ" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <div class="partner-name">রক্ত সেবা বাংলাদেশ</div>
-   </div>
-   <div class="partner-card">
-    <img src="রংপুর রক্ত দান যাব সামাজিক সংগঠন.jpeg" alt="রংপুর রক্ত দান যাব সামাজিক সংগঠন" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <div class="partner-name">রংপুর রক্ত দান যাব সামাজিক সংগঠন</div>
-   </div>
-   <div class="partner-card">
-    <img src="FREE Blood Donation Mymensingh.jpeg" alt="FREE Blood Donation Mymensingh" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <div class="partner-name">FREE Blood Donation Mymensingh</div>
-   </div>
-   <div class="partner-card">
-    <img src="বন্ধু মহল ব্লাড ডোনার সোসাইটি.jpeg" alt="বন্ধু মহল ব্লাড ডোনার সোসাইটি" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <div class="partner-name">বন্ধু মহল ব্লাড ডোনার সোসাইটি</div>
-   </div>
-   <div class="partner-card">
-    <img src="আসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন.jpeg" alt="আসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <div class="partner-name">আসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন</div>
-   </div>
-   <div class="partner-card">
-    <img src="রক্তদানে আমরা ময়মনসিংহ.jpeg" alt="রক্তদানে আমরা ময়মনসিংহ" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <div class="partner-name">রক্তদানে আমরা ময়মনসিংহ</div>
-   </div>
-   <div class="partner-card">
-    <img src="Bangladesh Blood Donors Club.jpeg" alt="Bangladesh Blood Donors Club" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <div class="partner-name">Bangladesh Blood Donors Club</div>
-   </div>
-   <div class="partner-card">
-    <img src="বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ.jpeg" alt="বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <div class="partner-name">বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ</div>
-   </div>
-  </div>
- </div>
-</section>
-
-<section class="content" id="requests">
- <div class="wrap">
-  <div class="section-head">
-   <div><div class="eyebrow" data-i18n="reqEyebrow">জরুরি</div><h2 data-i18n="reqTitle">জরুরি রক্তের অনুরোধ</h2><p data-i18n="reqDesc">রোগীর জন্য রক্ত প্রয়োজন হলে জরুরি অনুরোধ পাঠান।</p></div>
-   <a class="pill" href="#emergency" data-page="home" data-i18n="reqButton">অনুরোধ করুন →</a>
-  </div>
-  <div class="requests" id="requestCards">
-   <div class="request-card"><span class="badge" data-i18n="reqBadge">জরুরি রক্তের অনুরোধ</span><h3 data-i18n="reqCardTitle">আপনার অনুরোধ এখানে দেখানো হবে</h3><p data-i18n="reqCardDesc">অনুরোধের তালিকা দেখাতে ডেটাবেস সংযোগ প্রয়োজন।</p></div>
-  </div>
- </div>
 </section>
 
 <section class="content">
@@ -1314,14 +1145,6 @@ function togglePassword(inputId, btn) {
   } else {
     input.type = "password";
     btn.textContent = "পাসওয়ার্ড দেখুন";
-  }
-}
-
-/* যোগ্যতা নির্দেশিকায় ক্লিক করলে পরামর্শ দেখানোর ফাংশন (পপ-আপ ছাড়াই) */
-function toggleFactTip(tipId) {
-  const tipBox = $(tipId);
-  if (tipBox) {
-    tipBox.style.display = tipBox.style.display === "block" ? "none" : "block";
   }
 }
 
