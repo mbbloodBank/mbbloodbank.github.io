@@ -195,124 +195,6 @@ select:disabled{background:var(--border);color:#aaa}
 .step h3{font-size:18px;margin:12px 0 5px}
 .step p{font-size:13px;color:var(--muted);margin:0}
 
-/* PARTNERS & POPUP STYLES */
-.partners-title-wrap {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-.partners-title-wrap h2 {
-  font-size: clamp(26px, 4vw, 38px);
-  color: var(--red);
-  margin: 0;
-  font-weight: 800;
-}
-.partners-title-wrap p {
-  margin: 0;
-  font-size: 15px;
-  color: var(--muted);
-  font-weight: 600;
-}
-.partners-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 15px;
-}
-.partner-card {
-  background: var(--cream);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 14px 18px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-}
-.partner-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--red);
-  box-shadow: 0 10px 20px #b5103518;
-}
-.partner-img-thumb {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--red);
-  flex-shrink: 0;
-}
-.partner-name {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1.4;
-}
-
-/* Modal / Popup */
-.partner-modal {
-  display: none;
-  position: fixed;
-  z-index: 999;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(5px);
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-.partner-modal.show {
-  display: flex;
-}
-.partner-modal-content {
-  background: var(--cream);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  max-width: 500px;
-  width: 100%;
-  padding: 25px;
-  position: relative;
-  text-align: center;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-  animation: popupAnim 0.3s ease-out forwards;
-}
-@keyframes popupAnim {
-  from { transform: scale(0.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-.partner-modal-close {
-  position: absolute;
-  top: 12px;
-  right: 15px;
-  background: var(--pink);
-  color: var(--red);
-  border: none;
-  font-size: 20px;
-  font-weight: bold;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-}
-.partner-modal-img {
-  width: 100%;
-  max-height: 280px;
-  object-fit: contain;
-  border-radius: 12px;
-  margin-bottom: 15px;
-  border: 1px solid var(--border);
-}
-.partner-modal-title {
-  font-size: 20px;
-  color: var(--red);
-  margin-bottom: 8px;
-  font-weight: 800;
-}
-
 /* BLOOD COMPATIBILITY */
 .compat{
   background:var(--deep);color:#fff;border-radius:28px;padding:30px;
@@ -363,6 +245,68 @@ select:disabled{background:var(--border);color:#aaa}
   display:flex;justify-content:space-between;align-items:center;gap:18px
 }
 .cta h2{margin:0 0 5px}
+
+/* PARTNERS / AFFILIATES SECTION STYLES */
+.partners-section {
+  padding: 40px 0 20px;
+}
+.partners-head {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.partners-title {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 800;
+  color: var(--red);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.partners-sub {
+  font-size: clamp(15px, 2vw, 18px);
+  color: var(--ink);
+  font-weight: 600;
+}
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.partner-card {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.partner-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--red);
+  box-shadow: 0 8px 25px rgba(181, 16, 53, 0.12);
+}
+.partner-banner {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  display: block;
+  background: var(--pink);
+  border-bottom: 1px solid var(--border);
+}
+.partner-name {
+  padding: 14px 12px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60px;
+}
 
 /* FORMS & REGISTRATION BANNER */
 .notice{
@@ -641,6 +585,7 @@ footer a:hover{color:#fff}
 @media(max-width:850px){
   .hero-grid{gap:15px}.photo{height:250px}
   .requests{grid-template-columns:repeat(2,1fr)}
+  .partners-grid{grid-template-columns:repeat(2,1fr);gap:14px}
   .work-grid{grid-template-columns:repeat(2,1fr)}
   .journey-layout{grid-template-columns:minmax(0,1fr) minmax(250px,.85fr);gap:16px}
   .volunteer-3d-banner{min-height:285px;padding:22px 16px}
@@ -669,6 +614,8 @@ footer a:hover{color:#fff}
   .group-card{padding:12px 9px;gap:9px}
   .drop{width:36px;height:42px;font-size:12px}
   .requests,.steps{grid-template-columns:1fr}
+  .partners-grid{grid-template-columns:1fr;gap:12px}
+  .partner-banner{height:150px}
   .compat{grid-template-columns:1fr;padding:22px}
   .compat h2{font-size:25px}
   .split{grid-template-columns:1fr;gap:18px}
@@ -872,85 +819,82 @@ footer a:hover{color:#fff}
  </div>
 </section>
 
-<!-- CTA SECTION -->
 <section class="wrap">
  <div class="cta"><div><h2 data-i18n="ctaTitle">আজই রক্তদাতা হিসেবে যুক্ত হন</h2><p class="muted" data-i18n="ctaDesc">আপনার একটি সিদ্ধান্ত কারও জীবনে আশার আলো হতে পারে।</p></div><a class="primary" href="#donorRegPage" data-page="donorReg" data-i18n="ctaButton">নিবন্ধন করুন →</a></div>
 </section>
 
-<!-- PARTNERSHIPS SECTION (যারা আমাদের সাথে যুক্ত আছে) -->
-<section class="content" id="partners">
+<!-- যারা আমাদের সাথে যুক্ত আছে (অর্গানাইজেশনাল পার্টনার সেকশন) -->
+<section class="partners-section">
  <div class="wrap">
-  <div class="partners-title-wrap">
-   <h2>যারা আমাদের সাথে যুক্ত আছে</h2>
-   <p>দেশের বড় বড় ব্লাড সংস্থা আমাদের সাথে যুক্ত</p>
+  <div class="partners-head">
+   <h2 class="partners-title">যারা আমাদের সাথে যুক্ত আছে</h2>
+   <p class="partners-sub">দেশের বড় বড় ব্লাড সংস্থা আমাদের সাথে যুক্ত</p>
   </div>
-  
   <div class="partners-grid">
-   <div class="partner-card" onclick="openPartnerModal('রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন')">
-    <img src="partners.jpeg" alt="Partner Logo" class="partner-img-thumb" onerror="this.src='mb-blood-bank-logo.png'">
-    <span class="partner-name">রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন</span>
+   <div class="partner-card">
+    <img src="রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন.jpeg" alt="রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
+    <div class="partner-name">রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন</div>
    </div>
-   <div class="partner-card" onclick="openPartnerModal('বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন')">
-    <img src="partners.jpeg" alt="Partner Logo" class="partner-img-thumb" onerror="this.src='mb-blood-bank-logo.png'">
-    <span class="partner-name">বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন</span>
+   <div class="partner-card">
+    <img src="বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন.jpeg" alt="বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
+    <div class="partner-name">বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন</div>
    </div>
-   <div class="partner-card" onclick="openPartnerModal('হিউম্যান অপ বাংলাদেশ')">
-    <img src="partners.jpeg" alt="Partner Logo" class="partner-img-thumb" onerror="this.src='mb-blood-bank-logo.png'">
-    <span class="partner-name">হিউম্যান অপ বাংলাদেশ</span>
+   <div class="partner-card">
+    <img src="হিউম্যান অপ বাংলাদেশ.jpeg" alt="হিউম্যান অপ বাংলাদেশ" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
+    <div class="partner-name">হিউম্যান অপ বাংলাদেশ</div>
    </div>
-   <div class="partner-card" onclick="openPartnerModal('ইউনাইটেড ব্লাড ডোনেশন')">
-    <img src="partners.jpeg" alt="Partner Logo" class="partner-img-thumb" onerror="this.src='mb-blood-bank-logo.png'">
-    <span class="partner-name">ইউনাইটেড ব্লাড ডোনেশন</span>
+   <div class="partner-card">
+    <img src="ইউনাইটেড ব্লাড ডোনেশন.jpeg" alt="ইউনাইটেড ব্লাড ডোনেশন" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
+    <div class="partner-name">ইউনাইটেড ব্লাড ডোনেশন</div>
    </div>
-   <div class="partner-card" onclick="openPartnerModal('Mymensingh Blood Donation')">
-    <img src="partners.jpeg" alt="Partner Logo" class="partner-img-thumb" onerror="this.src='mb-blood-bank-logo.png'">
-    <span class="partner-name">Mymensingh Blood Donation</span>
+   <div class="partner-card">
+    <img src="Mymensingh Blood Donation.jpeg" alt="Mymensingh Blood Donation" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
+    <div class="partner-name">Mymensingh Blood Donation</div>
    </div>
-   <div class="partner-card" onclick="openPartnerModal('রক্তের সন্ধানে আমরা')">
-    <img src="partners.jpeg" alt="Partner Logo" class="partner-img-thumb" onerror="this.src='mb-blood-bank-logo.png'">
-    <span class="partner-name">রক্তের সন্ধানে আমরা</span>
+   <div class="partner-card">
+    <img src="রক্তের সন্ধানে আমরা.jpeg" alt="রক্তের সন্ধানে আমরা" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
+    <div class="partner-name">রক্তের সন্ধানে আমরা</div>
    </div>
-   <div class="partner-card" onclick="openPartnerModal('Blood Donation Cumilla')">
-    <img src="partners.jpeg" alt="Partner Logo" class="partner-img-thumb" onerror="this.src='mb-blood-bank-logo.png'">
-    <span class="partner-name">Blood Donation Cumilla</span>
+   <div class="partner-card">
+    <img src="Blood Donation Cumilla.jpeg" alt="Blood Donation Cumilla" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
+    <div class="partner-name">Blood Donation Cumilla</div>
    </div>
-   <div class="partner-card" onclick="openPartnerModal('রক্ত সেবা বাংলাদেশ')">
-    <img src="partners.jpeg" alt="Partner Logo" class="partner-img-thumb" onerror="this.src='mb-blood-bank-logo.png'">
-    <span class="partner-name">রক্ত সেবা বাংলাদেশ</span>
+   <div class="partner-card">
+    <img src="রক্ত সেবা বাংলাদেশ.jpeg" alt="রক্ত সেবা বাংলাদেশ" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
+    <div class="partner-name">রক্ত সেবা বাংলাদেশ</div>
    </div>
-   <div class="partner-card" onclick="openPartnerModal('রংপুর রক্ত দান যাব সামাজিক সংগঠন')">
-    <img src="partners.jpeg" alt="Partner Logo" class="partner-img-thumb" onerror="this.src='mb-blood-bank-logo.png'">
-    <span class="partner-name">রংপুর রক্ত দান যাব সামাজিক সংগঠন</span>
+   <div class="partner-card">
+    <img src="রংপুর রক্ত দান যাব সামাজিক সংগঠন.jpeg" alt="রংপুর রক্ত দান যাব সামাজিক সংগঠন" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
+    <div class="partner-name">রংপুর রক্ত দান যাব সামাজিক সংগঠন</div>
    </div>
-   <div class="partner-card" onclick="openPartnerModal('FREE Blood Donation Mymensingh')">
-    <img src="partners.jpeg" alt="Partner Logo" class="partner-img-thumb" onerror="this.src='mb-blood-bank-logo.png'">
-    <span class="partner-name">FREE Blood Donation Mymensingh</span>
+   <div class="partner-card">
+    <img src="FREE Blood Donation Mymensingh.jpeg" alt="FREE Blood Donation Mymensingh" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
+    <div class="partner-name">FREE Blood Donation Mymensingh</div>
    </div>
-   <div class="partner-card" onclick="openPartnerModal('বন্ধু মহল ব্লাড ডোনার সোসাইটি')">
-    <img src="partners.jpeg" alt="Partner Logo" class="partner-img-thumb" onerror="this.src='mb-blood-bank-logo.png'">
-    <span class="partner-name">বন্ধু মহল ব্লাড ডোনার সোসাইটি</span>
+   <div class="partner-card">
+    <img src="বন্ধু মহল ব্লাড ডোনার সোসাইটি.jpeg" alt="বন্ধু মহল ব্লাড ডোনার সোসাইটি" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
+    <div class="partner-name">বন্ধু মহল ব্লাড ডোনার সোসাইটি</div>
    </div>
-   <div class="partner-card" onclick="openPartnerModal('আসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন')">
-    <img src="partners.jpeg" alt="Partner Logo" class="partner-img-thumb" onerror="this.src='mb-blood-bank-logo.png'">
-    <span class="partner-name">আসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন</span>
+   <div class="partner-card">
+    <img src="আসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন.jpeg" alt="আসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
+    <div class="partner-name">আসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন</div>
    </div>
-   <div class="partner-card" onclick="openPartnerModal('রক্তদানে আমরা ময়মনসিংহ')">
-    <img src="partners.jpeg" alt="Partner Logo" class="partner-img-thumb" onerror="this.src='mb-blood-bank-logo.png'">
-    <span class="partner-name">রক্তদানে আমরা ময়মনসিংহ</span>
+   <div class="partner-card">
+    <img src="রক্তদানে আমরা ময়মনসিংহ.jpeg" alt="রক্তদানে আমরা ময়মনসিংহ" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
+    <div class="partner-name">রক্তদানে আমরা ময়মনসিংহ</div>
    </div>
-   <div class="partner-card" onclick="openPartnerModal('Bangladesh Blood Donors Club')">
-    <img src="partners.jpeg" alt="Partner Logo" class="partner-img-thumb" onerror="this.src='mb-blood-bank-logo.png'">
-    <span class="partner-name">Bangladesh Blood Donors Club</span>
+   <div class="partner-card">
+    <img src="Bangladesh Blood Donors Club.jpeg" alt="Bangladesh Blood Donors Club" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
+    <div class="partner-name">Bangladesh Blood Donors Club</div>
    </div>
-   <div class="partner-card" onclick="openPartnerModal('বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ')">
-    <img src="partners.jpeg" alt="Partner Logo" class="partner-img-thumb" onerror="this.src='mb-blood-bank-logo.png'">
-    <span class="partner-name">বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ</span>
+   <div class="partner-card">
+    <img src="বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ.jpeg" alt="বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ" class="partner-banner" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
+    <div class="partner-name">বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ</div>
    </div>
   </div>
  </div>
 </section>
 
-<!-- EMERGENCY REQUESTS SECTION -->
 <section class="content" id="requests">
  <div class="wrap">
   <div class="section-head">
@@ -989,16 +933,6 @@ footer a:hover{color:#fff}
  </div>
 </section>
 </main>
-
-<!-- PARTNER POPUP MODAL -->
-<div class="partner-modal" id="partnerModal" onclick="closePartnerModal(event)">
-  <div class="partner-modal-content" onclick="event.stopPropagation()">
-    <button class="partner-modal-close" onclick="closePartnerModalDirect()">✕</button>
-    <img src="partners.jpeg" alt="Partners image" class="partner-modal-img" onerror="this.src='mb-blood-bank-logo.png'">
-    <div class="partner-modal-title" id="partnerModalTitle">সংস্থার নাম</div>
-    <p style="color:var(--muted);font-size:13px;margin:0;">MB Blood Bank-এর সাথে সামাজিক ও মানবিক কর্মকাণ্ডে অংশীদারিত্ব নিয়ে যুক্ত আছে।</p>
-  </div>
-</div>
 
 <!-- DONOR LOGIN PAGE -->
 <main id="donorLoginPage" class="hidden">
@@ -1388,30 +1322,6 @@ function toggleFactTip(tipId) {
   const tipBox = $(tipId);
   if (tipBox) {
     tipBox.style.display = tipBox.style.display === "block" ? "none" : "block";
-  }
-}
-
-/* পার্টনারশিপ পপ-আপ মডাল ফাংশন */
-function openPartnerModal(partnerName) {
-  const modal = $("partnerModal");
-  const title = $("partnerModalTitle");
-  if(modal && title) {
-    title.textContent = partnerName;
-    modal.classList.add("show");
-  }
-}
-
-function closePartnerModal(event) {
-  const modal = $("partnerModal");
-  if(modal) {
-    modal.classList.remove("show");
-  }
-}
-
-function closePartnerModalDirect() {
-  const modal = $("partnerModal");
-  if(modal) {
-    modal.classList.remove("show");
   }
 }
 
