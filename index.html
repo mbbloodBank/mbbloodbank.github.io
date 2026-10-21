@@ -215,8 +215,26 @@ select:disabled{background:var(--border);color:#aaa}
 /* ELIGIBILITY */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:35px;align-items:start}
 .facts{display:grid;gap:9px}
-.fact{padding:12px 15px;display:flex;align-items:center;gap:12px;font-size:13px}
+.fact{padding:12px 15px;display:flex;align-items:center;gap:12px;font-size:13px;cursor:pointer;transition:border-color .2s, transform .2s}
+.fact:hover{border-color:var(--red);transform:translateX(3px)}
 .fact b{color:var(--red)}
+
+/* CUSTOM MODAL FOR TIPS */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;
+  display:grid;place-items:center;padding:15px;opacity:0;pointer-events:none;transition:opacity .3s
+}
+.modal-overlay.active{opacity:1;pointer-events:auto}
+.modal-content{
+  background:var(--cream);border:1px solid var(--border);border-radius:20px;
+  max-width:500px;width:100%;padding:25px;box-shadow:0 20px 40px rgba(0,0,0,0.2);
+  transform:translateY(20px);transition:transform .3s
+}
+.modal-overlay.active .modal-content{transform:translateY(0)}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+.modal-header h3{margin:0;color:var(--red);font-size:20px}
+.modal-close{background:none;border:none;font-size:22px;color:var(--muted);cursor:pointer}
+.modal-body{font-size:14px;color:var(--muted);line-height:1.8}
 
 /* CTA */
 .cta{
@@ -726,13 +744,26 @@ footer a:hover{color:#fff}
  <div class="wrap split">
   <div><div class="eyebrow" data-i18n="eligEyebrow">রক্তদানের যোগ্যতা</div><h2 data-i18n="eligTitle">কারা রক্ত দিতে পারবেন?</h2><p class="muted" data-i18n="eligDesc">রক্তদানের আগে স্বাস্থ্যকর্মীর পরামর্শ নিন। চূড়ান্ত যোগ্যতা রক্তদান কেন্দ্র নির্ধারণ করবে।</p></div>
   <div class="facts">
-   <div class="fact"><b>♥</b> <span data-i18n="fact1">বয়স ও ওজন রক্তদান কেন্দ্রের নির্দেশনা অনুযায়ী হতে হবে</span></div>
-   <div class="fact"><b>♥</b> <span data-i18n="fact2">শেষ রক্তদানের পর যথেষ্ট সময় পার হতে হবে</span></div>
-   <div class="fact"><b>♥</b> <span data-i18n="fact3">রক্তদানের দিন শারীরিকভাবে সুস্থ থাকতে হবে</span></div>
-   <div class="fact"><b>♥</b> <span data-i18n="fact4">স্বাস্থ্যকর্মীর স্ক্রিনিং সম্পন্ন করতে হবে</span></div>
+   <div class="fact" onclick="openTipModal('বয়স ও ওজন নির্দেশনা', 'সাধারণত রক্তদানের জন্য বয়স ১৮ থেকে ৬০ বছরের মধ্যে এবং ওজন কমপক্ষে ৫০ কেজি হতে হবে। রক্তদান কেন্দ্রের নির্দেশনা অনুযায়ী এটি কিছুটা ভিন্ন হতে পারে।')"><b>♥</b> <span data-i18n="fact1">বয়স ও ওজন রক্তদান কেন্দ্রের নির্দেশনা অনুযায়ী হতে হবে</span></div>
+   <div class="fact" onclick="openTipModal('শেষ রক্তদানের সময়', 'সাধারণত পুরুষদের ক্ষেত্রে প্রতি ৩ মাস এবং নারীদের ক্ষেত্রে প্রতি ৪ মাস পর পর রক্তদান করা নিরাপদ। আপনার শরীরে পর্যাপ্ত হিমোগ্লোবিন থাকা আবশ্যক।')"><b>♥</b> <span data-i18n="fact2">শেষ রক্তদানের পর যথেষ্ট সময় পার হতে হবে</span></div>
+   <div class="fact" onclick="openTipModal('শারীরিক সুস্থতা', 'রক্তদানের দিন আপনার জ্বর, সর্দি, কাশি বা অন্য কোনো সংক্রামক রোগ থাকা যাবে না। গত ২৪ ঘণ্টার মধ্যে কোনো ভারী ওষুধ বা অ্যান্টিবায়োটিক সেবন করে থাকলে রক্তদান থেকে বিরত থাকুন।')"><b>♥</b> <span data-i18n="fact3">রক্তদানের দিন শারীরিকভাবে সুস্থ থাকতে হবে</span></div>
+   <div class="fact" onclick="openTipModal('স্বাস্থ্যকর্মী স্ক্রিনিং', 'রক্তদানের পূর্বে ব্লাড ব্যাংকের বা মেডিকেল টিমের মাধ্যমে আপনার রক্তচাপ, পাল্স, তাপমাত্রা এবং হিমোগ্লোবিন লেভেল পরীক্ষা (স্ক্রিনিং) করানো বাধ্যতামূলক।')"><b>♥</b> <span data-i18n="fact4">স্বাস্থ্যকর্মীর স্ক্রিনিং সম্পন্ন করতে হবে</span></div>
   </div>
  </div>
 </section>
+
+<!-- TIP MODAL -->
+<div class="modal-overlay" id="tipModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="modalTitle">পরামর্শ ও টিপস</h3>
+      <button class="modal-close" onclick="closeTipModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- Content goes here -->
+    </div>
+  </div>
+</div>
 
 <section class="wrap">
  <div class="cta"><div><h2 data-i18n="ctaTitle">আজই রক্তদাতা হিসেবে যুক্ত হন</h2><p class="muted" data-i18n="ctaDesc">আপনার একটি সিদ্ধান্ত কারও জীবনে আশার আলো হতে পারে।</p></div><a class="primary" href="#donorRegPage" data-page="donorReg" data-i18n="ctaButton">নিবন্ধন করুন →</a></div>
@@ -937,7 +968,7 @@ footer a:hover{color:#fff}
   <section>
    <div class="eyebrow" data-i18n="missionEyebrow">আমাদের উদ্দেশ্য</div>
    <h2 class="about-heading" data-i18n="missionTitle">আমাদের মিশন ও ভিশন</h2>
-   <p class="about-copy" data-i18n="missionDesc">দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে তোলাই আমাদের ভিশন।</p>
+   <p class="about-copy" data-i18n="missionDesc">দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে توলাই আমাদের ভিশন।</p>
    <div class="about-columns">
     <article class="about-panel"><h3 data-i18n="panel1Title">🎯 আমাদের মিশন</h3><p data-i18n="panel1Desc">দ্রুত, নিরাপদ আর ঝামেলাহীন ডোনার খুঁজে পেতে সহায়তা করে মানুষের মুখে হাসি ফোটানো।</p></article>
     <article class="about-panel"><h3 data-i18n="panel2Title">🌟 আমাদের ভিশন</h3><p data-i18n="panel2Desc">প্রযুক্তিনির্ভর সমাধানে বাংলাদেশের রক্তদানের ব্যবস্থাকে নতুনভাবে এগিয়ে নেওয়া।</p></article>
@@ -1147,6 +1178,20 @@ function togglePassword(inputId, btn) {
     btn.textContent = "পাসওয়ার্ড দেখুন";
   }
 }
+
+/* যোগ্যতা সম্পর্কিত টিপস মডাল ওপেন/ক্লোজ ফাংশন */
+function openTipModal(title, text) {
+  $("modalTitle").textContent = title;
+  $("modalBody").textContent = text;
+  $("tipModal").classList.add("active");
+}
+function closeTipModal() {
+  $("tipModal").classList.remove("active");
+}
+// ব্যাকগ্রাউন্ডে ক্লিক করলে মডাল বন্ধ হবে
+$("tipModal").addEventListener("click", (e) => {
+  if (e.target === $("tipModal")) closeTipModal();
+});
 
 /* মোবাইল মেনু */
 const menuBtn = $("menuBtn");
