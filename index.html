@@ -240,81 +240,11 @@ select:disabled{background:var(--border);color:#aaa}
 
 /* CTA */
 .cta{
-  margin:15px 0 30px;padding:30px 35px;border-radius:25px;
+  margin:15px 0 45px;padding:30px 35px;border-radius:25px;
   background:var(--pink);border:1px solid #f2d7dc;
   display:flex;justify-content:space-between;align-items:center;gap:18px
 }
 .cta h2{margin:0 0 5px}
-
-/* ASSOCIATED ORGANIZATIONS SECTION STYLES */
-.associated-orgs-section {
-  margin: 30px 0;
-  padding: 30px;
-  background: var(--cream);
-  border: 1px solid var(--border);
-  border-radius: 25px;
-}
-.associated-orgs-title {
-  font-size: clamp(22px, 3vw, 28px);
-  font-weight: 800;
-  color: var(--red);
-  margin-bottom: 8px;
-  text-align: center;
-}
-.associated-orgs-subtitle {
-  font-size: 14px;
-  color: var(--muted);
-  text-align: center;
-  margin-bottom: 25px;
-}
-.orgs-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-}
-.org-card {
-  background: var(--cream);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 14px;
-  text-align: center;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-  transition: transform .2s ease, border-color .2s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.org-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--red);
-}
-.org-card img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  margin-bottom: 12px;
-  background: #fbe8eb;
-}
-.org-card h3 {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--ink);
-  margin: 0;
-  line-height: 1.5;
-}
-
-@media(max-width: 900px) {
-  .orgs-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-@media(max-width: 600px) {
-  .orgs-grid {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* FORMS & REGISTRATION BANNER */
 .notice{
@@ -829,96 +759,17 @@ footer a:hover{color:#fff}
     <div id="tip3" class="fact-tip-box">পরামর্শ: জ্বর, সর্দি, কাশি বা বড় কোনো ইনফেকশন থাকলে রক্তদান থেকে বিরত থাকুন এবং পর্যাপ্ত পানি ও পুষ্টিকর খাবার গ্রহণ করুন।</div>
    </div>
    <div class="fact-container">
-    <div class="fact" onclick="toggleFactTip('tyesh')"><b>♥</b> <span data-i18n="fact4">স্বাস্থ্যকর্মীর স্ক্রিনিং সম্পন্ন করতে হবে</span></div>
+    <div class="fact" onclick="toggleFactTip('tip4')"><b>♥</b> <span data-i18n="fact4">স্বাস্থ্যকর্মীর স্ক্রিনিং সম্পন্ন করতে হবে</span></div>
     <div id="tip4" class="fact-tip-box">পরামর্শ: রক্তদানের পূর্বে প্রেশার, হিমোগ্লোবিন ও অন্যান্য প্রাথমিক স্বাস্থ্য পরীক্ষা স্বাস্থ্যকর্মী কর্তৃক সম্পন্ন করা বাধ্যতামূলক।</div>
    </div>
   </div>
  </div>
 </section>
 
-<!-- আজই রক্তদাতা হিসেবে যুক্ত হন (CTA Section) -->
 <section class="wrap">
- <div class="cta">
-  <div>
-   <h2 data-i18n="ctaTitle">আজই রক্তদাতা হিসেবে যুক্ত হন</h2>
-   <p class="muted" data-i18n="ctaDesc">আপনার একটি সিদ্ধান্ত কারও জীবনে আশার আলো হতে পারে।</p>
-  </div>
-  <a class="primary" href="#donorRegPage" data-page="donorReg" data-i18n="ctaButton">নিবন্ধন করুন →</a>
- </div>
+ <div class="cta"><div><h2 data-i18n="ctaTitle">আজই রক্তদাতা হিসেবে যুক্ত হন</h2><p class="muted" data-i18n="ctaDesc">আপনার একটি সিদ্ধান্ত কারও জীবনে আশার আলো হতে পারে।</p></div><a class="primary" href="#donorRegPage" data-page="donorReg" data-i18n="ctaButton">নিবন্ধন করুন →</a></div>
 </section>
 
-<!-- যারা আমাদের সাথে যুক্ত আছে (নতুন সেকশন) -->
-<section class="wrap">
- <div class="associated-orgs-section">
-  <h2 class="associated-orgs-title">যারা আমাদের সাথে যুক্ত আছে</h2>
-  <p class="associated-orgs-subtitle">দেশের বড় বড় ব্লাড সংস্থা আমাদের সাথে যুক্ত</p>
-  
-  <div class="orgs-grid">
-   <div class="org-card">
-    <img src="rangpur-blood-donors.jpeg" alt="রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন" onerror="this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <h3>রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন</h3>
-   </div>
-   <div class="org-card">
-    <img src="begum-rokeya-blood.jpeg" alt="বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন" onerror="this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <h3>বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন</h3>
-   </div>
-   <div class="org-card">
-    <img src="human-op-bd.jpeg" alt="হিউম্যান অপ বাংলাদেশ" onerror="this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <h3>হিউম্যান অপ বাংলাদেশ</h3>
-   </div>
-   <div class="org-card">
-    <img src="united-blood-donation.jpeg" alt="ইউনাইটেড ব্লাড ডোনেশন" onerror="this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <h3>ইউনাইটেড ব্লাড ডোনেশন</h3>
-   </div>
-   <div class="org-card">
-    <img src="mymensingh-blood-donation.jpeg" alt="Mymensingh Blood Donation" onerror="this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <h3>Mymensingh Blood Donation</h3>
-   </div>
-   <div class="org-card">
-    <img src="rokter-sondhane-amra.jpeg" alt="রক্তের সন্ধানে আমরা" onerror="this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <h3>রক্তের সন্ধানে আমরা</h3>
-   </div>
-   <div class="org-card">
-    <img src="blood-donation-cumilla.jpeg" alt="Blood Donation Cumilla" onerror="this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <h3>Blood Donation Cumilla</h3>
-   </div>
-   <div class="org-card">
-    <img src="rokto-sheba-bangladesh.jpeg" alt="রক্ত সেবা বাংলাদেশ" onerror="this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <h3>রক্ত সেবা বাংলাদেশ</h3>
-   </div>
-   <div class="org-card">
-    <img src="rangpur-rokto-dan.jpeg" alt="রংপুর রক্ত দান যাব সামাজিক সংগঠন" onerror="this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <h3>রংপুর রক্ত দান যাব সামাজিক সংগঠন</h3>
-   </div>
-   <div class="org-card">
-    <img src="free-blood-donation-mymensingh.jpeg" alt="FREE Blood Donation Mymensingh" onerror="this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <h3>FREE Blood Donation Mymensingh</h3>
-   </div>
-   <div class="org-card">
-    <img src="bondhu-mohol-blood.jpeg" alt="বন্ধু মহল ব্লাড ডোনার সোসাইটি" onerror="this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <h3>বন্ধু মহল ব্লাড ডোনার সোসাইটি</h3>
-   </div>
-   <div class="org-card">
-    <img src="ashahoi-manusher-jonno.jpeg" alt="আসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন" onerror="this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <h3>আসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন</h3>
-   </div>
-   <div class="org-card">
-    <img src="roktodane-amra-mymensingh.jpeg" alt="রক্তদানে আমরা ময়মনসিংহ" onerror="this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <h3>রক্তদানে আমরা ময়মনসিংহ</h3>
-   </div>
-   <div class="org-card">
-    <img src="bangladesh-blood-donors-club.jpeg" alt="Bangladesh Blood Donors Club" onerror="this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <h3>Bangladesh Blood Donors Club</h3>
-   </div>
-   <div class="org-card">
-    <img src="bangladesh-qawmi-blood.jpeg" alt="বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ" onerror="this.src='https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=600&q=80'">
-    <h3>বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ</h3>
-   </div>
-  </div>
- </div>
-</section>
-
-<!-- জরুরি রক্তের অনুরোধ অপশন -->
 <section class="content">
  <div class="wrap">
   <div class="form-card" id="emergency">
@@ -1463,7 +1314,7 @@ const translations = {
     workTitle: "রক্তদাতা ও রোগীর পাশে",
     workDesc: "রক্তদাতা নিবন্ধন থেকে জরুরি রক্তের অনুরোধ—রক্তের প্রয়োজনের সময়ে প্রয়োজনীয় যোগাযোগ সহজ করাই আমাদের উদ্যোগ।",
     wCard1Title: "লাইভ ডোনার",
-    wCard1Desc: "অনলাইন ডোনার নিবন্ধন, জরুরি অনুরোধ এবং দেশের বিভিন্ন এলাকার রক্তদatar তথ্য খুঁজে পাওয়ার ব্যবস্থা।",
+    wCard1Desc: "অনলাইন ডোনার নিবন্ধন, জরুরি অনুরোধ এবং দেশের বিভিন্ন এলাকার রক্তদাতার তথ্য খুঁজে পাওয়ার ব্যবস্থা।",
     wCard2Title: "রক্তদানে সহায়তা",
     wCard2Desc: "রক্তের প্রয়োজন রয়েছে এমন ব্যক্তি ও স্বেচ্ছাসেবী রক্তদাতার মধ্যে যোগাযোগে সহায়তা।",
     wCard3Title: "সঠিক ডোনার যাচাই",
