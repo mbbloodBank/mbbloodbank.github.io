@@ -1072,7 +1072,7 @@ footer a:hover{color:#fff}
   <section>
    <div class="eyebrow" data-i18n="missionEyebrow">আমাদের উদ্দেশ্য</div>
    <h2 class="about-heading" data-i18n="missionTitle">আমাদের মিশন ও ভিশন</h2>
-   <p class="about-copy" data-i18n="missionDesc">দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে তোলাই আমাদের ভিশন।</p>
+   <p class="about-copy" data-i18n="missionDesc">দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে توলাই আমাদের ভিশন।</p>
    <div class="about-columns">
     <article class="about-panel"><h3 data-i18n="panel1Title">🎯 আমাদের মিশন</h3><p data-i18n="panel1Desc">দ্রুত, নিরাপদ আর ঝামেলাহীন ডোনার খুঁজে পেতে সহায়তা করে মানুষের মুখে হাসি ফোটানো।</p></article>
     <article class="about-panel"><h3 data-i18n="panel2Title">🌟 আমাদের ভিশন</h3><p data-i18n="panel2Desc">প্রযুক্তিনির্ভর সমাধানে বাংলাদেশের রক্তদানের ব্যবস্থাকে নতুনভাবে এগিয়ে নেওয়া।</p></article>
@@ -1267,6 +1267,28 @@ footer a:hover{color:#fff}
  </div>
 </footer>
 
+<!-- Firebase SDKs ও আপনার স্ক্রিপ্ট -->
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBRZW1CtF_YMxj50-UPbtMoL71E9XEsbj4",
+    authDomain: "mb-blood-bank-2a77a.firebaseapp.com",
+    projectId: "mb-blood-bank-2a77a",
+    storageBucket: "mb-blood-bank-2a77a.firebasestorage.app",
+    messagingSenderId: "407595095479",
+    appId: "1:407595095479:web:4cd9ec9807511084b68432",
+    measurementId: "G-9YYPYS87G0"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+
 <script>
 "use strict";
 const $ = id => document.getElementById(id);
@@ -1408,7 +1430,7 @@ const translations = {
     astat4Val: "৬৪", astat4Text: "জেলার মানুষের জন্য",
     missionEyebrow: "আমাদের উদ্দেশ্য",
     missionTitle: "আমাদের মিশন ও ভিশন",
-    missionDesc: "দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে তোলাই আমাদের ভিশন।",
+    missionDesc: "দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে توলাই আমাদের ভিশন।",
     panel1Title: "🎯 আমাদের মিশন",
     panel1Desc: "দ্রুত, নিরাপদ আর ঝামেলাহীন ডোনার খুঁজে পেতে সহায়তা করে মানুষের মুখে হাসি ফোটানো।",
     panel2Title: "🌟 আমাদের ভিশন",
@@ -1417,7 +1439,7 @@ const translations = {
     workTitle: "রক্তদাতা ও রোগীর পাশে",
     workDesc: "রক্তদাতা নিবন্ধন থেকে জরুরি রক্তের অনুরোধ—রক্তের প্রয়োজনের সময়ে প্রয়োজনীয় যোগাযোগ সহজ করাই আমাদের উদ্যোগ।",
     wCard1Title: "লাইভ ডোনার",
-    wCard1Desc: "অনলাইন ডোনার নিবন্ধন, জরুরি অনুরোধ এবং দেশের বিভিন্ন এলাকার রক্তদatar তথ্য খুঁজে পাওয়ার ব্যবস্থা।",
+    wCard1Desc: "অনলাইন ডোনার নিবন্ধন, জরুরি অনুরোধ এবং দেশের বিভিন্ন এলাকার রক্তদাতার তথ্য খুঁজে পাওয়ার ব্যবস্থা।",
     wCard2Title: "রক্তদানে সহায়তা",
     wCard2Desc: "রক্তের প্রয়োজন রয়েছে এমন ব্যক্তি ও স্বেচ্ছাসেবী রক্তদাতার মধ্যে যোগাযোগে সহায়তা।",
     wCard3Title: "সঠিক ডোনার যাচাই",
