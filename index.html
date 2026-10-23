@@ -240,7 +240,7 @@ select:disabled{background:var(--border);color:#aaa}
 
 /* CTA */
 .cta{
-  margin:15px 0 45px;padding:30px 35px;border-radius:25px;
+  margin:15px 0 25px;padding:30px 35px;border-radius:25px;
   background:var(--pink);border:1px solid #f2d7dc;
   display:flex;justify-content:space-between;align-items:center;gap:18px
 }
@@ -248,62 +248,60 @@ select:disabled{background:var(--border);color:#aaa}
 
 /* PARTNERS ANIMATION SECTION */
 .partners-section {
-  margin: 30px 0 45px;
+  margin: 25px 0 35px;
+  padding: 25px 0;
   text-align: center;
   overflow: hidden;
 }
 .partners-title {
-  font-size: clamp(24px, 3.5vw, 32px);
+  font-size: clamp(22px, 3vw, 28px);
   font-weight: 800;
   color: var(--red);
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 .partners-subtitle {
-  font-size: clamp(14px, 2vw, 16px);
+  font-size: 14px;
   color: var(--muted);
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
-.marquee-container {
+.partners-slider {
+  display: flex;
   width: 100%;
   overflow: hidden;
-  white-space: nowrap;
   position: relative;
-  display: flex;
+  white-space: nowrap;
+  padding: 10px 0;
 }
-.marquee-track {
+.partners-track {
   display: flex;
-  gap: 25px;
-  width: max-content;
-  animation: scrollMarquee 35s linear infinite;
+  gap: 20px;
+  animation: scrollPartners 35s linear infinite;
+  /* টাচ বা হোভার করলে অ্যানিমেশন থামবে না */
+  animation-play-state: running !important;
 }
-/* Hover বা Touch করলেও এনিমেশন থামবে না */
-.marquee-track:hover, .marquee-track:active {
+.partners-slider:hover .partners-track {
   animation-play-state: running !important;
 }
 .partner-card {
+  flex-shrink: 0;
+  width: 140px;
+  height: 90px;
   background: var(--cream);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 12px 18px;
-  display: inline-flex;
+  border-radius: 12px;
+  display: flex;
   align-items: center;
-  gap: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-  flex-shrink: 0;
+  justify-content: center;
+  padding: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
 }
 .partner-card img {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--pink);
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
 }
-.partner-card span {
-  font-weight: 700;
-  font-size: 14px;
-  color: var(--ink);
-}
-@keyframes scrollMarquee {
+@keyframes scrollPartners {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
@@ -828,64 +826,53 @@ footer a:hover{color:#fff}
  </div>
 </section>
 
-<!-- আজই রক্তদাতা হিসেবে যুক্ত হন (লিংক অপশন) -->
 <section class="wrap">
- <div class="cta">
-  <div>
-   <h2 data-i18n="ctaTitle">আজই রক্তদাতা হিসেবে যুক্ত হন</h2>
-   <p class="muted" data-i18n="ctaDesc">আপনার একটি সিদ্ধান্ত কারও জীবনে আশার আলো হতে পারে।</p>
-  </div>
-  <a class="primary" href="#donorRegPage" data-page="donorReg" data-i18n="ctaButton">নিবন্ধন করুন →</a>
- </div>
+ <div class="cta"><div><h2 data-i18n="ctaTitle">আজই রক্তদাতা হিসেবে যুক্ত হন</h2><p class="muted" data-i18n="ctaDesc">আপনার একটি সিদ্ধান্ত কারও জীবনে আশার আলো হতে পারে।</p></div><a class="primary" href="#donorRegPage" data-page="donorReg" data-i18n="ctaButton">নিবন্ধন করুন →</a></div>
 </section>
 
-<!-- যারা আমাদের সাথে যুক্ত আছে (এনিমেশন সহ ব্লাড সংস্থাসমূহ) -->
-<section class="partners-section">
- <div class="wrap">
-  <h2 class="partners-title">যারা আমাদের সাথে যুক্ত আছে</h2>
-  <p class="partners-subtitle">দেশের বড় বড় ব্লাড সংস্থা আমাদের সাথে যুক্ত</p>
-  
-  <div class="marquee-container">
-   <div class="marquee-track">
-    <!-- প্রথম সেট সংস্থা -->
-    <div class="partner-card"><img src="রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন.jpg" alt="রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন</span></div>
-    <div class="partner-card"><img src="বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন.jpg" alt="বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন</span></div>
-    <div class="partner-card"><img src="হিউম্যান অপ বাংলাদেশ.jpg" alt="হিউম্যান অপ বাংলাদেশ" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>হিউম্যান অপ বাংলাদেশ</span></div>
-    <div class="partner-card"><img src="ইউনাইটেড ব্লাড ডোনেশন.jpg" alt="ইউনাইটেড ব্লাড ডোনেশন" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>ইউনাইটেড ব্লাড ডোনেশন</span></div>
-    <div class="partner-card"><img src="Mymensingh Blood Donation.jpg" alt="Mymensingh Blood Donation" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>Mymensingh Blood Donation</span></div>
-    <div class="partner-card"><img src="রক্তের সন্ধানে আমরা.jpg" alt="রক্তের সন্ধানে আমরা" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>রক্তের সন্ধানে আমরা</span></div>
-    <div class="partner-card"><img src="Blood Donation Cumilla.jpg" alt="Blood Donation Cumilla" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>Blood Donation Cumilla</span></div>
-    <div class="partner-card"><img src="রক্ত সেবা বাংলাদেশ.jpg" alt="রক্ত সেবা বাংলাদেশ" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>রক্ত সেবা বাংলাদেশ</span></div>
-    <div class="partner-card"><img src="রংপুর রক্ত দান যাব সামাজিক সংগঠন.jpg" alt="রংপুর রক্ত দান যাব সামাজিক সংগঠন" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>রংপুর রক্ত দান যাব সামাজিক সংগঠন</span></div>
-    <div class="partner-card"><img src="FREE Blood Donation Mymensingh.jpg" alt="FREE Blood Donation Mymensingh" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>FREE Blood Donation Mymensingh</span></div>
-    <div class="partner-card"><img src="বন্ধু মহল ব্লাড ডোনার সোসাইটি.jpg" alt="বন্ধু মহল ব্লাড ডোনার সোসাইটি" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>বন্ধু মহল ব্লাড ডোনার সোসাইটি</span></div>
-    <div class="partner-card"><img src="আসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন.jpg" alt="আসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>আসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন</span></div>
-    <div class="partner-card"><img src="রক্তদানে আমরা ময়মনসিংহ.jpg" alt="রক্তদানে আমরা ময়মনসিংহ" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>রক্তদানে আমরা ময়মনসিংহ</span></div>
-    <div class="partner-card"><img src="Bangladesh Blood Donors Club.jpg" alt="Bangladesh Blood Donors Club" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>Bangladesh Blood Donors Club</span></div>
-    <div class="partner-card"><img src="বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ.jpg" alt="বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ</span></div>
+<!-- সংযুক্ত ব্লাড সংস্থাসমূহের অ্যানিমেশন সেকশন -->
+<section class="wrap partners-section">
+ <h2 class="partners-title">যারা আমাদের সাথে যুক্ত আছে</h2>
+ <p class="partners-subtitle">দেশের বড় বড় ব্লাড সংস্থা আমাদের সাথে যুক্ত</p>
+ <div class="partners-slider">
+  <div class="partners-track">
+   <!-- প্রথম সেট -->
+   <div class="partner-card"><img src="রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন.jpg" alt="রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন"></div>
+   <div class="partner-card"><img src="বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন.jpg" alt="বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন"></div>
+   <div class="partner-card"><img src="হিউম্যান অপ বাংলাদেশ.jpg" alt="হিউম্যান অপ বাংলাদেশ"></div>
+   <div class="partner-card"><img src="ইউনাইটেড ব্লাড ডোনেশন.jpg" alt="ইউনাইটেড ব্লাড ডোনেশন"></div>
+   <div class="partner-card"><img src="Mymensingh Blood Donation.jpg" alt="Mymensingh Blood Donation"></div>
+   <div class="partner-card"><img src="রক্তের সন্ধানে আমরা.jpg" alt="রক্তের সন্ধানে আমরা"></div>
+   <div class="partner-card"><img src="Blood Donation Cumilla.jpg" alt="Blood Donation Cumilla"></div>
+   <div class="partner-card"><img src="রক্ত সেবা বাংলাদেশ.jpg" alt="রক্ত সেবা বাংলাদেশ"></div>
+   <div class="partner-card"><img src="রংপুর রক্ত দান যাব সামাজিক সংগঠন.jpg" alt="রংপুর রক্ত দান যাব সামাজিক সংগঠন"></div>
+   <div class="partner-card"><img src="FREE Blood Donation Mymensingh.jpg" alt="FREE Blood Donation Mymensingh"></div>
+   <div class="partner-card"><img src="বন্ধু মহল ব্লাড ডোনার সোসাইটি.jpg" alt="বন্ধু মহল ব্লাড ডোনার সোসাইটি"></div>
+   <div class="partner-card"><img src="আসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন.jpg" alt="আসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন"></div>
+   <div class="partner-card"><img src="রক্তদানে আমরা ময়মনসিংহ.jpg" alt="রক্তদানে আমরা ময়মনসিংহ"></div>
+   <div class="partner-card"><img src="Bangladesh Blood Donors Club.jpg" alt="Bangladesh Blood Donors Club"></div>
+   <div class="partner-card"><img src="বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ.jpg" alt="বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ"></div>
 
-    <!-- লুপ নিখুঁত রাখার জন্য ডুপ্লিকেট সেট -->
-    <div class="partner-card"><img src="রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন.jpg" alt="রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন</span></div>
-    <div class="partner-card"><img src="বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন.jpg" alt="বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন</span></div>
-    <div class="partner-card"><img src="হিউম্যান অপ বাংলাদেশ.jpg" alt="হিউম্যান অপ বাংলাদেশ" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>হিউম্যান অপ বাংলাদেশ</span></div>
-    <div class="partner-card"><img src="ইউনাইটেড ব্লাড ডোনেশন.jpg" alt="ইউনাইটেড ব্লাড ডোনেশন" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>ইউনাইটেড ব্লাড ডোনেশন</span></div>
-    <div class="partner-card"><img src="Mymensingh Blood Donation.jpg" alt="Mymensingh Blood Donation" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>Mymensingh Blood Donation</span></div>
-    <div class="partner-card"><img src="রক্তের সন্ধানে আমরা.jpg" alt="রক্তের সন্ধানে আমরা" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>রক্তের সন্ধানে আমরা</span></div>
-    <div class="partner-card"><img src="Blood Donation Cumilla.jpg" alt="Blood Donation Cumilla" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>Blood Donation Cumilla</span></div>
-    <div class="partner-card"><img src="রক্ত সেবা বাংলাদেশ.jpg" alt="রক্ত সেবা বাংলাদেশ" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>রক্ত সেবা বাংলাদেশ</span></div>
-    <div class="partner-card"><img src="রংপুর রক্ত দান যাব সামাজিক সংগঠন.jpg" alt="রংপুর রক্ত দান যাব সামাজিক সংগঠন" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>রংপুর রক্ত দান যাব সামাজিক সংগঠন</span></div>
-    <div class="partner-card"><img src="FREE Blood Donation Mymensingh.jpg" alt="FREE Blood Donation Mymensingh" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>FREE Blood Donation Mymensingh</span></div>
-    <div class="partner-card"><img src="বন্ধু মহল ব্লাড ডোনার সোসাইটি.jpg" alt="বন্ধু মহল ব্লাড ডোনার সোসাইটি" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>বন্ধু মহল ব্লাড ডোনার সোসাইটি</span></div>
-    <div class="partner-card"><img src="আসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন.jpg" alt="আসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>আসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন</span></div>
-    <div class="partner-card"><img src="রক্তদানে আমরা ময়মনসিংহ.jpg" alt="রক্তদানে আমরা ময়মনসিংহ" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>রক্তদানে আমরা ময়মনসিংহ</span></div>
-    <div class="partner-card"><img src="Bangladesh Blood Donors Club.jpg" alt="Bangladesh Blood Donors Club" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>Bangladesh Blood Donors Club</span></div>
-    <div class="partner-card"><img src="বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ.jpg" alt="বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ" onerror="this.src='https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=100&q=80'"><span>বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ</span></div>
-   </div>
+   <!-- নির্বিঘ্ন লুপ (Infinite Loop) এর জন্য ডুপ্লিকেট সেট -->
+   <div class="partner-card"><img src="রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন.jpg" alt="রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন"></div>
+   <div class="partner-card"><img src="বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন.jpg" alt="বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন"></div>
+   <div class="partner-card"><img src="হিউম্যান অপ বাংলাদেশ.jpg" alt="হিউম্যান অপ বাংলাদেশ"></div>
+   <div class="partner-card"><img src="ইউনাইটেড ব্লাড ডোনেশন.jpg" alt="ইউনাইটেড ব্লাড ডোনেশন"></div>
+   <div class="partner-card"><img src="Mymensingh Blood Donation.jpg" alt="Mymensingh Blood Donation"></div>
+   <div class="partner-card"><img src="রক্তের সন্ধানে আমরা.jpg" alt="রক্তের সন্ধানে আমরা"></div>
+   <div class="partner-card"><img src="Blood Donation Cumilla.jpg" alt="Blood Donation Cumilla"></div>
+   <div class="partner-card"><img src="রক্ত সেবা বাংলাদেশ.jpg" alt="রক্ত সেবা বাংলাদেশ"></div>
+   <div class="partner-card"><img src="রংপুর রক্ত দান যাব সামাজিক সংগঠন.jpg" alt="রংপুর রক্ত দান যাব সামাজিক সংগঠন"></div>
+   <div class="partner-card"><img src="FREE Blood Donation Mymensingh.jpg" alt="FREE Blood Donation Mymensingh"></div>
+   <div class="partner-card"><img src="বন্ধু মহল ব্লাড ডোনার সোসাইটি.jpg" alt="বন্ধু মহল ব্লাড ডোনার সোসাইটি"></div>
+   <div class="partner-card"><img src="আসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন.jpg" alt="আসহায় মানুষের জন্য ব্লাড ফাউন্ডেশন"></div>
+   <div class="partner-card"><img src="রক্তদানে আমরা ময়মনসিংহ.jpg" alt="রক্তদানে আমরা ময়মনসিংহ"></div>
+   <div class="partner-card"><img src="Bangladesh Blood Donors Club.jpg" alt="Bangladesh Blood Donors Club"></div>
+   <div class="partner-card"><img src="বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ.jpg" alt="বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ"></div>
   </div>
  </div>
 </section>
 
-<!-- জরুরি রক্তের অনুরোধ (ফর্ম অপশন) -->
 <section class="content">
  <div class="wrap">
   <div class="form-card" id="emergency">
@@ -1085,7 +1072,7 @@ footer a:hover{color:#fff}
   <section>
    <div class="eyebrow" data-i18n="missionEyebrow">আমাদের উদ্দেশ্য</div>
    <h2 class="about-heading" data-i18n="missionTitle">আমাদের মিশন ও ভিশন</h2>
-   <p class="about-copy" data-i18n="missionDesc">দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে توলাই আমাদের ভিশন।</p>
+   <p class="about-copy" data-i18n="missionDesc">দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে তোলাই আমাদের ভিশন।</p>
    <div class="about-columns">
     <article class="about-panel"><h3 data-i18n="panel1Title">🎯 আমাদের মিশন</h3><p data-i18n="panel1Desc">দ্রুত, নিরাপদ আর ঝামেলাহীন ডোনার খুঁজে পেতে সহায়তা করে মানুষের মুখে হাসি ফোটানো।</p></article>
     <article class="about-panel"><h3 data-i18n="panel2Title">🌟 আমাদের ভিশন</h3><p data-i18n="panel2Desc">প্রযুক্তিনির্ভর সমাধানে বাংলাদেশের রক্তদানের ব্যবস্থাকে নতুনভাবে এগিয়ে নেওয়া।</p></article>
@@ -1421,7 +1408,7 @@ const translations = {
     astat4Val: "৬৪", astat4Text: "জেলার মানুষের জন্য",
     missionEyebrow: "আমাদের উদ্দেশ্য",
     missionTitle: "আমাদের মিশন ও ভিশন",
-    missionDesc: "দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে توলাই আমাদের ভিশন।",
+    missionDesc: "দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে তোলাই আমাদের ভিশন।",
     panel1Title: "🎯 আমাদের মিশন",
     panel1Desc: "দ্রুত, নিরাপদ আর ঝামেলাহীন ডোনার খুঁজে পেতে সহায়তা করে মানুষের মুখে হাসি ফোটানো।",
     panel2Title: "🌟 আমাদের ভিশন",
@@ -1430,7 +1417,7 @@ const translations = {
     workTitle: "রক্তদাতা ও রোগীর পাশে",
     workDesc: "রক্তদাতা নিবন্ধন থেকে জরুরি রক্তের অনুরোধ—রক্তের প্রয়োজনের সময়ে প্রয়োজনীয় যোগাযোগ সহজ করাই আমাদের উদ্যোগ।",
     wCard1Title: "লাইভ ডোনার",
-    wCard1Desc: "অনলাইন ডোনার নিবন্ধন, জরুরি অনুরোধ এবং দেশের বিভিন্ন এলাকার রক্তদাতার তথ্য খুঁজে পাওয়ার ব্যবস্থা।",
+    wCard1Desc: "অনলাইন ডোনার নিবন্ধন, জরুরি অনুরোধ এবং দেশের বিভিন্ন এলাকার রক্তদatar তথ্য খুঁজে পাওয়ার ব্যবস্থা।",
     wCard2Title: "রক্তদানে সহায়তা",
     wCard2Desc: "রক্তের প্রয়োজন রয়েছে এমন ব্যক্তি ও স্বেচ্ছাসেবী রক্তদাতার মধ্যে যোগাযোগে সহায়তা।",
     wCard3Title: "সঠিক ডোনার যাচাই",
