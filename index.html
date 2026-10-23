@@ -1269,15 +1269,14 @@ footer a:hover{color:#fff}
   import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-  // আপনার ফায়ারবেজ প্রজেক্ট সেটিংস থেকে প্রাপ্ত সঠিক কনফিগারেশন
+  // আপনার ফায়ারবেজ প্রজেক্ট সেটিংস থেকে প্রাপ্ত সঠিক কনফিগারেশন এখানে বসাবেন
   const firebaseConfig = {
-    apiKey: "AIzaSyBRZW1CtF_YMxj50-UPbtMoL71E9XEsbj4",
-    authDomain: "mb-blood-bank-2a77a.firebaseapp.com",
-    projectId: "mb-blood-bank-2a77a",
-    storageBucket: "mb-blood-bank-2a77a.firebasestorage.app",
-    messagingSenderId: "407595095479",
-    appId: "1:407595095479:web:4cd9ec9807511084b68432",
-    measurementId: "G-9YYPYS87G0"
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
   };
 
   const app = initializeApp(firebaseConfig);
@@ -1993,7 +1992,7 @@ const compatibility = {
   "O-": {give:["O-","O+","A-","A+","B-","B+","AB-","AB+"],receive:["O-"]},
   "O+": {give:["O+","A+","B+","AB+"],receive:["O-","O+"]},
   "A-": {give:["A-","A+","AB-","AB+"],receive:["O-","A-"]},
-  "A+":++ {give:["A+","AB+"],receive:["O-","O+","A-","A+"]},
+  "A+": {give:["A+","AB+"],receive:["O-","O+","A-","A+"]},
   "B-": {give:["B-","B+","AB-","AB+"],receive:["O-","B-"]},
   "B+": {give:["B+","AB+"],receive:["O-","O+","B-","B+"]},
   "AB-": {give:["AB-","AB+"],receive:["O-","A-","B-","AB-"]},
