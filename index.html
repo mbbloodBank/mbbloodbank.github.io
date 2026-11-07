@@ -31,7 +31,7 @@ body{
   font-family:"Noto Sans Bengali","Arial",sans-serif;
   font-size:14px;line-height:1.75;
   transition:background .3s,color .3s;
-  padding-bottom:60px; /* মোবাইলে নিচে ফিক্সড বারের জন্য পেজ যেন কেটে না যায় */
+  padding-bottom: 65px;
 }
 a{color:inherit;text-decoration:none}
 button,input,select,textarea{font:inherit}
@@ -223,7 +223,6 @@ select:disabled{background:var(--border);color:#aaa}
 .fact:hover{background:var(--pink);border-color:#e8a5b3}
 .fact b{color:var(--red)}
 
-/* টিপস দেখানোর স্টাইল (পপ-আপ ছাড়া নিচে প্রদর্শিত হবে) */
 .fact-tip-box {
   margin-top: 8px;
   padding: 10px 14px;
@@ -558,6 +557,39 @@ select:disabled{background:var(--border);color:#aaa}
 .whatsapp-button:hover{background:#e5fff1}
 .contact-footer-note{text-align:center;color:var(--muted);font-size:12px;margin-top:23px}
 
+/* BOTTOM NAVIGATION BAR */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: var(--cream);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 8px 0;
+  z-index: 1000;
+  box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
+}
+.bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  transition: color 0.2s;
+}
+.bottom-nav-item span.icon {
+  font-size: 18px;
+  margin-bottom: 2px;
+}
+.bottom-nav-item:hover, .bottom-nav-item.active {
+  color: var(--red);
+}
+
 /* FOOTER */
 footer{background:#211516;color:#fff;padding:35px 0 15px}
 .footer-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:28px}
@@ -579,48 +611,6 @@ footer a:hover{color:#fff}
 .footer-social-link:hover{background:#eaf1ff;transform:translateY(-3px)}
 .footer-social-link svg{display:block;width:27px;height:27px;fill:currentColor}
 .footer-social-link.group-link svg{width:29px;height:29px}
-
-/* BOTTOM NAVIGATION BAR FOR MOBILE */
-.mobile-bottom-nav {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: var(--cream);
-  border-top: 1px solid var(--border);
-  z-index: 999;
-  justify-content: space-around;
-  align-items: center;
-  box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
-}
-.mobile-bottom-nav a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--muted);
-  flex: 1;
-  height: 100%;
-  transition: color 0.2s;
-}
-.mobile-bottom-nav a span.icon {
-  font-size: 18px;
-  margin-bottom: 2px;
-}
-.mobile-bottom-nav a:hover,
-.mobile-bottom-nav a.active {
-  color: var(--red);
-}
-
-@media(max-width:768px) {
-  .mobile-bottom-nav {
-    display: flex;
-  }
-}
 
 @media(max-width:850px){
   .hero-grid{gap:15px}.photo{height:250px}
@@ -878,7 +868,6 @@ footer a:hover{color:#fff}
  <p class="partners-subtitle">দেশের বড় বড় ব্লাড সংস্থা আমাদের সাথে যুক্ত</p>
  <div class="partners-slider">
   <div class="partners-track">
-   <!-- প্রথম সেট -->
    <div class="partner-card"><img src="রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন.jpg" alt="রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন"></div>
    <div class="partner-card"><img src="বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন.jpg" alt="বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন"></div>
    <div class="partner-card"><img src="হিউম্যান অপ বাংলাদেশ.jpg" alt="হিউম্যান অপ বাংলাদেশ"></div>
@@ -895,7 +884,6 @@ footer a:hover{color:#fff}
    <div class="partner-card"><img src="Bangladesh Blood Donors Club.jpg" alt="Bangladesh Blood Donors Club"></div>
    <div class="partner-card"><img src="বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ.jpg" alt="বাংলাদেশ কওমি ব্লাড ডোনার পরিসদ"></div>
 
-   <!-- নির্বিঘ্ন লুপ (Infinite Loop) এর জন্য ডুপ্লিকেট সেট -->
    <div class="partner-card"><img src="রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন.jpg" alt="রংপুর ব্লাড ডোনার হেল্পিং ফাউন্ডেশন"></div>
    <div class="partner-card"><img src="বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন.jpg" alt="বেগম রোকেয়া যুব ব্লাড ডোনার ফাউন্ডেশন"></div>
    <div class="partner-card"><img src="হিউম্যান অপ বাংলাদেশ.jpg" alt="হিউম্যান অপ বাংলাদেশ"></div>
@@ -1309,25 +1297,25 @@ footer a:hover{color:#fff}
  </div>
 </footer>
 
-<!-- মোবাইল ডিভাইসের জন্য নিচের ফিক্সড নেভিগেশন বার -->
-<nav class="mobile-bottom-nav">
-  <a href="#home" data-page="home" class="active">
+<!-- ফিক্সড নিচের নেভিগেশন বার (লাল-সাদা থিম) -->
+<nav class="bottom-nav">
+  <a href="#home" class="bottom-nav-item active" data-page="home">
     <span class="icon">🏠</span>
     <span>হোম</span>
   </a>
-  <a href="#search" data-page="home">
+  <a href="#search" class="bottom-nav-item" data-page="home">
     <span class="icon">🔍</span>
     <span>ডোনার</span>
   </a>
-  <a href="#contactPage" data-page="contact">
+  <a href="tel:01726232108" class="bottom-nav-item">
     <span class="icon">🚑</span>
     <span>এম্বুলেন্স</span>
   </a>
-  <a href="#emergency" data-page="home">
+  <a href="#emergency" class="bottom-nav-item" data-page="home">
     <span class="icon">📑</span>
     <span>রিকুয়েষ্ট</span>
   </a>
-  <a href="#donorLoginPage" data-page="donorLogin">
+  <a href="#donorLoginPage" class="bottom-nav-item" data-page="donorLogin">
     <span class="icon">🧑‍🦲</span>
     <span>প্রোফাইল</span>
   </a>
@@ -1353,7 +1341,6 @@ footer a:hover{color:#fff}
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  // রক্তদাতা নিবন্ধনের ফাংশন
   const registrationForm = document.getElementById('registrationForm');
   if (registrationForm) {
     registrationForm.addEventListener('submit', async (event) => {
@@ -1415,7 +1402,6 @@ footer a:hover{color:#fff}
 "use strict";
 const $ = id => document.getElementById(id);
 
-/* পাসওয়ার্ড হাইড/শো ফাংশন */
 function togglePassword(inputId, btn) {
   const input = $(inputId);
   if (input.type === "password") {
@@ -1427,7 +1413,6 @@ function togglePassword(inputId, btn) {
   }
 }
 
-/* যোগ্যতা নির্দেশিকায় ক্লিক করলে পরামর্শ দেখানোর ফাংশন (পপ-আপ ছাড়াই) */
 function toggleFactTip(tipId) {
   const tipBox = $(tipId);
   if (tipBox) {
@@ -1435,7 +1420,6 @@ function toggleFactTip(tipId) {
   }
 }
 
-/* মোবাইল মেনু */
 const menuBtn = $("menuBtn");
 const navLinks = $("navLinks");
 
@@ -1444,7 +1428,6 @@ menuBtn.addEventListener("click", () => {
   menuBtn.setAttribute("aria-expanded", String(open));
 });
 
-/* ডার্ক মোড লজিক */
 const darkModeBtn = $("darkModeBtn");
 darkModeBtn.addEventListener("click", () => {
   const currentTheme = document.documentElement.getAttribute("data-theme");
@@ -1458,7 +1441,6 @@ darkModeBtn.addEventListener("click", () => {
   }
 });
 
-/* ভাষা পরিবর্তন লজিক (EN/BN) */
 const langBtn = $("langBtn");
 let currentLang = "bn";
 
@@ -1805,7 +1787,6 @@ langBtn.addEventListener("click", () => {
   $("heroDesc").textContent = t.heroDescText;
 });
 
-/* পেজ পরিবর্তন ও নেভিগেশন লজিক */
 function showPage(page, targetHash) {
   const isAbout = page === "about";
   const isContact = page === "contact";
@@ -1825,9 +1806,9 @@ function showPage(page, targetHash) {
     );
   });
 
-  /* মোবাইল নিচের বারের অ্যাক্টিভ ক্লাস কন্ট্রোল */
-  document.querySelectorAll(".mobile-bottom-nav a").forEach(link => {
-    link.classList.toggle("active", link.dataset.page === page);
+  // বটম নেভিগেশন আইটেম অ্যাক্টিভ ক্লাস আপডেট
+  document.querySelectorAll(".bottom-nav-item[data-page]").forEach(item => {
+    item.classList.toggle("active", item.dataset.page === page);
   });
 
   navLinks.classList.remove("open");
@@ -1859,16 +1840,8 @@ function showPage(page, targetHash) {
 
 document.querySelectorAll("[data-page]").forEach(link => {
   link.addEventListener("click", event => {
-    event.preventDefault();
-    const page = link.dataset.page || "home";
-    const href = link.getAttribute("href");
-    showPage(page, href);
-  });
-});
-
-/* মোবাইল নিচের নেভিগেশন বারের জন্য আলাদা ক্লিক হ্যান্ডলার */
-document.querySelectorAll(".mobile-bottom-nav a").forEach(link => {
-  link.addEventListener("click", event => {
+    // যদি এম্বুলেন্স বা অন্য এক্সটার্নাল লিংক হয় তবে ডিফল্ট কাজ করতে দেওয়া হোক
+    if(link.getAttribute("href").startsWith("tel:")) return;
     event.preventDefault();
     const page = link.dataset.page || "home";
     const href = link.getAttribute("href");
@@ -1892,7 +1865,6 @@ window.addEventListener("popstate", () => {
   else showPage("home", location.hash);
 });
 
-/* বিভাগ-জেলা-উপজেলা এবং Inside Dhaka-থানা তালিকা */
 let selectedBlood = "";
 let geoData = [];
 
@@ -2025,7 +1997,6 @@ async function loadLocations() {
 }
 loadLocations();
 
-/* রক্তের গ্রুপ নির্বাচন */
 $("bloodButtons").querySelectorAll("[data-blood]").forEach(btn => {
   btn.addEventListener("click", () => {
     selectedBlood = selectedBlood === btn.dataset.blood ? "" : btn.dataset.blood;
@@ -2082,7 +2053,6 @@ $("emergencyForm").addEventListener("submit", event => {
   $("emergencyStatus").style.color = "#b51035";
 });
 
-/* সাধারণ লোহিত রক্তকণিকার ABO/Rh সামঞ্জস্য */
 const compatibility = {
   "O-": {give:["O-","O+","A-","A+","B-","B+","AB-","AB+"],receive:["O-"]},
   "O+": {give:["O+","A+","B+","AB+"],receive:["O-","O+"]},
