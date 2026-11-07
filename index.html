@@ -30,7 +30,8 @@ body{
   margin:0;background:var(--cream);color:var(--ink);
   font-family:"Noto Sans Bengali","Arial",sans-serif;
   font-size:14px;line-height:1.75;
-  transition:background .3s,color .3s
+  transition:background .3s,color .3s;
+  padding-bottom:60px; /* মোবাইলে নিচে ফিক্সড বারের জন্য পেজ যেন কেটে না যায় */
 }
 a{color:inherit;text-decoration:none}
 button,input,select,textarea{font:inherit}
@@ -579,6 +580,48 @@ footer a:hover{color:#fff}
 .footer-social-link svg{display:block;width:27px;height:27px;fill:currentColor}
 .footer-social-link.group-link svg{width:29px;height:29px}
 
+/* BOTTOM NAVIGATION BAR FOR MOBILE */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: var(--cream);
+  border-top: 1px solid var(--border);
+  z-index: 999;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+}
+.mobile-bottom-nav a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  flex: 1;
+  height: 100%;
+  transition: color 0.2s;
+}
+.mobile-bottom-nav a span.icon {
+  font-size: 18px;
+  margin-bottom: 2px;
+}
+.mobile-bottom-nav a:hover,
+.mobile-bottom-nav a.active {
+  color: var(--red);
+}
+
+@media(max-width:768px) {
+  .mobile-bottom-nav {
+    display: flex;
+  }
+}
+
 @media(max-width:850px){
   .hero-grid{gap:15px}.photo{height:250px}
   .requests{grid-template-columns:repeat(2,1fr)}
@@ -664,17 +707,20 @@ footer a:hover{color:#fff}
     </a>
 
     <div class="nav-right-group">
+      <a href="#donorRegPage" class="header-action-btn" data-page="donorReg" data-i18n="navDonorReg">রক্তদাতা নিবন্ধন</a>
+      <a href="#donorLoginPage" class="header-action-btn" data-page="donorLogin" data-i18n="navLogin">লগইন করুন</a>
       <button class="utility-btn" id="langBtn">EN</button>
       <button class="utility-btn" id="darkModeBtn">🌙</button>
       <button class="menu" id="menuBtn" aria-label="মেনু খুলুন" aria-expanded="false">☰</button>
     </div>
 
     <nav class="links" id="navLinks">
-      <a class="active" href="#home" data-page="home">🏠 হোম</a>
-      <a href="#search" data-page="home">🔍 ডোনার</a>
-      <a href="#ambulance" data-page="ambulance">🚑 এম্বুলেন্স</a>
-      <a href="#requests" data-page="home">📑 রিকুয়েষ্ট</a>
-      <a href="#donorLoginPage" data-page="donorLogin">🧑‍🦲প্রোফাইল</a>
+      <a class="active" href="#home" data-page="home" data-i18n="menuHome">হোম</a>
+      <a href="#search" data-page="home" data-i18n="menuFindDonor">রক্তদাতা খুঁজুন</a>
+      <a href="#requests" data-page="home" data-i18n="menuRequests">রক্তের অনুরোধ</a>
+      <a href="#donorRegPage" data-page="donorReg" data-i18n="menuDonorReg">রক্তদাতা নিবন্ধন</a>
+      <a href="#aboutPage" data-page="about" data-i18n="menuAbout">আমাদের কথা</a>
+      <a href="#donorRegPage" class="pill" data-page="donorReg" data-i18n="menuBeDonor">রক্তদাতা হন</a>
     </nav>
   </div>
 </header>
@@ -896,17 +942,6 @@ footer a:hover{color:#fff}
 </section>
 </main>
 
-<!-- AMBULANCE PAGE -->
-<main id="ambulancePage" class="hidden">
- <div class="wrap">
-  <div class="form-card" style="text-align:center; padding: 40px;">
-   <div class="eyebrow">জরুরি সেবা</div>
-   <h1 style="color:var(--red); font-size: 32px;">এম্বুলেন্স সেবা</h1>
-   <p class="muted">জরুরি প্রয়োজনে এম্বুলেন্স বুকিং বা যোগাযোগের তালিকা এখানে যুক্ত করা হবে।</p>
-  </div>
- </div>
-</main>
-
 <!-- DONOR LOGIN PAGE -->
 <main id="donorLoginPage" class="hidden">
  <div class="wrap">
@@ -1079,7 +1114,7 @@ footer a:hover{color:#fff}
   <section>
    <div class="eyebrow" data-i18n="missionEyebrow">আমাদের উদ্দেশ্য</div>
    <h2 class="about-heading" data-i18n="missionTitle">আমাদের মিশন ও ভিশন</h2>
-   <p class="about-copy" data-i18n="missionDesc">দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে তোলাই আমাদের ভিশন।</p>
+   <p class="about-copy" data-i18n="missionDesc">দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে توলাই আমাদের ভিশন।</p>
    <div class="about-columns">
     <article class="about-panel"><h3 data-i18n="panel1Title">🎯 আমাদের মিশন</h3><p data-i18n="panel1Desc">দ্রুত, নিরাপদ আর ঝামেলাহীন ডোনার খুঁজে পেতে সহায়তা করে মানুষের মুখে হাসি ফোটানো।</p></article>
     <article class="about-panel"><h3 data-i18n="panel2Title">🌟 আমাদের ভিশন</h3><p data-i18n="panel2Desc">প্রযুক্তিনির্ভর সমাধানে বাংলাদেশের রক্তদানের ব্যবস্থাকে নতুনভাবে এগিয়ে নেওয়া।</p></article>
@@ -1249,7 +1284,7 @@ footer a:hover{color:#fff}
 
    <div>
     <h3 data-i18n="fCol1Title">দ্রুত লিংক</h3>
-    <a href="#search" data-page="home">🔍 ডোনার</a>
+    <a href="#search" data-page="home" data-i18n="menuFindDonor">রক্তদাতা খুঁজুন</a>
     <a href="#donorRegPage" data-page="donorReg" data-i18n="menuDonorReg">রক্তদাতা হিসেবে নিবন্ধন</a>
     <a href="#emergency" data-page="home" data-i18n="reqTitle">জরুরি রক্তের অনুরোধ</a>
     <a href="#aboutPage" data-page="about" data-i18n="menuAbout">আমাদের কথা</a>
@@ -1273,6 +1308,30 @@ footer a:hover{color:#fff}
   <div class="copyright" data-i18n="copyright">© 2025–2026 MB Blood Bank · মানবতার সেবায়</div>
  </div>
 </footer>
+
+<!-- মোবাইল ডিভাইসের জন্য নিচের ফিক্সড নেভিগেশন বার -->
+<nav class="mobile-bottom-nav">
+  <a href="#home" data-page="home" class="active">
+    <span class="icon">🏠</span>
+    <span>হোম</span>
+  </a>
+  <a href="#search" data-page="home">
+    <span class="icon">🔍</span>
+    <span>ডোনার</span>
+  </a>
+  <a href="#contactPage" data-page="contact">
+    <span class="icon">🚑</span>
+    <span>এম্বুলেন্স</span>
+  </a>
+  <a href="#emergency" data-page="home">
+    <span class="icon">📑</span>
+    <span>রিকুয়েষ্ট</span>
+  </a>
+  <a href="#donorLoginPage" data-page="donorLogin">
+    <span class="icon">🧑‍🦲</span>
+    <span>প্রোফাইল</span>
+  </a>
+</nav>
 
 <!-- Firebase SDKs ও ডাটাবেজ সংযোগ স্ক্রিপ্ট -->
 <script type="module">
@@ -1406,6 +1465,14 @@ let currentLang = "bn";
 const translations = {
   bn: {
     logoSmall: "এক ফোঁটা রক্ত, একটি জীবন",
+    navDonorReg: "রক্তদাতা নিবন্ধন",
+    navLogin: "লগইন করুন",
+    menuHome: "হোম",
+    menuFindDonor: "রক্তদাতা খুঁজুন",
+    menuRequests: "রক্তের অনুরোধ",
+    menuDonorReg: "রক্তদাতা নিবন্ধন",
+    menuAbout: "আমাদের কথা",
+    menuBeDonor: "রক্তদাতা হন",
     heroTag: "🔴 স্বেচ্ছাসেবী রক্তদাতা নেটওয়ার্ক",
     heroTitleHtml: 'রক্ত দিন,<br><span>জীবন বাঁচান।</span>',
     heroDescText: "MB Blood Bank রোগী ও স্বেচ্ছাসেবী রক্তদাতাদের মাঝে সেতুবন্ধন। রক্তের গ্রুপ ও এলাকা নির্বাচন করে রক্তদাতা খুঁজে নিন।",
@@ -1543,7 +1610,7 @@ const translations = {
     waPanelDesc: "যে রক্তদাতার অপেক্ষায় আছেন বা খুঁজতেছেন, তা নিয়ে সাপোর্ট টিমের কাছে পৌঁছানোর দ্রুত উপায় প্রায়ই হোয়াটসঅ্যাপ। আপনার প্রয়োজনের কথা লিখে আমাদের মেসেজ পাঠাতে পারেন।",
     waBtnText: "হোয়াটসঅ্যাপে মেসেজ করুন →",
     contactFooterNote: "MB Blood Bank — এক ফোঁটা রক্ত, একটি জীবন।",
-    footerTagline: "A humanitarian bridge between voluntary donors and patients.",
+    footerTagline: "স্বেচ্ছাসেবী রক্তদাতা ও রোগীর মাঝে মানবতার সেতুবন্ধন।",
     fCol1Title: "দ্রুত লিংক",
     fCol2Title: "যোগাযোগ",
     fContactOpt: "যোগাযোগ অপশন",
@@ -1556,6 +1623,14 @@ const translations = {
   },
   en: {
     logoSmall: "A drop of blood, a life",
+    navDonorReg: "Donor Registration",
+    navLogin: "Login",
+    menuHome: "Home",
+    menuFindDonor: "Find Donor",
+    menuRequests: "Blood Requests",
+    menuDonorReg: "Donor Registration",
+    menuAbout: "About Us",
+    menuBeDonor: "Become a Donor",
     heroTag: "🔴 Voluntary Blood Donor Network",
     heroTitleHtml: 'Give Blood,<br><span>Save Life.</span>',
     heroDescText: "MB Blood Bank is a bridge between patients and voluntary blood donors. Find blood donors by selecting blood group and area.",
@@ -1736,21 +1811,23 @@ function showPage(page, targetHash) {
   const isContact = page === "contact";
   const isDonorReg = page === "donorReg";
   const isDonorLogin = page === "donorLogin";
-  const isAmbulance = page === "ambulance";
 
-  $("homePage").classList.toggle("hidden", isAbout || isContact || isDonorReg || isDonorLogin || isAmbulance);
+  $("homePage").classList.toggle("hidden", isAbout || isContact || isDonorReg || isDonorLogin);
   $("aboutPage").classList.toggle("hidden", !isAbout);
   $("contactPage").classList.toggle("hidden", !isContact);
   $("donorRegPage").classList.toggle("hidden", !isDonorReg);
   $("donorLoginPage").classList.toggle("hidden", !isDonorLogin);
-  const ambPage = $("ambulancePage");
-  if(ambPage) ambPage.classList.toggle("hidden", !isAmbulance);
 
   document.querySelectorAll("#navLinks a[data-page]").forEach(link => {
     link.classList.toggle(
       "active",
       link.dataset.page === page && !link.classList.contains("pill")
     );
+  });
+
+  /* মোবাইল নিচের বারের অ্যাক্টিভ ক্লাস কন্ট্রোল */
+  document.querySelectorAll(".mobile-bottom-nav a").forEach(link => {
+    link.classList.toggle("active", link.dataset.page === page);
   });
 
   navLinks.classList.remove("open");
@@ -1767,9 +1844,6 @@ function showPage(page, targetHash) {
     window.scrollTo({top:0,behavior:"smooth"});
   } else if (isDonorLogin) {
     history.replaceState(null, "", "#donorLoginPage");
-    window.scrollTo({top:0,behavior:"smooth"});
-  } else if (isAmbulance) {
-    history.replaceState(null, "", "#ambulancePage");
     window.scrollTo({top:0,behavior:"smooth"});
   } else {
     const target = targetHash && $(targetHash.replace("#",""));
@@ -1792,12 +1866,21 @@ document.querySelectorAll("[data-page]").forEach(link => {
   });
 });
 
+/* মোবাইল নিচের নেভিগেশন বারের জন্য আলাদা ক্লিক হ্যান্ডলার */
+document.querySelectorAll(".mobile-bottom-nav a").forEach(link => {
+  link.addEventListener("click", event => {
+    event.preventDefault();
+    const page = link.dataset.page || "home";
+    const href = link.getAttribute("href");
+    showPage(page, href);
+  });
+});
+
 window.addEventListener("load", () => {
   if (location.hash === "#aboutPage") showPage("about");
   else if (location.hash === "#contactPage") showPage("contact");
   else if (location.hash === "#donorRegPage") showPage("donorReg");
   else if (location.hash === "#donorLoginPage") showPage("donorLogin");
-  else if (location.hash === "#ambulancePage") showPage("ambulance");
   else showPage("home");
 });
 
@@ -1806,7 +1889,6 @@ window.addEventListener("popstate", () => {
   else if (location.hash === "#contactPage") showPage("contact");
   else if (location.hash === "#donorRegPage") showPage("donorReg");
   else if (location.hash === "#donorLoginPage") showPage("donorLogin");
-  else if (location.hash === "#ambulancePage") showPage("ambulance");
   else showPage("home", location.hash);
 });
 
