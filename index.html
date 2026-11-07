@@ -30,8 +30,7 @@ body{
   margin:0;background:var(--cream);color:var(--ink);
   font-family:"Noto Sans Bengali","Arial",sans-serif;
   font-size:14px;line-height:1.75;
-  transition:background .3s,color .3s;
-  padding-bottom: 65px;
+  transition:background .3s,color .3s
 }
 a{color:inherit;text-decoration:none}
 button,input,select,textarea{font:inherit}
@@ -557,39 +556,6 @@ select:disabled{background:var(--border);color:#aaa}
 .whatsapp-button:hover{background:#e5fff1}
 .contact-footer-note{text-align:center;color:var(--muted);font-size:12px;margin-top:23px}
 
-/* BOTTOM NAVIGATION BAR */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: var(--cream);
-  border-top: 1px solid var(--border);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 8px 0;
-  z-index: 1000;
-  box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
-}
-.bottom-nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 700;
-  transition: color 0.2s;
-}
-.bottom-nav-item span.icon {
-  font-size: 18px;
-  margin-bottom: 2px;
-}
-.bottom-nav-item:hover, .bottom-nav-item.active {
-  color: var(--red);
-}
-
 /* FOOTER */
 footer{background:#211516;color:#fff;padding:35px 0 15px}
 .footer-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:28px}
@@ -995,7 +961,7 @@ footer a:hover{color:#fff}
     ⚠️ নিবন্ধনের পর আপনার Account/Donor/Profile সরাসরি active হবে না। Admin যাচাই ও Approved করার পর আপনার তথ্য রক্তদাতার তালিকায় প্রদর্শিত হবে।
    </div>
 
-   <form id="registrationForm">
+   <form id="registrationForm" onsubmit="registerDonor(event)">
     <div class="form-grid">
      <div>
       <label>নাম:</label>
@@ -1102,7 +1068,7 @@ footer a:hover{color:#fff}
   <section>
    <div class="eyebrow" data-i18n="missionEyebrow">আমাদের উদ্দেশ্য</div>
    <h2 class="about-heading" data-i18n="missionTitle">আমাদের মিশন ও ভিশন</h2>
-   <p class="about-copy" data-i18n="missionDesc">দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে توলাই আমাদের ভিশন।</p>
+   <p class="about-copy" data-i18n="missionDesc">দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে তোলাই আমাদের ভিশন।</p>
    <div class="about-columns">
     <article class="about-panel"><h3 data-i18n="panel1Title">🎯 আমাদের মিশন</h3><p data-i18n="panel1Desc">দ্রুত, নিরাপদ আর ঝামেলাহীন ডোনার খুঁজে পেতে সহায়তা করে মানুষের মুখে হাসি ফোটানো।</p></article>
     <article class="about-panel"><h3 data-i18n="panel2Title">🌟 আমাদের ভিশন</h3><p data-i18n="panel2Desc">প্রযুক্তিনির্ভর সমাধানে বাংলাদেশের রক্তদানের ব্যবস্থাকে নতুনভাবে এগিয়ে নেওয়া।</p></article>
@@ -1297,36 +1263,13 @@ footer a:hover{color:#fff}
  </div>
 </footer>
 
-<!-- ফিক্সড নিচের নেভিগেশন বার (লাল-সাদা থিম) -->
-<nav class="bottom-nav">
-  <a href="#home" class="bottom-nav-item active" data-page="home">
-    <span class="icon">🏠</span>
-    <span>হোম</span>
-  </a>
-  <a href="#search" class="bottom-nav-item" data-page="home">
-    <span class="icon">🔍</span>
-    <span>ডোনার</span>
-  </a>
-  <a href="tel:01726232108" class="bottom-nav-item">
-    <span class="icon">🚑</span>
-    <span>এম্বুলেন্স</span>
-  </a>
-  <a href="#emergency" class="bottom-nav-item" data-page="home">
-    <span class="icon">📑</span>
-    <span>রিকুয়েষ্ট</span>
-  </a>
-  <a href="#donorLoginPage" class="bottom-nav-item" data-page="donorLogin">
-    <span class="icon">🧑‍🦲</span>
-    <span>প্রোফাইল</span>
-  </a>
-</nav>
-
 <!-- Firebase SDKs ও ডাটাবেজ সংযোগ স্ক্রিপ্ট -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+  // আপনার ফায়ারবেজ প্রজেক্ট সেটিংস থেকে প্রাপ্ত সঠিক কনফিগারেশন
   const firebaseConfig = {
     apiKey: "AIzaSyBRZW1CtF_YMxj50-UPbtMoL71E9XEsbj4",
     authDomain: "mb-blood-bank-2a77a.firebaseapp.com",
@@ -1341,61 +1284,61 @@ footer a:hover{color:#fff}
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  const registrationForm = document.getElementById('registrationForm');
-  if (registrationForm) {
-    registrationForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
+  // রক্তদাতা নিবন্ধনের ফাংশন
+  window.registerDonor = async function(event) {
+    event.preventDefault();
 
-      const name = document.getElementById('name').value;
-      const phone = document.getElementById('phone').value;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('regPassword').value;
-      const confirmPassword = document.getElementById('regConfirmPassword').value;
-      const bloodGroup = document.getElementById('bloodGroup').value;
-      const division = document.getElementById('regDivision').value;
-      const district = document.getElementById('regDistrict').value;
-      const upazila = document.getElementById('regUpazila').value;
-      const address = document.getElementById('address').value;
-      const regStatus = document.getElementById('regStatus');
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('regPassword').value;
+    const confirmPassword = document.getElementById('regConfirmPassword').value;
+    const bloodGroup = document.getElementById('bloodGroup').value;
+    const division = document.getElementById('regDivision').value;
+    const district = document.getElementById('regDistrict').value;
+    const upazila = document.getElementById('regUpazila').value;
+    const address = document.getElementById('address').value;
+    const regStatus = document.getElementById('regStatus');
 
-      if (password !== confirmPassword) {
-        regStatus.textContent = "পাসওয়ার্ড দুটি মিলছে না! আবার চেষ্টা করুন।";
-        regStatus.style.color = "#b51035";
-        return;
-      }
+    if (password !== confirmPassword) {
+      regStatus.textContent = "পাসওয়ার্ড দুটি মিলছে না! আবার চেষ্টা করুন।";
+      regStatus.style.color = "#b51035";
+      return;
+    }
 
-      try {
-        regStatus.textContent = "নিবন্ধন প্রক্রিয়া চলছে, দয়া করে অপেক্ষা করুন...";
-        regStatus.style.color = "#14783d";
+    try {
+      regStatus.textContent = "নিবন্ধন প্রক্রিয়া চলছে, দয়া করে অপেক্ষা করুন...";
+      regStatus.style.color = "#14783d";
 
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+      // ১. ফায়ারবেজ অথেন্টিকেশনে ইউজার তৈরি
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-        await addDoc(collection(db, "donors"), {
-          uid: user.uid,
-          name: name,
-          phone: phone,
-          email: email,
-          bloodGroup: bloodGroup,
-          division: division,
-          district: district,
-          upazila: upazila,
-          address: address,
-          status: "Pending",
-          createdAt: new Date()
-        });
+      // ২. ফায়ারস্টোর ডাটাবেজে রক্তদাতার তথ্য সেভ করা
+      await addDoc(collection(db, "donors"), {
+        uid: user.uid,
+        name: name,
+        phone: phone,
+        email: email,
+        bloodGroup: bloodGroup,
+        division: division,
+        district: district,
+        upazila: upazila,
+        address: address,
+        status: "Pending",
+        createdAt: new Date()
+      });
 
-        regStatus.textContent = "নিবন্ধন সফল হয়েছে! অ্যাডমিন অ্যাপ্রুভালের পর প্রোফাইল সচল হবে।";
-        regStatus.style.color = "#14783d";
-        alert("নিবন্ধন সফল হয়েছে!");
-        registrationForm.reset();
+      regStatus.textContent = "নিবন্ধন সফল হয়েছে! অ্যাডমিন অ্যাপ্রুভালের পর প্রোফাইল সচল হবে।";
+      regStatus.style.color = "#14783d";
+      alert("নিবন্ধন সফল হয়েছে!");
+      document.getElementById('registrationForm').reset();
 
-      } catch (error) {
-        regStatus.textContent = "ত্রুটি: " + error.message;
-        regStatus.style.color = "#b51035";
-      }
-    });
-  }
+    } catch (error) {
+      regStatus.textContent = "ত্রুটি: " + error.message;
+      regStatus.style.color = "#b51035";
+    }
+  };
 </script>
 
 <script>
@@ -1493,7 +1436,7 @@ const translations = {
     step3Title: "রক্ত দিন, জীবন বাঁচান",
     step3Desc: "যোগ্য হলে চিকিৎসাকর্মীর পরামর্শে রক্তদান করুন।",
     compatEyebrow: "রক্তের সামঞ্জস্যতা",
-    compatTitle: " কে কাকে রক্ত দিতে পারে?",
+    compatTitle: "কে কাকে রক্ত দিতে পারে?",
     compatDesc: "রক্তের গ্রুপ বেছে নিন। এটি লোহিত রক্তকণিকার সাধারণ ABO/Rh সামঞ্জস্যের তথ্য। রক্তদানের আগে হাসপাতালের ক্রসম্যাচ জরুরি।",
     compatGiveTitle: "এই গ্রুপকে দিতে পারবেন",
     compatReceiveTitle: "এই গ্রুপ থেকে নিতে পারবেন",
@@ -1541,7 +1484,7 @@ const translations = {
     panel2Desc: "প্রযুক্তিনির্ভর সমাধানে বাংলাদেশের রক্তদানের ব্যবস্থাকে নতুনভাবে এগিয়ে নেওয়া।",
     workEyebrow: "আমরা যা করি",
     workTitle: "রক্তদাতা ও রোগীর পাশে",
-    workDesc: "রক্তদাতা নিবন্ধন থেকে জরুরি রক্তের অনুরোধ—রক্তের প্রয়োজনের সময়ে প্রয়োজনীয় যোগাযোগ সহজ করাই আমাদের উদ্যোগ।",
+    workDesc: "রক্তদাতা নিবন্ধন থেকে জরুরি রক্তের অনুরোধ—রক্তের প্রয়োজনের সময়ে প্রয়োজনীয় যোগাযোগ সহজ করাই আমাদের উদ্যোগ.",
     wCard1Title: "লাইভ ডোনার",
     wCard1Desc: "অনলাইন ডোনার নিবন্ধন, জরুরি অনুরোধ এবং দেশের বিভিন্ন এলাকার রক্তদাতার তথ্য খুঁজে পাওয়ার ব্যবস্থা।",
     wCard2Title: "রক্তদানে সহায়তা",
@@ -1589,7 +1532,7 @@ const translations = {
     contactNote: "ℹ️ রক্তদানের আগে হাসপাতাল বা অনুমোদিত রক্তদান কেন্দ্রের সঙ্গে প্রয়োজনীয় স্বাস্থ্য পরীক্ষা ও ক্রসম্যাচ নিশ্চিত করুন। জরুরি চিকিৎসার প্রয়োজনে নিকটস্থ হাসপাতালের সাহায্য নিন।",
     waPanelTag: "দ্রুত সাপোর্ট",
     waPanelTitle: "হোয়াটসঅ্যাপে কথা বলুন",
-    waPanelDesc: "যে রক্তদাতার অপেক্ষায় আছেন বা খুঁজতেছেন, তা নিয়ে সাপোর্ট টিমের কাছে পৌঁছানোর দ্রুত উপায় প্রায়ই হোয়াটসঅ্যাপ। আপনার প্রয়োজনের কথা লিখে আমাদের মেসেজ পাঠাতে পারেন।",
+    waPanelDesc: "যে রক্তদাতার অপেক্ষায় আছেন বা খুঁজতেছেন, তা নিয়ে সাপোর্ট টিমের কাছে পৌঁছানোর দ্রুত উপায় প্রায়ই হোয়াটসঅ্যাপ। আপনার প্রয়োজনের কথা লিখে আমাদের মেসেজ পাঠাতে পারেন.",
     waBtnText: "হোয়াটসঅ্যাপে মেসেজ করুন →",
     contactFooterNote: "MB Blood Bank — এক ফোঁটা রক্ত, একটি জীবন।",
     footerTagline: "স্বেচ্ছাসেবী রক্তদাতা ও রোগীর মাঝে মানবতার সেতুবন্ধন।",
@@ -1806,11 +1749,6 @@ function showPage(page, targetHash) {
     );
   });
 
-  // বটম নেভিগেশন আইটেম অ্যাক্টিভ ক্লাস আপডেট
-  document.querySelectorAll(".bottom-nav-item[data-page]").forEach(item => {
-    item.classList.toggle("active", item.dataset.page === page);
-  });
-
   navLinks.classList.remove("open");
   menuBtn.setAttribute("aria-expanded", "false");
 
@@ -1840,8 +1778,6 @@ function showPage(page, targetHash) {
 
 document.querySelectorAll("[data-page]").forEach(link => {
   link.addEventListener("click", event => {
-    // যদি এম্বুলেন্স বা অন্য এক্সটার্নাল লিংক হয় তবে ডিফল্ট কাজ করতে দেওয়া হোক
-    if(link.getAttribute("href").startsWith("tel:")) return;
     event.preventDefault();
     const page = link.dataset.page || "home";
     const href = link.getAttribute("href");
@@ -2057,7 +1993,7 @@ const compatibility = {
   "O-": {give:["O-","O+","A-","A+","B-","B+","AB-","AB+"],receive:["O-"]},
   "O+": {give:["O+","A+","B+","AB+"],receive:["O-","O+"]},
   "A-": {give:["A-","A+","AB-","AB+"],receive:["O-","A-"]},
-  "A+": {give:["A+","AB+"],receive:["O-","O+","A-","A+"]},
+  "A+":++ {give:["A+","AB+"],receive:["O-","O+","A-","A+"]},
   "B-": {give:["B-","B+","AB-","AB+"],receive:["O-","B-"]},
   "B+": {give:["B+","AB+"],receive:["O-","O+","B-","B+"]},
   "AB-": {give:["AB-","AB+"],receive:["O-","A-","B-","AB-"]},
