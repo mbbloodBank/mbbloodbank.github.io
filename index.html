@@ -59,6 +59,7 @@ header{
 }
 .logo-text{display:block}
 .logo small{display:block;font-size:9px;color:var(--muted);font-weight:400}
+.logo-drop{display:none!important}
 
 .nav-right-group{
   display:flex;align-items:center;gap:8px;flex-wrap:wrap
@@ -277,6 +278,9 @@ select:disabled{background:var(--border);color:#aaa}
   animation: scrollPartners 35s linear infinite;
   animation-play-state: running !important;
 }
+.partners-slider:hover .partners-track {
+  animation-play-state: running !important;
+}
 .partner-card {
   flex-shrink: 0;
   width: 140px;
@@ -329,134 +333,8 @@ select:disabled{background:var(--border);color:#aaa}
   color:var(--red);font-size:12px;font-weight:700;cursor:pointer
 }
 
-/* DONOR DASHBOARD & PROFILE STYLES */
-.dashboard-container {
-  max-width: 800px;
-  margin: 20px auto;
-  background: var(--cream);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 25px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-}
-.profile-header-card {
-  text-align: center;
-  position: relative;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--border);
-}
-.quick-check-btn {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background: var(--red);
-  color: #fff;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  box-shadow: 0 4px 10px rgba(181,16,53,0.3);
-}
-.profile-avatar {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--red);
-  margin: 10px auto;
-  display: block;
-}
-.profile-name {
-  font-size: 20px;
-  font-weight: 800;
-  margin: 5px 0 2px;
-}
-.profile-role-status {
-  font-size: 13px;
-  color: var(--red);
-  font-weight: 700;
-  margin-bottom: 15px;
-}
-.dashboard-grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin: 15px 0;
-}
-.dash-box {
-  padding: 12px;
-  border-radius: 12px;
-  text-align: center;
-  font-weight: 700;
-  font-size: 13px;
-  border: 1px solid rgba(0,0,0,0.05);
-  box-shadow: inset 0 2px 5px rgba(255,255,255,0.5);
-}
-.dash-box-1 { background: #ffebee; color: #b51035; }
-.dash-box-2 { background: #e3f2fd; color: #0d47a1; }
-.dash-box-3 { background: #e8f5e9; color: #1b5e20; }
-
-.point-box {
-  background: #2e7d32;
-  color: #fff;
-  text-align: center;
-  padding: 12px;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 15px;
-  margin: 10px 0;
-  box-shadow: 0 4px 10px rgba(46,125,50,0.2);
-}
-.action-option-btn {
-  display: block;
-  width: 100%;
-  background: var(--pink);
-  color: var(--red);
-  border: 1px solid var(--border);
-  padding: 12px 15px;
-  border-radius: 12px;
-  font-weight: bold;
-  text-align: left;
-  margin: 10px 0;
-  transition: all 0.2s;
-}
-.action-option-btn:hover {
-  background: var(--red);
-  color: #fff;
-}
-.role-switch-container {
-  display: none;
-  background: var(--pink);
-  padding: 15px;
-  border-radius: 12px;
-  margin: 10px 0;
-  border: 1px dashed var(--red);
-}
-.donor-id-card-modal {
-  display: none;
-  background: linear-gradient(135deg, #b51035, #800d25);
-  color: #fff;
-  padding: 20px;
-  border-radius: 15px;
-  text-align: center;
-  margin: 15px 0;
-  box-shadow: 0 10px 25px rgba(181,16,53,0.4);
-}
-.quick-check-section {
-  display: none;
-  background: var(--cream);
-  border: 2px solid var(--red);
-  padding: 15px;
-  border-radius: 12px;
-  margin-top: 15px;
-}
-
 /* ABOUT & CONTACT PAGES */
-#aboutPage,#contactPage,#donorRegPage,#donorLoginPage,#donorDashboardPage{padding:32px 0 55px;min-height:70vh}
+#aboutPage,#contactPage,#donorRegPage,#donorLoginPage{padding:32px 0 55px;min-height:70vh}
 .about-top{
   display:grid;grid-template-columns:1fr 1fr;gap:28px;
   align-items:center;background:var(--cream);border:1px solid var(--border);
@@ -559,6 +437,16 @@ select:disabled{background:var(--border);color:#aaa}
 .volunteer-3d-banner:hover{
   transform:rotateY(0deg) rotateX(0deg) translateY(-4px);
   box-shadow:0 30px 42px #4a0b1b40,inset 0 2px 1px #ffffff75
+}
+.volunteer-3d-banner::before{
+  content:"";position:absolute;z-index:-1;width:210px;height:210px;
+  top:-85px;right:-60px;border:24px solid #ffffff17;border-radius:50%;
+  box-shadow:0 0 0 18px #ffffff0b,0 0 0 36px #ffffff08;transform:translateZ(18px)
+}
+.volunteer-3d-banner::after{
+  content:"";position:absolute;z-index:-1;width:180px;height:180px;
+  bottom:-110px;left:-45px;border-radius:50%;background:#ffffff12;
+  box-shadow:0 0 35px #ffffff15;transform:translateZ(12px)
 }
 .volunteer-symbol{
   width:76px;height:76px;margin-bottom:15px;display:grid;place-items:center;
@@ -1045,8 +933,8 @@ footer a:hover{color:#fff}
 <!-- DONOR LOGIN PAGE -->
 <main id="donorLoginPage" class="hidden">
  <div class="wrap">
-  <div class="form-card">
-   <div class="login-layout">
+  <div class="form-card" id="loginCardContainer">
+   <div class="login-layout" id="loginLayoutBox">
     <div>
      <div class="eyebrow">রক্তদাতা পোর্টাল</div>
      <h1 style="font-size:clamp(28px,4vw,38px);margin:5px 0 8px;color:var(--red)">রক্তদাতা লগইন</h1>
@@ -1094,88 +982,6 @@ footer a:hover{color:#fff}
  </div>
 </main>
 
-<!-- DONOR DASHBOARD PAGE (AFTER LOGIN) -->
-<main id="donorDashboardPage" class="hidden">
- <div class="wrap">
-  <div class="dashboard-container">
-   <div class="profile-header-card">
-    <button type="button" class="quick-check-btn" onclick="toggleQuickCheck()">🛡️ Quick Check</button>
-    <img id="dashProfilePic" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" alt="প্রোফাইল ছবি" class="profile-avatar">
-    <h2 id="dashProfileName" class="profile-name">নাম লোড হচ্ছে...</h2>
-    <div id="dashProfileRoleStatus" class="profile-role-status">রক্তদাতা</div>
-
-    <div class="dashboard-grid-3">
-     <div class="dash-box dash-box-1" id="dashBloodGroup">রক্তের গ্রুপ: A+</div>
-     <div class="dash-box dash-box-2" id="dashDistrict">জেলা: রংপুর</div>
-     <div class="dash-box dash-box-3" id="dashStatus">অবস্থা: সক্রিয়</div>
-    </div>
-
-    <div class="point-box" onclick="alert('আপনার বর্তমান পয়েন্ট: ৫০')">⭐ পয়েন্ট: ৫০ (দেখতে ক্লিক করুন)</div>
-   </div>
-
-   <!-- 🛡️ Quick Check Section -->
-   <div id="quickCheckSection" class="quick-check-section">
-    <h3 style="color:var(--red);font-size:16px;margin-bottom:10px;">স্মার্ট রক্তদাতা যাচাই (Quick Check)</h3>
-    <div style="font-size:13px;display:grid;gap:8px;" id="quickCheckQuestions">
-     <div>১. আপনার বয়স কি ১৮ থেকে ৬০ বছরের মধ্যে? <select><option>Yes</option><option>No</option></select></div>
-     <div>২. আপনার ওজন কি কমপক্ষে ৪৫ কেজি? <select><option>Yes</option><option>No</option></select></div>
-     <div>৩. গত ৩ মাসের মধ্যে কি আপনি রক্ত দিয়েছেন? <select><option>No</option><option>Yes</option></select></div>
-     <div>৪. আজ আপনার কি কোনো বড় শারীরিক অসুস্থতা বা জ্বর আছে? <select><option>No</option><option>Yes</option></select></div>
-     <div>৫. আপনি কি কোনো নিয়মিত ভারী ওষুধ সেবন করছেন? <select><option>No</option><option>Yes</option></select></div>
-     <div>৬. আপনি কি শারীরিকভাবে সম্পূর্ণ সুস্থ বোধ করছেন? <select><option>Yes</option><option>No</option></select></div>
-    </div>
-    <button type="button" class="primary" style="margin-top:10px;padding:8px 15px;font-size:12px;" onclick="checkEligibilityResult()">যাচাই করুন: আজ রক্ত দিতে পারবেন কি?</button>
-    <div id="eligibilityResultMsg" style="margin-top:8px;font-weight:bold;font-size:13px;color:#1b5e20;"></div>
-   </div>
-
-   <!-- Options List -->
-   <div style="margin-top:20px;">
-    <button type="button" class="action-option-btn" onclick="toggleDonorCard()">🪪 আমার ডোনার কার্ড</button>
-    <div id="donorIdCardModal" class="donor-id-card-modal">
-     <h3 style="margin:0 0 5px;font-size:18px;">MB Blood Bank - Digital Donor ID</h3>
-     <p style="margin:0 0 10px;font-size:12px;">Official Verified Blood Donor Card</p>
-     <div style="background:#fff;color:#000;padding:12px;border-radius:10px;text-align:left;display:inline-block;width:100%;">
-      <p style="margin:4px 0;"><b>নাম:</b> <span id="cardName">---</span></p>
-      <p style="margin:4px 0;"><b>রক্তের গ্রুপ:</b> <span id="cardBlood">---</span></p>
-      <p style="margin:4px 0;"><b>মোবাইল:</b> <span id="cardPhone">---</span></p>
-     </div>
-     <button type="button" class="utility-btn" style="margin-top:10px;background:#fff;color:var(--red);border:none;" onclick="alert('ডোনার কার্ড ডাউনলোড হচ্ছে...')">ডাউনলোড করুন</button>
-    </div>
-
-    <button type="button" class="action-option-btn" onclick="alert('আপনার রক্তদানের হিস্ট্রি: সফলভাবে ১ বার রক্তদান করেছেন।')">🩸 রক্তদানে ইতিহাস</button>
-
-    <button type="button" class="action-option-btn" onclick="toggleRoleSwitch()">🧑‍🦲 ভূমিকা পরিবর্তন করুন</button>
-    <div id="roleSwitchContainer" class="role-switch-container">
-     <label>আপনার ভূমিকা নির্বাচন করুন:</label>
-     <select id="userRoleSelect" onchange="updateRoleDisplay(this.value)">
-      <option value="রক্তদাতা">রক্তদাতা ★</option>
-      <option value="রক্ত গ্রহীতা">রক্ত গ্রহীতা ★</option>
-     </select>
-    </div>
-
-    <button type="button" class="action-option-btn" onclick="togglePasswordChangeForm()">🔐 পাসওয়ার্ড পরিবর্তন করুন</button>
-    <div id="passwordChangeContainer" class="role-switch-container">
-     <div style="display:grid;gap:10px;">
-      <input type="password" id="currPwd" placeholder="বর্তমান পাসওয়ার্ড *">
-      <input type="password" id="newPwd" placeholder="নিউ পাসওয়ার্ড *">
-      <input type="password" id="confirmNewPwd" placeholder="নিউ পাসওয়ার্ড পুনরায় লিখুন *">
-      <button type="button" class="primary" style="padding:8px;" onclick="alert('পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে!')">পরিবর্তন করুন</button>
-     </div>
-    </div>
-
-    <button type="button" class="action-option-btn" onclick="toggleEditProfileForm()">⚙️ প্রোফাইল এডিট করুন</button>
-    <div id="editProfileContainer" class="role-switch-container">
-     <div style="display:grid;gap:10px;">
-      <input type="text" id="editNameInput" placeholder="নাম পরিবর্তন করুন">
-      <input type="file" id="editPicInput" accept="image/*">
-      <button type="button" class="primary" style="padding:8px;" onclick="saveProfileEdits()">সংরক্ষণ করুন</button>
-     </div>
-    </div>
-   </div>
-  </div>
- </div>
-</main>
-
 <!-- DONOR REGISTRATION PAGE -->
 <main id="donorRegPage" class="hidden">
  <div class="wrap">
@@ -1186,7 +992,7 @@ footer a:hover{color:#fff}
    <h2 data-i18n="regTitle">রক্তদাতা হিসেবে নিবন্ধন করুন</h2>
    
    <div class="notice">
-    ⚠️ সফলভাবে নিবন্ধনের সাথে সাথেই আপনার অ্যাকাউন্ট সচল হবে এবং রক্তদাতার তালিকায় প্রদর্শিত হবে।
+    ⚠️ নিবন্ধনের পর আপনার Account সরাসরি রক্তদাতার তালিকায় প্রদর্শিত হবে (অ্যাডমিন যাচাই ছাড়াই)।
    </div>
 
    <form id="registrationForm">
@@ -1237,7 +1043,7 @@ footer a:hover{color:#fff}
 
      <div>
       <label>ছবি:</label>
-      <input type="file" id="regPhoto" accept="image/*" name="photo">
+      <input type="file" accept="image/*" id="regPhotoInput" name="photo">
      </div>
 
      <div>
@@ -1262,8 +1068,8 @@ footer a:hover{color:#fff}
      </div>
     </div>
 
-    <button class="primary" style="margin-top:20px;width:100%" type="submit" data-i18n="regSubmit">নিবন্ধন সম্পন্ন করুন</button>
-    <p class="status" id="regStatus" aria-live="polite"></p>
+    <button class="primary" style="margin-top:20px;width:100%" type="submit" data-i18n="regSubmit">নিবন্ধন সম্পূর্ণ করুন</button>
+    <p class="status" id="regStatus" aria-live="polite" data-i18n="regStatusText">নিবন্ধন সফল হলে সাথে সাথে রক্তদাতার তালিকায় যুক্ত হয়ে যাবে।</p>
    </form>
   </div>
  </div>
@@ -1296,7 +1102,7 @@ footer a:hover{color:#fff}
   <section>
    <div class="eyebrow" data-i18n="missionEyebrow">আমাদের উদ্দেশ্য</div>
    <h2 class="about-heading" data-i18n="missionTitle">আমাদের মিশন ও ভিশন</h2>
-   <p class="about-copy" data-i18n="missionDesc">দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে তোলাই আমাদের ভিশন।</p>
+   <p class="about-copy" data-i18n="missionDesc">দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে توলাই আমাদের ভিশন।</p>
    <div class="about-columns">
     <article class="about-panel"><h3 data-i18n="panel1Title">🎯 আমাদের মিশন</h3><p data-i18n="panel1Desc">দ্রুত, নিরাপদ আর ঝামেলাহীন ডোনার খুঁজে পেতে সহায়তা করে মানুষের মুখে হাসি ফোটানো।</p></article>
     <article class="about-panel"><h3 data-i18n="panel2Title">🌟 আমাদের ভিশন</h3><p data-i18n="panel2Desc">প্রযুক্তিনির্ভর সমাধানে বাংলাদেশের রক্তদানের ব্যবস্থাকে নতুনভাবে এগিয়ে নেওয়া।</p></article>
@@ -1308,9 +1114,9 @@ footer a:hover{color:#fff}
    <h2 class="about-heading" data-i18n="workTitle">রক্তদাতা ও রোগীর পাশে</h2>
    <p class="about-copy" data-i18n="workDesc">রক্তদাতা নিবন্ধন থেকে জরুরি রক্তের অনুরোধ—রক্তের প্রয়োজনের সময়ে প্রয়োজনীয় যোগাযোগ সহজ করাই আমাদের উদ্যোগ।</p>
    <div class="work-grid">
-    <article class="work-card"><div class="work-icon">🩸</div><h3 data-i18n="wCard1Title">লাইভ ডোনার</h3><p data-i18n="wCard1Desc">অনলাইন ডোনার নিবন্ধন, জরুরি অনুরোধ এবং দেশের বিভিন্ন এলাকার রক্তদাতার তথ্য খুঁজে পাওয়ার ব্যবস্থা।</p></article>
+    <article class="work-card"><div class="work-icon">🩸</div><h3 data-i18n="wCard1Title">লাইভ ডোনার</h3><p data-i18n="wCard1Desc">অনলাইন ডোনার নিবন্ধন, জরুরি অনুরোধ এবং দেশের বিভিন্ন এলাকার রক্তদatar তথ্য খুঁজে পাওয়ার ব্যবস্থা।</p></article>
     <article class="work-card"><div class="work-icon">🤝</div><h3 data-i18n="wCard2Title">রক্তদানে সহায়তা</h3><p data-i18n="wCard2Desc">রক্তের প্রয়োজন রয়েছে এমন ব্যক্তি ও স্বেচ্ছাসেবী রক্তদাতার মধ্যে যোগাযোগে সহায়তা।</p></article>
-    <article class="work-card"><div class="work-icon">✓</div><h3 data-i18n="wCard3Title">সঠিক ডোনার যাচাই</h3><p data-i18n="wCard3Desc">নিবন্ধিত ডোনারের তথ্য প্রশাসকের মাধ্যমে যাচাই ও অনুমোদনের ব্যবস্থা রাখার লক্ষ্য।</p></article>
+    <article class="work-card"><div class="work-icon">✓</div><h3 data-i18n="wCard3Title">সঠিক ডোনার যাচাই</h3><p data-i18n="wCard3Desc">নিবন্ধিত ডোনারের তথ্য সরাসরি রক্তদাতার তালিকায় প্রদর্শিত হওয়ার ব্যবস্থা।</p></article>
     <article class="work-card"><div class="work-icon">❤️</div><h3 data-i18n="wCard4Title">MB Blood Bank</h3><p data-i18n="wCard4Desc">রক্তের অনুরোধের তথ্য সংশ্লিষ্ট মানুষের কাছে পৌঁছে দেওয়ার জন্য একটি সহায়ক নেটওয়ার্ক।</p></article>
    </div>
   </section>
@@ -1453,7 +1259,7 @@ footer a:hover{color:#fff}
      <img src="mb-blood-bank-logo.png" alt="MB Blood Bank অরিজিনাল লোগো">
      <span class="logo-text">MB Blood Bank<small data-i18n="logoSmall">এক ফোঁটা রক্ত, একটি জীবন</small></span>
     </a>
-    <p class="footer-tagline" data-i18n="footerTagline">স্বেচ্ছাসেবী রক্তদাতা ও রোগীর মাঝে মানবতার সেতুবন্ধন।[span_0](start_span)[span_0](end_span)</p>
+    <p class="footer-tagline" data-i18n="footerTagline">স্বেচ্ছাসেবী রক্তদাতা ও রোগীর মাঝে মানবতার সেতুবন্ধন।</p>
     <div class="footer-socials">
      <a class="footer-social-link" href="https://www.facebook.com/share/19S774qsfr/" target="_blank" rel="noopener noreferrer" aria-label="MB Blood Bank Facebook" title="Facebook">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.4 21v-8.2h2.8l.4-3.2h-3.2V7.55c0-.93.26-1.56 1.6-1.56h1.7V3.13c-.3-.04-1.34-.13-2.55-.13-2.52 0-4.25 1.54-4.25 4.37V9.6H7.05v3.2h2.85V21h3.5z"/></svg>
@@ -1466,38 +1272,38 @@ footer a:hover{color:#fff}
 
    <div>
     <h3 data-i18n="fCol1Title">দ্রুত লিংক</h3>
-    <a href="#search" data-page="home" data-i18n="menuFindDonor">রক্তদাতা খুঁজুন[span_1](start_span)[span_1](end_span)</a>
-    <a href="#donorRegPage" data-page="donorReg" data-i18n="menuDonorReg">রক্তদাতা হিসেবে নিবন্ধন[span_2](start_span)[span_2](end_span)</a>
-    <a href="#emergency" data-page="home" data-i18n="reqTitle">জরুরি রক্তের অনুরোধ[span_3](start_span)[span_3](end_span)</a>
-    <a href="#aboutPage" data-page="about" data-i18n="menuAbout">আমাদের কথা[span_4](start_span)[span_4](end_span)</a>
+    <a href="#search" data-page="home" data-i18n="menuFindDonor">রক্তদাতা খুঁজুন</a>
+    <a href="#donorRegPage" data-page="donorReg" data-i18n="menuDonorReg">রক্তদাতা হিসেবে নিবন্ধন</a>
+    <a href="#emergency" data-page="home" data-i18n="reqTitle">জরুরি রক্তের অনুরোধ</a>
+    <a href="#aboutPage" data-page="about" data-i18n="menuAbout">আমাদের কথা</a>
    </div>
 
    <div>
-    <h3 data-i18n="fCol2Title">যোগাযোগ[span_5](start_span)[span_5](end_span)</h3>
-    <a href="#contactPage" data-page="contact" data-i18n="fContactOpt">যোগাযোগ অপশন[span_6](start_span)[span_6](end_span)</a>
-    <a href="tel:01726232108" data-i18n="fHotline">☎ হটলাইন[span_7](start_span)[span_7](end_span)</a>
-    <a href="mailto:info@mbbloodbank.com.bd" data-i18n="fEmail">✉ ইমেইল[span_8](start_span)[span_8](end_span)</a>
-    <a href="https://wa.me/8801726232108" target="_blank" rel="noopener noreferrer" data-i18n="waDetail">WhatsApp সাপোর্ট[span_9](start_span)[span_9](end_span)</a>
+    <h3 data-i18n="fCol2Title">যোগাযোগ</h3>
+    <a href="#contactPage" data-page="contact" data-i18n="fContactOpt">যোগাযোগ অপশন</a>
+    <a href="tel:01726232108" data-i18n="fHotline">☎ হটলাইন</a>
+    <a href="mailto:info@mbbloodbank.com.bd" data-i18n="fEmail">✉ ইমেইল</a>
+    <a href="https://wa.me/8801726232108" target="_blank" rel="noopener noreferrer" data-i18n="waDetail">WhatsApp সাপোর্ট</a>
    </div>
 
    <div>
-    <h3 data-i18n="fCol3Title">প্রতিষ্ঠাতা[span_10](start_span)[span_10](end_span)</h3>
-    <p>Monir Ahmed Shakib[span_11](start_span)[span_11](end_span)</p>
-    <p data-i18n="fFoundedYear">প্রতিষ্ঠার সাল: ২০২৫[span_12](start_span)[span_12](end_span)</p>
-    <p data-i18n="fFooterNote">জরুরি প্রয়োজনে তথ্য যাচাই করে যোগাযোগ করুন।[span_13](start_span)[span_13](end_span)</p>
+    <h3 data-i18n="fCol3Title">প্রতিষ্ঠাতা</h3>
+    <p>Monir Ahmed Shakib</p>
+    <p data-i18n="fFoundedYear">প্রতিষ্ঠার সাল: ২০২৫</p>
+    <p data-i18n="fFooterNote">জরুরি প্রয়োজনে তথ্য যাচাই করে যোগাযোগ করুন।</p>
    </div>
   </div>
-  <div class="copyright" data-i18n="copyright">© 2025–2026 MB Blood Bank · মানবতার সেবায়[span_14](start_span)[span_14](end_span)</div>
+  <div class="copyright" data-i18n="copyright">© 2025–2026 MB Blood Bank · মানবতার সেবায়</div>
  </div>
 </footer>
 
-<!-- ফিক্সড নিচের নেভিগেশন বার (লগইন করার পর ড্যাশবোর্ডের নিচে দেখাবে) -->
-<nav class="bottom-nav hidden" id="fixedBottomNav">
-  <a href="#home" class="bottom-nav-item active" data-page="home" onclick="showPage('home','#home')">
+<!-- ফিক্সড নিচের নেভিগেশন বার (লাল-সাদা থিম) -->
+<nav class="bottom-nav" id="bottomNavBar">
+  <a href="#home" class="bottom-nav-item active" data-page="home">
     <span class="icon">🏠</span>
     <span>হোম</span>
   </a>
-  <a href="#search" class="bottom-nav-item" data-page="home" onclick="showPage('home','#search')">
+  <a href="#search" class="bottom-nav-item" data-page="home">
     <span class="icon">🔍</span>
     <span>ডোনার</span>
   </a>
@@ -1505,101 +1311,17 @@ footer a:hover{color:#fff}
     <span class="icon">🚑</span>
     <span>এম্বুলেন্স</span>
   </a>
-  <a href="#emergency" class="bottom-nav-item" data-page="home" onclick="showPage('home','#emergency')">
+  <a href="#emergency" class="bottom-nav-item" data-page="home">
     <span class="icon">📑</span>
     <span>রিকুয়েষ্ট</span>
   </a>
-  <a href="#donorDashboardPage" class="bottom-nav-item" data-page="donorDashboard" onclick="showPage('donorDashboard')">
+  <a href="#donorLoginPage" class="bottom-nav-item" data-page="donorLogin">
     <span class="icon">🧑‍🦲</span>
     <span>প্রোফাইল</span>
   </a>
 </nav>
 
-<!-- Firebase SDKs ও ডাটাবেজ সংযোগ স্ক্রিপ্ট -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBRZW1CtF_YMxj50-UPbtMoL71E9XEsbj4",
-    authDomain: "mb-blood-bank-2a77a.firebaseapp.com",
-    projectId: "mb-blood-bank-2a77a",
-    storageBucket: "mb-blood-bank-2a77a.firebasestorage.app",
-    messagingSenderId: "407595095479",
-    appId: "1:407595095479:web:4cd9ec9807511084b68432",
-    measurementId: "G-9YYPYS87G0"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-
-  window.currentUserData = {
-    name: "Monir Ahmed Shakib",
-    email: "info@mbbloodbank.com.bd",
-    phone: "01726232108",
-    bloodGroup: "B+",
-    district: "রংপুর",
-    status: "সক্রিয়"
-  };
-
-  const registrationForm = document.getElementById('registrationForm');
-  if (registrationForm) {
-    registrationForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
-
-      const name = document.getElementById('name').value;
-      const phone = document.getElementById('phone').value;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('regPassword').value;
-      const confirmPassword = document.getElementById('regConfirmPassword').value;
-      const bloodGroup = document.getElementById('bloodGroup').value;
-      const district = document.getElementById('regDistrict').value;
-      const regStatus = document.getElementById('regStatus');
-
-      if (password !== confirmPassword) {
-        regStatus.textContent = "পাসওয়ার্ড দুটি মিলছে না! আবার চেষ্টা করুন।";
-        regStatus.style.color = "#b51035";
-        return;
-      }
-
-      try {
-        regStatus.textContent = "নিবন্ধন প্রক্রিয়া চলছে...";
-        regStatus.style.color = "#14783d";
-
-        // লোকাল ডেটা আপডেট করে সরাসরি ড্যাশবোর্ডে লগইন করিয়ে দেওয়া
-        window.currentUserData = {
-          name: name,
-          email: email,
-          phone: phone,
-          bloodGroup: bloodGroup || "B+",
-          district: district || "রংপুর",
-          status: "সক্রিয়"
-        };
-
-        alert("নিবন্ধন সফল হয়েছে!");
-        showPage('donorDashboard');
-
-      } catch (error) {
-        regStatus.textContent = "ত্রুটি: " + error.message;
-        regStatus.style.color = "#b51035";
-      }
-    });
-  }
-
-  const loginForm = document.getElementById('loginForm');
-  if(loginForm) {
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const identity = document.getElementById('loginIdentity').value;
-      window.currentUserData.email = identity;
-      alert("লগইন সফল হয়েছে!");
-      showPage('donorDashboard');
-    });
-  }
-</script>
-
+<!-- জাভাস্ক্রিপ্ট এবং ড্যাশবোর্ড লজিক -->
 <script>
 "use strict";
 const $ = id => document.getElementById(id);
@@ -1619,57 +1341,6 @@ function toggleFactTip(tipId) {
   const tipBox = $(tipId);
   if (tipBox) {
     tipBox.style.display = tipBox.style.display === "block" ? "none" : "block";
-  }
-}
-
-function toggleQuickCheck() {
-  const sec = $("quickCheckSection");
-  sec.style.display = sec.style.display === "block" ? "none" : "block";
-}
-
-function checkEligibilityResult() {
-  $("eligibilityResultMsg.textContent = "অভিনন্দন! আপনার উত্তর অনুযায়ী আপনি আজ রক্তদান করতে পারবেন।";
-}
-
-function toggleDonorCard() {
-  const card = $("donorIdCardModal");
-  card.style.display = card.style.display === "block" ? "none" : "block";
-  if(window.currentUserData) {
-    $("cardName").textContent = window.currentUserData.name;
-    $("cardBlood").textContent = window.currentUserData.bloodGroup;
-    $("cardPhone").textContent = window.currentUserData.phone;
-  }
-}
-
-function toggleRoleSwitch() {
-  const box = $("roleSwitchContainer");
-  box.style.display = box.style.display === "block" ? "none" : "block";
-}
-
-function updateRoleDisplay(val) {
-  $("dashProfileRoleStatus").textContent = val;
-}
-
-function togglePasswordChangeForm() {
-  const box = $("passwordChangeContainer");
-  box.style.display = box.style.display === "block" ? "none" : "block";
-}
-
-function toggleEditProfileForm() {
-  const box = $("editProfileContainer");
-  box.style.display = box.style.display === "block" ? "none" : "block";
-  if(window.currentUserData) {
-    $("editNameInput").value = window.currentUserData.name;
-  }
-}
-
-function saveProfileEdits() {
-  const newName = $("editNameInput").value;
-  if(newName) {
-    window.currentUserData.name = newName;
-    $("dashProfileName").textContent = newName;
-    alert("প্রোফাইল সফলভাবে আপডেট হয়েছে!");
-    toggleEditProfileForm();
   }
 }
 
@@ -1764,7 +1435,8 @@ const translations = {
     regTitle: "রক্তদাতা হিসেবে নিবন্ধন করুন",
     optSelectGroup: "রক্তের গ্রুপ নির্বাচন করুন *",
     optSelectDivision: "বিভাগ নির্বাচন করুন *",
-    regSubmit: "নিবন্ধন সম্পন্ন করুন",
+    regSubmit: "নিবন্ধন সম্পূর্ণ করুন",
+    regStatusText: "নিবন্ধন সফল হলে সাথে সাথে রক্তদাতার তালিকায় যুক্ত হয়ে যাবে।",
     emerEyebrow: "জরুরি রক্তের অনুরোধ",
     emerTitle: "রোগীর জন্য রক্তের অনুরোধ করুন",
     emerNotice: "⚠️ আর্থিক লেনদেনের ক্ষেত্রে সতর্ক থাকুন। আর্থিক লেনদেনের জন্য MB Blood Bank কর্তৃপক্ষ দায়ী নয়।",
@@ -1773,7 +1445,87 @@ const translations = {
     hospitalPlaceholder: "হাসপাতাল / স্থান *",
     emerSubmit: "জরুরি অনুরোধ পাঠান",
     emerStatusText: "অনুরোধ সংরক্ষণ করতে Firebase/ডেটাবেস সংযোগ প্রয়োজন।",
-    copyright: "© 2025–2026 MB Blood Bank · মানবতার সেবায়[span_15](start_span)[span_15](end_span)"
+    aboutTag: "❤️ MB Blood Bank · আমাদের কথা",
+    aboutMainTitle: "মানবতার জন্য <span>একটি নেটওয়ার্ক</span>",
+    aboutIntro1: "২০২৫ সাল থেকে বাংলাদেশের বিভিন্ন এলাকার মানুষের কাছে রক্তদানের তথ্য পৌঁছে দেওয়া, রক্তদাতা নিবন্ধন, জরুরি রক্তের অনুরোধ এবং লাইভ ডোনার খুঁজে পাওয়ার সুযোগ তৈরি করাই আমাদের লক্ষ্য।",
+    aboutIntro2: "৬৪টি জেলার প্রতিটি—উপজেলা সদর থেকে ইউনিয়ন পর্যন্ত—একটাই নেটওয়ার্কে মানুষকে যুক্ত করার স্বপ্ন নিয়ে MB Blood Bank-এর পথচলা।",
+    aboutLocation: "বাংলাদেশের প্রতিটি প্রান্তে মানবতার বন্ধন",
+    bannerTitle: "রক্ত দিন, জীবন বাঁচান",
+    bannerDesc: "আপনার এক ব্যাগ রক্ত একজন মানুষের জীবনে নতুন আশার আলো হতে পারে।",
+    astat1Val: "৩,০০০", astat1Text: "নিবন্ধিত ডোনার",
+    astat2Val: "৭০০", astat2Text: "কর্মী",
+    astat3Val: "১,০০০", astat3Text: "ডোনার পয়েন্ট",
+    astat4Val: "৬৪", astat4Text: "জেলার মানুষের জন্য",
+    missionEyebrow: "আমাদের উদ্দেশ্য",
+    missionTitle: "আমাদের মিশন ও ভিশন",
+    missionDesc: "দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে তোলাই আমাদের ভিশন.",
+    panel1Title: "🎯 আমাদের মিশন",
+    panel1Desc: "দ্রুত, নিরাপদ আর ঝামেলাহীন ডোনার খুঁজে পেতে সহায়তা করে মানুষের মুখে হাসি ফোটানো।",
+    panel2Title: "🌟 আমাদের ভিশন",
+    panel2Desc: "প্রযুক্তিনির্ভর সমাধানে বাংলাদেশের রক্তদানের ব্যবস্থাকে নতুনভাবে এগিয়ে নেওয়া।",
+    workEyebrow: "আমরা যা করি",
+    workTitle: "রক্তদাতা ও রোগীর পাশে",
+    workDesc: "রক্তদাতা নিবন্ধন থেকে জরুরি রক্তের অনুরোধ—রক্তের প্রয়োজনের সময়ে প্রয়োজনীয় যোগাযোগ সহজ করাই আমাদের উদ্যোগ।",
+    wCard1Title: "লাইভ ডোনার",
+    wCard1Desc: "অনলাইন ডোনার নিবন্ধন, জরুরি অনুরোধ এবং দেশের বিভিন্ন এলাকার রক্তদাতার তথ্য খুঁজে পাওয়ার ব্যবস্থা।",
+    wCard2Title: "রক্তদানে সহায়তা",
+    wCard2Desc: "রক্তের প্রয়োজন রয়েছে এমন ব্যক্তি ও স্বেচ্ছাসেবী রক্তদাতার মধ্যে যোগাযোগে সহায়তা।",
+    wCard3Title: "সঠিক ডোনার যাচাই",
+    wCard3Desc: "নিবন্ধিত ডোনারের তথ্য সরাসরি রক্তদাতার তালিকায় প্রদর্শিত হওয়ার ব্যবস্থা।",
+    wCard4Title: "MB Blood Bank",
+    wCard4Desc: "রক্তের অনুরোধের তথ্য সংশ্লিষ্ট মানুষের কাছে পৌঁছে দেওয়ার জন্য একটি সহায়ক নেটওয়ার্ক।",
+    journeyEyebrow: "আমাদের যাত্রা",
+    journeyTitle: "যেভাবে শুরু",
+    journeyDesc1: "২০২৫ সালে ঢাকায় একদল রক্তদাতা ও একটি প্রতিশ্রুতি নিয়ে MB Blood Bank-এর যাত্রা শুরু—প্রয়োজনের সময়ে রক্তদাতার সঙ্গে যোগাযোগ সহজ করা। সেই লক্ষ্য থেকেই দেশের বিভিন্ন জেলা ও এলাকায় রক্তদাতা নেটওয়ার্ক গড়ে তোলার স্বপ্ন নিয়ে আমাদের পথচলা।",
+    journeyDesc2: "আমাদের লক্ষ্য হলো বিভাগ, জেলা, উপজেলা, ইউনিয়ন ও গ্রামের মানুষের কাছে রক্তদানের তথ্য পৌঁছে দেওয়া এবং জরুরি প্রয়োজনে যোগাযোগের সুযোগ সহজ করা।",
+    banner3dTitle: "স্বেচ্ছাসেবী<br>মানবতার বন্ধন",
+    banner3dDesc: "একসাথে এগিয়ে আসি, রক্তদানের মাধ্যমে মানুষের পাশে দাঁড়াই। আপনার সহযোগিতাই হতে পারে কারও নতুন জীবনের আশা।",
+    banner3dBottom: "❤️ রক্ত দিন, জীবন বাঁচান",
+    leadEyebrow: "নেতৃত্ব",
+    leadTitle: "প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক",
+    founderRole: "প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক",
+    founderDesc: "২০২৫ সালে ঢাকায় MB Blood Bank প্রতিষ্ঠার মাধ্যমে রক্তদাতা ও রক্তের প্রয়োজন রয়েছে এমন মানুষের মধ্যে যোগাযোগ সহজ করার উদ্যোগ শুরু হয়। মানুষের পাশে থাকা এবং রক্তদানের তথ্য সহজলভ্য করাই এই উদ্যোগের মূল উদ্দেশ্য।",
+    founderQuote: "“জরুরি প্রয়োজনে রক্তদানের ব্যবস্থা সহজ, নির্ভরযোগ্য ও মানবিক করে তোলাই আমাদের কাজ।”",
+    aboutFinalTitle: "প্রতিটি বিভাগ, জেলা, উপজেলা ও গ্রামের মানুষের পাশে",
+    aboutFinalDesc: "রক্তদাতা হিসেবে নিবন্ধন করুন, জরুরি প্রয়োজনে রক্তদাতা খুঁজুন, আর অসহায় মানুষের জীবন বাঁচাতে মানবতার এই উদ্যোগে যুক্ত হোন।",
+    aboutFinalBtn1: "রক্তদাতা নিবন্ধন করুন →",
+    aboutFinalBtn2: "জরুরি রক্তদাতা খুঁজুন",
+    contactTag: "❤️ MB Blood Bank · যোগাযোগ",
+    contactMainTitle: "আমরা আপনার <span>পাশে আছি</span>",
+    contactMainDesc: "রক্তদাতা খোঁজা, রক্তদাতা নিবন্ধন, অ্যাকাউন্ট অথবা কোনো অভিযোগের বিষয়ে আমাদের সঙ্গে যোগাযোগ করুন। সঠিক তথ্য দিয়ে যোগাযোগ করলে আমরা আপনাকে সহায়তা করতে পারব।",
+    cMethodsEyebrow: "যোগাযোগের মাধ্যম",
+    cMethodsTitle: "একজন মানুষের সাথে কথা বলুন",
+    cMethodsSub: "আপনার প্রয়োজন অনুযায়ী নিচের যেকোনো মাধ্যম বেছে নিন।",
+    hotlineTitle: "হটলাইন",
+    hotlineDesc: "রক্তদাতা, ব্লাড ব্যাংক, নিবন্ধন, অ্যাকাউন্ট ও অভিযোগ",
+    callNow: "এখনই কল করুন",
+    emailTitle: "ইমেইল",
+    emailDesc: "ইমেইল পাঠান — এক কর্মদিবসের মধ্যে উত্তর দেওয়ার লক্ষ্য",
+    sendEmail: "ইমেইল পাঠান",
+    officeTitle: "ব্লাড ব্যাংক অফিস",
+    officeDesc: "আমাদের অফিসের ঠিকানা",
+    officeAddress: "বাড়ি ৪, রোড ২/এ, গংগাচড়া, রংপুর ৪৫১০",
+    openMap: "ম্যাপে খুলুন",
+    waTitle: "হোয়াটসঅ্যাপ সাপোর্ট",
+    waDesc: "দ্রুত যোগাযোগের জন্য WhatsApp ব্যবহার করুন",
+    waDetail: "WhatsApp-এ মেসেজ পাঠান",
+    openWa: "WhatsApp খুলুন",
+    contactNote: "ℹ️ রক্তদানের আগে হাসপাতাল বা অনুমোদিত রক্তদান কেন্দ্রের সঙ্গে প্রয়োজনীয় স্বাস্থ্য পরীক্ষা ও ক্রসম্যাচ নিশ্চিত করুন। জরুরি চিকিৎসার প্রয়োজনে নিকটস্থ হাসপাতালের সাহায্য নিন।",
+    waPanelTag: "দ্রুত সাপোর্ট",
+    waPanelTitle: "হোয়াটসঅ্যাপে কথা বলুন",
+    waPanelDesc: "যে রক্তদাতার অপেক্ষায় আছেন বা খুঁজতেছেন, তা নিয়ে সাপোর্ট টিমের কাছে পৌঁছানোর দ্রুত উপায় প্রায়ই হোয়াটসঅ্যাপ। আপনার প্রয়োজনের কথা লিখে আমাদের মেসেজ পাঠাতে পারেন।",
+    waBtnText: "হোয়াটসঅ্যাপে মেসেজ করুন →",
+    contactFooterNote: "MB Blood Bank — এক ফোঁটা রক্ত, একটি জীবন।",
+    footerTagline: "স্বেচ্ছাসেবী রক্তদাতা ও রোগীর মাঝে মানবতার সেতুবন্ধন।",
+    fCol1Title: "দ্রুত লিংক",
+    fCol2Title: "যোগাযোগ",
+    fContactOpt: "যোগাযোগ অপশন",
+    fHotline: "☎ হটলাইন",
+    fEmail: "✉ ইমেইল",
+    fCol3Title: "প্রতিষ্ঠাতা",
+    fFoundedYear: "প্রতিষ্ঠার সাল: ২০২৫",
+    fFooterNote: "জরুরি প্রয়োজনে তথ্য যাচাই করে যোগাযোগ করুন।",
+    copyright: "© 2025–2026 MB Blood Bank · মানবতার সেবায়"
   },
   en: {
     logoSmall: "A drop of blood, a life",
@@ -1842,6 +1594,7 @@ const translations = {
     optSelectGroup: "Select Blood Group *",
     optSelectDivision: "Select Division *",
     regSubmit: "Complete Registration",
+    regStatusText: "Registration will instantly appear in the donor list upon success.",
     emerEyebrow: "Emergency Blood Request",
     emerTitle: "Request Blood for Patient",
     emerNotice: "⚠️ Be cautious regarding financial transactions. MB Blood Bank authorities are not responsible for financial transactions.",
@@ -1850,7 +1603,87 @@ const translations = {
     hospitalPlaceholder: "Hospital / Location *",
     emerSubmit: "Send Emergency Request",
     emerStatusText: "Firebase/Database connection required to save request.",
-    copyright: "© 2025–2026 MB Blood Bank · In Service of Humanity[span_16](start_span)[span_16](end_span)"
+    aboutTag: "❤️ MB Blood Bank · About Us",
+    aboutMainTitle: "A Network for <span>Humanity</span>",
+    aboutIntro1: "Since 2025, our goal has been to share blood donation info, register donors, facilitate emergency requests, and create live donor search opportunities across areas in Bangladesh.",
+    aboutIntro2: "With the dream of connecting people in every single one of the 64 districts—from upazila headquarters to unions—into a single network, MB Blood Bank began its journey.",
+    aboutLocation: "Bonds of humanity in every corner of Bangladesh",
+    bannerTitle: "Give Blood, Save Life",
+    bannerDesc: "One bag of your blood can bring new hope into someone's life.",
+    astat1Val: "3,000", astat1Text: "Registered Donors",
+    astat2Val: "700", astat2Text: "Staff",
+    astat3Val: "1,000", astat3Text: "Donor Points",
+    astat4Val: "64", astat4Text: "For District People",
+    missionEyebrow: "Our Purpose",
+    missionTitle: "Our Mission & Vision",
+    missionDesc: "Our mission is to bring smiles to people by making it fast, safe, and hassle-free to contact donors. Our vision is to make blood donation in Bangladesh easier, more reliable, and more humane through tech-driven solutions.",
+    panel1Title: "🎯 Our Mission",
+    panel1Desc: "Bringing smiles by helping find fast, safe, and hassle-free donors.",
+    panel2Title: "🌟 Our Vision",
+    panel2Desc: "Advancing Bangladesh's blood donation system with tech-driven solutions.",
+    workEyebrow: "What We Do",
+    workTitle: "Standing Beside Donors & Patients",
+    workDesc: "From donor registration to emergency requests—our initiative simplifies necessary communication during times of blood need.",
+    wCard1Title: "Live Donors",
+    wCard1Desc: "Online donor registration, emergency requests, and finding donor info across different areas of the country.",
+    wCard2Title: "Donation Support",
+    wCard2Desc: "Helping connect individuals in need of blood with voluntary donors.",
+    wCard3Title: "Verified Donors",
+    wCard3Desc: "Aims to display registered donor info directly in the donor list.",
+    wCard4Title: "MB Blood Bank",
+    wCard4Desc: "A supportive network to deliver blood request info to relevant people.",
+    journeyEyebrow: "Our Journey",
+    journeyTitle: "How It Started",
+    journeyDesc1: "MB Blood Bank started its journey in Dhaka in 2025 with a group of donors and a promise—making it easy to contact donors when needed. Driven by that goal, our path began with the dream of building donor networks across districts and areas.",
+    journeyDesc2: "Our goal is to reach blood donation info to people in divisions, districts, upazilas, unions, and villages, and simplify communication for emergencies.",
+    banner3dTitle: "Voluntary<br>Humanity Bond",
+    banner3dDesc: "Let's step forward together, standing beside people through blood donation. Your cooperation could be someone's new life hope.",
+    banner3dBottom: "❤️ Give Blood, Save Life",
+    leadEyebrow: "Leadership",
+    leadTitle: "Founder & Managing Director",
+    founderRole: "Founder & Managing Director",
+    founderDesc: "The initiative to simplify communication between donors and people in need began with the establishment of MB Blood Bank in Dhaka in 2025. The core purpose is standing beside people and making blood donation info accessible.",
+    founderQuote: "“Making blood donation arrangements easy, reliable, and humane for emergency needs is our work.”",
+    aboutFinalTitle: "Standing Beside Every Division, District, Upazila & Village",
+    aboutFinalDesc: "Register as a donor, find donors in emergencies, and join this humanitarian initiative to save helpless lives.",
+    aboutFinalBtn1: "Register as Donor →",
+    aboutFinalBtn2: "Find Emergency Donor",
+    contactTag: "❤️ MB Blood Bank · Contact",
+    contactMainTitle: "We Are <span>With You</span>",
+    contactMainDesc: "Contact us regarding finding donors, donor registration, accounts, or complaints. Providing accurate info helps us assist you.",
+    cMethodsEyebrow: "Contact Methods",
+    cMethodsTitle: "Talk to a Person",
+    cMethodsSub: "Choose any of the methods below according to your needs.",
+    hotlineTitle: "Hotline",
+    hotlineDesc: "Donors, blood bank, registration, accounts & complaints",
+    callNow: "Call Now",
+    emailTitle: "Email",
+    emailDesc: "Send an email — aiming to reply within one working day",
+    sendEmail: "Send Email",
+    officeTitle: "Blood Bank Office",
+    officeDesc: "Our office address",
+    officeAddress: "House 4, Road 2/A, Gangachara, Rangpur 5410",
+    openMap: "Open in Map",
+    waTitle: "WhatsApp Support",
+    waDesc: "Use WhatsApp for quick communication",
+    waDetail: "Message on WhatsApp",
+    openWa: "Open WhatsApp",
+    contactNote: "ℹ️ Ensure necessary health checks and crossmatching with the hospital or approved blood donation center before donating blood. Seek help from the nearest hospital for emergency medical needs.",
+    waPanelTag: "Quick Support",
+    waPanelTitle: "Talk on WhatsApp",
+    waPanelDesc: "WhatsApp is often the fastest way to reach the support team regarding donors you are waiting for or looking for. You can write your requirement and message us.",
+    waBtnText: "Message on WhatsApp →",
+    contactFooterNote: "MB Blood Bank — A drop of blood, a life.",
+    footerTagline: "A humanitarian bridge between voluntary donors and patients.",
+    fCol1Title: "Quick Links",
+    fCol2Title: "Contact",
+    fContactOpt: "Contact Options",
+    fHotline: "☎ Hotline",
+    fEmail: "✉ Email",
+    fCol3Title: "Founder",
+    fFoundedYear: "Founded: 2025",
+    fFooterNote: "Verify info before contacting in emergencies.",
+    copyright: "© 2025–2026 MB Blood Bank · In Service of Humanity"
   }
 };
 
@@ -1859,10 +1692,23 @@ langBtn.addEventListener("click", () => {
   langBtn.textContent = currentLang === "bn" ? "EN" : "BN";
   
   const t = translations[currentLang];
+
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const key = el.getAttribute("data-i18n");
-    if (t[key]) el.innerHTML = t[key];
+    if (t[key]) {
+      el.innerHTML = t[key];
+    }
   });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+    const key = el.getAttribute("data-i18n-placeholder");
+    if (t[key]) {
+      el.placeholder = t[key];
+    }
+  });
+
+  $("heroTitle").innerHTML = t.heroTitleHtml;
+  $("heroDesc").textContent = t.heroDescText;
 });
 
 function showPage(page, targetHash) {
@@ -1870,30 +1716,50 @@ function showPage(page, targetHash) {
   const isContact = page === "contact";
   const isDonorReg = page === "donorReg";
   const isDonorLogin = page === "donorLogin";
-  const isDonorDashboard = page === "donorDashboard";
 
-  $("homePage").classList.toggle("hidden", isAbout || isContact || isDonorReg || isDonorLogin || isDonorDashboard);
+  $("homePage").classList.toggle("hidden", isAbout || isContact || isDonorReg || isDonorLogin);
   $("aboutPage").classList.toggle("hidden", !isAbout);
   $("contactPage").classList.toggle("hidden", !isContact);
   $("donorRegPage").classList.toggle("hidden", !isDonorReg);
   $("donorLoginPage").classList.toggle("hidden", !isDonorLogin);
-  const dashPage = $("donorDashboardPage");
-  if(dashPage) dashPage.classList.toggle("hidden", !isDonorDashboard);
 
-  // লগইন করার পর ড্যাশবোর্ডের নিচে বটম নেভিগেশন বার দেখাবে
-  const bottomNav = $("fixedBottomNav");
-  if(bottomNav) {
-    bottomNav.classList.toggle("hidden", !isDonorDashboard && page !== "home" && page !== "search");
+  document.querySelectorAll("#navLinks a[data-page]").forEach(link => {
+    link.classList.toggle(
+      "active",
+      link.dataset.page === page && !link.classList.contains("pill")
+    );
+  });
+
+  // বটম নেভিগেশন আইটেম অ্যাক্টিভ ক্লাস আপডেট
+  document.querySelectorAll(".bottom-nav-item[data-page]").forEach(item => {
+    item.classList.toggle("active", item.dataset.page === page);
+  });
+
+  navLinks.classList.remove("open");
+  menuBtn.setAttribute("aria-expanded", "false");
+
+  if (isAbout) {
+    history.replaceState(null, "", "#aboutPage");
+    window.scrollTo({top:0,behavior:"smooth"});
+  } else if (isContact) {
+    history.replaceState(null, "", "#contactPage");
+    window.scrollTo({top:0,behavior:"smooth"});
+  } else if (isDonorReg) {
+    history.replaceState(null, "", "#donorRegPage");
+    window.scrollTo({top:0,behavior:"smooth"});
+  } else if (isDonorLogin) {
+    history.replaceState(null, "", "#donorLoginPage");
+    window.scrollTo({top:0,behavior:"smooth"});
+  } else {
+    const target = targetHash && $(targetHash.replace("#",""));
+    if (target) {
+      history.replaceState(null, "", targetHash);
+      setTimeout(() => target.scrollIntoView({behavior:"smooth",block:"start"}), 0);
+    } else {
+      history.replaceState(null, "", "#home");
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
   }
-
-  if(isDonorDashboard && window.currentUserData) {
-    $("dashProfileName").textContent = window.currentUserData.name;
-    $("dashBloodGroup").textContent = "রক্তের গ্রুপ: " + window.currentUserData.bloodGroup;
-    $("dashDistrict").textContent = "জেলা: " + window.currentUserData.district;
-    $("dashStatus").textContent = "অবস্থা: " + window.currentUserData.status;
-  }
-
-  window.scrollTo({top:0,behavior:"smooth"});
 }
 
 document.querySelectorAll("[data-page]").forEach(link => {
@@ -1901,22 +1767,54 @@ document.querySelectorAll("[data-page]").forEach(link => {
     if(link.getAttribute("href").startsWith("tel:")) return;
     event.preventDefault();
     const page = link.dataset.page || "home";
-    showPage(page);
+    const href = link.getAttribute("href");
+    showPage(page, href);
   });
+});
+
+window.addEventListener("load", () => {
+  if (location.hash === "#aboutPage") showPage("about");
+  else if (location.hash === "#contactPage") showPage("contact");
+  else if (location.hash === "#donorRegPage") showPage("donorReg");
+  else if (location.hash === "#donorLoginPage") showPage("donorLogin");
+  else showPage("home");
+});
+
+window.addEventListener("popstate", () => {
+  if (location.hash === "#aboutPage") showPage("about");
+  else if (location.hash === "#contactPage") showPage("contact");
+  else if (location.hash === "#donorRegPage") showPage("donorReg");
+  else if (location.hash === "#donorLoginPage") showPage("donorLogin");
+  else showPage("home", location.hash);
 });
 
 let selectedBlood = "";
 let geoData = [];
+
 const geoURL = "https://raw.githubusercontent.com/sohag-pro/BD-JSON/master/bd.json";
-const dhakaMetroThanas = ["Adabor","Airport","Badda","Banani","Bangshal","Dhanmondi","Gulshan","Mirpur","Mohammadpur","Uttara"];
+
+const dhakaMetroThanas = [
+  "Adabor","Airport","Badda","Banani","Bangshal","Bhashantek","Cantonment",
+  "Chawkbazar","Dakshinkhan","Darus-Salam","Demra","Dhanmondi","Gandaria",
+  "Gulshan","Hazaribagh","Jatrabari","Kadamtali","Kafrul","Kalabagan",
+  "Kamrangirchar","Khilgaon","Khilkhet","Kotwali","Lalbagh","Mirpur Model",
+  "Mohammadpur","Motijheel","Mugda","New Market","Pallabi","Paltan","Ramna",
+  "Rampura","Sabujbagh","Shah Ali","Shahbagh","Sher-e-Bangla Nagar",
+  "Shyampur","Sutrapur","Tejgaon","Tejgaon Industrial Area","Turag",
+  "Uttara East","Uttara West","Vatara","Wari"
+];
+
+const INSIDE_DHAKA_VALUE = "__inside_dhaka__";
 
 function resetSelect(el, label) {
   el.replaceChildren(new Option(label, ""));
 }
+
 function itemName(item) {
   if (typeof item === "string") return item;
   return item.bn_name || item.name || item.title || "";
 }
+
 function fillSelect(el, items, label) {
   resetSelect(el, label);
   items.forEach(item => {
@@ -1925,28 +1823,492 @@ function fillSelect(el, items, label) {
   });
 }
 
+function addInsideDhakaOption(divisionSelect) {
+  const exists = Array.from(divisionSelect.options).some(
+    option => option.value === INSIDE_DHAKA_VALUE
+  );
+  if (!exists) {
+    divisionSelect.add(new Option("Inside Dhaka — ঢাকা মহানগরের থানা", INSIDE_DHAKA_VALUE));
+  }
+}
+
+function isInsideDhaka(value) {
+  return value === INSIDE_DHAKA_VALUE;
+}
+
+function setupCascade(divisionId, districtId, upazilaId) {
+  const div = $(divisionId);
+  const dist = $(districtId);
+  const upa = $(upazilaId);
+
+  if(!div) return;
+
+  fillSelect(div, geoData, currentLang === "bn" ? "বিভাগ নির্বাচন করুন" : "Select Division");
+  addInsideDhakaOption(div);
+  resetSelect(dist, currentLang === "bn" ? "আগে বিভাগ নির্বাচন করুন" : "Select Division First");
+  resetSelect(upa, currentLang === "bn" ? "আগে জেলা নির্বাচন করুন" : "Select District First");
+  dist.disabled = true;
+  upa.disabled = true;
+
+  div.addEventListener("change", () => {
+    const divisionValue = div.value;
+
+    if (isInsideDhaka(divisionValue)) {
+      fillSelect(dist, dhakaMetroThanas, currentLang === "bn" ? "ঢাকা মহানগরের থানা নির্বাচন করুন" : "Select Dhaka Metro Thana");
+      dist.disabled = false;
+      resetSelect(upa, currentLang === "bn" ? "Inside Dhaka-তে উপজেলা নির্বাচন প্রয়োজন নেই" : "Upazila not required for Inside Dhaka");
+      upa.disabled = true;
+      return;
+    }
+
+    const division = geoData.find(x => itemName(x) === divisionValue);
+    const districts = division ? (division.districts || division.district || []) : [];
+    fillSelect(dist, districts, currentLang === "bn" ? "জেলা নির্বাচন করুন" : "Select District");
+    dist.disabled = districts.length === 0;
+    resetSelect(upa, currentLang === "bn" ? "আগে জেলা নির্বাচন করুন" : "Select District First");
+    upa.disabled = true;
+  });
+
+  dist.addEventListener("change", () => {
+    if (isInsideDhaka(div.value)) {
+      resetSelect(upa, currentLang === "bn" ? "Inside Dhaka-তে উপজেলা নির্বাচন প্রয়োজন নেই" : "Upazila not required for Inside Dhaka");
+      upa.disabled = true;
+      return;
+    }
+
+    const division = geoData.find(x => itemName(x) === div.value);
+    const districts = division ? (division.districts || division.district || []) : [];
+    const district = districts.find(x => itemName(x) === dist.value);
+    const upazilas = district
+      ? (district.upazilas || district.upazillas || district.upazila || [])
+      : [];
+
+    fillSelect(upa, upazilas, currentLang === "bn" ? "উপজেলা নির্বাচন করুন" : "Select Upazila");
+    upa.disabled = upazilas.length === 0;
+  });
+}
+
 async function loadLocations() {
+  const status = $("locationStatus");
+
   try {
     const response = await fetch(geoURL);
-    if (!response.ok) throw new Error();
-    geoData = await response.json();
-    
-    // Simple population for selects
-    const divs = geoData.map(d => itemName(d));
-    const searchDiv = $("searchDivision");
-    const regDiv = $("regDivision");
-    const reqDiv = $("reqDivision");
-    
-    divs.forEach(d => {
-      if(searchDiv) searchDiv.add(new Option(d, d));
-      if(regDiv) regDiv.add(new Option(d, d));
-      if(reqDiv) reqDiv.add(new Option(d, d));
-    });
-  } catch (e) {
-    console.error("Location load error", e);
+    if (!response.ok) throw new Error("লোকেশন ডেটা পাওয়া যায়নি");
+
+    const data = await response.json();
+    if (!Array.isArray(data) || !data.length) {
+      throw new Error("লোকেশন ডেটার ফরম্যাট সঠিক নয়");
+    }
+
+    geoData = data;
+    setupCascade("searchDivision","searchDistrict","searchUpazila");
+    setupCascade("regDivision","regDistrict","regUpazila");
+    setupCascade("reqDivision","reqDistrict","reqUpazila");
+
+    if (status) {
+      status.textContent =
+        currentLang === "bn" ? "লোকেশন তালিকা লোড হয়েছে। ঢাকা বিভাগ নির্বাচন করলে জেলার তালিকা এবং Inside Dhaka নির্বাচন করলে ঢাকা মহানগরের থানা দেখাবে।" : "Location list loaded.";
+      status.style.color = "#14783d";
+    }
+  } catch (error) {
+    console.error(error);
+    if (status) {
+      status.textContent = currentLang === "bn" ? "লোকেশন তালিকা লোড হয়নি। ইন্টারনেট বা JSON ডেটার ঠিকানা পরীক্ষা করুন।" : "Location list failed to load.";
+      status.style.color = "#b51035";
+    }
   }
 }
 loadLocations();
+
+$("bloodButtons").querySelectorAll("[data-blood]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    selectedBlood = selectedBlood === btn.dataset.blood ? "" : btn.dataset.blood;
+    $("bloodButtons").querySelectorAll("[data-blood]").forEach(b => {
+      b.classList.toggle("active", b.dataset.blood === selectedBlood);
+    });
+  });
+});
+
+$("searchForm").addEventListener("submit", event => {
+  event.preventDefault();
+  const division = $("searchDivision").value;
+  const district = $("searchDistrict").value;
+  const upazila = $("searchUpazila").value;
+
+  let locationText;
+  if (isInsideDhaka(division)) {
+    locationText = "Inside Dhaka · Thana: " + (district || "All Thanas");
+  } else {
+    locationText = (division || "All Divisions") + " · " +
+      (district || "All Districts") + " · " + (upazila || "All Upazilas");
+  }
+
+  $("searchStatus").textContent =
+    (currentLang === "bn" ? "আপনার নির্বাচন: " : "Your selection: ") + (selectedBlood || (currentLang === "bn" ? "সব রক্তের গ্রুপ" : "All Blood Groups")) +
+    " · " + locationText;
+  $("searchStatus").style.color = "#14783d";
+});
+
+document.querySelectorAll("[data-group]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    selectedBlood = btn.dataset.group;
+    $("bloodButtons").querySelectorAll("[data-blood]").forEach(b => {
+      b.classList.toggle("active", b.dataset.blood === selectedBlood);
+    });
+    $("searchStatus").textContent =
+      selectedBlood + (currentLang === "bn" ? " গ্রুপ নির্বাচন করা হয়েছে। এখন রক্তদাতা খুঁজুন চাপুন।" : " group selected. Click Find Donor now.");
+    $("search").scrollIntoView({behavior:"smooth",block:"start"});
+  });
+});
+
+// --- রেজিস্ট্রেশন ও লগইন লোকালস্টোরেজ এবং ড্যাশবোর্ড লজিক ---
+let registeredDonors = JSON.parse(localStorage.getItem('mb_registered_donors')) || [
+  {
+    name: "Monir Ahmed Shakib",
+    phone: "01726232108",
+    email: "admin@mbbloodbank.com.bd",
+    password: "123456",
+    bloodGroup: "B+",
+    district: "Rangpur",
+    address: "Gangachara, Rangpur",
+    role: "রক্তদাতা",
+    points: 150,
+    history: ["২০২৬-০১-১৫: রক্তদান সম্পন্ন", "২০২৫-০৯-১০: রক্তদান সম্পন্ন"],
+    roleHidden: "রক্তদাতা★রক্ত গ্রহীতা",
+    photo: ""
+  }
+];
+
+let currentUser = JSON.parse(localStorage.getItem('mb_current_user')) || null;
+
+// রেজিস্ট্রেশন ফর্ম সাবমিট (এডমিন যাচাই ছাড়াই সরাসরি লিস্টে যুক্ত হবে)
+const registrationForm = document.getElementById('registrationForm');
+if (registrationForm) {
+  registrationForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('regPassword').value;
+    const confirmPassword = document.getElementById('regConfirmPassword').value;
+    const bloodGroup = document.getElementById('bloodGroup').value;
+    const division = document.getElementById('regDivision').value;
+    const district = document.getElementById('regDistrict').value;
+    const upazila = document.getElementById('regUpazila').value;
+    const address = document.getElementById('address').value;
+    const regStatus = document.getElementById('regStatus');
+    const photoInput = document.getElementById('regPhotoInput');
+
+    if (password !== confirmPassword) {
+      regStatus.textContent = "পাসওয়ার্ড দুটি মিলছে না! আবার চেষ্টা করুন।";
+      regStatus.style.color = "#b51035";
+      return;
+    }
+
+    // ছবি রিড করার ব্যবস্থা
+    let reader = new FileReader();
+    let photoDataUrl = "";
+    
+    const saveAndFinish = (imgUrl) => {
+      const newDonor = {
+        name, phone, email, password, bloodGroup,
+        district: district || division || "বাংলাদেশ",
+        address,
+        role: "রক্তদাতা",
+        points: 10,
+        history: ["প্রাথমিক নিবন্ধন সম্পন্ন"],
+        roleHidden: "রক্তদাতা★রক্ত গ্রহীতা",
+        photo: imgUrl || ""
+      };
+
+      registeredDonors.push(newDonor);
+      localStorage.setItem('mb_registered_donors', JSON.stringify(registeredDonors));
+
+      regStatus.textContent = "নিবন্ধন সফল হয়েছে! রক্তদাতার তালিকায় আপনার নাম যুক্ত হয়েছে।";
+      regStatus.style.color = "#14783d";
+      alert("নিবন্ধন সফল হয়েছে!");
+      registrationForm.reset();
+      showPage("donorLogin", "#donorLoginPage");
+    };
+
+    if(photoInput && photoInput.files && photoInput.files[0]) {
+      reader.onload = function(e) {
+        saveAndFinish(e.target.result);
+      };
+      reader.readAsDataURL(photoInput.files[0]);
+    } else {
+      saveAndFinish("");
+    }
+  });
+}
+
+// লগইন ফর্ম সাবমিট
+const loginForm = document.getElementById('loginForm');
+if(loginForm) {
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const identity = document.getElementById('loginIdentity').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const loginStatus = document.getElementById('loginStatus');
+
+    const found = registeredDonors.find(d => (d.email === identity || d.phone === identity) && d.password === password);
+
+    if(found) {
+      currentUser = found;
+      localStorage.setItem('mb_current_user', JSON.stringify(currentUser));
+      loginStatus.textContent = "লগ সফল হয়েছে!";
+      loginStatus.style.color = "#14783d";
+      renderDonorDashboard();
+    } else {
+      loginStatus.textContent = "ভুল জিমেইল/মোবাইল নম্বর অথবা পাসওয়ার্ড!";
+      loginStatus.style.color = "#b51035";
+    }
+  });
+}
+
+// ডোনার ড্যাশবোর্ড রেন্ডার ফাংশন
+function renderDonorDashboard() {
+  if(!currentUser) return;
+  const loginCardContainer = document.getElementById('loginCardContainer');
+  if(!loginCardContainer) return;
+
+  // নেভিগেশন বার ডোনার ড্যাশবোর্ডের নিচে দেখানোর জন্য বটম নেভ ঠিক করা
+  const bottomNav = document.getElementById('bottomNavBar');
+
+  loginCardContainer.innerHTML = `
+    <div style="max-width:650px;margin:auto;text-align:center;position:relative;">
+      
+      <!-- Quick Check আইকন ও পপআপ -->
+      <div style="position:absolute;top:0;right:0;z-index:10;">
+        <button onclick="toggleQuickCheck()" style="background:#b51035;color:#fff;border:none;border-radius:20px;padding:6px 12px;font-weight:bold;display:flex;align-items:center;gap:5px;cursor:pointer;">
+          🛡️ Quick Check
+        </button>
+      </div>
+
+      <!-- প্রোফাইল পিকচার -->
+      <div style="width:110px;height:110px;border-radius:50%;margin:15px auto 10px;overflow:hidden;border:3px solid #b51035;background:#fbe8eb;display:grid;place-items:center;">
+        ${currentUser.photo ? `<img src="${currentUser.photo}" alt="Profile" style="width:100%;height:100%;object-fit:cover;">` : `<span style="font-size:45px;">🧑‍🦲</span>`}
+      </div>
+
+      <!-- নাম ও স্ট্যাটাস -->
+      <h2 style="margin:5px 0 2px;font-size:24px;font-weight:800;color:var(--ink);">${currentUser.name}</h2>
+      <p style="margin:0 0 15px;color:var(--red);font-weight:700;font-size:14px;">${currentUser.role || 'রক্তদাতা'}</p>
+
+      <!-- ৩ টা ঘর (রক্তের গ্রুপ, জেলা, অবস্থা) -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:15px;">
+        <div style="background:#ffccd5;padding:12px;border-radius:12px;color:#800d25;font-weight:800;">
+          <div style="font-size:11px;color:#666;">রক্তের গ্রুপ</div>
+          <div style="font-size:16px;">${currentUser.bloodGroup}</div>
+        </div>
+        <div style="background:#e2ece9;padding:12px;border-radius:12px;color:#0b5345;font-weight:800;">
+          <div style="font-size:11px;color:#666;">জেলা</div>
+          <div style="font-size:15px;">${currentUser.district}</div>
+        </div>
+        <div style="background:#fcf3cf;padding:12px;border-radius:12px;color:#7d6608;font-weight:800;">
+          <div style="font-size:11px;color:#666;">অবস্থা</div>
+          <div style="font-size:14px;">সক্রিয় ডোনার</div>
+        </div>
+      </div>
+
+      <!-- পয়েন্ট অপশন (সবুজ রঙের) -->
+      <div onclick="alert('আপনার মোট পয়েন্ট: ' + (${currentUser.points || 10}))" style="background:#27ae60;color:#fff;padding:12px;border-radius:12px;font-weight:800;cursor:pointer;margin-bottom:12px;box-shadow:0 4px 10px rgba(39,174,96,0.3);">
+        ⭐ পয়েন্ট দেখুন: ${currentUser.points || 10} পয়েন্ট
+      </div>
+
+      <!-- 🪪 আমার ডোনার কার্ড (লাল কালার) -->
+      <div onclick="openDonorCardModal()" style="background:#b51035;color:#fff;padding:14px;border-radius:12px;font-weight:800;cursor:pointer;margin-bottom:12px;box-shadow:0 4px 12px rgba(181,16,53,0.3);">
+        🪪 আমার ডোনার কার্ড (3D আইডি কার্ড)
+      </div>
+
+      <!-- 🩸 রক্তদানে ইতিহাস -->
+      <div onclick="openHistoryModal()" style="background:var(--pink);color:var(--red);border:1px solid #f2d7dc;padding:14px;border-radius:12px;font-weight:800;cursor:pointer;margin-bottom:12px;">
+        🩸 রক্তদানের ইতিহাস
+      </div>
+
+      <!-- 🧑‍🦲 ভূমিকা সুইস বাটন ও এডিট অপশন -->
+      <div style="background:var(--cream);border:1px solid var(--border);padding:15px;border-radius:12px;margin-bottom:12px;text-align:left;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-weight:bold;">রক্তদাতা / রক্ত গ্রহীতা ভূমিকা</span>
+          <button onclick="toggleRoleEdit()" style="background:var(--red);color:#fff;border:none;padding:5px 12px;border-radius:15px;font-size:12px;font-weight:bold;">এডিট করুন</button>
+        </div>
+        <div id="roleEditBox" style="display:none;margin-top:10px;">
+          <select id="updateRoleSelect" style="margin-bottom:8px;">
+            <option value="রক্তদাতা">রক্তদাতা</option>
+            <option value="রক্ত গ্রহীতা">রক্ত গ্রহীতা</option>
+            <option value="রক্তদাতা★রক্ত গ্রহীতা">রক্তদাতা★রক্ত গ্রহীতা</option>
+          </select>
+          <button onclick="saveRoleUpdate()" class="primary" style="padding:6px 14px;font-size:12px;">সংরক্ষণ করুন</button>
+        </div>
+      </div>
+
+      <!-- 🔐 পাসওয়ার্ড পরিবর্তন করুন -->
+      <div style="background:var(--cream);border:1px solid var(--border);padding:15px;border-radius:12px;margin-bottom:15px;text-align:left;">
+        <div style="font-weight:bold;margin-bottom:8px;cursor:pointer;color:var(--red);" onclick="togglePasswordChangeBox()">🔐 পাসওয়ার্ড পরিবর্তন করুন</div>
+        <div id="passwordChangeBox" style="display:none;display:grid;gap:8px;">
+          <input type="password" id="currPwd" placeholder="বর্তমান পাসওয়ার্ড *">
+          <input type="password" id="newPwd1" placeholder="নিউ পাসওয়ার্ড *">
+          <input type="password" id="newPwd2" placeholder="নিউ পাসওয়ার্ড (পুনরায়) *">
+          <button onclick="changePasswordAction()" class="primary" style="padding:6px 14px;font-size:12px;">পাসওয়ার্ড আপডেট করুন</button>
+        </div>
+      </div>
+
+      <button onclick="logoutAction()" style="background:none;border:1px solid var(--red);color:var(--red);padding:8px 20px;border-radius:20px;font-weight:bold;cursor:pointer;">লগআউট করুন</button>
+
+      <!-- Quick Check পপআপ মডাল -->
+      <div id="quickCheckModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:2000;display:flex;align-items:center;justify-content:center;padding:15px;">
+        <div style="background:var(--cream);padding:20px;border-radius:18px;max-width:500px;width:100%;text-align:left;max-height:85vh;overflow-y:auto;border:2px solid var(--red);">
+          <h3 style="color:var(--red);font-size:22px;margin-bottom:10px;">স্মার্ট রক্তদাতা যাচাই</h3>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:15px;">নিচের ৬টি প্রশ্নে Yes/No দিন এবং সাথে সাথে আজ রক্ত দিতে পারবেন কি না তা দেখুন:</p>
+          
+          <div style="display:grid;gap:12px;font-size:13px;">
+            <div>1. আপনার বয়স কি ১৮ থেকে ৬০ বছরের মধ্যে এবং ওজন অন্তত ৪৫ কেজি? <select id="qc1"><option value="yes">Yes</option><option value="no">No</option></select></div>
+            <div>2. গত ৩ বা ৪ মাসের মধ্যে কি আপনি রক্ত দান করেছেন? <select id="qc2"><option value="no">No</option><option value="yes">Yes</option></select></div>
+            <div>3. আজ কি আপনি শারীরিকভাবে সম্পূর্ণ সুস্থ ও সবল আছেন? <select id="qc3"><option value="yes">Yes</option><option value="no">No</option></select></div>
+            <div>4. আপনার কি ঠান্ডা, জ্বর, কাশি বা বড় কোনো ইনফেকশন আছে? <select id="qc4"><option value="no">No</option><option value="yes">Yes</option></select></div>
+            <div>5. আপনি কি গত ২৪ ঘণ্টার মধ্যে কোনো মাদক বা ভারী ওষুধ গ্রহণ করেছেন? <select id="qc5"><option value="no">No</option><option value="yes">Yes</option></select></div>
+            <div>6. আপনার কি বড় কোনো দীর্ঘস্থায়ী রোগ (যেমন হৃদরোগ বা ডায়াবেটিস) আছে? <select id="qc6"><option value="no">No</option><option value="yes">Yes</option></select></div>
+          </div>
+
+          <button onclick="calculateQuickCheck()" class="primary" style="margin-top:15px;width:100%;padding:10px;">যাচাচ করুন</button>
+          <div id="qcResult" style="margin-top:12px;font-weight:bold;text-align:center;font-size:15px;"></div>
+          
+          <button onclick="toggleQuickCheck()" style="margin-top:10px;background:#666;color:#fff;border:none;width:100%;padding:8px;border-radius:10px;">বন্ধ করুন</button>
+        </div>
+      </div>
+
+    </div>
+  `;
+}
+
+// কুইক চেক টগল
+function toggleQuickCheck() {
+  const modal = document.getElementById('quickCheckModal');
+  if(modal) {
+    modal.style.display = modal.style.display === "flex" ? "none" : "flex";
+  }
+}
+
+function calculateQuickCheck() {
+  const q1 = document.getElementById('qc1').value;
+  const q2 = document.getElementById('qc2').value;
+  const q3 = document.getElementById('qc3').value;
+  const q4 = document.getElementById('qc4').value;
+  const q5 = document.getElementById('qc5').value;
+  const q6 = document.getElementById('qc6').value;
+
+  const res = document.getElementById('qc5');
+  const qcResult = document.getElementById('qcResult');
+
+  if(q1 === 'yes' && q2 === 'no' && q3 === 'yes' && q4 === 'no' && q5 === 'no' && q6 === 'no') {
+    qcResult.textContent = "✅ অভিনন্দন! আপনি আজ রক্ত দান করতে পারবেন।";
+    qcResult.style.color = "#27ae60";
+  } else {
+    qcResult.textContent = "❌ দুঃখিত, বর্তমান স্বাস্থ্যগত শর্তানুযায়ী আজ আপনি রক্ত দিতে পারবেন না।";
+    qcResult.style.color = "#b51035";
+  }
+}
+
+function toggleRoleEdit() {
+  const box = document.getElementById('roleEditBox');
+  box.style.display = box.style.display === "block" ? "none" : "block";
+}
+
+function saveRoleUpdate() {
+  const newRole = document.getElementById('updateRoleSelect').value;
+  currentUser.role = newRole;
+  currentUser.roleHidden = newRole;
+  localStorage.setItem('mb_current_user', JSON.stringify(currentUser));
+  
+  // রেজিস্টার্ড লিস্টেও আপডেট করা
+  registeredDonors = registeredDonors.map(d => d.email === currentUser.email ? currentUser : d);
+  localStorage.setItem('mb_registered_donors', JSON.stringify(registeredDonors));
+
+  alert("ভূমিকা আপডেট সফল হয়েছে!");
+  renderDonorDashboard();
+}
+
+function togglePasswordChangeBox() {
+  const box = document.getElementById('passwordChangeBox');
+  box.style.display = box.style.display === "grid" ? "none" : "grid";
+}
+
+function changePasswordAction() {
+  const curr = document.getElementById('currPwd').value;
+  const n1 = document.getElementById('newPwd1').value;
+  const n2 = document.getElementById('newPwd2').value;
+
+  if(curr !== currentUser.password) {
+    alert("বর্তমান পাসওয়ার্ড সঠিক নয়!");
+    return;
+  }
+  if(n1 !== n2) {
+    alert("নতুন পাসওয়ার্ড দুটি মিলছে না!");
+    return;
+  }
+  if(!n1) {
+    alert("নতুন পাসওয়ার্ড খালি রাখা যাবে না!");
+    return;
+  }
+
+  currentUser.password = n1;
+  localStorage.setItem('mb_current_user', JSON.stringify(currentUser));
+  registeredDonors = registeredDonors.map(d => d.email === currentUser.email ? currentUser : d);
+  localStorage.setItem('mb_registered_donors', JSON.stringify(registeredDonors));
+
+  alert("পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে!");
+  togglePasswordChangeBox();
+}
+
+function logoutAction() {
+  localStorage.removeItem('mb_current_user');
+  currentUser = null;
+  location.reload();
+}
+
+function openDonorCardModal() {
+  alert("স্বয়ংক্রিয় 3D ডোনার আইডি কার্ড জেনারেট হচ্ছে...");
+}
+
+function openHistoryModal() {
+  let historyText = currentUser.history ? currentUser.history.join("\n") : "কোনো ইতিহাস নেই";
+  alert("রক্তদানের ইতিহাস:\n\n" + historyText);
+}
+
+const compatibility = {
+  "O-": {give:["O-","O+","A-","A+","B-","B+","AB-","AB+"],receive:["O-"]},
+  "O+": {give:["O+","A+","B+","AB+"],receive:["O-","O+"]},
+  "A-": {give:["A-","A+","AB-","AB+"],receive:["O-","A-"]},
+  "A+": {give:["A+","AB+"],receive:["O-","O+","A-","A+"]},
+  "B-": {give:["B-","B+","AB-","AB+"],receive:["O-","B-"]},
+  "B+": {give:["B+","AB+"],receive:["O-","O+","B-","B+"]},
+  "AB-": {give:["AB-","AB+"],receive:["O-","A-","B-","AB-"]},
+  "AB+": {give:["AB+"],receive:["O-","O+","A-","A+","B-","B+","AB-","AB+"]}
+};
+
+function renderBloodTypes(container, types) {
+  container.replaceChildren();
+  types.forEach(type => {
+    const span = document.createElement("span");
+    span.textContent = type;
+    container.appendChild(span);
+  });
+}
+
+function showCompat(group) {
+  const data = compatibility[group];
+  if (!data) return;
+  renderBloodTypes($("canGive"),data.give);
+  renderBloodTypes($("canReceive"),data.receive);
+  document.querySelectorAll("[data-compat]").forEach(btn => {
+    btn.classList.toggle("active",btn.dataset.compat === group);
+  });
+}
+
+document.querySelectorAll("[data-compat]").forEach(btn => {
+  btn.addEventListener("click",() => showCompat(btn.dataset.compat));
+});
+showCompat("B+");
 </script>
 </body>
 </html>
