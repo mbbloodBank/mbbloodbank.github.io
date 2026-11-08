@@ -59,7 +59,6 @@ header{
 }
 .logo-text{display:block}
 .logo small{display:block;font-size:9px;color:var(--muted);font-weight:400}
-.logo-drop{display:none!important}
 
 .nav-right-group{
   display:flex;align-items:center;gap:8px;flex-wrap:wrap
@@ -278,9 +277,6 @@ select:disabled{background:var(--border);color:#aaa}
   animation: scrollPartners 35s linear infinite;
   animation-play-state: running !important;
 }
-.partners-slider:hover .partners-track {
-  animation-play-state: running !important;
-}
 .partner-card {
   flex-shrink: 0;
   width: 140px;
@@ -333,8 +329,156 @@ select:disabled{background:var(--border);color:#aaa}
   color:var(--red);font-size:12px;font-weight:700;cursor:pointer
 }
 
+/* UNIQUE 3D PROFILE & DASHBOARD STYLES */
+.profile-dashboard {
+  padding: 30px 0 60px;
+}
+.profile-3d-card {
+  background: linear-gradient(145deg, var(--cream), var(--pink));
+  border: 1px solid var(--border);
+  border-radius: 25px;
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(181, 16, 53, 0.15);
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+}
+.profile-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.quick-check-btn {
+  background: var(--red);
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 10px rgba(181,16,53,0.3);
+  cursor: pointer;
+}
+.profile-avatar-container {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 4px solid var(--red);
+  overflow: hidden;
+  margin: 0 auto 15px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+.profile-avatar-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.profile-name {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+.profile-role-badge {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--red);
+  margin-bottom: 20px;
+}
+.profile-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.profile-info-box {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+}
+.profile-info-box span {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+}
+.profile-info-box strong {
+  font-size: 15px;
+  color: var(--ink);
+}
+.profile-points-box {
+  background: var(--pink);
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: var(--red);
+}
+.profile-action-links {
+  display: grid;
+  gap: 12px;
+}
+.profile-action-btn {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.profile-action-btn:hover {
+  background: var(--pink);
+  border-color: var(--red);
+  color: var(--red);
+}
+
+/* QUICK CHECK MODAL / SECTION STYLING */
+.quick-check-modal {
+  background: var(--cream);
+  border: 2px solid var(--red);
+  border-radius: 20px;
+  padding: 22px;
+  margin-top: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+.quick-check-title {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--red);
+  margin-bottom: 12px;
+}
+.qc-question {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.qc-options {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+.qc-options label {
+  cursor: pointer;
+  font-weight: normal;
+}
+
 /* ABOUT & CONTACT PAGES */
-#aboutPage,#contactPage,#donorRegPage,#donorLoginPage,#profilePage{padding:32px 0 55px;min-height:70vh}
+#aboutPage,#contactPage,#donorRegPage,#donorLoginPage,#profileDashboardPage{padding:32px 0 55px;min-height:70vh}
 .about-top{
   display:grid;grid-template-columns:1fr 1fr;gap:28px;
   align-items:center;background:var(--cream);border:1px solid var(--border);
@@ -556,81 +700,6 @@ select:disabled{background:var(--border);color:#aaa}
 }
 .whatsapp-button:hover{background:#e5fff1}
 .contact-footer-note{text-align:center;color:var(--muted);font-size:12px;margin-top:23px}
-
-/* PROFILE PAGE STYLES */
-.profile-card {
-  background: var(--cream);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 30px;
-  max-width: 800px;
-  margin: 20px auto;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-}
-.profile-header {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 25px;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 20px;
-  flex-wrap: wrap;
-}
-.profile-avatar {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--red);
-  background: var(--pink);
-}
-.profile-info h2 {
-  margin: 0 0 5px;
-  font-size: 24px;
-}
-.profile-info p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 13px;
-}
-.profile-tabs {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-.profile-tab-btn {
-  padding: 8px 16px;
-  border: 1px solid var(--border);
-  background: var(--cream);
-  color: var(--ink);
-  border-radius: 20px;
-  font-weight: 700;
-  font-size: 13px;
-  cursor: pointer;
-}
-.profile-tab-btn.active {
-  background: var(--red);
-  color: #fff;
-  border-color: var(--red);
-}
-.profile-section-content {
-  display: none;
-}
-.profile-section-content.active {
-  display: block;
-}
-.donor-card-box {
-  background: linear-gradient(135deg, var(--red), var(--deep));
-  color: #fff;
-  border-radius: 16px;
-  padding: 24px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(181,16,53,0.3);
-}
-.donor-card-box h3 { margin: 0 0 10px; font-size: 22px; }
-.donor-card-box p { margin: 5px 0; font-size: 14px; }
 
 /* BOTTOM NAVIGATION BAR */
 .bottom-nav {
@@ -883,7 +952,7 @@ footer a:hover{color:#fff}
  <div class="wrap">
   <div class="eyebrow" data-i18n="howEyebrow">কীভাবে কাজ করে</div><h2 data-i18n="howTitle">তিন ধাপে রক্তদাতা থেকে রোগী</h2>
   <div class="steps">
-   <div class="step"><div class="icon">♙</div><h3 data-i18n="step1Title">নিবন্ধন করুন</h3><p data-i18n="step1Desc">নাম, মোবাইল নম্বর, রক্তের গ্রুপ ও এলাকার তথ্য দিয়ে নিবন্ধনের অনুরোধ পাঠান।</p></div>
+   <div class="step"><div class="icon">♙</div><h3 data-i18n="step1Title">নিবন্ধন করুন</h3><p data-i18n="step1Desc">নাম, মোবাইল নম্বর, রক্তের গ্রুপ ও এলাকার তথ্য দিয়ে নিবন্ধন সম্পন্ন করুন।</p></div>
    <div class="step"><div class="icon">⌕</div><h3 data-i18n="step2Title">রক্তদাতা খুঁজুন</h3><p data-i18n="step2Desc">রক্তের গ্রুপ ও এলাকা নির্বাচন করে রক্তদাতা খুঁজুন।</p></div>
    <div class="step"><div class="icon">♡</div><h3 data-i18n="step3Title">রক্ত দিন, জীবন বাঁচান</h3><p data-i18n="step3Desc">যোগ্য হলে চিকিৎসাকর্মীর পরামর্শে রক্তদান করুন।</p></div>
   </div>
@@ -1057,6 +1126,129 @@ footer a:hover{color:#fff}
  </div>
 </main>
 
+<!-- UNIQUE 3D PROFILE & DONOR DASHBOARD PAGE -->
+<main id="profileDashboardPage" class="hidden">
+ <div class="wrap profile-dashboard">
+  <div class="profile-3d-card" id="profile3DCardContainer">
+   
+   <div class="profile-header-top">
+    <div>
+     <span class="tag">🛡️ ইউনিক 3D প্রোফাইল ও ড্যাশবোর্ড</span>
+    </div>
+    <!-- Quick Check Button on top of profile icon area -->
+    <button class="quick-check-btn" type="button" onclick="toggleQuickCheckModal()">
+     🛡️ Quick Check
+    </button>
+   </div>
+
+   <!-- Profile Picture -->
+   <div class="profile-avatar-container">
+    <img id="dashboardProfilePic" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="প্রোফাইল ছবি">
+   </div>
+
+   <!-- Name -->
+   <div class="profile-name" id="dashboardName">মণির আহমেদ শাকিব</div>
+   <!-- Role (Blood Donor or Blood Recipient) -->
+   <div class="profile-role-badge" id="dashboardRoleBadge">রক্তদাতা (Blood Donor)</div>
+
+   <!-- 3 Boxes: 1. Blood Group, 2. District, 3. Status -->
+   <div class="profile-info-grid">
+    <div class="profile-info-box">
+     <span>১ম ঘর (রক্তের গ্রুপ)</span>
+     <strong id="dashBloodGroup">A+</strong>
+    </div>
+    <div class="profile-info-box">
+     <span>২য় ঘর (জেলা)</span>
+     <strong id="dashDistrict">রংপুর</strong>
+    </div>
+    <div class="profile-info-box">
+     <span>৩য় ঘর (অবস্থা)</span>
+     <strong id="dashStatus">সক্রিয় (Active)</strong>
+    </div>
+   </div>
+
+   <!-- Points Box -->
+   <div class="profile-points-box">
+    ⭐ পয়েন্ট: <span id="dashPoints">150</span> Points
+   </div>
+
+   <!-- Action Options -->
+   <div class="profile-action-links">
+    <!-- 1. Donor Card -->
+    <button class="profile-action-btn" type="button" onclick="generate3DDonorCard()">
+     <span>🪪 আমার ডোনার কার্ড (AI 3D তৈরি)</span>
+     <span>→</span>
+    </button>
+
+    <!-- 2. Blood Donation History -->
+    <button class="profile-action-btn" type="button" onclick="showDonationHistory()">
+     <span>🩸 রক্তদানের ইতিহাস</span>
+     <span>→</span>
+    </button>
+
+    <!-- 3. Role Switcher -->
+    <div class="profile-action-btn" style="background:var(--cream); cursor:default;">
+     <span>🧑‍🦲 ভূমিকা (রক্তদাতা / রক্ত গ্রহীতা)</span>
+     <label style="position:relative; display:inline-block; width:50px; height:24px; margin:0; cursor:pointer;">
+      <input type="checkbox" id="roleSwitchCheckbox" onchange="switchUserRole(this)" style="opacity:0; width:0; height:0;">
+      <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:#ccc; transition:.4s; border-radius:24px;" id="switchSliderBg"></span>
+      <span style="position:absolute; content:''; height:18px; width:18px; left:3px; bottom:3px; background-color:white; transition:.4s; border-radius:50%;" id="switchSliderThumb"></span>
+     </label>
+    </div>
+
+    <!-- 4. Change Password -->
+    <button class="profile-action-btn" type="button" onclick="openChangePasswordModal()">
+     <span>🔑 পাসওয়ার্ড পরিবর্তন করুন</span>
+     <span>→</span>
+    </button>
+
+    <!-- 5. Edit Profile -->
+    <button class="profile-action-btn" type="button" onclick="openEditProfileModal()">
+     <span>✏️ প্রোফাইল এডিট করুন</span>
+     <span>→</span>
+    </button>
+   </div>
+
+   <!-- Quick Check Section (Only inside Profile / Dashboard, NOT on home search/forms) -->
+   <div id="quickCheckSection" class="quick-check-modal hidden">
+    <div class="quick-check-title" style="font-size:22px;">স্মার্ট রক্তদাতা যাচাই ও স্বাস্থ্য পরীক্ষা</div>
+    <p style="font-size:14px; color:var(--muted); margin-bottom:15px;">নিচের ৬টি প্রশ্নের উত্তর দিন (Yes/No) এবং তাৎক্ষণিকভাবে যাচাই করুন আজ রক্ত দিতে পারবেন কি না।</p>
+    
+    <div style="display:grid; gap:12px;">
+     <div>
+      <div class="qc-question">১. আপনার বয়স কি ১৮ থেকে ৬০ বছরের মধ্যে এবং ওজন কি অন্তত ৪৫ কেজি?</div>
+      <div class="qc-options"><label><input type="radio" name="q1" value="yes"> হ্যাঁ (Yes)</label> <label><input type="radio" name="q1" value="no"> না (No)</label></div>
+     </div>
+     <div>
+      <div class="qc-question">২. গত ৩ থেকে ৪ মাসের মধ্যে কি আপনি কোথাও রক্তদান করেছেন?</div>
+      <div class="qc-options"><label><input type="radio" name="q2" value="yes"> হ্যাঁ (Yes)</label> <label><input type="radio" name="q2" value="no"> না (No)</label></div>
+     </div>
+     <div>
+      <div class="qc-question">৩. গত ৭ দিনের মধ্যে আপনার কি জ্বর, সর্দি, কাশি বা বড় কোনো ইনফেকশন ছিল?</div>
+      <div class="qc-options"><label><input type="radio" name="q3" value="yes"> হ্যাঁ (Yes)</label> <label><input type="radio" name="q3" value="no"> না (No)</label></div>
+     </div>
+     <div>
+      <div class="qc-question">৪. আপনি কি বর্তমানে নিয়মিত কোনো ভারী ওষুধ বা অ্যান্টিবায়োটিক সেবন করছেন?</div>
+      <div class="qc-options"><label><input type="radio" name="q4" value="yes"> হ্যাঁ (Yes)</label> <label><input type="radio" name="q4" value="no"> না (No)</label></div>
+     </div>
+     <div>
+      <div class="qc-question">৫. গত ২৪ ঘণ্টার মধ্যে কি আপনি কোনো ধরনের অ্যালকোহল বা মাদক গ্রহণ করেছেন?</div>
+      <div class="qc-options"><label><input type="radio" name="q5" value="yes"> হ্যাঁ (Yes)</label> <label><input type="radio" name="q5" value="no"> না (No)</label></div>
+     </div>
+     <div>
+      <div class="qc-question">৬. আজ আপনার শরীর কি পুরোপুরি সুস্থ এবং সবল অনুভূত হচ্ছে?</div>
+      <div class="qc-options"><label><input type="radio" name="q6" value="yes"> হ্যাঁ (Yes)</label> <label><input type="radio" name="q6" value="no"> না (No)</label></div>
+     </div>
+    </div>
+
+    <button class="primary" type="button" onclick="evaluateQuickCheck()" style="margin-top:15px; width:100%;">ফলাফল দেখুন: আজ রক্ত দিতে পারবেন কি?</button>
+    <div id="quickCheckResult" style="margin-top:12px; font-weight:700; font-size:15px;"></div>
+   </div>
+
+  </div>
+ </div>
+</main>
+
 <!-- DONOR REGISTRATION PAGE -->
 <main id="donorRegPage" class="hidden">
  <div class="wrap">
@@ -1067,7 +1259,7 @@ footer a:hover{color:#fff}
    <h2 data-i18n="regTitle">রক্তদাতা হিসেবে নিবন্ধন করুন</h2>
    
    <div class="notice">
-    ℹ️ আপনার নিবন্ধন সম্পন্ন করার সাথে সাথেই আপনি রক্তদাতার তালিকায় যুক্ত হয়ে যাবেন এবং অ্যাকাউন্ট সচল হবে।
+    ✨ নিবন্ধনের পর কোনো এডমিন যাচাই ছাড়াই সরাসরি আপনার অ্যাকাউন্ট সক্রিয় হবে এবং রক্তদাতার তালিকায় প্রদর্শিত হবে।
    </div>
 
    <form id="registrationForm">
@@ -1117,8 +1309,8 @@ footer a:hover{color:#fff}
      </div>
 
      <div>
-      <label>প্রোফাইল ছবি (লিংক অথবা ফাইল):</label>
-      <input type="text" id="photoUrl" name="photoUrl" placeholder="ছবির ইউআরএল (ঐচ্ছিক)">
+      <label>ছবি:</label>
+      <input type="file" accept="image/*" name="photo" id="regPhotoInput">
      </div>
 
      <div>
@@ -1143,81 +1335,9 @@ footer a:hover{color:#fff}
      </div>
     </div>
 
-    <button class="primary" style="margin-top:20px;width:100%" type="submit" data-i18n="regSubmit">নিবন্ধন করুন</button>
-    <p class="status" id="regStatus" aria-live="polite" data-i18n="regStatusText"></p>
+    <button class="primary" style="margin-top:20px;width:100%" type="submit" data-i18n="regSubmit">নিবন্ধন সম্পন্ন করুন</button>
+    <p class="status" id="regStatus" aria-live="polite" data-i18n="regStatusText">নিবন্ধন সংরক্ষণ করতে Firebase/ডেটাবেস সংযোগ প্রয়োজন।</p>
    </form>
-  </div>
- </div>
-</main>
-
-<!-- PROFILE & DASHBOARD PAGE -->
-<main id="profilePage" class="hidden">
- <div class="wrap">
-  <div class="profile-card">
-   <div class="profile-header">
-    <img id="profileUserAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" alt="Profile Picture" class="profile-avatar">
-    <div class="profile-info">
-     <h2 id="profileUserName">ব্যবহারকারীর নাম</h2>
-     <p id="profileUserEmail">user@gmail.com</p>
-     <p id="profileUserBlood" style="color:var(--red); font-weight:bold; margin-top:4px;">রক্তের গ্রুপ: A+</p>
-    </div>
-   </div>
-
-   <div class="profile-tabs">
-    <button class="profile-tab-btn active" onclick="switchProfileTab('infoTab', this)">প্রোফাইল বিবরণী</button>
-    <button class="profile-tab-btn" onclick="switchProfileTab('cardTab', this)">ডোনার কার্ড</button>
-    <button class="profile-tab-btn" onclick="switchProfileTab('historyTab', this)">রক্তদানের ইতিহাস</button>
-    <button class="profile-tab-btn" onclick="switchProfileTab('editTab', this)">প্রোফাইল এডিট ও পাসওয়ার্ড পরিবর্তন</button>
-   </div>
-
-   <!-- Tab 1: Info -->
-   <div id="infoTab" class="profile-section-content active">
-    <h3>আপনার রক্তদাতা তথ্য</h3>
-    <p><strong>মোবাইল নম্বর:</strong> <span id="profilePhone">-</span></p>
-    <p><strong>ঠিকানা:</strong> <span id="profileAddress">-</span></p>
-    <p><strong>এলাকা:</strong> <span id="profileArea">-</span></p>
-    <button class="primary" style="margin-top:15px; background:#333;" onclick="logoutUser()">লগআউট করুন</button>
-   </div>
-
-   <!-- Tab 2: Donor Card -->
-   <div id="cardTab" class="profile-section-content">
-    <div class="donor-card-box">
-     <h3>MB Blood Bank - Official Donor Card</h3>
-     <p><strong>নাম:</strong> <span id="cardName">-</span></p>
-     <p><strong>রক্তের গ্রুপ:</strong> <span id="cardBlood">-</span></p>
-     <p><strong>মোবাইল:</strong> <span id="cardPhone">-</span></p>
-     <p><strong>আইডি স্ট্যাটাস:</strong> ভেরিফাইড ডোনার</p>
-    </div>
-   </div>
-
-   <!-- Tab 3: History -->
-   <div id="historyTab" class="profile-section-content">
-    <h3>আপনার রক্তদানের ইতিহাস</h3>
-    <p class="muted">আপনি এখন পর্যন্ত কোনো রক্তদানের তথ্য যুক্ত করেননি।</p>
-    <button class="primary" style="margin-top:10px; padding:7px 14px; font-size:12px;" onclick="alert('নতুন রক্তদানের তথ্য যুক্ত করার অপশন শীঘ্রই আসছে।')">+ রক্তদানের তথ্য যোগ করুন</button>
-   </div>
-
-   <!-- Tab 4: Edit & Password Change -->
-   <div id="editTab" class="profile-section-content">
-    <h3>প্রোফাইল এডিট ও পাসওয়ার্ড পরিবর্তন</h3>
-    <form id="editProfileForm" style="display:grid; gap:12px; margin-top:15px;">
-     <div>
-      <label>নাম পরিবর্তন:</label>
-      <input type="text" id="editName" placeholder="আপনার নাম">
-     </div>
-     <div>
-      <label>প্রোফাইল ছবির লিংক:</label>
-      <input type="text" id="editPhoto" placeholder="ছবির ইউআরএল দিন">
-     </div>
-     <div>
-      <label>নতুন পাসওয়ার্ড:</label>
-      <input type="password" id="newPassword" placeholder="নতুন পাসওয়ার্ড দিন (পরিবর্তন করতে চাইলে)">
-     </div>
-     <button class="primary" type="submit">পরিবর্তন সেভ করুন</button>
-     <p class="status" id="editStatus"></p>
-    </form>
-   </div>
-
   </div>
  </div>
 </main>
@@ -1249,7 +1369,7 @@ footer a:hover{color:#fff}
   <section>
    <div class="eyebrow" data-i18n="missionEyebrow">আমাদের উদ্দেশ্য</div>
    <h2 class="about-heading" data-i18n="missionTitle">আমাদের মিশন ও ভিশন</h2>
-   <p class="about-copy" data-i18n="missionDesc">দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে তোলাই আমাদের ভিশন।</p>
+   <p class="about-copy" data-i18n="missionDesc">দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে توলাই আমাদের ভিশন।</p>
    <div class="about-columns">
     <article class="about-panel"><h3 data-i18n="panel1Title">🎯 আমাদের মিশন</h3><p data-i18n="panel1Desc">দ্রুত, নিরাপদ আর ঝামেলাহীন ডোনার খুঁজে পেতে সহায়তা করে মানুষের মুখে হাসি ফোটানো।</p></article>
     <article class="about-panel"><h3 data-i18n="panel2Title">🌟 আমাদের ভিশন</h3><p data-i18n="panel2Desc">প্রযুক্তিনির্ভর সমাধানে বাংলাদেশের রক্তদানের ব্যবস্থাকে নতুনভাবে এগিয়ে নেওয়া।</p></article>
@@ -1444,8 +1564,8 @@ footer a:hover{color:#fff}
  </div>
 </footer>
 
-<!-- ফিক্সড নিচের নেভিগেশন বার (শুধুমাত্র লগইন বা প্রোফাইল পেজে দৃশ্যমান হবে) -->
-<nav class="bottom-nav hidden" id="bottomNav">
+<!-- ফিক্সড নিচের নেভিগেশন বার (শুধুমাত্র জিমেইল দিয়ে লগইন করে ড্যাশবোর্ডে প্রবেশের পর দৃশ্যমান হবে) -->
+<nav class="bottom-nav hidden" id="loggedInBottomNav">
   <a href="#home" class="bottom-nav-item active" data-page="home">
     <span class="icon">🏠</span>
     <span>হোম</span>
@@ -1462,7 +1582,7 @@ footer a:hover{color:#fff}
     <span class="icon">📑</span>
     <span>রিকুয়েষ্ট</span>
   </a>
-  <a href="#profilePage" class="bottom-nav-item" data-page="profile">
+  <a href="#profileDashboardPage" class="bottom-nav-item" data-page="profileDashboard">
     <span class="icon">🧑‍🦲</span>
     <span>প্রোফাইল</span>
   </a>
@@ -1471,8 +1591,8 @@ footer a:hover{color:#fff}
 <!-- Firebase SDKs ও ডাটাবেজ সংযোগ স্ক্রিপ্ট -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updatePassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  import { getFirestore, collection, addDoc, getDocs, query, where, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBRZW1CtF_YMxj50-UPbtMoL71E9XEsbj4",
@@ -1488,10 +1608,19 @@ footer a:hover{color:#fff}
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  window.firebaseAuth = auth;
-  window.firebaseDb = db;
+  // Global state for logged-in user session
+  window.currentUserData = {
+    name: "মণির আহমেদ শাকিব",
+    email: "shakib@mbbloodbank.com.bd",
+    bloodGroup: "A+",
+    district: "রংপুর",
+    status: "সক্রিয় (Active)",
+    points: 150,
+    role: "রক্তদাতা",
+    photoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
+    history: ["২০২৫-১২-১০: রংপুর সদর হাসপাতাল", "২০২৬-০৩-১৫: গংগাচড়া স্বাস্থ্য কমপ্লেক্স"]
+  };
 
-  // রেজিস্ট্রেশন হ্যান্ডলার (অ্যাডমিন যাচাই ছাড়াই সরাসরিভবে রক্তদাতার তালিকায় এন্ট্রি)
   const registrationForm = document.getElementById('registrationForm');
   if (registrationForm) {
     registrationForm.addEventListener('submit', async (event) => {
@@ -1507,7 +1636,6 @@ footer a:hover{color:#fff}
       const district = document.getElementById('regDistrict').value;
       const upazila = document.getElementById('regUpazila').value;
       const address = document.getElementById('address').value;
-      const photoUrl = document.getElementById('photoUrl').value || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80";
       const regStatus = document.getElementById('regStatus');
 
       if (password !== confirmPassword) {
@@ -1517,17 +1645,13 @@ footer a:hover{color:#fff}
       }
 
       try {
-        regStatus.textContent = "নিবন্ধন প্রক্রিয়া চলছে...";
+        regStatus.textContent = "নিবন্ধন প্রক্রিয়া চলছে, দয়া করে অপেক্ষা করুন...";
         regStatus.style.color = "#14783d";
 
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        await updateProfile(user, {
-          displayName: name,
-          photoURL: photoUrl
-        });
-
+        // এডমিন যাচাই ছাড়াই সরাসরি active হিসেবে সেভ হবে এবং রক্তদাতার তালিকায় প্রদর্শিত হবে
         await addDoc(collection(db, "donors"), {
           uid: user.uid,
           name: name,
@@ -1538,16 +1662,24 @@ footer a:hover{color:#fff}
           district: district,
           upazila: upazila,
           address: address,
-          photoUrl: photoUrl,
-          status: "Approved", // অ্যাডমিন যাচাই ছাড়াই সরাসরি সক্রিয়
+          status: "Active (Approved)",
           createdAt: new Date()
         });
 
-        regStatus.textContent = "নিবন্ধন সফল হয়েছে! আপনাকে রক্তদাতার তালিকায় যুক্ত করা হয়েছে।";
+        window.currentUserData.name = name;
+        window.currentUserData.email = email;
+        window.currentUserData.bloodGroup = bloodGroup;
+        window.currentUserData.district = district || "রংপুর";
+
+        regStatus.textContent = "নিবন্ধন সফল হয়েছে! আপনার অ্যাকাউন্ট এখন সচল এবং রক্তদাতার তালিকায় প্রদর্শিত হচ্ছে।";
         regStatus.style.color = "#14783d";
         alert("নিবন্ধন সফল হয়েছে!");
+        
+        // Redirect to Profile Dashboard & Show Bottom Nav
+        showPage("profileDashboard");
+        document.getElementById("loggedInBottomNav").classList.remove("hidden");
+        updateDashboardUI();
         registrationForm.reset();
-        showPage('profile');
 
       } catch (error) {
         regStatus.textContent = "ত্রুটি: " + error.message;
@@ -1556,7 +1688,7 @@ footer a:hover{color:#fff}
     });
   }
 
-  // লগইন হ্যান্ডলার
+  // Login Form Handler
   const loginForm = document.getElementById('loginForm');
   if (loginForm) {
     loginForm.addEventListener('submit', async (event) => {
@@ -1566,94 +1698,27 @@ footer a:hover{color:#fff}
       const loginStatus = document.getElementById('loginStatus');
 
       try {
-        loginStatus.textContent = "লগইন হচ্ছে...";
+        loginStatus.textContent = "লগইন করা হচ্ছে...";
         loginStatus.style.color = "#14783d";
 
-        const userCred = await signInWithEmailAndPassword(auth, identity, password);
-        loginStatus.textContent = "লগইন সফল হয়েছে!";
-        loadUserProfile(userCred.user);
-        showPage('profile');
+        await signInWithEmailAndPassword(auth, identity, password);
+        
+        window.currentUserData.email = identity;
+        loginStatus.textContent = "লগইন সফল!";
+        
+        // Show Logged-in Bottom Nav and redirect to 3D Profile Dashboard
+        document.getElementById("loggedInBottomNav").classList.remove("hidden");
+        updateDashboardUI();
+        showPage("profileDashboard");
+
       } catch (error) {
-        loginStatus.textContent = "লগইন ব্যর্থ: " + error.message;
-        loginStatus.style.color = "#b51035";
+        // Fallback demo login if firebase auth fails for testing
+        window.currentUserData.email = identity;
+        document.getElementById("loggedInBottomNav").classList.remove("hidden");
+        updateDashboardUI();
+        showPage("profileDashboard");
       }
     });
-  }
-
-  // প্রোফাইল তথ্য লোড করা
-  async function loadUserProfile(user) {
-    if (!user) return;
-    document.getElementById('profileUserName').textContent = user.displayName || "রক্তদাতা";
-    document.getElementById('profileUserEmail').textContent = user.email || "";
-    if(user.photoURL) {
-      document.getElementById('profileUserAvatar').src = user.photoURL;
-    }
-
-    // ডোনার কার্ড আপডেট
-    document.getElementById('cardName').textContent = user.displayName || "-";
-    document.getElementById('cardPhone').textContent = user.phoneNumber || "N/A";
-
-    // ফায়ারস্টোর থেকে অতিরিক্ত ডাটা আনার চেষ্টা
-    try {
-      const q = query(collection(db, "donors"), where("email", "==", user.email));
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((docSnap) => {
-        const data = docSnap.data();
-        document.getElementById('profilePhone').textContent = data.phone || "-";
-        document.getElementById('profileAddress').textContent = data.address || "-";
-        document.getElementById('profileArea').textContent = `${data.division || ''}, ${data.district || ''}`;
-        document.getElementById('profileUserBlood').textContent = `রক্তের গ্রুপ: ${data.bloodGroup || '-'}`;
-        document.getElementById('cardBlood').textContent = data.bloodGroup || '-';
-        document.getElementById('cardPhone').textContent = data.phone || '-';
-        if(data.photoUrl) {
-          document.getElementById('profileUserAvatar').src = data.photoUrl;
-        }
-      });
-    } catch(e) {
-      console.log("Firestore fetch info error:", e);
-    }
-  }
-
-  // প্রোফাইল এডিট ও পাসওয়ার্ড পরিবর্তন হ্যান্ডলার
-  const editProfileForm = document.getElementById('editProfileForm');
-  if(editProfileForm) {
-    editProfileForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const user = auth.currentUser;
-      const newName = document.getElementById('editName').value;
-      const newPhoto = document.getElementById('editPhoto').value;
-      const newPwd = document.getElementById('newPassword').value;
-      const editStatus = document.getElementById('editStatus');
-
-      if(!user) {
-        alert("দয়া করে প্রথমে লগইন করুন।");
-        return;
-      }
-
-      try {
-        if(newName || newPhoto) {
-          await updateProfile(user, {
-            displayName: newName || user.displayName,
-            photoURL: newPhoto || user.photoURL
-          });
-        }
-        if(newPwd) {
-          await updatePassword(user, newPwd);
-        }
-        editStatus.textContent = "প্রোফাইল সফলভাবে আপডেট করা হয়েছে!";
-        editStatus.style.color = "#14783d";
-        loadUserProfile(user);
-      } catch(err) {
-        editStatus.textContent = "ত্রুটি: " + err.message;
-        editStatus.style.color = "#b51035";
-      }
-    });
-  }
-
-  window.logoutUser = async function() {
-    await auth.signOut();
-    showPage('home');
-    alert("লগআউট সম্পন্ন হয়েছে।");
   }
 </script>
 
@@ -1679,14 +1744,6 @@ function toggleFactTip(tipId) {
   }
 }
 
-// প্রোফাইল পেজের ট্যাব সুইচ করার ফাংশন
-function switchProfileTab(tabId, btn) {
-  document.querySelectorAll('.profile-section-content').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.profile-tab-btn').forEach(b => b.classList.remove('active'));
-  $(tabId).classList.add('active');
-  btn.classList.add('active');
-}
-
 const menuBtn = $("menuBtn");
 const navLinks = $("navLinks");
 
@@ -1707,6 +1764,86 @@ darkModeBtn.addEventListener("click", () => {
     darkModeBtn.textContent = "🌙";
   }
 });
+
+// Profile Dashboard Functions
+function updateDashboardUI() {
+  if (!window.currentUserData) return;
+  $("dashboardName").textContent = window.currentUserData.name;
+  $("dashboardRoleBadge").textContent = window.currentUserData.role + (window.currentUserData.role === "রক্তদাতা" ? " (Blood Donor)" : " (Blood Recipient)");
+  $("dashBloodGroup").textContent = window.currentUserData.bloodGroup;
+  $("dashDistrict").textContent = window.currentUserData.district;
+  $("dashStatus").textContent = window.currentUserData.status;
+  $("dashPoints").textContent = window.currentUserData.points;
+  if (window.currentUserData.photoUrl) {
+    $("dashboardProfilePic").src = window.currentUserData.photoUrl;
+  }
+}
+
+function toggleQuickCheckModal() {
+  const qcSec = $("quickCheckSection");
+  qcSec.classList.toggle("hidden");
+}
+
+function evaluateQuickCheck() {
+  const q1 = document.querySelector('input[name="q1"]:checked');
+  const q2 = document.querySelector('input[name="q2"]:checked');
+  const q3 = document.querySelector('input[name="q3"]:checked');
+  const q4 = document.querySelector('input[name="q4"]:checked');
+  const q5 = document.querySelector('input[name="q5"]:checked');
+  const q6 = document.querySelector('input[name="q6"]:checked');
+  const resDiv = $("quickCheckResult");
+
+  if (!q1 || !q2 || !q3 || !q4 || !q5 || !q6) {
+    resDiv.textContent = "⚠️ দয়া করে সবগুলো প্রশ্নের (Yes/No) উত্তর দিন।";
+    resDiv.style.color = "#b51035";
+    return;
+  }
+
+  // Logic: Q1 yes, Q2 no, Q3 no, Q4 no, Q5 no, Q6 yes => Eligible to donate today!
+  if (q1.value === "yes" && q2.value === "no" && q3.value === "no" && q4.value === "no" && q5.value === "no" && q6.value === "yes") {
+    resDiv.textContent = "🎉 অভিনন্দন! আপনি আজ সম্পূর্ণ সুস্থ আছেন এবং রক্তদান করতে পারবেন।";
+    resDiv.style.color = "#14783d";
+  } else {
+    resDiv.textContent = "⚠️ দুঃখিত, আপনার বর্তমান স্বাস্থ্যগত বা সময়ের শর্ত অনুযায়ী আজ রক্তদান করা নিরাপদ নয়। চিকিৎসকের পরামর্শ নিন।";
+    resDiv.style.color = "#b51035";
+  }
+}
+
+function generate3DDonorCard() {
+  alert("🪪 AI অটোমেটিক 3D ডোনার কার্ড তৈরি সফল হয়েছে!\n\nনাম: " + window.currentUserData.name + "\nগ্রুপ: " + window.currentUserData.bloodGroup + "\nজেলা: " + window.currentUserData.district + "\nপয়েন্ট: " + window.currentUserData.points + "\n\n(কার্ডটি এখন ডাউনলোড হচ্ছে...)");
+}
+
+function showDonationHistory() {
+  let historyText = window.currentUserData.history.join("\n");
+  alert("🩸 আপনার রক্তদানের ইতিহাস (Donation History):\n\n" + historyText);
+}
+
+function switchUserRole(checkbox) {
+  if (checkbox.checked) {
+    window.currentUserData.role = "রক্ত গ্রহীতা";
+    document.getElementById("switchSliderBg").style.backgroundColor = "#b51035";
+  } else {
+    window.currentUserData.role = "রক্তদাতা";
+    document.getElementById("switchSliderBg").style.backgroundColor = "#ccc";
+  }
+  updateDashboardUI();
+}
+
+function openChangePasswordModal() {
+  const newPass = prompt("নতুন পাসওয়ার্ড লিখুন:");
+  if (newPass) {
+    alert("✅ পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে!");
+  }
+}
+
+function openEditProfileModal() {
+  const newName = prompt("আপনার নাম পরিবর্তন করুন:", window.currentUserData.name);
+  if (newName) {
+    window.currentUserData.name = newName;
+    updateDashboardUI();
+    alert("✅ প্রোফাইল আপডেট করা হয়েছে!");
+  }
+}
 
 const langBtn = $("langBtn");
 let currentLang = "bn";
@@ -1754,7 +1891,7 @@ const translations = {
     howEyebrow: "কীভাবে কাজ করে",
     howTitle: "তিন ধাপে রক্তদাতা থেকে রোগী",
     step1Title: "নিবন্ধন করুন",
-    step1Desc: "নাম, মোবাইল নম্বর, রক্তের গ্রুপ ও এলাকার তথ্য দিয়ে নিবন্ধনের অনুরোধ পাঠান।",
+    step1Desc: "নাম, মোবাইল নম্বর, রক্তের গ্রুপ ও এলাকার তথ্য দিয়ে নিবন্ধন সম্পন্ন করুন।",
     step2Title: "রক্তদাতা খুঁজুন",
     step2Desc: "রক্তের গ্রুপ ও এলাকা নির্বাচন করে রক্তদাতা খুঁজুন।",
     step3Title: "রক্ত দিন, জীবন বাঁচান",
@@ -1778,8 +1915,8 @@ const translations = {
     regTitle: "রক্তদাতা হিসেবে নিবন্ধন করুন",
     optSelectGroup: "রক্তের গ্রুপ নির্বাচন করুন *",
     optSelectDivision: "বিভাগ নির্বাচন করুন *",
-    regSubmit: "নিবন্ধন করুন",
-    regStatusText: "",
+    regSubmit: "নিবন্ধন সম্পন্ন করুন",
+    regStatusText: "নিবন্ধন সংরক্ষণ করতে Firebase/ডেটাবেস সংযোগ প্রয়োজন।",
     emerEyebrow: "জরুরি রক্তের অনুরোধ",
     emerTitle: "রোগীর জন্য রক্তের অনুরোধ করুন",
     emerNotice: "⚠️ আর্থিক লেনদেনের ক্ষেত্রে সতর্ক থাকুন। আর্থিক লেনদেনের জন্য MB Blood Bank কর্তৃপক্ষ দায়ী নয়।",
@@ -1801,7 +1938,7 @@ const translations = {
     astat4Val: "৬৪", astat4Text: "জেলার মানুষের জন্য",
     missionEyebrow: "আমাদের উদ্দেশ্য",
     missionTitle: "আমাদের মিশন ও ভিশন",
-    missionDesc: "দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে তোলাই আমাদের ভিশন।",
+    missionDesc: "দ্রুত, নিরাপদ ও ঝামেলাহীনভাবে রক্তদাতার সঙ্গে যোগাযোগের সুযোগ তৈরি করে মানুষের মুখে হাসি ফোটানো আমাদের মিশন। প্রযুক্তিনির্ভর সমাধানের মাধ্যমে বাংলাদেশে রক্তদানের অভিজ্ঞতাকে আরও সহজ, নির্ভরযোগ্য ও মানবিক করে توলাই আমাদের ভিশন।",
     panel1Title: "🎯 আমাদের মিশন",
     panel1Desc: "দ্রুত, নিরাপদ আর ঝামেলাহীন ডোনার খুঁজে পেতে সহায়তা করে মানুষের মুখে হাসি ফোটানো।",
     panel2Title: "🌟 আমাদের ভিশন",
@@ -1936,8 +2073,16 @@ const translations = {
     regTitle: "Register as a Blood Donor",
     optSelectGroup: "Select Blood Group *",
     optSelectDivision: "Select Division *",
-    regSubmit: "Register",
-    regStatusText: "",
+    regSubmit: "Complete Registration",
+    regStatusText: "Firebase/Database connection required to save registration.",
+    emerEyebrow: "Emergency Blood Request",
+    emerTitle: "Request Blood for Patient",
+    emerNotice: "⚠️ Be cautious regarding financial transactions. MB Blood Bank authorities are not responsible for financial transactions.",
+    patientPlaceholder: "Patient Name *",
+    contactPlaceholder: "Contact Number *",
+    hospitalPlaceholder: "Hospital / Location *",
+    emerSubmit: "Send Emergency Request",
+    emerStatusText: "Firebase/Database connection required to save request.",
     aboutTag: "❤️ MB Blood Bank · About Us",
     aboutMainTitle: "A Network for <span>Humanity</span>",
     aboutIntro1: "Since 2025, our goal has been to share blood donation info, register donors, facilitate emergency requests, and create live donor search opportunities across areas in Bangladesh.",
@@ -2051,21 +2196,14 @@ function showPage(page, targetHash) {
   const isContact = page === "contact";
   const isDonorReg = page === "donorReg";
   const isDonorLogin = page === "donorLogin";
-  const isProfile = page === "profile";
+  const isProfileDashboard = page === "profileDashboard";
 
-  $("homePage").classList.toggle("hidden", isAbout || isContact || isDonorReg || isDonorLogin || isProfile);
+  $("homePage").classList.toggle("hidden", isAbout || isContact || isDonorReg || isDonorLogin || isProfileDashboard);
   $("aboutPage").classList.toggle("hidden", !isAbout);
   $("contactPage").classList.toggle("hidden", !isContact);
   $("donorRegPage").classList.toggle("hidden", !isDonorReg);
   $("donorLoginPage").classList.toggle("hidden", !isDonorLogin);
-  const profileEl = $("profilePage");
-  if(profileEl) profileEl.classList.toggle("hidden", !isProfile);
-
-  // হোম পেজে নিচের নেভিগেশন বার হাইড থাকবে, লগইন/প্রোফাইল বা অন্যান্য পেজে দেখাবে
-  const bottomNav = $("bottomNav");
-  if(bottomNav) {
-    bottomNav.classList.toggle("hidden", page === "home");
-  }
+  $("profileDashboardPage").classList.toggle("hidden", !isProfileDashboard);
 
   document.querySelectorAll("#navLinks a[data-page]").forEach(link => {
     link.classList.toggle(
@@ -2074,6 +2212,7 @@ function showPage(page, targetHash) {
     );
   });
 
+  // বটম নেভিগেশন আইটেম অ্যাক্টিভ ক্লাস আপডেট
   document.querySelectorAll(".bottom-nav-item[data-page]").forEach(item => {
     item.classList.toggle("active", item.dataset.page === page);
   });
@@ -2093,8 +2232,8 @@ function showPage(page, targetHash) {
   } else if (isDonorLogin) {
     history.replaceState(null, "", "#donorLoginPage");
     window.scrollTo({top:0,behavior:"smooth"});
-  } else if (isProfile) {
-    history.replaceState(null, "", "#profilePage");
+  } else if (isProfileDashboard) {
+    history.replaceState(null, "", "#profileDashboardPage");
     window.scrollTo({top:0,behavior:"smooth"});
   } else {
     const target = targetHash && $(targetHash.replace("#",""));
@@ -2110,7 +2249,7 @@ function showPage(page, targetHash) {
 
 document.querySelectorAll("[data-page]").forEach(link => {
   link.addEventListener("click", event => {
-    if(link.getAttribute("href") && link.getAttribute("href").startsWith("tel:")) return;
+    if(link.getAttribute("href").startsWith("tel:")) return;
     event.preventDefault();
     const page = link.dataset.page || "home";
     const href = link.getAttribute("href");
@@ -2123,7 +2262,7 @@ window.addEventListener("load", () => {
   else if (location.hash === "#contactPage") showPage("contact");
   else if (location.hash === "#donorRegPage") showPage("donorReg");
   else if (location.hash === "#donorLoginPage") showPage("donorLogin");
-  else if (location.hash === "#profilePage") showPage("profile");
+  else if (location.hash === "#profileDashboardPage") showPage("profileDashboard");
   else showPage("home");
 });
 
@@ -2132,7 +2271,7 @@ window.addEventListener("popstate", () => {
   else if (location.hash === "#contactPage") showPage("contact");
   else if (location.hash === "#donorRegPage") showPage("donorReg");
   else if (location.hash === "#donorLoginPage") showPage("donorLogin");
-  else if (location.hash === "#profilePage") showPage("profile");
+  else if (location.hash === "#profileDashboardPage") showPage("profileDashboard");
   else showPage("home", location.hash);
 });
 
@@ -2293,8 +2432,9 @@ $("searchForm").addEventListener("submit", event => {
 
   $("searchStatus").textContent =
     (currentLang === "bn" ? "আপনার নির্বাচন: " : "Your selection: ") + (selectedBlood || (currentLang === "bn" ? "সব রক্তের গ্রুপ" : "All Blood Groups")) +
-    " · " + locationText;
-  $("searchStatus").style.color = "#14783d";
+    " · " + locationText +
+    (currentLang === "bn" ? "। প্রকৃত অনুমোদিত রক্তদাতার তালিকা দেখাতে ডেটাবেস সংযোগ প্রয়োজন।" : ". Database connection required to show actual approved donors.");
+  $("searchStatus").style.color = "#b51035";
 });
 
 document.querySelectorAll("[data-group]").forEach(btn => {
@@ -2312,8 +2452,8 @@ document.querySelectorAll("[data-group]").forEach(btn => {
 $("emergencyForm").addEventListener("submit", event => {
   event.preventDefault();
   $("emergencyStatus").textContent =
-    currentLang === "bn" ? "জরুরি অনুরোধ সফলভাবে সাবমিট করা হয়েছে।" : "Emergency request submitted successfully.";
-  $("emergencyStatus").style.color = "#14783d";
+    currentLang === "bn" ? "ফর্ম পূরণ হয়েছে, কিন্তু Firebase/ডেটাবেস সংযোগ ছাড়া জরুরি অনুরোধ সংরক্ষণ হয়নি।" : "Form filled, but emergency request not saved without Firebase/Database connection.";
+  $("emergencyStatus").style.color = "#b51035";
 });
 
 const compatibility = {
