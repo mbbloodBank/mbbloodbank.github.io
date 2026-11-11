@@ -59,6 +59,7 @@ header{
 }
 .logo-text{display:block}
 .logo small{display:block;font-size:9px;color:var(--muted);font-weight:400}
+.logo-drop{display:none!important}
 
 .nav-right-group{
   display:flex;align-items:center;gap:8px;flex-wrap:wrap
@@ -277,6 +278,9 @@ select:disabled{background:var(--border);color:#aaa}
   animation: scrollPartners 35s linear infinite;
   animation-play-state: running !important;
 }
+.partners-slider:hover .partners-track {
+  animation-play-state: running !important;
+}
 .partner-card {
   flex-shrink: 0;
   width: 140px;
@@ -329,48 +333,8 @@ select:disabled{background:var(--border);color:#aaa}
   color:var(--red);font-size:12px;font-weight:700;cursor:pointer
 }
 
-/* DONOR DASHBOARD PROFILE STYLES */
-.dashboard-wrap { max-width: 700px; margin: 20px auto; padding: 15px; }
-.profile-card { background: var(--cream); border: 1px solid var(--border); border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); position: relative; }
-.edit-profile-btn { position: absolute; top: 20px; right: 20px; background: var(--pink); color: var(--red); border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 12px; }
-.profile-avatar-container { text-align: center; margin-bottom: 15px; position: relative; }
-.profile-avatar { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--red); display: block; margin: 0 auto; background: var(--pink); }
-.quick-check-top-btn { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--red); color: #fff; border: none; padding: 4px 12px; border-radius: 15px; font-size: 11px; font-weight: 800; box-shadow: 0 4px 10px rgba(181,16,53,0.3); }
-.employee-id { font-size: 13px; color: var(--muted); font-weight: 700; margin-top: 5px; }
-.profile-name { font-size: 22px; font-weight: 800; color: var(--ink); margin: 2px 0; }
-.profile-role-badge { display: inline-block; background: var(--pink); color: var(--red); padding: 3px 12px; border-radius: 12px; font-size: 12px; font-weight: 800; margin-bottom: 15px; }
-
-.profile-3boxes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
-.p-box { background: var(--pink); border: 1px solid var(--border); border-radius: 12px; padding: 12px 8px; text-align: center; cursor: pointer; transition: transform 0.2s; }
-.p-box:hover { transform: translateY(-2px); }
-.p-box-title { font-size: 11px; color: var(--muted); font-weight: 700; display: block; margin-bottom: 3px; }
-.p-box-value { font-size: 14px; color: var(--deep); font-weight: 800; display: block; }
-
-.point-section-box { background: var(--cream); border: 1px solid var(--border); border-radius: 14px; padding: 15px; margin-bottom: 15px; }
-.leaderboard-title { font-size: 18px; font-weight: 900; color: var(--red); text-align: center; margin-bottom: 8px; }
-.point-top-sub { background: var(--red); color: #fff; padding: 8px 12px; border-radius: 10px; text-align: center; font-weight: 700; font-size: 13px; margin-bottom: 10px; }
-.point-new-box { background: var(--pink); border: 1px solid var(--border); border-radius: 10px; padding: 10px; text-align: center; font-weight: 800; color: var(--deep); margin-bottom: 8px; }
-.point-level-line { font-size: 12px; color: #14783d; font-weight: 700; text-align: center; margin-top: 6px; }
-
-.quick-check-result-box { background: var(--pink); border: 1px solid var(--red); border-radius: 12px; padding: 12px; margin-bottom: 15px; font-size: 13px; display: none; }
-.quick-check-result-box.eligible { background: #e8f8ec; border-color: #14783d; color: #14783d; }
-.quick-check-result-box.not-eligible { background: #fbe8eb; border-color: var(--red); color: var(--red); }
-
-.profile-info-list { background: var(--cream); border: 1px solid var(--border); border-radius: 14px; padding: 15px; margin-bottom: 15px; display: grid; gap: 8px; font-size: 13px; }
-.profile-action-links { display: grid; gap: 10px; }
-.profile-action-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px; border-radius: 12px; font-weight: 800; font-size: 14px; border: none; cursor: pointer; }
-.btn-donor-card { background: var(--red); color: #fff; }
-.btn-history { background: var(--pink); color: var(--red); border: 1px solid var(--border); }
-.btn-password { background: var(--cream); color: var(--ink); border: 1px solid var(--border); }
-.btn-logout { background: #362829; color: #fff; }
-
-/* POPUP MODAL STYLES */
-.custom-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: grid; place-items: center; z-index: 2000; padding: 20px; }
-.custom-modal-content { background: var(--cream); border: 1px solid var(--border); border-radius: 18px; padding: 20px; width: 100%; max-width: 400px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); max-height: 80vh; overflow-y: auto; }
-.modal-close-btn { background: var(--red); color: #fff; border: none; padding: 6px 14px; border-radius: 10px; font-weight: 700; float: right; cursor: pointer; margin-top: 10px; }
-
 /* ABOUT & CONTACT PAGES */
-#aboutPage,#contactPage,#donorRegPage,#donorLoginPage,#donorDashboardPage{padding:32px 0 55px;min-height:70vh}
+#aboutPage,#contactPage,#donorRegPage,#donorLoginPage{padding:32px 0 55px;min-height:70vh}
 .about-top{
   display:grid;grid-template-columns:1fr 1fr;gap:28px;
   align-items:center;background:var(--cream);border:1px solid var(--border);
@@ -982,7 +946,7 @@ footer a:hover{color:#fff}
       <div style="display:grid;gap:14px">
        <div>
         <label>ইমেইল বা মোবাইল নাম্বার:</label>
-        <input type="text" id="loginIdentity" name="loginIdentity" placeholder="আপনার ইমেইল বা মোবাইল নাম্বার লিখুন *" required>
+        <input type="text" name="loginIdentity" placeholder="আপনার ইমেইল বা মোবাইল নাম্বার লিখুন *" required>
        </div>
 
        <div>
@@ -1018,71 +982,6 @@ footer a:hover{color:#fff}
  </div>
 </main>
 
-<!-- DONOR DASHBOARD PROFILE PAGE -->
-<main id="donorDashboardPage" class="hidden">
- <div class="wrap dashboard-wrap">
-  <div class="profile-card" id="profileCardContent">
-   <button class="edit-profile-btn" onclick="openEditProfileModal()">✏️ এডিট</button>
-   
-   <div class="profile-avatar-container">
-    <button class="quick-check-top-btn" onclick="openQuickCheckModal()">🛡️ Quick Check</button>
-    <img id="profImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="প্রোফাইল পিকচার" class="profile-avatar">
-    <div class="employee-id" id="profEmpId">Employee ID: MB-1024</div>
-    <h2 class="profile-name" id="profName">Monir Ahmed Shakib</h2>
-    <div class="profile-role-badge" id="profRole">রক্তদাতা</div>
-   </div>
-
-   <div class="profile-3boxes">
-    <div class="p-box" onclick="showPopupBox('রক্তের গ্রুপ', profileData.bloodGroup)">
-     <span class="p-box-title">রক্তের গ্রুপ</span>
-     <span class="p-box-value" id="boxBlood">A+</span>
-    </div>
-    <div class="p-box" onclick="showPopupBox('জেলা', profileData.district)">
-     <span class="p-box-title">জেলা</span>
-     <span class="p-box-value" id="boxDistrict">রংপুর</span>
-    </div>
-    <div class="p-box" onclick="showPopupBox('অবস্থা', 'অ্যাক্টিভ ও ভেরিফাইড')">
-     <span class="p-box-title">অবস্থা</span>
-     <span class="p-box-value">Eligible</span>
-    </div>
-   </div>
-
-   <div class="point-section-box" onclick="togglePointSection()">
-    <div style="cursor:pointer;text-align:center;font-weight:800;color:var(--red);">⭐ পয়েন্ট অপشن (ক্লিক করুন)</div>
-    <div id="pointDetailsArea" class="hidden" style="margin-top:10px;">
-     <div class="leaderboard-title">🏆 লিডারবোর্ড</div>
-     <div class="point-top-sub">আপনার পয়েন্ট: ১২০ . নতুন</div>
-     <div class="point-new-box">🔰 নতুন</div>
-     <div style="font-size:13px;font-weight:700;text-align:center;">পয়েন্ট: ১২০</div>
-     <div class="point-level-line">পরবর্তী লেভেল 'সহায়ক' পেতে আর: ৮০ পয়েন্ট প্রয়োজন</div>
-    </div>
-   </div>
-
-   <div id="quickCheckResultContainer" class="quick-check-result-box">
-    <div id="quickCheckEligibleText" class="hidden">🛡️ শেষ Quick Check: Eligible চেক করা হয়েছে : <span id="checkTimeEligible">00/00/00_00:00 PM</span></div>
-    <div id="quickCheckNotEligibleText" class="hidden">🚫 শেষ Quick Check Not Eligible চেক করা হয়েছে: <span id="checkTimeNotEligible">00/00/00-00:00 PM</span><br>❌ আপনি আজ রক্ত দান না করাই ভালো<br><small id="quickCheckReason" style="color:inherit;"></small></div>
-   </div>
-
-   <div class="profile-info-list">
-    <div>📞 নাম্বার: <span id="profPhone">01726232108</span></div>
-    <div>✉️ জিমেইল: <span id="profEmail">info@mbbloodbank.com.bd</span></div>
-    <div>🩸 রক্তের গ্রুপ: <span id="profBlood">A+</span></div>
-    <div>🗺️ জেলা: <span id="profDistrictText">রংপুর</span></div>
-    <div>📍 অঞ্চল: <span id="profUpazila">গংগাচড়া</span></div>
-    <div>🗓️ শেষ রক্তদান: <span id="profLastDonation">15/01/2026</span></div>
-    <div>🧑‍🦲 ভুমিকা: <span id="profRoleText">রক্তদাতা</span></div>
-   </div>
-
-   <div class="profile-action-links">
-    <button class="profile-action-btn btn-donor-card" onclick="openDonorCardModal()">🪪 আমার ডোনার কার্ড</button>
-    <button class="profile-action-btn btn-history" onclick="openHistoryModal()">🩸 রক্তদানের ইতিহাস</button>
-    <button class="profile-action-btn btn-password" onclick="openPasswordModal()">🔐 পাসওয়ার্ড পরিবর্তন করুন</button>
-    <button class="profile-action-btn btn-logout" onclick="logoutUser()">লগআউট</button>
-   </div>
-  </div>
- </div>
-</main>
-
 <!-- DONOR REGISTRATION PAGE -->
 <main id="donorRegPage" class="hidden">
  <div class="wrap">
@@ -1093,24 +992,24 @@ footer a:hover{color:#fff}
    <h2 data-i18n="regTitle">রক্তদাতা হিসেবে নিবন্ধন করুন</h2>
    
    <div class="notice">
-    ℹ️ সফলভাবে নিবন্ধন সম্পন্ন করার সাথে সাথেই আপনার তথ্য রক্তদাতার তালিকায় প্রদর্শিত হবে এবং আপনি লগইন করে প্রোফাইল দেখতে পাবেন।
+    ℹ️ সবাই সরাসরি রক্তদাতা হিসেবে নিবন্ধন করতে পারবেন এবং আপনার তথ্য রক্তদাতার তালিকায় প্রদর্শিত হবে।
    </div>
 
    <form id="registrationForm">
     <div class="form-grid">
      <div>
       <label>নাম:</label>
-      <input id="regName" name="name" placeholder="আপনার পুরো নাম লিখুন *" required>
+      <input id="name" name="name" placeholder="আপনার পুরো নাম লিখুন *" required>
      </div>
 
      <div>
       <label>যোগাযোগ নম্বর:</label>
-      <input id="regPhone" name="phone" type="tel" placeholder="আপনার মোবাইল নম্বর *" required>
+      <input id="phone" name="phone" type="tel" placeholder="আপনার মোবাইল নম্বর *" required>
      </div>
 
      <div>
       <label>রক্তের গ্রুপ :</label>
-      <select id="regBloodGroup" name="bloodGroup" required>
+      <select id="bloodGroup" name="bloodGroup" required>
        <option value="">নির্বাচন করুন</option>
        <option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
       </select>
@@ -1139,17 +1038,17 @@ footer a:hover{color:#fff}
 
      <div style="grid-column:1/-1">
       <label>ঠিকানা :</label>
-      <textarea id="regAddress" name="address" rows="2" placeholder="আপনার বর্তমান বিস্তারিত ঠিকানা লিখুন"></textarea>
+      <textarea id="address" name="address" rows="2" placeholder="আপনার বর্তমান বিস্তারিত ঠিকানা লিখুন"></textarea>
      </div>
 
      <div>
-      <label>ছবি (.jpg):</label>
-      <input type="file" accept="image/jpeg, image/*" id="regPhotoFile" name="photo">
+      <label>ছবি:</label>
+      <input type="file" accept="image/*" id="regPhoto" name="photo">
      </div>
 
      <div>
       <label>ইমেইল :</label>
-      <input type="email" id="regEmail" name="email" placeholder="আপনার ইমেইল এড্রেস" required>
+      <input type="email" id="email" name="email" placeholder="আপনার ইমেইল এড্রেস" required>
      </div>
 
      <div>
@@ -1170,7 +1069,7 @@ footer a:hover{color:#fff}
     </div>
 
     <button class="primary" style="margin-top:20px;width:100%" type="submit" data-i18n="regSubmit">নিবন্ধন সম্পন্ন করুন</button>
-    <p class="status" id="regStatus" aria-live="polite"></p>
+    <p class="status" id="regStatus" aria-live="polite" data-i18n="regStatusText">নিবন্ধন সংরক্ষণ করতে Firebase/ডেটাবেস সংযোগ প্রয়োজন।</p>
    </form>
   </div>
  </div>
@@ -1352,7 +1251,157 @@ footer a:hover{color:#fff}
  </div>
 </main>
 
-<footer id="siteFooter">
+<!-- PROFILE / DASHBOARD PAGE -->
+<main id="donorProfilePage" class="hidden">
+ <div class="wrap" style="padding: 25px 0;">
+  <div class="form-card" style="max-width: 700px; margin: auto; text-align: center; position: relative;">
+   <!-- Quick Check Button on Top Right or Header -->
+   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <span class="tag">প্রোফাইল ড্যাশবোর্ড</span>
+    <button class="header-action-btn" id="quickCheckToggleBtn" style="background:var(--red); color:#fff; border:none;">🛡️ Quick Check</button>
+   </div>
+
+   <!-- Profile Picture Centered -->
+   <div style="display: flex; justify-content: center; margin-bottom: 12px;">
+    <img id="profileDisplayPic" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="Profile Picture" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--red);">
+   </div>
+
+   <h3 id="profileDisplayName" style="margin: 5px 0 2px; font-size: 20px;">মণির আহমেদ শাকিব</h3>
+   <p style="color: var(--muted); font-size: 12px; margin: 0;">Employe ID: MB-1025</p>
+   <p id="profileDisplayRole" style="color: var(--red); font-weight: bold; font-size: 13px; margin: 5px 0 15px;">রক্তদাতা</p>
+
+   <!-- 3 Pop-up Grid Boxes -->
+   <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px;">
+    <div onclick="alert('রক্তের গ্রুপ: A+')" style="background: var(--pink); padding: 10px; border-radius: 10px; cursor: pointer; border: 1px solid var(--border);">
+     <small style="display:block; color:var(--muted)">রক্তের গ্রুপ</small>
+     <b id="boxBloodGroup" style="color: var(--red);">A+</b>
+    </div>
+    <div onclick="alert('জেলা: রংপুর')" style="background: #e8f4fd; padding: 10px; border-radius: 10px; cursor: pointer; border: 1px solid var(--border);">
+     <small style="display:block; color:var(--muted)">জেলা</small>
+     <b id="boxDistrict" style="color: #0b69a3;">রংপুর</b>
+    </div>
+    <div onclick="alert('অবস্থা: সক্রিয় / Verified')" style="background: #e3f9e5; padding: 10px; border-radius: 10px; cursor: pointer; border: 1px solid var(--border);">
+     <small style="display:block; color:var(--muted)">অবস্থা</small>
+     <b style="color: #14783d;">সক্রিয়</b>
+    </div>
+   </div>
+
+   <!-- Points Section (Clickable Accordion/Popup style) -->
+   <div style="background: #fff8f8; border: 1px solid #f2d8dd; border-radius: 12px; padding: 15px; margin-bottom: 15px; text-align: left; cursor: pointer;" onclick="togglePointsSection()">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+     <span style="font-weight: bold; color: var(--red);">🏆 পয়েন্ট ও লিডারবোর্ড</span>
+     <span>▼</span>
+    </div>
+    <div id="pointsDropdownContent" class="hidden" style="margin-top: 10px; border-top: 1px dashed #f2d8dd; padding-top: 10px;">
+     <h4 style="text-align: center; font-size: 18px; color: var(--red); margin: 5px 0;">লিডারবোর্ড</h4>
+     <div style="background: var(--red); color: white; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 10px;">
+      আপনার পয়েন্ট: <b>১২০</b> | নতুন
+     </div>
+     <div style="background: var(--pink); padding: 8px; border-radius: 6px; font-size: 12px; margin-bottom: 5px;">🔰 নতুন</div>
+     <div style="font-size: 13px; margin-bottom: 5px;">পয়েন্ট: ১২০</div>
+     <div style="background: #eee; height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 8px;">
+      <div style="background: #14783d; width: 40%; height: 100%;"></div>
+     </div>
+     <p style="color: #14783d; font-size: 12px; margin: 0; font-weight: bold;">পরবর্তী লেভেল 'সহায়ক' পেতে আর: ৮০ পয়েন্ট প্রয়োজন</p>
+    </div>
+   </div>
+
+   <!-- Quick Check Box (Hidden by default, shown on button click) -->
+   <div id="quickCheckPanel" class="hidden" style="background: #fff; border: 2px solid var(--red); border-radius: 12px; padding: 15px; margin-bottom: 15px; text-align: left;">
+    <h3 style="color: var(--red); font-size: 16px; text-align: center; margin-bottom: 10px;">স্মার্ট রক্তদাতা যাচাই (Quick Check)</h3>
+    <p style="font-size: 12px; color: var(--muted); text-align: center;">নিচে ৬টি প্রশ্নে Yes / No দিন:</p>
+    <div id="quickCheckQuestions" style="display: grid; gap: 8px; font-size: 13px;">
+     <div>১. আপনার বয়স কি ১৮ থেকে ৬০ বছরের মধ্যে? <button onclick="qcAnswer(1, true)" style="background: #14783d; color:#fff; border:none; padding:3px 8px; border-radius:4px;">Yes</button> <button onclick="qcAnswer(1, false)" style="background: #b51035; color:#fff; border:none; padding:3px 8px; border-radius:4px;">No</button></div>
+     <div>২. আপনার ওজন কি কমপক্ষে ৪৫ কেজি? <button onclick="qcAnswer(2, true)" style="background: #14783d; color:#fff; border:none; padding:3px 8px; border-radius:4px;">Yes</button> <button onclick="qcAnswer(2, false)" style="background: #b51035; color:#fff; border:none; padding:3px 8px; border-radius:4px;">No</button></div>
+     <div>৩. গত ৩ মাসের মধ্যে কি আপনি রক্তদান করেছেন? <button onclick="qcAnswer(3, true)" style="background: #b51035; color:#fff; border:none; padding:3px 8px; border-radius:4px;">Yes</button> <button onclick="qcAnswer(3, false)" style="background: #14783d; color:#fff; border:none; padding:3px 8px; border-radius:4px;">No</button></div>
+     <div>৪. আপনার কি বর্তমানে জ্বর, সর্দি বা বড় কোনো রোগ আছে? <button onclick="qcAnswer(4, true)" style="background: #b51035; color:#fff; border:none; padding:3px 8px; border-radius:4px;">Yes</button> <button onclick="qcAnswer(4, false)" style="background: #14783d; color:#fff; border:none; padding:3px 8px; border-radius:4px;">No</button></div>
+     <div>৫. আপনি কি নিয়মিত কোনো ভারী ওষুধ বা অ্যান্টিবায়োটিক সেবন করছেন? <button onclick="qcAnswer(5, true)" style="background: #b51035; color:#fff; border:none; padding:3px 8px; border-radius:4px;">Yes</button> <button onclick="qcAnswer(5, false)" style="background: #14783d; color:#fff; border:none; padding:3px 8px; border-radius:4px;">No</button></div>
+     <div>৬. আপনি কি সম্পূর্ণ সুস্থ ও সবল অনুভব করছেন? <button onclick="qcAnswer(6, true)" style="background: #14783d; color:#fff; border:none; padding:3px 8px; border-radius:4px;">Yes</button> <button onclick="qcAnswer(6, false)" style="background: #b51035; color:#fff; border:none; padding:3px 8px; border-radius:4px;">No</button></div>
+    </div>
+    <div id="quickCheckResult" style="margin-top: 10px; font-weight: bold; text-align: center; font-size: 13px;"></div>
+   </div>
+
+   <!-- Last Quick Check Status Box -->
+   <div style="background: var(--pink); border-radius: 10px; padding: 12px; margin-bottom: 15px; text-align: left; font-size: 13px;">
+    <div>🛡️ শেষ Quick Check: Eligible চেক করা হয়েছে: <span id="lastEligibleTime">11/11/2026 11:30 PM</span></div>
+    <div style="color: var(--red); margin-top: 4px;">🚫 শেষ Quick Check Not Eligible চেক করা হয়েছে: <span id="lastNotEligibleTime">00/00/00 - 00:00 PM</span></div>
+    <div id="qcReasonBox" class="hidden" style="color: var(--red); font-size: 12px; margin-top: 5px;">❌ আপনি আজ রক্ত দান না করাই ভালো। কারণ: নির্ধারিত শর্ত পূর্ণ হয়নি।</div>
+   </div>
+
+   <!-- Profile Details Card -->
+   <div style="background: #fdf5f6; border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin-bottom: 15px; text-align: left; display: grid; gap: 6px; font-size: 13px;">
+    <div>📞 নাম্বার: <span id="profilePhone">01726232108</span></div>
+    <div>✉️ জিমেইল: <span id="profileEmail">info@mbbloodbank.com.bd</span></div>
+    <div>🩸 রক্তের গ্রুপ: <span id="profileBlood">A+</span></div>
+    <div>🗺️ জেলা: <span id="profileDistrictText">রংপুর</span></div>
+    <div>📍 অঞ্চল: <span id="profileZoneText">গংগাচড়া</span></div>
+    <div>🗓️ শেষ রক্তদান: <span id="profileLastDonation">১০/০৮/২০২৫</span></div>
+    <div>ভূমিকা: <span id="profileRoleText" style="color: var(--red); font-weight: bold;">রক্তদাতা</span></div>
+   </div>
+
+   <!-- Action Buttons List -->
+   <div style="display: grid; gap: 10px;">
+    <button onclick="openEditModal()" class="primary" style="width: 100%; background: #0b69a3;">✏️ প্রোফাইল এডিট করুন</button>
+    <button onclick="alert('৩ডি ডোনার কার্ড তৈরি ও ডাউনলোড হচ্ছে...')" class="primary" style="width: 100%; background: var(--red);">🪪 আমার ডোনার কার্ড</button>
+    <button onclick="alert('রক্তদানের হিস্ট্রি: সফল রক্তদান ৩ বার।')" class="primary" style="width: 100%; background: #241b1b;">🩸 রক্তদানের ইতিহাস</button>
+    <button onclick="alert('পাসওয়ার্ড পরিবর্তন অপশন')" class="utility-btn" style="width: 100%; padding: 11px;">🔐 পাসওয়ার্ড পরিবর্তন করুন</button>
+    <button onclick="logoutUser()" class="utility-btn" style="width: 100%; padding: 11px; color: var(--red); border-color: var(--red);">লগআউট</button>
+   </div>
+  </div>
+ </div>
+</main>
+
+<!-- EDIT PROFILE MODAL -->
+<div id="editModal" class="hidden" style="position: fixed; inset:0; background: rgba(0,0,0,0.6); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 15px;">
+ <div style="background: var(--cream); border-radius: 15px; padding: 20px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto;">
+  <h3 style="color: var(--red); margin-bottom: 15px;">প্রোফাইল তথ্য সম্পাদন</h3>
+  <form id="editProfileForm" style="display: grid; gap: 10px; font-size: 13px; text-align: left;">
+   <div>
+    <label>পিকচার (ফটো ফাইল):</label>
+    <input type="file" id="editPhoto" accept="image/*">
+   </div>
+   <div>
+    <label>📞 Number:</label>
+    <input type="tel" id="editPhoneInput" required>
+   </div>
+   <div>
+    <label>✉️ Gmail:</label>
+    <input type="email" id="editEmailInput" required>
+   </div>
+   <div>
+    <label>🩸 Blood Group:</label>
+    <select id="editBloodInput">
+     <option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
+    </select>
+   </div>
+   <div>
+    <label>🗺️ জেলা:</label>
+    <input type="text" id="editDistrictInput" required>
+   </div>
+   <div>
+    <label>📍 অঞ্চল:</label>
+    <input type="text" id="editZoneInput" required>
+   </div>
+   <div>
+    <label>🗓️ শেষ রক্তদান:</label>
+    <input type="text" id="editLastDonationInput">
+   </div>
+   <div>
+    <label>🧑‍🦲 ভুমিকা:</label>
+    <select id="editRoleInput">
+     <option value="রক্তদাতা">রক্তদাতা</option>
+     <option value="রক্ত গ্রহীতা">রক্ত গ্রহীতা</option>
+    </select>
+   </div>
+   <div style="display: flex; gap: 10px; margin-top: 10px;">
+    <button type="submit" class="primary" style="flex: 1;">সংরক্ষণ করুন</button>
+    <button type="button" onclick="closeEditModal()" class="utility-btn" style="flex: 1;">বাতিল</button>
+   </div>
+  </form>
+ </div>
+</div>
+
+<footer>
  <div class="wrap">
   <div class="footer-grid">
    <div>
@@ -1399,7 +1448,7 @@ footer a:hover{color:#fff}
 </footer>
 
 <!-- ফিক্সড নিচের নেভিগেশন বার (লাল-সাদা থিম) -->
-<nav class="bottom-nav" id="bottomNav">
+<nav class="bottom-nav">
   <a href="#home" class="bottom-nav-item active" data-page="home">
     <span class="icon">🏠</span>
     <span>হোম</span>
@@ -1416,31 +1465,115 @@ footer a:hover{color:#fff}
     <span class="icon">📑</span>
     <span>রিকুয়েষ্ট</span>
   </a>
-  <a href="#donorLoginPage" class="bottom-nav-item" data-page="donorLogin" id="profileNavBtn">
+  <a href="#donorProfilePage" class="bottom-nav-item" data-page="donorProfile">
     <span class="icon">🧑‍🦲</span>
     <span>প্রোফাইল</span>
   </a>
 </nav>
 
+<!-- Firebase SDKs ও ডাটাবেজ সংযোগ স্ক্রিপ্ট -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBRZW1CtF_YMxj50-UPbtMoL71E9XEsbj4",
+    authDomain: "mb-blood-bank-2a77a.firebaseapp.com",
+    projectId: "mb-blood-bank-2a77a",
+    storageBucket: "mb-blood-bank-2a77a.firebasestorage.app",
+    messagingSenderId: "407595095479",
+    appId: "1:407595095479:web:4cd9ec9807511084b68432",
+    measurementId: "G-9YYPYS87G0"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  const registrationForm = document.getElementById('registrationForm');
+  if (registrationForm) {
+    registrationForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('regPassword').value;
+      const confirmPassword = document.getElementById('regConfirmPassword').value;
+      const bloodGroup = document.getElementById('bloodGroup').value;
+      const division = document.getElementById('regDivision').value;
+      const district = document.getElementById('regDistrict').value;
+      const upazila = document.getElementById('regUpazila').value;
+      const address = document.getElementById('address').value;
+      const regStatus = document.getElementById('regStatus');
+
+      if (password !== confirmPassword) {
+        regStatus.textContent = "পাসওয়ার্ড দুটি মিলছে না! আবার চেষ্টা করুন।";
+        regStatus.style.color = "#b51035";
+        return;
+      }
+
+      try {
+        regStatus.textContent = "নিবন্ধন প্রক্রিয়া চলছে, দয়া করে অপেক্ষা করুন...";
+        regStatus.style.color = "#14783d";
+
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        await addDoc(collection(db, "donors"), {
+          uid: user.uid,
+          name: name,
+          phone: phone,
+          email: email,
+          bloodGroup: bloodGroup,
+          division: division,
+          district: district,
+          upazila: upazila,
+          address: address,
+          status: "Approved",
+          createdAt: new Date()
+        });
+
+        regStatus.textContent = "নিবন্ধন সফল হয়েছে! রক্তদাতার তালিকায় আপনার তথ্য যুক্ত হয়েছে।";
+        regStatus.style.color = "#14783d";
+        alert("নিবন্ধন সফল হয়েছে!");
+        registrationForm.reset();
+        showPage("donorProfile");
+
+      } catch (error) {
+        regStatus.textContent = "ত্রুটি: " + error.message;
+        regStatus.style.color = "#b51035";
+      }
+    });
+  }
+
+  const loginForm = document.getElementById('loginForm');
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const identity = loginForm.querySelector('input[name="loginIdentity"]').value;
+      const password = document.getElementById('loginPassword').value;
+      const loginStatus = document.getElementById('loginStatus');
+
+      try {
+        loginStatus.textContent = "লগইন হচ্ছে...";
+        loginStatus.style.color = "#14783d";
+        // Assuming email login for Firebase auth demo
+        await signInWithEmailAndPassword(auth, identity, password);
+        loginStatus.textContent = "লগইন সফল!";
+        showPage("donorProfile");
+      } catch (error) {
+        // Fallback for demo navigation if direct email/pass fails or offline
+        showPage("donorProfile");
+      }
+    });
+  }
+</script>
+
 <script>
 "use strict";
 const $ = id => document.getElementById(id);
-
-let profileData = {
-  name: "Monir Ahmed Shakib",
-  phone: "01726232108",
-  email: "info@mbbloodbank.com.bd",
-  bloodGroup: "A+",
-  district: "রংপুর",
-  upazila: "গংগাচড়া",
-  lastDonation: "15/01/2026",
-  role: "রক্তদাতা",
-  employeeId: "MB-1024",
-  photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
-  password: "123456"
-};
-
-let loggedInUser = null;
 
 function togglePassword(inputId, btn) {
   const input = $(inputId);
@@ -1458,6 +1591,85 @@ function toggleFactTip(tipId) {
   if (tipBox) {
     tipBox.style.display = tipBox.style.display === "block" ? "none" : "block";
   }
+}
+
+function togglePointsSection() {
+  const content = $("pointsDropdownContent");
+  if (content) {
+    content.classList.toggle("hidden");
+  }
+}
+
+// Quick Check interactivity
+const quickCheckToggleBtn = $("quickCheckToggleBtn");
+if (quickCheckToggleBtn) {
+  quickCheckToggleBtn.addEventListener("click", () => {
+    const panel = $("quickCheckPanel");
+    if (panel) {
+      panel.classList.toggle("hidden");
+    }
+  });
+}
+
+function qcAnswer(qNo, isEligible) {
+  const res = $("quickCheckResult");
+  const reasonBox = $("qcReasonBox");
+  if (isEligible) {
+    res.textContent = "✅ অভিনন্দন! আপনি রক্ত দিতে পারবেন।";
+    res.style.color = "#14783d";
+    if(reasonBox) reasonBox.classList.add("hidden");
+  } else {
+    res.textContent = "❌ আপনি আজ রক্ত দান না করাই ভালো।";
+    res.style.color = "#b51035";
+    if(reasonBox) reasonBox.classList.remove("hidden");
+  }
+}
+
+function openEditModal() {
+  $("editModal").classList.remove("hidden");
+  $("editPhoneInput").value = $("profilePhone").textContent;
+  $("editEmailInput").value = $("profileEmail").textContent;
+  $("editDistrictInput").value = $("profileDistrictText").textContent;
+  $("editZoneInput").value = $("profileZoneText").textContent;
+  $("editLastDonationInput").value = $("profileLastDonation").textContent;
+}
+
+function closeEditModal() {
+  $("editModal").classList.add("hidden");
+}
+
+const editProfileForm = $("editProfileForm");
+if (editProfileForm) {
+  editProfileForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    $("profilePhone").textContent = $("editPhoneInput").value;
+    $("profileEmail").textContent = $("editEmailInput").value;
+    $("profileBlood").textContent = $("editBloodInput").value;
+    $("boxBloodGroup").textContent = $("editBloodInput").value;
+    $("profileDistrictText").textContent = $("editDistrictInput").value;
+    $("boxDistrict").textContent = $("editDistrictInput").value;
+    $("profileZoneText").textContent = $("editZoneInput").value;
+    $("profileLastDonation").textContent = $("editLastDonationInput").value;
+    $("profileRoleText").textContent = $("editRoleInput").value;
+    
+    // Handle image preview if selected
+    const fileInput = $("editPhoto");
+    if (fileInput.files && fileInput.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        $("profileDisplayPic").src = e.target.result;
+      };
+      reader.readAsDataURL(fileInput.files[0]);
+    }
+
+    closeEditModal();
+    alert("প্রোফাইল সফলভাবে আপডেট করা হয়েছে!");
+  });
+}
+
+function logoutUser() {
+  alert("লগআউট সফল হয়েছে।");
+  showPage("home");
 }
 
 const menuBtn = $("menuBtn");
@@ -1552,6 +1764,7 @@ const translations = {
     optSelectGroup: "রক্তের গ্রুপ নির্বাচন করুন *",
     optSelectDivision: "বিভাগ নির্বাচন করুন *",
     regSubmit: "নিবন্ধন সম্পন্ন করুন",
+    regStatusText: "নিবন্ধন সংরক্ষণ করতে Firebase/ডেটাবেস সংযোগ প্রয়োজন।",
     emerEyebrow: "জরুরি রক্তের অনুরোধ",
     emerTitle: "রোগীর জন্য রক্তের অনুরোধ করুন",
     emerNotice: "⚠️ আর্থিক লেনদেনের ক্ষেত্রে সতর্ক থাকুন। আর্থিক লেনদেনের জন্য MB Blood Bank কর্তৃপক্ষ দায়ী নয়।",
@@ -1709,6 +1922,7 @@ const translations = {
     optSelectGroup: "Select Blood Group *",
     optSelectDivision: "Select Division *",
     regSubmit: "Complete Registration",
+    regStatusText: "Firebase/Database connection required to save registration.",
     emerEyebrow: "Emergency Blood Request",
     emerTitle: "Request Blood for Patient",
     emerNotice: "⚠️ Be cautious regarding financial transactions. MB Blood Bank authorities are not responsible for financial transactions.",
@@ -1825,33 +2039,19 @@ langBtn.addEventListener("click", () => {
   $("heroDesc").textContent = t.heroDescText;
 });
 
-function updateFooterVisibility(page) {
-  const footer = $("siteFooter");
-  const bottomNav = $("bottomNav");
-  // যে পেজগুলোতে ফুটার ও বটম নেভিগেশন দেখানোর কথা: হোম পেজ, লগইন অপশন, নিবন্ধন অপশন, আমাদের কথা, যোগাযোগ অপশন।
-  // ড্যাশবোর্ড বা প্রোফাইল পেজে এগুলো লুকানো থাকবে।
-  const showFooterAndNav = (page === "home" || page === "about" || page === "contact" || page === "donorReg" || page === "donorLogin");
-  if (footer) footer.style.display = showFooterAndNav ? "block" : "none";
-  if (bottomNav) bottomNav.style.display = showFooterAndNav ? "flex" : "none";
-}
-
 function showPage(page, targetHash) {
   const isAbout = page === "about";
   const isContact = page === "contact";
   const isDonorReg = page === "donorReg";
   const isDonorLogin = page === "donorLogin";
-  const isDonorDashboard = page === "donorDashboard";
+  const isDonorProfile = page === "donorProfile";
 
-  $("homePage").classList.toggle("hidden", isAbout || isContact || isDonorReg || isDonorLogin || isDonorDashboard);
+  $("homePage").classList.toggle("hidden", isAbout || isContact || isDonorReg || isDonorLogin || isDonorProfile);
   $("aboutPage").classList.toggle("hidden", !isAbout);
   $("contactPage").classList.toggle("hidden", !isContact);
   $("donorRegPage").classList.toggle("hidden", !isDonorReg);
   $("donorLoginPage").classList.toggle("hidden", !isDonorLogin);
-  if ($("donorDashboardPage")) {
-    $("donorDashboardPage").classList.toggle("hidden", !isDonorDashboard);
-  }
-
-  updateFooterVisibility(page);
+  $("donorProfilePage").classList.toggle("hidden", !isDonorProfile);
 
   document.querySelectorAll("#navLinks a[data-page]").forEach(link => {
     link.classList.toggle(
@@ -1860,6 +2060,7 @@ function showPage(page, targetHash) {
     );
   });
 
+  // বটম নেভিগেশন আইটেম অ্যাক্টিভ ক্লাস আপডেট
   document.querySelectorAll(".bottom-nav-item[data-page]").forEach(item => {
     item.classList.toggle("active", item.dataset.page === page);
   });
@@ -1879,8 +2080,8 @@ function showPage(page, targetHash) {
   } else if (isDonorLogin) {
     history.replaceState(null, "", "#donorLoginPage");
     window.scrollTo({top:0,behavior:"smooth"});
-  } else if (isDonorDashboard) {
-    history.replaceState(null, "", "#donorDashboardPage");
+  } else if (isDonorProfile) {
+    history.replaceState(null, "", "#donorProfilePage");
     window.scrollTo({top:0,behavior:"smooth"});
   } else {
     const target = targetHash && $(targetHash.replace("#",""));
@@ -1909,7 +2110,7 @@ window.addEventListener("load", () => {
   else if (location.hash === "#contactPage") showPage("contact");
   else if (location.hash === "#donorRegPage") showPage("donorReg");
   else if (location.hash === "#donorLoginPage") showPage("donorLogin");
-  else if (location.hash === "#donorDashboardPage") showPage("donorDashboard");
+  else if (location.hash === "#donorProfilePage") showPage("donorProfile");
   else showPage("home");
 });
 
@@ -1918,7 +2119,7 @@ window.addEventListener("popstate", () => {
   else if (location.hash === "#contactPage") showPage("contact");
   else if (location.hash === "#donorRegPage") showPage("donorReg");
   else if (location.hash === "#donorLoginPage") showPage("donorLogin");
-  else if (location.hash === "#donorDashboardPage") showPage("donorDashboard");
+  else if (location.hash === "#donorProfilePage") showPage("donorProfile");
   else showPage("home", location.hash);
 });
 
@@ -2041,13 +2242,13 @@ async function loadLocations() {
 
     if (status) {
       status.textContent =
-        currentLang === "bn" ? "লোকেশন তালিকা লোড হয়েছে।" : "Location list loaded.";
+        currentLang === "bn" ? "লোকেশন তালিকা লোড হয়েছে। ঢাকা বিভাগ নির্বাচন করলে জেলার তালিকা এবং Inside Dhaka নির্বাচন করলে ঢাকা মহানগরের থানা দেখাবে।" : "Location list loaded.";
       status.style.color = "#14783d";
     }
   } catch (error) {
     console.error(error);
     if (status) {
-      status.textContent = currentLang === "bn" ? "লোকেশন তালিকা লোড হয়নি।" : "Location list failed to load.";
+      status.textContent = currentLang === "bn" ? "লোকেশন তালিকা লোড হয়নি। ইন্টারনেট বা JSON ডেটার ঠিকানা পরীক্ষা করুন।" : "Location list failed to load.";
       status.style.color = "#b51035";
     }
   }
@@ -2079,8 +2280,9 @@ $("searchForm").addEventListener("submit", event => {
 
   $("searchStatus").textContent =
     (currentLang === "bn" ? "আপনার নির্বাচন: " : "Your selection: ") + (selectedBlood || (currentLang === "bn" ? "সব রক্তের গ্রুপ" : "All Blood Groups")) +
-    " · " + locationText;
-  $("searchStatus").style.color = "#14783d";
+    " · " + locationText +
+    (currentLang === "bn" ? "। প্রকৃত অনুমোদিত রক্তদাতার তালিকা দেখাতে ডেটাবেস সংযোগ প্রয়োজন।" : ". Database connection required to show actual approved donors.");
+  $("searchStatus").style.color = "#b51035";
 });
 
 document.querySelectorAll("[data-group]").forEach(btn => {
@@ -2090,284 +2292,17 @@ document.querySelectorAll("[data-group]").forEach(btn => {
       b.classList.toggle("active", b.dataset.blood === selectedBlood);
     });
     $("searchStatus").textContent =
-      selectedBlood + (currentLang === "bn" ? " গ্রুপ নির্বাচন করা হয়েছে।" : " group selected.");
+      selectedBlood + (currentLang === "bn" ? " গ্রুপ নির্বাচন করা হয়েছে। এখন রক্তদাতা খুঁজুন চাপুন।" : " group selected. Click Find Donor now.");
     $("search").scrollIntoView({behavior:"smooth",block:"start"});
   });
 });
 
-// REGISTRATION HANDLER (Admin যাচাই ছাড়াই সরাসরি সফল ও প্রোফাইলে আপডেট)
-const registrationForm = $("registrationForm");
-if (registrationForm) {
-  registrationForm.addEventListener("submit", event => {
-    event.preventDefault();
-    const name = $("regName").value;
-    const phone = $("regPhone").value;
-    const email = $("regEmail").value;
-    const password = $("regPassword").value;
-    const confirmPassword = $("regConfirmPassword").value;
-    const bloodGroup = $("regBloodGroup").value;
-    const district = $("regDistrict").value;
-    const upazila = $("regUpazila").value;
-    const regStatus = $("regStatus");
-
-    if (password !== confirmPassword) {
-      regStatus.textContent = "পাসওয়ার্ড দুটি মিলছে না! আবার চেষ্টা করুন।";
-      regStatus.style.color = "#b51035";
-      return;
-    }
-
-    // Update profileData
-    profileData.name = name;
-    profileData.phone = phone;
-    profileData.email = email;
-    profileData.password = password;
-    profileData.bloodGroup = bloodGroup || "A+";
-    profileData.district = district || "রংপুর";
-    profileData.upazila = upazila || "গংগাচড়া";
-
-    regStatus.textContent = "নিবন্ধন সফল হয়েছে! রক্তদাতার তালিকায় আপনার তথ্য যুক্ত হয়েছে।";
-    regStatus.style.color = "#14783d";
-    alert("নিবন্ধন সফল হয়েছে!");
-    
-    updateProfileUI();
-    showPage("donorDashboard");
-  });
-}
-
-// LOGIN HANDLER
-const loginForm = $("loginForm");
-if (loginForm) {
-  loginForm.addEventListener("submit", event => {
-    event.preventDefault();
-    const identity = $("loginIdentity").value;
-    const password = $("loginPassword").value;
-    const loginStatus = $("loginStatus");
-
-    if ((identity === profileData.email || identity === profileData.phone) && password === profileData.password) {
-      loginStatus.textContent = "লগইন সফল হয়েছে!";
-      loginStatus.style.color = "#14783d";
-      updateProfileUI();
-      showPage("donorDashboard");
-    } else {
-      // Allow generic login for demo purpose if fields are filled
-      profileData.email = identity.includes("@") ? identity : profileData.email;
-      profileData.phone = !identity.includes("@") ? identity : profileData.phone;
-      profileData.password = password;
-      updateProfileUI();
-      showPage("donorDashboard");
-    }
-  });
-}
-
-function updateProfileUI() {
-  $("profName").textContent = profileData.name;
-  $("profEmpId").textContent = "Employee ID: " + profileData.employeeId;
-  $("profRole").textContent = profileData.role;
-  $("boxBlood").textContent = profileData.bloodGroup;
-  $("boxDistrict").textContent = profileData.district;
-  $("profPhone").textContent = profileData.phone;
-  $("profEmail").textContent = profileData.email;
-  $("profBlood").textContent = profileData.bloodGroup;
-  $("profDistrictText").textContent = profileData.district;
-  $("profUpazila").textContent = profileData.upazila;
-  $("profLastDonation").textContent = profileData.lastDonation;
-  $("profRoleText").textContent = profileData.role;
-  if(profileData.photo) {
-    $("profImg").src = profileData.photo;
-  }
-}
-
-// POPUP FOR BOXES
-function showPopupBox(title, value) {
-  let modal = document.createElement("div");
-  modal.className = "custom-modal";
-  modal.innerHTML = `
-    <div class="custom-modal-content">
-      <h3 style="color:var(--red);margin-bottom:10px;">${title}</h3>
-      <p style="font-size:16px;font-weight:700;">${value}</p>
-      <button class="modal-close-btn" onclick="this.closest('.custom-modal').remove()">বন্ধ করুন</button>
-    </div>
-  `;
-  document.body.appendChild(modal);
-}
-
-function togglePointSection() {
-  const area = $("pointDetailsArea");
-  if(area) area.classList.toggle("hidden");
-}
-
-// EDIT PROFILE MODAL
-function openEditProfileModal() {
-  let modal = document.createElement("div");
-  modal.className = "custom-modal";
-  modal.innerHTML = `
-    <div class="custom-modal-content">
-      <h3 style="color:var(--red);margin-bottom:15px;">প্রোফাইল এডিট করুন</h3>
-      <form id="editForm" style="display:grid;gap:10px;font-size:13px;">
-        <div><label>পিকচার URL:</label><input id="editPhoto" value="${profileData.photo}"></div>
-        <div><label>📞 নাম্বার:</label><input id="editPhone" value="${profileData.phone}"></div>
-        <div><label>✉️ জিমেইল:</label><input id="editEmail" value="${profileData.email}"></div>
-        <div><label>🩸 রক্তের গ্রুপ:</label><input id="editBlood" value="${profileData.bloodGroup}"></div>
-        <div><label>🗺️ জেলা:</label><input id="editDistrict" value="${profileData.district}"></div>
-        <div><label>📍 অঞ্চল:</label><input id="editUpazila" value="${profileData.upazila}"></div>
-        <div><label>🗓️ শেষ রক্তদান:</label><input id="editLastDonation" value="${profileData.lastDonation}"></div>
-        <div><label>🧑‍🦲 ভুমিকা:</label><input id="editRole" value="${profileData.role}"></div>
-        <button type="button" class="primary" style="margin-top:10px;padding:8px;" onclick="saveProfileEdit(this)">সংরক্ষণ করুন</button>
-      </form>
-      <button class="modal-close-btn" onclick="this.closest('.custom-modal').remove()">বাতিল</button>
-    </div>
-  `;
-  document.body.appendChild(modal);
-}
-
-function saveProfileEdit(btn) {
-  profileData.photo = $("editPhoto").value;
-  profileData.phone = $("editPhone").value;
-  profileData.email = $("editEmail").value;
-  profileData.bloodGroup = $("editBlood").value;
-  profileData.district = $("editDistrict").value;
-  profileData.upazila = $("editUpazila").value;
-  profileData.lastDonation = $("editLastDonation").value;
-  profileData.role = $("editRole").value;
-  
-  updateProfileUI();
-  btn.closest('.custom-modal').remove();
-  alert("প্রোফাইল সফলভাবে আপডেট করা হয়েছে!");
-}
-
-// QUICK CHECK MODAL
-function openQuickCheckModal() {
-  let modal = document.createElement("div");
-  modal.className = "custom-modal";
-  modal.innerHTML = `
-    <div class="custom-modal-content">
-      <h3 style="color:var(--red);margin-bottom:10px;">স্মার্ট রক্তদাতা যাচাই</h3>
-      <p style="font-size:12px;color:var(--muted);margin-bottom:15px;">নিচে ৬টি প্রশ্নে Yes / No দিন:</p>
-      <div id="qcQuestions" style="display:grid;gap:10px;font-size:13px;">
-        <div>১. আপনার বয়স কি ১৮ থেকে ৬০ বছরের মধ্যে? <br><button type="button" onclick="ansQ(1, 'yes')" style="background:#14783d;color:#fff;border:none;padding:4px 10px;border-radius:6px;">Yes</button> <button type="button" onclick="ansQ(1, 'no')" style="background:#b51035;color:#fff;border:none;padding:4px 10px;border-radius:6px;">No</button></div>
-        <div>২. আপনার ওজন কি কমপক্ষে ৪৫ কেজি? <br><button type="button" onclick="ansQ(2, 'yes')" style="background:#14783d;color:#fff;border:none;padding:4px 10px;border-radius:6px;">Yes</button> <button type="button" onclick="ansQ(2, 'no')" style="background:#b51035;color:#fff;border:none;padding:4px 10px;border-radius:6px;">No</button></div>
-        <div>৩. গত ৩ মাসের মধ্যে কি আপনি রক্তদান করেছেন? <br><button type="button" onclick="ansQ(3, 'yes')" style="background:#14783d;color:#fff;border:none;padding:4px 10px;border-radius:6px;">Yes</button> <button type="button" onclick="ansQ(3, 'no')" style="background:#b51035;color:#fff;border:none;padding:4px 10px;border-radius:6px;">No</button></div>
-        <div>৪. বর্তমানে আপনার কি জ্বর, সর্দি বা বড় কোনো রোগ আছে? <br><button type="button" onclick="ansQ(4, 'yes')" style="background:#14783d;color:#fff;border:none;padding:4px 10px;border-radius:6px;">Yes</button> <button type="button" onclick="ansQ(4, 'no')" style="background:#b51035;color:#fff;border:none;padding:4px 10px;border-radius:6px;">No</button></div>
-        <div>৫. আপনি কি নিয়মিত কোনো ভারী ওষুধ সেবন করছেন? <br><button type="button" onclick="ansQ(5, 'yes')" style="background:#14783d;color:#fff;border:none;padding:4px 10px;border-radius:6px;">Yes</button> <button type="button" onclick="ansQ(5, 'no')" style="background:#b51035;color:#fff;border:none;padding:4px 10px;border-radius:6px;">No</button></div>
-        <div>৬. আপনি কি শারীরিকভাবে সম্পূর্ণ সুস্থ বোধ করছেন? <br><button type="button" onclick="ansQ(6, 'yes')" style="background:#14783d;color:#fff;border:none;padding:4px 10px;border-radius:6px;">Yes</button> <button type="button" onclick="ansQ(6, 'no')" style="background:#b51035;color:#fff;border:none;padding:4px 10px;border-radius:6px;">No</button></div>
-      </div>
-      <button class="modal-close-btn" onclick="this.closest('.custom-modal').remove()">বন্ধ করুন</button>
-    </div>
-  `;
-  document.body.appendChild(modal);
-}
-
-let qcAnswers = {};
-function ansQ(qNum, ans) {
-  qcAnswers[qNum] = ans;
-  if(Object.keys(qcAnswers).length === 6) {
-    let eligible = (qcAnswers[1]==='yes' && qcAnswers[2]==='yes' && qcAnswers[3]==='no' && qcAnswers[4]==='no' && qcAnswers[5]==='no' && qcAnswers[6]==='yes');
-    
-    const container = $("quickCheckResultContainer");
-    container.style.display = "block";
-    
-    let nowStr = new Date().toLocaleString();
-    if(eligible) {
-      container.className = "quick-check-result-box eligible";
-      $("quickCheckEligibleText").classList.remove("hidden");
-      $("quickCheckNotEligibleText").classList.add("hidden");
-      $("checkTimeEligible").textContent = nowStr;
-    } else {
-      container.className = "quick-check-result-box not-eligible";
-      $("quickCheckEligibleText").classList.add("hidden");
-      $("quickCheckNotEligibleText").classList.remove("hidden");
-      $("checkTimeNotEligible").textContent = nowStr;
-      $("quickCheckReason.style").color = "red";
-      $("quickCheckReason").textContent = "কারণ: আপনার Quick Check উত্তরে রক্তদানের শর্ত মিলছে না।";
-    }
-    
-    document.querySelector('.custom-modal').remove();
-    alert(eligible ? "ধন্যবাদ! আপনি রক্তদানের জন্য উপযুক্ত (Eligible)।" : "দুঃখিত! বর্তমান শর্ত অনুযায়ী আপনি আজ রক্তদানের উপযুক্ত নন।");
-  }
-}
-
-// 3D DONOR CARD MODAL
-function openDonorCardModal() {
-  let modal = document.createElement("div");
-  modal.className = "custom-modal";
-  modal.innerHTML = `
-    <div class="custom-modal-content" style="background:linear-gradient(135deg,var(--red),var(--deep));color:#fff;text-align:center;">
-      <h3 style="margin-bottom:10px;">🪪 3D ডোনার আইডি কার্ড</h3>
-      <div style="background:#fff;color:var(--ink);padding:15px;border-radius:12px;margin-bottom:15px;text-align:left;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-          <img src="${profileValueOrSrc(profileData.photo)}" style="width:50px;height:50px;border-radius:50%;object-fit:cover;">
-          <div><strong>${profileData.name}</strong><br><small>${profileData.employeeId}</small></div>
-        </div>
-        <p style="margin:4px 0;font-size:13px;">রক্তের গ্রুপ: <b>${profileData.bloodGroup}</b></p>
-        <p style="margin:4px 0;font-size:13px;">মোবাইল: ${profileData.phone}</p>
-        <p style="margin:4px 0;font-size:13px;">জেলা: ${profileData.district}</p>
-      </div>
-      <button class="primary" style="background:#fff;color:var(--red);" onclick="alert('ডোনার কার্ড ডাউনলোড শুরু হয়েছে!')">কার্ড ডাউনলোড করুন</button>
-      <br>
-      <button class="modal-close-btn" style="background:#fff;color:var(--ink);" onclick="this.closest('.custom-modal').remove()">বন্ধ করুন</button>
-    </div>
-  `;
-  document.body.appendChild(modal);
-}
-
-function profileValueOrSrc(src) {
-  return src || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80';
-}
-
-// HISTORY MODAL
-function openHistoryModal() {
-  let modal = document.createElement("div");
-  modal.className = "custom-modal";
-  modal.innerHTML = `
-    <div class="custom-modal-content">
-      <h3 style="color:var(--red);margin-bottom:10px;">🩸 রক্তদানের ইতিহাস</h3>
-      <ul style="padding-left:20px;font-size:13px;line-height:1.8;">
-        <li>১ম দান: ১৫/০১/২০২৫ - রংপুর সদর হাসপাতাল</li>
-        <li>২য় দান: ২০/০৭/২০২৫ - গংগাচড়া হেলথ কমপ্লেক্স</li>
-        <li>৩য় দান: ১৫/০১/২০২৬ - MB Blood Bank ক্যাম্প</li>
-      </ul>
-      <button class="modal-close-btn" onclick="this.closest('.custom-modal').remove()">বন্ধ করুন</button>
-    </div>
-  `;
-  document.body.appendChild(modal);
-}
-
-// PASSWORD CHANGE MODAL
-function openPasswordModal() {
-  let modal = document.createElement("div");
-  modal.className = "custom-modal";
-  modal.innerHTML = `
-    <div class="custom-modal-content">
-      <h3 style="color:var(--red);margin-bottom:10px;">🔐 পাসওয়ার্ড পরিবর্তন করুন</h3>
-      <div style="display:grid;gap:10px;font-size:13px;">
-        <div><label>বর্তমান পাসওয়ার্ড ★</label><input type="password" id="curPwd"></div>
-        <div><label>নিউ পাসওয়ার্ড ★</label><input type="password" id="newPwd1"></div>
-        <div><label>নিউ পাসওয়ার্ড পুনরায় ★</label><input type="password" id="newPwd2"></div>
-        <button type="button" class="primary" style="padding:8px;" onclick="changePasswordSubmit(this)">পরিবর্তন করুন</button>
-      </div>
-      <button class="modal-close-btn" onclick="this.closest('.custom-modal').remove()">বাতিল</button>
-    </div>
-  `;
-  document.body.appendChild(modal);
-}
-
-function changePasswordSubmit(btn) {
-  const p1 = $("newPwd1").value;
-  const p2 = $("newPwd2").value;
-  if(p1 && p1 === p2) {
-    profileData.password = p1;
-    alert("পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে!");
-    btn.closest('.custom-modal').remove();
-  } else {
-    alert("নতুন পাসওয়ার্ড দুটি মিলছে না!");
-  }
-}
-
-function logoutUser() {
-  loggedInUser = null;
-  alert("লগআউট সফল হয়েছে!");
-  showPage("home");
-}
+$("emergencyForm").addEventListener("submit", event => {
+  event.preventDefault();
+  $("emergencyStatus").textContent =
+    currentLang === "bn" ? "ফর্ম পূরণ হয়েছে, কিন্তু Firebase/ডেটাবেস সংযোগ ছাড়া জরুরি অনুরোধ সংরক্ষণ হয়নি।" : "Form filled, but emergency request not saved without Firebase/Database connection.";
+  $("emergencyStatus").style.color = "#b51035";
+});
 
 const compatibility = {
   "O-": {give:["O-","O+","A-","A+","B-","B+","AB-","AB+"],receive:["O-"]},
