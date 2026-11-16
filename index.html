@@ -1,820 +1,1892 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clinova Dashboard V35 - Healthcare Bento UI</title>
+    <title>MB Blood Bank | স্মার্ট রক্তদাতা ও ব্লাড ম্যানেজমেন্ট সিস্টেম</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter, Plus Jakarta Sans & Playfair Display -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Hind Siliguri', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Hind Siliguri (Bangla) & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,500;1,600&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
         body {
-            font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(135deg, #eef2f9 0%, #e2e8f0 100%);
-            min-height: 100vh;
-            color: #0f172a;
+            font-family: 'Hind Siliguri', 'Inter', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
             overflow-x: hidden;
         }
 
-        .font-serif-italic {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
+        /* 3D Bento Card Styling */
+        .bento-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+            box-shadow: 0 14px 28px -8px rgba(15, 23, 42, 0.12), 0 6px 12px -4px rgba(15, 23, 42, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+        }
+        .dark .bento-3d {
+            box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.45), 0 6px 14px -4px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        }
+        .bento-3d:hover {
+            transform: translateY(-6px) rotateX(1.5deg) rotateY(-1.5deg);
+            box-shadow: 0 24px 40px -10px rgba(225, 29, 72, 0.18), 0 10px 20px -6px rgba(15, 23, 42, 0.12);
         }
 
-        /* Glassmorphism Card Styling */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.05), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
-            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+        /* Flat Non-3D Bottom Bars */
+        .flat-bar {
+            transform: none !important;
+            box-shadow: none !important;
         }
 
-        .glass-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 35px -8px rgba(15, 23, 42, 0.09), 0 8px 16px -4px rgba(15, 23, 42, 0.04);
+        /* 3D Red Donor ID Card */
+        .donor-id-3d-wrap {
+            perspective: 1100px;
+        }
+        .donor-id-3d-card {
+            background: linear-gradient(135deg, #b91c1c 0%, #dc2626 48%, #7f1d1d 100%);
+            transform-style: preserve-3d;
+            transition: transform 0.25s ease-out, box-shadow 0.3s ease;
+            box-shadow: 0 22px 45px -10px rgba(185, 28, 28, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.35);
         }
 
-        /* Dark Navy Patient Monitor Card */
-        .dark-glass-card {
-            background: linear-gradient(160deg, #162038 0%, #0d1424 100%);
-            border: 1px solid rgba(56, 189, 248, 0.18);
-            box-shadow: 0 20px 40px -10px rgba(13, 20, 36, 0.35);
-            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        /* Pulse Ring for Emergency */
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.55); }
+            50% { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
+        }
+        .emergency-pulse {
+            animation: pulseGlow 2s infinite;
         }
 
-        .dark-glass-card:hover {
-            transform: translateY(-4px);
-        }
-
-        .dark-metric-tile {
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            transition: background 0.2s ease, border-color 0.2s ease;
-        }
-
-        .dark-metric-tile:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(56, 189, 248, 0.3);
-        }
-
-        /* Sidebar Active Glow */
-        .nav-active-glow {
-            background: #ffffff;
-            color: #0f172a;
-            box-shadow: 0 0 18px rgba(255, 255, 255, 0.75);
-        }
-
-        /* Live ECG Pulse Animation */
-        @keyframes ecgDraw {
-            0% {
-                stroke-dashoffset: 600;
-            }
-            100% {
-                stroke-dashoffset: 0;
-            }
-        }
-
-        .ecg-line {
-            stroke-dasharray: 600;
-            stroke-dashoffset: 600;
-            animation: ecgDraw 3.2s linear infinite;
-        }
-
-        /* Smooth Staggered Entry Animation */
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(18px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-entry {
-            opacity: 0;
-            animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
-
-        .delay-1 { animation-delay: 0.08s; }
-        .delay-2 { animation-delay: 0.16s; }
-        .delay-3 { animation-delay: 0.24s; }
-        .delay-4 { animation-delay: 0.32s; }
-        .delay-5 { animation-delay: 0.40s; }
-        .delay-6 { animation-delay: 0.48s; }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(148, 163, 184, 0.4);
-            border-radius: 9999px;
-        }
+        /* Smooth Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.45); border-radius: 9999px; }
     </style>
 </head>
-<body class="p-3 sm:p-5 lg:p-6 flex flex-col lg:flex-row gap-4 lg:gap-6 max-w-[1600px] mx-auto">
+<body class="bg-slate-100 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col">
 
-    <!-- 1. LEFT SLIM DARK NAVY SIDEBAR -->
-    <aside class="bg-[#0f172a] text-slate-400 rounded-3xl lg:rounded-[32px] p-3 lg:py-6 lg:px-3 flex lg:flex-col items-center justify-between shadow-xl shrink-0 z-20">
-        <!-- Top Brand Logo & Quick Add -->
-        <div class="flex lg:flex-col items-center gap-3 lg:gap-5">
-            <!-- Brand Emblem -->
-            <button onclick="showToast('Clinova OS v3.5 Active')" class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white shadow-lg shadow-blue-500/30 hover:scale-105 transition-transform" title="Clinova Medical">
-                <i data-lucide="activity" class="w-6 h-6"></i>
-            </button>
-
-            <!-- '+' Quick Add Button -->
-            <button onclick="showToast('New Patient Intake Form opened')" class="w-10 h-10 rounded-full bg-slate-800/90 hover:bg-blue-600 text-white border border-slate-700 flex items-center justify-center transition-all hover:scale-105 relative" title="Add New Record">
-                <i data-lucide="plus" class="w-5 h-5"></i>
-                <span class="w-2 h-2 rounded-full bg-rose-500 absolute -top-0.5 -right-0.5 ring-2 ring-[#0f172a]"></span>
-            </button>
-        </div>
-
-        <!-- Center Navigation Icons -->
-        <nav class="flex lg:flex-col items-center gap-2 sm:gap-3 lg:gap-4 my-0 lg:my-auto" id="sidebar-nav">
-            <button data-nav="Dashboard" class="nav-btn nav-active-glow w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200" title="Dashboard">
-                <i data-lucide="layout-grid" class="w-5 h-5"></i>
-            </button>
-            <button data-nav="Calendar" class="nav-btn w-11 h-11 rounded-full hover:bg-slate-800/80 hover:text-white flex items-center justify-center transition-all duration-200" title="Appointments Calendar">
-                <i data-lucide="calendar" class="w-5 h-5"></i>
-            </button>
-            <button data-nav="Patients" class="nav-btn w-11 h-11 rounded-full hover:bg-slate-800/80 hover:text-white flex items-center justify-center transition-all duration-200" title="Patient Directory">
-                <i data-lucide="users" class="w-5 h-5"></i>
-            </button>
-            <button data-nav="Reports" class="nav-btn w-11 h-11 rounded-full hover:bg-slate-800/80 hover:text-white flex items-center justify-center transition-all duration-200" title="Lab & Clinical Reports">
-                <i data-lucide="file-bar-chart-2" class="w-5 h-5"></i>
-            </button>
-            <button data-nav="Messages" class="nav-btn w-11 h-11 rounded-full hover:bg-slate-800/80 hover:text-white flex items-center justify-center transition-all duration-200 relative" title="Staff Messages">
-                <i data-lucide="message-square" class="w-5 h-5"></i>
-                <span class="w-2 h-2 rounded-full bg-cyan-400 absolute top-2.5 right-2.5"></span>
-            </button>
-        </nav>
-
-        <!-- Bottom Settings & Logout -->
-        <div class="hidden sm:flex lg:flex-col items-center gap-3">
-            <button onclick="showToast('System Preferences')" class="w-10 h-10 rounded-full hover:bg-slate-800/80 hover:text-white flex items-center justify-center transition-colors" title="Settings">
-                <i data-lucide="settings" class="w-5 h-5"></i>
-            </button>
-            <button onclick="showToast('Session locked securely')" class="w-10 h-10 rounded-full hover:bg-rose-500/20 hover:text-rose-400 flex items-center justify-center transition-colors" title="Logout">
-                <i data-lucide="log-out" class="w-5 h-5"></i>
-            </button>
-        </div>
-    </aside>
-
-    <!-- MAIN CONTENT SHELL -->
-    <div class="flex-1 flex flex-col gap-5 min-w-0">
-
-        <!-- 2. TOP HEADER BAR -->
-        <header class="flex flex-wrap items-center justify-between gap-4 animate-entry">
-            <!-- Brand Pill + Date Badge -->
-            <div class="flex items-center gap-3 flex-wrap">
-                <div class="glass-card px-4 py-2 rounded-full flex items-center gap-2.5">
-                    <span class="font-bold text-slate-900 tracking-tight text-sm sm:text-base">Clinova</span>
-                    <span class="text-slate-300">|</span>
-                    <span class="text-xs sm:text-sm font-medium text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-full">Dashboard</span>
+    <!-- ==================== TOP HEADER & NAVIGATION (ALWAYS CLEARLY VISIBLE) ==================== -->
+    <header class="sticky top-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="max-w-[1560px] mx-auto px-3 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-3">
+            
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-2.5 cursor-pointer" onclick="navigateTo('landing')">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-600 to-red-700 text-white flex items-center justify-center shadow-md shadow-rose-500/30">
+                    <i data-lucide="droplet" class="w-6 h-6 fill-current"></i>
                 </div>
-                <div class="hidden md:flex items-center gap-2 text-xs font-medium text-slate-500 bg-white/60 px-3.5 py-2 rounded-full border border-white/80">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span id="live-date-badge">Tue, Nov 17 • 12:17 AM</span>
+                <div>
+                    <span class="text-lg sm:text-xl font-extrabold tracking-tight text-rose-600 dark:text-rose-500">MB Blood Bank</span>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-none" data-i18n="tagline">জীবন বাঁচানোর স্মার্ট নেটওয়ার্ক</p>
                 </div>
             </div>
 
-            <!-- Centered Search Bar -->
-            <div class="order-3 md:order-2 w-full md:w-80 lg:w-96 relative">
-                <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
-                <input 
-                    type="text" 
-                    id="global-search"
-                    placeholder="Search patients, doctors, records..." 
-                    class="w-full pl-10 pr-12 py-2.5 rounded-full bg-white/80 backdrop-blur-md border border-white text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 shadow-sm transition-all"
-                >
-                <span class="hidden sm:inline-block text-[10px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md absolute right-3.5 top-1/2 -translate-y-1/2 border border-slate-200">⌘K</span>
-            </div>
-
-            <!-- Right Notification & Profile Avatar -->
-            <div class="order-2 md:order-3 flex items-center gap-3">
-                <button onclick="showToast('3 new lab results & 1 ICU alert')" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-slate-600 hover:text-slate-900 relative">
-                    <i data-lucide="bell" class="w-5 h-5"></i>
-                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500 border-2 border-white absolute top-2 right-2.5"></span>
+            <!-- Main Navigation Links (Home -> Donor Dashboard, Donor, Ambulance, Request) -->
+            <nav class="flex items-center gap-1 sm:gap-2 order-3 lg:order-2 w-full lg:w-auto justify-center bg-slate-100 dark:bg-slate-800/80 p-1 rounded-2xl">
+                <button onclick="navigateTo('dashboard')" id="nav-dashboard" class="main-nav-btn px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-rose-600 text-white shadow-sm">
+                    Home
                 </button>
-
-                <div class="glass-card pl-1.5 pr-4 py-1.5 rounded-full flex items-center gap-3 cursor-pointer" onclick="showToast('Logged in as Dr. Amara (CMO)')">
-                    <img 
-                        src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=120&q=80" 
-                        onerror="this.src='https://placehold.co/100x100/2563eb/ffffff?text=AM'"
-                        alt="Dr. Amara" 
-                        class="w-9 h-9 rounded-full object-cover ring-2 ring-blue-500/20"
-                    >
-                    <div class="hidden sm:block text-left leading-tight">
-                        <p class="text-xs font-bold text-slate-800">Amara</p>
-                        <p class="text-[11px] text-slate-500">Chief Medical Officer</p>
-                    </div>
-                    <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 hidden sm:block"></i>
-                </div>
-            </div>
-        </header>
-
-        <!-- 3. GREETING & ACTION CONTROLS -->
-        <section class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 animate-entry delay-1">
-            <div>
-                <div class="inline-flex items-center gap-2 text-xs font-medium text-blue-700 bg-blue-100/70 px-3 py-1 rounded-full mb-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-                    <span>3 surgeries in progress • Good morning, here's your hospital pulse</span>
-                </div>
-                <h1 class="text-3xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-slate-900 leading-none">
-                    Welcome Back, <span class="font-serif-italic font-normal text-blue-600">Amara</span>
-                </h1>
-            </div>
-
-            <div class="flex items-center gap-3 self-start sm:self-end">
-                <!-- Period Filter Dropdown -->
-                <div class="relative">
-                    <select id="timeframe-select" onchange="updateDashboardPeriod(this.value)" class="appearance-none glass-card pl-4 pr-10 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-slate-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/30">
-                        <option value="month">This Month</option>
-                        <option value="week">This Week</option>
-                        <option value="quarter">Last Quarter</option>
-                    </select>
-                    <i data-lucide="chevron-down" class="w-4 h-4 text-slate-500 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
-                </div>
-
-                <!-- Download Report Button -->
-                <button onclick="downloadReport()" class="px-5 py-2.5 rounded-full bg-[#0f172a] hover:bg-blue-600 text-white text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-lg shadow-slate-900/15 transition-all active:scale-95">
-                    <i data-lucide="download" class="w-4 h-4"></i>
-                    <span>Download Report</span>
+                <button onclick="navigateTo('donor-dir')" id="nav-donor-dir" class="main-nav-btn px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 transition-all">
+                    Donor
                 </button>
-            </div>
-        </section>
+                <button onclick="navigateTo('ambulance')" id="nav-ambulance" class="main-nav-btn px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 transition-all">
+                    Ambulance
+                </button>
+                <button onclick="navigateTo('request')" id="nav-request" class="main-nav-btn px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 transition-all">
+                    Request
+                </button>
+            </nav>
 
-        <!-- 4. MAIN BENTO GRID LAYOUT (2/3 Left-Center + 1/3 Right Column) -->
-        <main class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
-
-            <!-- LEFT / CENTER AREA (8 of 12 cols = 2/3 width) -->
-            <div class="xl:col-span-8 flex flex-col gap-5">
-
-                <!-- TOP ROW: 3 KPI STAT CARDS -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
-
-                    <!-- KPI Card 1: Appointments -->
-                    <div class="glass-card rounded-3xl p-5 flex flex-col justify-between animate-entry delay-2">
-                        <div class="flex items-center justify-between mb-3">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-9 h-9 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
-                                    <i data-lucide="calendar-check" class="w-4 h-4"></i>
-                                </div>
-                                <span class="text-sm font-semibold text-slate-700">Appointments</span>
-                            </div>
-                            <button class="text-slate-400 hover:text-slate-600"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
-                        </div>
-
-                        <div class="flex items-end justify-between gap-2 my-2">
-                            <div>
-                                <h2 class="text-3xl font-bold text-slate-900 tracking-tight counter" data-target="1240">0</h2>
-                            </div>
-                            <!-- Mini Smooth SVG Sparkline Wave -->
-                            <svg class="w-24 h-11 overflow-visible" viewBox="0 0 100 40">
-                                <defs>
-                                    <linearGradient id="sparkBlue" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.35"/>
-                                        <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.0"/>
-                                    </linearGradient>
-                                </defs>
-                                <path d="M0,32 Q15,12 30,22 T60,14 T85,20 T100,6 L100,40 L0,40 Z" fill="url(#sparkBlue)"/>
-                                <path d="M0,32 Q15,12 30,22 T60,14 T85,20 T100,6" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
-                            </svg>
-                        </div>
-
-                        <div class="flex items-center gap-1.5 text-xs mt-2 pt-2 border-t border-slate-100">
-                            <span class="inline-flex items-center gap-0.5 font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
-                                <i data-lucide="trending-up" class="w-3 h-3"></i> +12%
-                            </span>
-                            <span class="text-slate-400">from last 30 days</span>
-                        </div>
-                    </div>
-
-                    <!-- KPI Card 2: Active Patients -->
-                    <div class="glass-card rounded-3xl p-5 flex flex-col justify-between animate-entry delay-3">
-                        <div class="flex items-center justify-between mb-3">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-9 h-9 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
-                                    <i data-lucide="user-check" class="w-4 h-4"></i>
-                                </div>
-                                <span class="text-sm font-semibold text-slate-700">Active Patients</span>
-                            </div>
-                            <button class="text-slate-400 hover:text-slate-600"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
-                        </div>
-
-                        <div class="flex items-end justify-between gap-2 my-2">
-                            <div>
-                                <h2 class="text-3xl font-bold text-slate-900 tracking-tight counter" data-target="3860">0</h2>
-                            </div>
-                            <!-- Mini Bar Chart Indicator -->
-                            <div class="flex items-end gap-1.5 h-11 pb-1">
-                                <span class="w-1.5 h-4 bg-indigo-200 rounded-full"></span>
-                                <span class="w-1.5 h-7 bg-indigo-300 rounded-full"></span>
-                                <span class="w-1.5 h-5 bg-indigo-200 rounded-full"></span>
-                                <span class="w-1.5 h-9 bg-indigo-500 rounded-full"></span>
-                                <span class="w-1.5 h-6 bg-indigo-300 rounded-full"></span>
-                                <span class="w-1.5 h-10 bg-indigo-600 rounded-full"></span>
-                                <span class="w-1.5 h-8 bg-indigo-400 rounded-full"></span>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-1.5 text-xs mt-2 pt-2 border-t border-slate-100">
-                            <span class="inline-flex items-center gap-0.5 font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
-                                <i data-lucide="trending-up" class="w-3 h-3"></i> +8.4%
-                            </span>
-                            <span class="text-slate-400">from last 30 days</span>
-                        </div>
-                    </div>
-
-                    <!-- KPI Card 3: Critical Alerts -->
-                    <div class="glass-card rounded-3xl p-5 flex flex-col justify-between animate-entry delay-4">
-                        <div class="flex items-center justify-between mb-3">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-9 h-9 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center">
-                                    <i data-lucide="alert-triangle" class="w-4 h-4"></i>
-                                </div>
-                                <span class="text-sm font-semibold text-slate-700">Critical Alerts</span>
-                            </div>
-                            <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
-                        </div>
-
-                        <div class="flex items-end justify-between gap-2 my-2">
-                            <div>
-                                <h2 class="text-3xl font-bold text-slate-900 tracking-tight counter" data-target="42">0</h2>
-                            </div>
-                            <!-- Mini Audio/Pulse Wave Graphic -->
-                            <div class="flex items-center gap-1 h-11">
-                                <span class="w-1 h-3 bg-rose-200 rounded-full"></span>
-                                <span class="w-1 h-6 bg-rose-300 rounded-full"></span>
-                                <span class="w-1 h-9 bg-rose-500 rounded-full"></span>
-                                <span class="w-1 h-4 bg-rose-300 rounded-full"></span>
-                                <span class="w-1 h-10 bg-rose-600 rounded-full"></span>
-                                <span class="w-1 h-5 bg-rose-400 rounded-full"></span>
-                                <span class="w-1 h-7 bg-rose-500 rounded-full"></span>
-                                <span class="w-1 h-3 bg-rose-200 rounded-full"></span>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-1.5 text-xs mt-2 pt-2 border-t border-slate-100">
-                            <span class="inline-flex items-center gap-0.5 font-semibold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full">
-                                -5%
-                            </span>
-                            <span class="text-slate-500 truncate">requires immediate attention</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- BOTTOM ROW: 2 ANALYTICS CARDS -->
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 flex-1">
-
-                    <!-- Bottom Card 1: Operational Insights (7 cols) -->
-                    <div class="lg:col-span-7 glass-card rounded-3xl p-6 flex flex-col justify-between animate-entry delay-4">
-                        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-                            <div>
-                                <h3 class="text-base font-bold text-slate-900">Operational Insights</h3>
-                                <p class="text-xs text-slate-500">Patient inflow vs. hospital bed capacity</p>
-                            </div>
-
-                            <!-- Monthly / Weekly Toggle -->
-                            <div class="bg-slate-100/90 p-1 rounded-full flex items-center text-xs font-semibold">
-                                <button id="btn-monthly" onclick="toggleInsightsChart('monthly')" class="px-3.5 py-1 rounded-full bg-white text-slate-900 shadow-sm transition-all">Monthly</button>
-                                <button id="btn-weekly" onclick="toggleInsightsChart('weekly')" class="px-3.5 py-1 rounded-full text-slate-500 hover:text-slate-800 transition-all">Weekly</button>
-                            </div>
-                        </div>
-
-                        <!-- Legend -->
-                        <div class="flex items-center gap-5 text-xs mb-3">
-                            <div class="flex items-center gap-1.5">
-                                <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
-                                <span class="text-slate-600 font-medium">Patient Inflow</span>
-                            </div>
-                            <div class="flex items-center gap-1.5">
-                                <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
-                                <span class="text-slate-600 font-medium">Optimal Capacity</span>
-                            </div>
-                        </div>
-
-                        <!-- Smooth SVG Area/Line Chart -->
-                        <div class="relative w-full h-48 sm:h-52">
-                            <svg id="insights-svg" class="w-full h-full overflow-visible" viewBox="0 0 460 170" preserveAspectRatio="none">
-                                <defs>
-                                    <linearGradient id="inflowGrad" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="#2563eb" stop-opacity="0.28"/>
-                                        <stop offset="100%" stop-color="#2563eb" stop-opacity="0.0"/>
-                                    </linearGradient>
-                                </defs>
-                                <!-- Horizontal Grid Lines -->
-                                <line x1="0" y1="25" x2="460" y2="25" stroke="#e2e8f0" stroke-dasharray="4 4" stroke-width="1"/>
-                                <line x1="0" y1="65" x2="460" y2="65" stroke="#e2e8f0" stroke-dasharray="4 4" stroke-width="1"/>
-                                <line x1="0" y1="105" x2="460" y2="105" stroke="#e2e8f0" stroke-dasharray="4 4" stroke-width="1"/>
-                                <line x1="0" y1="145" x2="460" y2="145" stroke="#e2e8f0" stroke-width="1"/>
-
-                                <!-- Capacity Dashed Line -->
-                                <path id="capacity-path" d="M 10 75 C 90 70, 150 60, 230 65 C 310 70, 380 50, 450 55" fill="none" stroke="#22d3ee" stroke-width="2" stroke-dasharray="5 5"/>
-
-                                <!-- Inflow Area & Line -->
-                                <path id="inflow-area" d="M 10 125 C 75 95, 130 110, 195 70 C 260 30, 320 85, 385 45 C 415 28, 435 35, 450 30 L 450 145 L 10 145 Z" fill="url(#inflowGrad)"/>
-                                <path id="inflow-line" d="M 10 125 C 75 95, 130 110, 195 70 C 260 30, 320 85, 385 45 C 415 28, 435 35, 450 30" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round"/>
-
-                                <!-- Highlight Node -->
-                                <circle cx="385" cy="45" r="5" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
-                            </svg>
-
-                            <!-- Floating Tooltip Pill -->
-                            <div class="absolute top-3 right-8 bg-[#0f172a] text-white text-[11px] font-semibold px-3 py-1 rounded-full shadow-md">
-                                Peak: 94% Efficiency
-                            </div>
-
-                            <!-- X-Axis Labels -->
-                            <div id="chart-x-labels" class="flex justify-between text-[11px] font-medium text-slate-400 mt-1 px-1">
-                                <span>Jun</span>
-                                <span>Jul</span>
-                                <span>Aug</span>
-                                <span>Sep</span>
-                                <span>Oct</span>
-                                <span>Nov</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Bottom Card 2: Patient Flow Radial Gauge (5 cols) -->
-                    <div class="lg:col-span-5 glass-card rounded-3xl p-6 flex flex-col justify-between animate-entry delay-5">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <h3 class="text-base font-bold text-slate-900">Patient Flow</h3>
-                                <p class="text-xs text-slate-500">Department distribution</p>
-                            </div>
-                            <button class="w-8 h-8 rounded-full bg-slate-100/80 hover:bg-slate-200/70 flex items-center justify-center text-slate-500">
-                                <i data-lucide="info" class="w-4 h-4"></i>
-                            </button>
-                        </div>
-
-                        <!-- Radial / Segmented Progress Gauge -->
-                        <div class="relative flex items-center justify-center my-3">
-                            <svg class="w-44 h-44 -rotate-90" viewBox="0 0 160 160">
-                                <!-- Background Segmented Track -->
-                                <circle cx="80" cy="80" r="62" fill="none" stroke="#e2e8f0" stroke-width="14" stroke-dasharray="6 4"/>
-                                <!-- Outpatient Segment (Blue) -->
-                                <circle cx="80" cy="80" r="62" fill="none" stroke="#2563eb" stroke-width="14" stroke-dasharray="210 390" stroke-linecap="round"/>
-                                <!-- Inpatient Segment (Indigo) -->
-                                <circle cx="80" cy="80" r="62" fill="none" stroke="#6366f1" stroke-width="14" stroke-dasharray="105 390" stroke-dashoffset="-220" stroke-linecap="round"/>
-                                <!-- Emergency Segment (Cyan) -->
-                                <circle cx="80" cy="80" r="62" fill="none" stroke="#06b6d4" stroke-width="14" stroke-dasharray="50 390" stroke-dashoffset="-335" stroke-linecap="round"/>
-                            </svg>
-
-                            <!-- Center Metric -->
-                            <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-                                <span class="text-3xl font-bold text-slate-900 counter" data-target="860">0</span>
-                                <span class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Total Flow</span>
-                            </div>
-                        </div>
-
-                        <!-- Breakdown Tags -->
-                        <div class="grid grid-cols-3 gap-2 pt-2 border-t border-slate-100 text-center">
-                            <div class="bg-blue-50/80 rounded-2xl p-2">
-                                <div class="flex items-center justify-center gap-1 text-[11px] font-medium text-slate-600">
-                                    <span class="w-2 h-2 rounded-full bg-blue-600"></span> Outpatient
-                                </div>
-                                <p class="text-xs font-bold text-slate-900 mt-0.5">54%</p>
-                            </div>
-                            <div class="bg-indigo-50/80 rounded-2xl p-2">
-                                <div class="flex items-center justify-center gap-1 text-[11px] font-medium text-slate-600">
-                                    <span class="w-2 h-2 rounded-full bg-indigo-500"></span> Inpatient
-                                </div>
-                                <p class="text-xs font-bold text-slate-900 mt-0.5">28%</p>
-                            </div>
-                            <div class="bg-cyan-50/80 rounded-2xl p-2">
-                                <div class="flex items-center justify-center gap-1 text-[11px] font-medium text-slate-600">
-                                    <span class="w-2 h-2 rounded-full bg-cyan-500"></span> Emergency
-                                </div>
-                                <p class="text-xs font-bold text-slate-900 mt-0.5">18%</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- RIGHT COLUMN (4 of 12 cols = 1/3 width) -->
-            <div class="xl:col-span-4 flex flex-col gap-5">
-
-                <!-- 1. PATIENT MONITOR CARD (DARK NAVY THEME #131c31) -->
-                <div class="dark-glass-card rounded-3xl p-6 text-white flex flex-col justify-between animate-entry delay-3">
-                    <!-- Header -->
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center gap-2.5">
-                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-                            <h3 class="text-base font-bold tracking-tight">Patient Monitor</h3>
-                        </div>
-                        <span class="text-[11px] font-semibold bg-cyan-500/15 text-cyan-300 border border-cyan-400/30 px-3 py-1 rounded-full">
-                            ICU • Bed 04
-                        </span>
-                    </div>
-
-                    <!-- Patient Info Banner -->
-                    <div class="flex items-center justify-between bg-white/5 border border-white/10 rounded-2xl p-3 mb-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center font-bold text-sm text-white">
-                                MM
-                            </div>
-                            <div>
-                                <p class="text-sm font-bold text-white">Marvin McKinney</p>
-                                <p class="text-xs text-slate-400">Male, 48 yrs • Post-Op Telemetry</p>
-                            </div>
-                        </div>
-                        <span class="text-xs font-semibold text-emerald-400 bg-emerald-400/10 px-2.5 py-1 rounded-full">Stable</span>
-                    </div>
-
-                    <!-- Live Animated ECG / Heartbeat Waveform -->
-                    <div class="relative bg-[#0a101d] rounded-2xl p-3.5 border border-cyan-500/20 mb-4 overflow-hidden">
-                        <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1">
-                            <span>ECG LEAD II • 25mm/s</span>
-                            <span class="text-emerald-400 font-mono">SINUS RHYTHM</span>
-                        </div>
-                        <svg class="w-full h-20" viewBox="0 0 320 70" preserveAspectRatio="none">
-                            <!-- Subtle Grid -->
-                            <path d="M0 17 H320 M0 35 H320 M0 52 H320" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-                            <!-- Glowing Cyan/Emerald ECG Path -->
-                            <path 
-                                class="ecg-line"
-                                d="M0,38 L35,38 L45,30 L52,42 L60,10 L68,62 L76,28 L84,38 L125,38 L135,31 L142,41 L150,8 L158,64 L166,27 L174,38 L215,38 L225,30 L232,42 L240,10 L248,62 L256,28 L264,38 L320,38" 
-                                fill="none" 
-                                stroke="#34d399" 
-                                stroke-width="2.4" 
-                                stroke-linecap="round" 
-                                stroke-linejoin="round"
-                            />
-                        </svg>
-                    </div>
-
-                    <!-- 4 Dark Glass Metric Tiles -->
-                    <div class="grid grid-cols-2 gap-3 mb-4">
-                        <!-- Tile 1: Heart Rate -->
-                        <div class="dark-metric-tile rounded-2xl p-3.5">
-                            <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
-                                <span>Heart Rate</span>
-                                <i data-lucide="heart-pulse" class="w-4 h-4 text-emerald-400"></i>
-                            </div>
-                            <div class="flex items-baseline gap-1">
-                                <span id="live-hr" class="text-2xl font-bold text-emerald-400">72</span>
-                                <span class="text-xs text-slate-400">bpm</span>
-                            </div>
-                        </div>
-
-                        <!-- Tile 2: SpO2 -->
-                        <div class="dark-metric-tile rounded-2xl p-3.5">
-                            <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
-                                <span>SpO2</span>
-                                <i data-lucide="wind" class="w-4 h-4 text-cyan-400"></i>
-                            </div>
-                            <div class="flex items-baseline gap-1">
-                                <span class="text-2xl font-bold text-cyan-400">99</span>
-                                <span class="text-xs text-slate-400">%</span>
-                            </div>
-                        </div>
-
-                        <!-- Tile 3: Blood Pressure -->
-                        <div class="dark-metric-tile rounded-2xl p-3.5">
-                            <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
-                                <span>Blood Pressure</span>
-                                <i data-lucide="activity" class="w-4 h-4 text-blue-400"></i>
-                            </div>
-                            <div class="flex items-baseline gap-1">
-                                <span class="text-xl font-bold text-white">121/78</span>
-                                <span class="text-[10px] text-slate-400">mmHg</span>
-                            </div>
-                        </div>
-
-                        <!-- Tile 4: Resp Rate -->
-                        <div class="dark-metric-tile rounded-2xl p-3.5">
-                            <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
-                                <span>Resp Rate</span>
-                                <i data-lucide="waves" class="w-4 h-4 text-amber-400"></i>
-                            </div>
-                            <div class="flex items-baseline gap-1">
-                                <span class="text-2xl font-bold text-amber-300">15</span>
-                                <span class="text-xs text-slate-400">rpm</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Notify Action Button -->
-                    <button onclick="showToast('Attending nurse & Dr. Pena notified')" class="w-full py-2.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-semibold tracking-wide shadow-lg shadow-cyan-500/20 transition-all active:scale-98 flex items-center justify-center gap-2">
-                        <i data-lucide="bell-ring" class="w-4 h-4"></i>
-                        <span>Notify Care Team</span>
+            <!-- Top Action Controls: Register, Login, Theme Mode, Language + Quick Check above Profile Icon -->
+            <div class="flex items-center gap-2 sm:gap-2.5 order-2 lg:order-3 flex-wrap justify-end">
+                <!-- Auth Buttons (Always clear & visible) -->
+                <div id="auth-header-buttons" class="flex items-center gap-2">
+                    <button onclick="navigateTo('register')" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs sm:text-sm font-bold shadow-sm transition-all">
+                        নিবন্ধন করুন
+                    </button>
+                    <button onclick="navigateTo('login')" class="px-3 py-1.5 rounded-xl bg-slate-900 dark:bg-slate-700 hover:bg-slate-800 text-white text-xs sm:text-sm font-bold shadow-sm transition-all">
+                        লগইন করুন
                     </button>
                 </div>
 
-                <!-- 2. CARE TEAM CARD (WHITE GLASS CARD) -->
-                <div class="glass-card rounded-3xl p-6 flex-1 flex flex-col justify-between animate-entry delay-5">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center gap-2">
-                            <h3 class="text-base font-bold text-slate-900">Care Team</h3>
-                            <span class="text-xs font-semibold bg-emerald-50 text-emerald-600 px-2.5 py-0.5 rounded-full">6 On Duty</span>
-                        </div>
-                        <button onclick="showToast('Opening full medical roster...')" class="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1">
-                            <span>View All</span>
-                            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-                        </button>
+                <!-- Theme & Display Mode Toggle -->
+                <button onclick="toggleTheme()" class="px-3 py-1.5 rounded-xl bg-amber-100 dark:bg-slate-800 text-amber-900 dark:text-amber-300 border border-amber-300/60 dark:border-slate-700 text-xs font-bold flex items-center gap-1.5 transition-all" title="থিম ও প্রদর্শন মোড">
+                    <i data-lucide="sun-moon" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">থিম ও প্রদর্শন মোড</span>
+                </button>
+
+                <!-- Language Toggle -->
+                <button onclick="toggleLanguage()" id="lang-btn" class="px-3 py-1.5 rounded-xl bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300 border border-indigo-300/60 dark:border-indigo-800 text-xs font-bold flex items-center gap-1.5 transition-all">
+                    <i data-lucide="languages" class="w-4 h-4"></i>
+                    <span>Language: বাংলা</span>
+                </button>
+
+                <!-- Profile Icon with Red 🛡️ Quick Check Button Stacked Above It -->
+                <div class="flex flex-col items-center">
+                    <button onclick="openProfileQuickCheck()" class="px-2.5 py-0.5 mb-1 rounded-full bg-red-600 hover:bg-red-700 text-white text-[10px] sm:text-[11px] font-extrabold tracking-wide shadow-md shadow-red-600/30 flex items-center gap-1 animate-pulse">
+                        <span>🛡️ Quick Check</span>
+                    </button>
+                    <button onclick="navigateTo('profile')" class="w-9 h-9 rounded-full ring-2 ring-rose-500 overflow-hidden bg-slate-200 dark:bg-slate-700 flex items-center justify-center shadow-sm hover:scale-105 transition-transform" title="ইউজার প্রোফাইল">
+                        <img id="nav-profile-img" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80" onerror="this.src='https://placehold.co/100x100/e11d48/ffffff?text=MB'" alt="Profile" class="w-full h-full object-cover">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== VIEW 0: LANDING / HOME HERO VIEW ==================== -->
+    <section id="view-landing" class="hidden max-w-6xl mx-auto px-4 py-10 flex-1 flex flex-col justify-center">
+        <div class="bento-3d rounded-3xl bg-gradient-to-br from-rose-600 via-red-600 to-slate-900 text-white p-8 sm:p-12 relative overflow-hidden">
+            <div class="max-w-2xl relative z-10">
+                <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/15 text-xs font-bold mb-4">
+                    🩸 বাংলাদেশের স্মার্ট ডিজিটাল ব্লাড ব্যাংক নেটওয়ার্ক
+                </span>
+                <h1 class="text-3xl sm:text-5xl font-extrabold leading-tight mb-4">
+                    এক ব্যাগ রক্ত, বাঁচাতে পারে একটি অমূল্য প্রাণ
+                </h1>
+                <p class="text-rose-100 text-sm sm:text-base mb-8 leading-relaxed">
+                    রক্তদাতা নিবন্ধন করুন, আপনার ইউনিক ৩ডি ডোনার আইডি কার্ড তৈরি করুন এবং জরুরি মুহূর্তে জিপিএস ও লাইভ ট্র্যাকিংয়ের মাধ্যমে রোগীর পাশে দাঁড়ান।
+                </p>
+                <div class="flex flex-wrap gap-3">
+                    <button onclick="navigateTo('register')" class="px-6 py-3 rounded-2xl bg-white text-rose-600 font-extrabold text-sm shadow-lg hover:bg-rose-50 transition-all">
+                        নিবন্ধন করুন (Register)
+                    </button>
+                    <button onclick="navigateTo('login')" class="px-6 py-3 rounded-2xl bg-slate-900/80 hover:bg-slate-900 text-white border border-white/20 font-extrabold text-sm transition-all">
+                        লগইন করুন (Login)
+                    </button>
+                    <button onclick="navigateTo('dashboard')" class="px-6 py-3 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-sm transition-all">
+                        ডোনার ড্যাশবোর্ড দেখুন →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== VIEW 1: DONOR REGISTRATION FORM ==================== -->
+    <section id="view-register" class="hidden max-w-3xl mx-auto px-4 py-8 w-full">
+        <div class="bento-3d bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-2xl font-extrabold text-rose-600">🩸 রক্তদাতা / গ্রহীতা নিবন্ধন ফর্ম</h2>
+                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">সঠিক তথ্য দিয়ে নিবন্ধন সম্পন্ন করুন এবং লগইন করে ইউনিক প্রোফাইল পান</p>
+                </div>
+                <button onclick="navigateTo('login')" class="text-xs font-bold text-blue-600 hover:underline">ইতিমধ্যে অ্যাকাউন্ট আছে? লগইন</button>
+            </div>
+
+            <form id="register-form" onsubmit="handleRegister(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold mb-1">পূর্ণ নাম *</label>
+                    <input type="text" id="reg-name" required placeholder="যেমন: তানভীর আহমেদ" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">মোবাইল নাম্বার *</label>
+                    <input type="tel" id="reg-phone" required placeholder="017XXXXXXXX" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">জিমেইল (Gmail) *</label>
+                    <input type="email" id="reg-gmail" required placeholder="example@gmail.com" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">রক্তের গ্রুপ (Blood Group) *</label>
+                    <select id="reg-blood" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm font-bold text-rose-600">
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+" selected>B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">জেলা *</label>
+                    <input type="text" id="reg-district" required placeholder="যেমন: রংপুর / ঢাকা" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">অঞ্চল / থানা *</label>
+                    <input type="text" id="reg-area" required placeholder="যেমন: জাহাজ কোম্পানি মোড় / ধানমন্ডি" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">শেষ রক্তদানের তারিখ</label>
+                    <input type="date" id="reg-last-donation" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">ভুমিকা *</label>
+                    <select id="reg-role" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm font-semibold">
+                        <option value="রক্তদাতা">রক্তদাতা (Donor)</option>
+                        <option value="রক্ত গ্রহীতা">রক্ত গ্রহীতা (Recipient)</option>
+                    </select>
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-bold mb-1">প্রোফাইল পিকচার (.jpg / .png)</label>
+                    <input type="file" id="reg-pic" accept="image/jpeg,image/png,image/jpg" class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">পাসওয়ার্ড *</label>
+                    <input type="password" id="reg-pass" required placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">আবার পাসওয়ার্ড লিখুন *</label>
+                    <input type="password" id="reg-pass-confirm" required placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                </div>
+
+                <div class="sm:col-span-2 pt-2">
+                    <button type="submit" class="w-full py-3 rounded-2xl bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-700 hover:to-red-700 text-white font-extrabold text-sm shadow-lg shadow-rose-500/30 transition-all">
+                        নিবন্ধন সম্পন্ন করুন → লগইন পেজে যান
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- ==================== VIEW 2: DONOR LOGIN FORM (GMAIL + PASSWORD + CONFIRM PASSWORD) ==================== -->
+    <section id="view-login" class="hidden max-w-md mx-auto px-4 py-10 w-full">
+        <div class="bento-3d bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800">
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 rounded-2xl bg-rose-100 dark:bg-rose-950 text-rose-600 flex items-center justify-center mx-auto mb-3">
+                    <i data-lucide="shield-check" class="w-8 h-8"></i>
+                </div>
+                <h2 class="text-2xl font-extrabold">রক্তদাতা লগইন</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">জিমেইল, পাসওয়ার্ড এবং পুনরায় পাসওয়ার্ড দিয়ে আপনার ইউনিক প্রোফাইলে প্রবেশ করুন</p>
+            </div>
+
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold mb-1">জিমেইল (Gmail) *</label>
+                    <input type="email" id="login-gmail" required placeholder="example@gmail.com" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">পাসওয়ার্ড *</label>
+                    <input type="password" id="login-pass" required placeholder="পাসওয়ার্ড লিখুন" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">আবার পাসওয়ার্ড লিখুন *</label>
+                    <input type="password" id="login-pass-confirm" required placeholder="আবার পাসওয়ার্ড লিখুন" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                </div>
+
+                <button type="submit" class="w-full py-3 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-sm shadow-lg shadow-rose-500/30 transition-all">
+                    লগইন করুন ও ইউনিক প্রোফাইল খুলুন
+                </button>
+            </form>
+            <p class="text-center text-xs text-slate-500 mt-4">
+                নতুন ইউজার? <button onclick="navigateTo('register')" class="text-rose-600 font-bold hover:underline">এখানে নিবন্ধন করুন</button>
+            </p>
+        </div>
+    </section>
+
+    <!-- ==================== VIEW 3: DONOR DASHBOARD (3D BENTO GRID + LEFT SIDEBAR) ==================== -->
+    <div id="view-dashboard" class="max-w-[1560px] mx-auto w-full px-3 sm:px-6 py-5 flex flex-col lg:flex-row gap-5 flex-1">
+        
+        <!-- LEFT SIDEBAR NAVIGATION (Clicking opens 3D Bento Grid views with distinct colors) -->
+        <aside class="w-full lg:w-64 shrink-0 flex flex-col gap-2">
+            <div class="bg-white dark:bg-slate-900 rounded-3xl p-3 border border-slate-200 dark:border-slate-800 shadow-sm">
+                <p class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 px-3 py-1.5">ড্যাশবোর্ড মেনু</p>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-1.5" id="sidebar-menu">
+                    <button onclick="switchDashboardTab('overview')" data-tab="overview" class="side-tab-btn active-side-tab flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold bg-rose-600 text-white shadow-md transition-all text-left">
+                        <span>📊 মূল ড্যাশবোর্ড</span>
+                    </button>
+                    <button onclick="switchDashboardTab('hospitals')" data-tab="hospitals" class="side-tab-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-all text-left">
+                        <span>🏥 Hospital Directory</span>
+                    </button>
+                    <button onclick="switchDashboardTab('notices')" data-tab="notices" class="side-tab-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-amber-50 dark:hover:bg-slate-800 transition-all text-left">
+                        <span>📢 Notice & News</span>
+                    </button>
+                    <button onclick="switchDashboardTab('ambulance')" data-tab="ambulance" class="side-tab-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-rose-50 dark:hover:bg-slate-800 transition-all text-left">
+                        <span>🚑 Ambulance Service</span>
+                    </button>
+                    <button onclick="switchDashboardTab('history')" data-tab="history" class="side-tab-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-indigo-50 dark:hover:bg-slate-800 transition-all text-left">
+                        <span>📊 Donation History</span>
+                    </button>
+                    <button onclick="switchDashboardTab('leaderboard')" data-tab="leaderboard" class="side-tab-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-purple-50 dark:hover:bg-slate-800 transition-all text-left">
+                        <span>🏆 Top Donor / Leaderboard</span>
+                    </button>
+                    <button onclick="switchDashboardTab('guide')" data-tab="guide" class="side-tab-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-cyan-50 dark:hover:bg-slate-800 transition-all text-left">
+                        <span>📚 Blood Donation Guide</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- One-Tap Panic Broadcast / Emergency Blast Button -->
+            <div class="bento-3d rounded-3xl p-4 bg-gradient-to-br from-red-600 to-rose-800 text-white">
+                <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-xs font-extrabold uppercase tracking-wider">Panic Broadcast</span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-300 animate-ping"></span>
+                </div>
+                <p class="text-[11px] text-rose-100 mb-3">অতি জরুরি অপারেশন বা এক্সিডেন্টের রোগীর জন্য সব অনলাইন ডোনারকে অডিও অ্যালার্ট পাঠান।</p>
+                <button onclick="triggerPanicBroadcast()" class="w-full py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs shadow-md transition-all">
+                    🚨 One-Tap Panic Blast
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN DASHBOARD WORKSPACE -->
+        <main class="flex-1 flex flex-col gap-5 min-w-0">
+
+            <!-- 1. TOP EMERGENCY NOTIFICATION BANNER -->
+            <div class="bento-3d rounded-3xl p-4 bg-gradient-to-r from-red-600 via-rose-600 to-orange-600 text-white flex flex-wrap items-center justify-between gap-3 emergency-pulse">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-white/20 flex items-center justify-center shrink-0">
+                        <i data-lucide="bell-ring" class="w-5 h-5"></i>
                     </div>
-
-                    <div class="space-y-3">
-                        <!-- Doctor 1: Dr. Eleanor Pena -->
-                        <div class="flex items-center justify-between p-3 rounded-2xl bg-white/70 hover:bg-white border border-slate-100 transition-all">
-                            <div class="flex items-center gap-3">
-                                <img 
-                                    src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=120&q=80" 
-                                    onerror="this.src='https://placehold.co/100x100/0d9488/ffffff?text=EP'"
-                                    alt="Dr. Eleanor Pena" 
-                                    class="w-11 h-11 rounded-2xl object-cover"
-                                >
-                                <div>
-                                    <p class="text-sm font-bold text-slate-900">Dr. Eleanor Pena</p>
-                                    <p class="text-xs text-slate-500">Cardiologist • Cath Lab 2</p>
-                                </div>
-                            </div>
-                            <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2.5 py-1 rounded-full">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                Available
-                            </span>
+                    <div>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="text-xs font-extrabold uppercase bg-white text-rose-600 px-2 py-0.5 rounded-full">Emergency Notification</span>
+                            <span class="text-xs text-rose-100">নির্দিষ্ট এলাকা ও রক্তের গ্রুপ অ্যালার্ট</span>
                         </div>
+                        <p class="text-sm sm:text-base font-bold mt-0.5" id="emergency-banner-text">
+                            🚨 রংপুর মেডিকেল কলেজ হাসপাতালে জরুরি ২ ব্যাগ B+ রক্ত প্রয়োজন! (১.৮ কি.মি. দূরত্ব)
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="enableWebPush()" class="px-3.5 py-2 rounded-xl bg-slate-950/40 hover:bg-slate-950/60 text-white text-xs font-bold border border-white/25">
+                        🔔 Allow Push Alert
+                    </button>
+                    <button onclick="triggerSmsWhatsappAlert('B+', 'রংপুর মেডিকেল')" class="px-3.5 py-2 rounded-xl bg-white text-rose-600 hover:bg-rose-50 text-xs font-extrabold shadow">
+                        📲 SMS / WhatsApp অ্যালার্ট
+                    </button>
+                </div>
+            </div>
 
-                        <!-- Doctor 2: Dr. Albert Flores -->
-                        <div class="flex items-center justify-between p-3 rounded-2xl bg-white/70 hover:bg-white border border-slate-100 transition-all">
-                            <div class="flex items-center gap-3">
-                                <img 
-                                    src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=120&q=80" 
-                                    onerror="this.src='https://placehold.co/100x100/d97706/ffffff?text=AF'"
-                                    alt="Dr. Albert Flores" 
-                                    class="w-11 h-11 rounded-2xl object-cover"
-                                >
-                                <div>
-                                    <p class="text-sm font-bold text-slate-900">Dr. Albert Flores</p>
-                                    <p class="text-xs text-slate-500">Neurosurgeon • OR Suite 1</p>
-                                </div>
-                            </div>
-                            <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-amber-700 bg-amber-50 border border-amber-200/60 px-2.5 py-1 rounded-full">
-                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-                                In Surgery
-                            </span>
+            <!-- 2. DONOR GREETING BANNER (Picture, Name, ID, Role, Day/Month/Year, Good Morning/Afternoon/Evening) -->
+            <div class="bento-3d rounded-3xl p-5 sm:p-6 bg-gradient-to-br from-indigo-600 via-blue-600 to-cyan-600 text-white flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <img id="dash-user-pic" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80" onerror="this.src='https://placehold.co/120x120/ffffff/1d4ed8?text=MB'" alt="User" class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover ring-4 ring-white/30 shadow-lg">
+                    <div>
+                        <span id="time-greeting" class="inline-block px-3 py-0.5 rounded-full bg-white/20 text-xs font-bold mb-1">Good Morning</span>
+                        <h2 id="dash-user-name" class="text-xl sm:text-2xl font-extrabold">তানভীর আহমেদ</h2>
+                        <div class="flex flex-wrap items-center gap-2 mt-1 text-xs text-blue-100">
+                            <span class="bg-slate-950/30 px-2.5 py-0.5 rounded-lg font-mono font-bold" id="dash-user-id">ID: MB-2026-8492</span>
+                            <span class="bg-emerald-400 text-slate-950 px-2.5 py-0.5 rounded-lg font-extrabold" id="dash-user-role">রক্তদাতা</span>
                         </div>
                     </div>
                 </div>
 
+                <!-- Live Bar, Mash, Sal (Day, Month, Year) -->
+                <div class="bg-white/15 backdrop-blur-md border border-white/25 rounded-2xl px-4 py-3 text-right">
+                    <p class="text-[11px] uppercase tracking-wider text-blue-100 font-bold">আজকের তারিখ (বার • মাস • সাল)</p>
+                    <p id="bangla-date-display" class="text-sm sm:text-base font-extrabold mt-0.5">মঙ্গলবার, ১৭ নভেম্বর ২০২৬</p>
+                    <p id="live-clock-display" class="text-xs text-cyan-200 font-mono mt-0.5">12:51 AM</p>
+                </div>
+            </div>
+
+            <!-- ==================== TAB: MAIN OVERVIEW (3D BENTO GRID) ==================== -->
+            <div id="dash-tab-overview" class="space-y-5">
+                
+                <!-- ROW A: LIVE REQUESTS + LOCATION MATCHING + DYNAMIC BANNER & QR GENERATOR -->
+                <div class="grid grid-cols-1 xl:grid-cols-12 gap-5">
+                    <!-- সক্রিয় অনুরোধের তালিকা (Live Requests - 7 cols) -->
+                    <div class="xl:col-span-7 bento-3d rounded-3xl p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col justify-between">
+                        <div>
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                                <div>
+                                    <h3 class="text-lg font-extrabold text-rose-600 flex items-center gap-2">
+                                        <span class="w-2.5 h-2.5 rounded-full bg-rose-600 animate-ping"></span>
+                                        সক্রিয় অনুরোধের তালিকা (Live Requests)
+                                    </h3>
+                                    <p class="text-xs text-slate-500">জেলা/উপজেলা এবং GPS ৫-১০ কি.মি. রেডিয়াস ম্যাচিং</p>
+                                </div>
+                                <button onclick="detectGpsLocation()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5 shadow">
+                                    <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                                    <span>Detect My Location (GPS)</span>
+                                </button>
+                            </div>
+
+                            <div id="gps-status-bar" class="hidden mb-3 px-3 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-300 font-semibold">
+                                📍 আপনার বর্তমান অবস্থান থেকে ৫-১০ কি.মি. ব্যাসার্ধের মধ্যে ৪টি জরুরি অনুরোধ পাওয়া গেছে।
+                            </div>
+
+                            <!-- Live Request Items -->
+                            <div id="live-requests-list" class="space-y-3">
+                                <!-- Rendered dynamically via JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- One-Click Dynamic Banner & QR Code Generator + Auto Facebook Share (5 cols) -->
+                    <div class="xl:col-span-5 bento-3d rounded-3xl p-5 bg-gradient-to-br from-rose-50 via-white to-amber-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 border border-rose-200 dark:border-slate-700 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-base font-extrabold text-slate-900 dark:text-white">🎨 ডাইনামিক ব্যানার ও QR কোড</h3>
+                                <span class="text-[10px] font-bold bg-rose-600 text-white px-2 py-0.5 rounded-full">Auto Poster</span>
+                            </div>
+
+                            <!-- Generated Digital Banner Preview -->
+                            <div id="dynamic-banner-box" class="rounded-2xl p-4 bg-gradient-to-br from-red-600 to-rose-800 text-white shadow-lg border border-red-400/40 relative overflow-hidden">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div>
+                                        <span class="text-[10px] uppercase tracking-widest bg-amber-400 text-slate-950 font-extrabold px-2 py-0.5 rounded">MB BLOOD ALERT</span>
+                                        <h4 id="banner-title" class="text-xl font-extrabold mt-2">🩸 জরুরি B+ রক্ত প্রয়োজন</h4>
+                                        <p id="banner-hospital" class="text-xs text-rose-100 mt-1">📍 হাসপাতাল: রংপুর মেডিকেল কলেজ</p>
+                                        <p id="banner-phone" class="text-xs text-rose-100 mt-0.5">📱 যোগাযোগ: 01711-XXXXXX (Masked)</p>
+                                        <p class="text-[10px] text-amber-200 mt-2">🔗 বিস্তারিত দেখতে QR স্ক্যান করুন বা শেয়ার করুন</p>
+                                    </div>
+                                    <!-- Crisp SVG QR Code -->
+                                    <div class="bg-white p-1.5 rounded-xl shrink-0 shadow">
+                                        <svg class="w-16 h-16 text-slate-950" viewBox="0 0 36 36" fill="currentColor">
+                                            <path d="M2 2h10v10H2V2zm2 2v6h6V4H4zm2 2h2v2H6V6zm18-4h10v10H24V2zm2 2v6h6V4h-6zm2 2h2v2h-2V6zM2 24h10v10H2V24zm2 2v6h6v-6H4zm2 2h2v2H6v-2zm10-22h2v4h-2V6zm4 2h2v6h-2V8zm-6 6h4v2h-4v-2zm8 2h6v2h-6v-2zm-10 4h4v4h-4v-4zm8 2h2v4h-2v-4zm4 0h4v2h-4v-2zm-2 4h6v4h-6v-4zm-8 4h4v2h-4v-2z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Instant Social Share & Auto Facebook Page Post Buttons -->
+                        <div class="mt-4 space-y-2">
+                            <p class="text-xs font-bold text-slate-600 dark:text-slate-300">ওয়ান-ক্লিক সোশ্যাল শেয়ার ও অটো-পোস্ট:</p>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="socialShare('Facebook Group')" class="py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold flex items-center justify-center gap-1.5">
+                                    <span>📘 Facebook Group</span>
+                                </button>
+                                <button onclick="socialShare('WhatsApp Group')" class="py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center justify-center gap-1.5">
+                                    <span>💬 WhatsApp Group</span>
+                                </button>
+                                <button onclick="socialShare('Messenger')" class="py-2 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold flex items-center justify-center gap-1.5">
+                                    <span>⚡ Messenger</span>
+                                </button>
+                                <button onclick="socialShare('Facebook Page Auto-Post')" class="py-2 px-3 rounded-xl bg-slate-900 dark:bg-slate-700 hover:bg-slate-800 text-amber-300 text-xs font-bold flex items-center justify-center gap-1.5">
+                                    <span>🤖 FB Page Auto-Post</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ROW B: DONOR ON THE WAY (LIVE TRACKING) + GEO-FENCING + VOICE NOTE BLOOD REQUEST -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                    
+                    <!-- Card 1: Donor On The Way (Live Uber/Pathao Style Tracking) -->
+                    <div class="bento-3d rounded-3xl p-5 bg-gradient-to-br from-emerald-600 to-teal-700 text-white flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-extrabold bg-white/20 px-2.5 py-0.5 rounded-full">🛵 Donor On The Way</span>
+                                <span id="eta-badge" class="text-xs font-extrabold bg-amber-400 text-slate-950 px-2.5 py-0.5 rounded-full">ETA: 14 মিনিট</span>
+                            </div>
+                            <h3 class="text-lg font-extrabold">লাইভ ডোনার ট্র্যাকিং ম্যাপ</h3>
+                            <p class="text-xs text-emerald-100 mt-0.5">হাসপাতালের উদ্দেশ্যে রওনা হলে রোগীর স্বজনরা ম্যাপে লাইভ অবস্থান দেখতে পাবেন।</p>
+
+                            <!-- Simulated Interactive Route Map -->
+                            <div class="mt-4 bg-slate-950/35 rounded-2xl p-3.5 border border-white/15">
+                                <div class="flex justify-between text-[11px] font-bold mb-1.5">
+                                    <span>📍 জাহাজ কোম্পানি মোড়</span>
+                                    <span>🏥 রংপুর মেডিকেল</span>
+                                </div>
+                                <div class="w-full h-3 bg-white/20 rounded-full overflow-hidden relative">
+                                    <div id="journey-progress-bar" class="h-full bg-amber-400 rounded-full transition-all duration-700" style="width: 35%;"></div>
+                                </div>
+                                <div class="flex justify-between text-[11px] text-emerald-100 mt-2">
+                                    <span id="journey-status-text">ডোনার প্রস্তুতি নিচ্ছেন (৩.২ কি.মি. বাকি)</span>
+                                    <span id="journey-percent" class="font-bold">35%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="startDonorJourney()" id="start-journey-btn" class="mt-4 w-full py-2.5 rounded-xl bg-white text-emerald-800 hover:bg-emerald-50 font-extrabold text-xs shadow-md transition-all">
+                            🚀 Start Journey (লাইভ ট্র্যাকিং চালু করুন)
+                        </button>
+                    </div>
+
+                    <!-- Card 2: Geo-Fencing Alert (1-3km Radius) & Rapid Volunteer Deployment -->
+                    <div class="bento-3d rounded-3xl p-5 bg-gradient-to-br from-amber-500 to-orange-600 text-white flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-extrabold bg-slate-950/25 px-2.5 py-0.5 rounded-full">📡 Geo-Fencing & Volunteer</span>
+                            <h3 class="text-lg font-extrabold mt-2">১-৩ কি.মি. রেডিয়াস পুশ ও ভলান্টিয়ার</h3>
+                            <p class="text-xs text-amber-50 mt-1">হাসপাতালের ১-৩ কি.মি. এলাকার ডোনারদের ব্রাউজারে তৎক্ষণাৎ পুশ অ্যালার্ট এবং স্থানীয় থানা ভলান্টিয়ার ডিপ্লয়মেন্ট।</p>
+
+                            <div class="mt-3 space-y-2 bg-slate-950/20 p-3 rounded-2xl text-xs">
+                                <div class="flex items-center justify-between">
+                                    <span>🎯 ১-৩ কি.মি. সক্রিয় ডোনার:</span>
+                                    <span class="font-extrabold bg-white text-orange-700 px-2 py-0.5 rounded-md">১৮ জন অনলাইন</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span>🦺 থানা ভলান্টিয়ার (সদর):</span>
+                                    <span class="font-bold">মোঃ রাফি (০১৭XX-XXXXXX)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2 mt-4">
+                            <button onclick="triggerGeoFence()" class="py-2.5 px-2 rounded-xl bg-slate-950 text-white hover:bg-slate-800 font-extrabold text-xs">
+                                📡 1-3km Push
+                            </button>
+                            <button onclick="deployVolunteer()" class="py-2.5 px-2 rounded-xl bg-white text-orange-700 hover:bg-amber-50 font-extrabold text-xs">
+                                🦺 ভলান্টিয়ার পাঠান
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Voice Note Blood Request & Voice Command Search -->
+                    <div class="bento-3d rounded-3xl p-5 bg-gradient-to-br from-purple-600 to-indigo-700 text-white flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-extrabold bg-white/20 px-2.5 py-0.5 rounded-full">🎙️ Voice AI Assistant</span>
+                            <h3 class="text-lg font-extrabold mt-2">২০ সেকেন্ডের ভয়েস নোট রিকোয়েস্ট</h3>
+                            <p class="text-xs text-purple-100 mt-1">টাইপ করার সময় না থাকলে মুখে বলুন (যেমন: "খুলনা মেডিকেলে B+ রক্ত লাগবে"), অটো টেক্সট হয়ে পোস্ট হবে।</p>
+
+                            <div class="mt-3 bg-slate-950/30 border border-white/15 rounded-2xl p-3">
+                                <p id="voice-transcript" class="text-xs italic text-cyan-200">"মাইক বাটনে চাপ দিয়ে রোগীর তথ্য বলুন..."</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2 mt-4">
+                            <button onclick="simulateVoiceRequest()" class="py-2.5 px-2 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-extrabold text-xs flex items-center justify-center gap-1">
+                                <span>🎙️ Voice Request</span>
+                            </button>
+                            <button onclick="simulateVoiceSearch()" class="py-2.5 px-2 rounded-xl bg-white text-indigo-800 hover:bg-indigo-50 font-extrabold text-xs flex items-center justify-center gap-1">
+                                <span>🔍 Voice Search</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ROW C: BLOOD DEMAND HEATMAP + BLOOD SWAP/EXCHANGE + DONOR STORIES + SMART SOCIAL BADGE + RIDE FUND + THANK YOU WALL -->
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+                    
+                    <!-- 1. Blood Demand Heatmap & Blood Swap/Exchange -->
+                    <div class="bento-3d rounded-3xl p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-base font-extrabold text-rose-600">🗺️ লাইভ ব্লাড ডিমান্ড হিটম্যাপ ও এক্সচেঞ্জ</h3>
+                            <p class="text-xs text-slate-500 mb-3">কোন জেলায় কোন গ্রুপের চাহিদা বেশি ও ব্লাড সোয়াপ সহায়িকা</p>
+                            <div class="grid grid-cols-2 gap-2 text-xs mb-3">
+                                <div class="p-2.5 rounded-xl bg-red-100 dark:bg-red-950/60 text-red-800 dark:text-red-300 font-bold flex justify-between">
+                                    <span>ঢাকা (O-)</span><span>অতি জরুরি 🔥</span>
+                                </div>
+                                <div class="p-2.5 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 font-bold flex justify-between">
+                                    <span>রংপুর (B+)</span><span>উচ্চ চাহিদা ⚡</span>
+                                </div>
+                                <div class="p-2.5 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-bold flex justify-between">
+                                    <span>চট্টগ্রাম (A+)</span><span>স্বাভাবিক ✅</span>
+                                </div>
+                                <div class="p-2.5 rounded-xl bg-purple-100 dark:bg-purple-950/60 text-purple-800 dark:text-purple-300 font-bold flex justify-between">
+                                    <span>খুলনা (AB-)</span><span>জরুরি 🚨</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="showToast('ব্লাড এক্সচেঞ্জ ম্যাচিং: আপনার A+ রক্ত দিয়ে ব্লাড ব্যাংক থেকে O- সংগ্রহ করার ২টি ম্যাচ পাওয়া গেছে!')" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold">
+                            🔄 Blood Swap / Exchange ম্যাচ খুঁজুন
+                        </button>
+                    </div>
+
+                    <!-- 2. Donor Short Stories & Smart Social Media Badge -->
+                    <div class="bento-3d rounded-3xl p-5 bg-gradient-to-br from-pink-600 to-rose-700 text-white flex flex-col justify-between">
+                        <div>
+                            <span class="text-[11px] font-extrabold bg-white/20 px-2.5 py-0.5 rounded-full">📸 Stories & Smart Badge</span>
+                            <h3 class="text-base font-extrabold mt-2">ডোনার শর্ট স্টোরিজ ও সোশ্যাল ব্যাজ</h3>
+                            <div class="flex items-center gap-2.5 my-3 overflow-x-auto pb-1">
+                                <div onclick="showToast('স্টোরি: সাদিয়া জাহান ২য় বার রক্তদান সম্পন্ন করেছেন ❤️')" class="shrink-0 w-16 h-20 rounded-2xl bg-white/20 border-2 border-amber-300 p-1 cursor-pointer flex flex-col justify-end text-[10px] font-bold">
+                                    <span>সাদিয়া (O+)</span>
+                                </div>
+                                <div onclick="showToast('স্টোরি: রাশেদুল ইসলাম জরুরি অপারেশনে রক্ত দিয়েছেন 🩸')" class="shrink-0 w-16 h-20 rounded-2xl bg-white/20 border-2 border-cyan-300 p-1 cursor-pointer flex flex-col justify-end text-[10px] font-bold">
+                                    <span>রাশেদ (B+)</span>
+                                </div>
+                                <div onclick="showToast('নতুন ২০-৩০ সেকেন্ডের স্টোরি আপলোড অপশন চালু হয়েছে')" class="shrink-0 w-16 h-20 rounded-2xl bg-slate-950/40 border border-dashed border-white/50 flex flex-col items-center justify-center text-[10px] font-bold cursor-pointer">
+                                    <span>+ স্টোরি দিন</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="generateSocialBadge()" class="w-full py-2.5 rounded-xl bg-white text-rose-700 hover:bg-rose-50 text-xs font-extrabold shadow">
+                            🩸 "Today I Saved A Life 🩸" ব্যাজ তৈরি করুন
+                        </button>
+                    </div>
+
+                    <!-- 3. Crowdfunded Ride/Food Pass & 'রক্ত পেয়েছি' Thank You Wall -->
+                    <div class="bento-3d rounded-3xl p-5 bg-gradient-to-br from-cyan-600 to-blue-700 text-white flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-base font-extrabold">🚕 ডোনার যাতায়াত ফান্ড ও থ্যাংক ইউ ওয়াল</h3>
+                            <p class="text-xs text-cyan-100 mt-1">অসচ্ছল ডোনারদের যাতায়াত ভাড়া ও খাবারের জন্য মাইক্রো-ডোনেশন এবং রোগীর কৃতজ্ঞতা বার্তা।</p>
+                            <div class="mt-3 p-3 rounded-2xl bg-white/15 text-xs space-y-1">
+                                <p class="font-bold text-amber-200">💬 "রক্ত পেয়েছি" ওয়াল:</p>
+                                <p class="italic">"আলহামদুলিল্লাহ, MB Blood Bank এর মাধ্যমে ২০ মিনিটে AB+ রক্ত পেয়েছি। ধন্যবাদ তানভীর ভাই!" — সুমাইয়া আক্তার</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 mt-3">
+                            <button onclick="showToast('ডোনার রাইড/ফুড ফান্ডে ৫০৳ সহায়তা প্রক্রিয়া শুরু হয়েছে ❤️')" class="py-2 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-xs">
+                                💝 Ride/Food ফান্ড দিন
+                            </button>
+                            <button onclick="showToast('ধন্যবাদ বার্তা পোস্ট করার ফর্ম খোলা হয়েছে')" class="py-2 rounded-xl bg-white/20 hover:bg-white/30 text-white font-extrabold text-xs">
+                                ✍️ থ্যাংক ইউ লিখুন
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== TAB: HOSPITAL DIRECTORY (3D BENTO GRID) ==================== -->
+            <div id="dash-tab-hospitals" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div class="bento-3d rounded-3xl p-5 bg-gradient-to-br from-emerald-500 to-teal-700 text-white">
+                    <span class="text-xs font-bold bg-white/20 px-2.5 py-0.5 rounded-full">🏥 সরকারি মেডিকেল</span>
+                    <h3 class="text-lg font-extrabold mt-2">রংপুর মেডিকেল কলেজ হাসপাতাল</h3>
+                    <p class="text-xs text-emerald-100 mt-1">📍 ঠিকানা: মেডিকেল পূর্ব গেট, রংপুর সদর</p>
+                    <p class="text-xs text-emerald-100 mt-0.5">📞 ব্লাড ব্যাংক: 0521-62123</p>
+                    <a href="https://maps.google.com/?q=Rangpur+Medical+College+Hospital" target="_blank" class="mt-4 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white text-emerald-800 font-extrabold text-xs">
+                        🗺️ Google Maps Location
+                    </a>
+                </div>
+                <div class="bento-3d rounded-3xl p-5 bg-gradient-to-br from-blue-600 to-indigo-700 text-white">
+                    <span class="text-xs font-bold bg-white/20 px-2.5 py-0.5 rounded-full">🏥 জাতীয় ব্লাড ব্যাংক</span>
+                    <h3 class="text-lg font-extrabold mt-2">ঢাকা মেডিকেল কলেজ হাসপাতাল</h3>
+                    <p class="text-xs text-blue-100 mt-1">📍 ঠিকানা: বকশীবাজার, ঢাকা-১০০০</p>
+                    <p class="text-xs text-blue-100 mt-0.5">📞 হটলাইন: 02-55165088</p>
+                    <a href="https://maps.google.com/?q=Dhaka+Medical+College+Hospital" target="_blank" class="mt-4 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white text-blue-800 font-extrabold text-xs">
+                        🗺️ Google Maps Location
+                    </a>
+                </div>
+                <div class="bento-3d rounded-3xl p-5 bg-gradient-to-br from-purple-600 to-fuchsia-700 text-white">
+                    <span class="text-xs font-bold bg-white/20 px-2.5 py-0.5 rounded-full">🏥 রেড ক্রিসেন্ট</span>
+                    <h3 class="text-lg font-extrabold mt-2">বাংলাদেশ রেড ক্রিসেন্ট রক্ত কেন্দ্র</h3>
+                    <p class="text-xs text-purple-100 mt-1">📍 ঠিকানা: মোহাম্মদপুর, ঢাকা</p>
+                    <p class="text-xs text-purple-100 mt-0.5">📞 জরুরি: 01811-458524</p>
+                    <a href="https://maps.google.com/?q=Red+Crescent+Blood+Center+Dhaka" target="_blank" class="mt-4 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white text-purple-800 font-extrabold text-xs">
+                        🗺️ Google Maps Location
+                    </a>
+                </div>
+            </div>
+
+            <!-- ==================== TAB: NOTICE & NEWS (3D BENTO GRID) ==================== -->
+            <div id="dash-tab-notices" class="hidden grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="bento-3d rounded-3xl p-6 bg-gradient-to-br from-amber-500 to-orange-600 text-white">
+                    <span class="text-xs font-extrabold bg-slate-950/30 px-3 py-1 rounded-full">📢 ক্যাম্পেইন আপডেট</span>
+                    <h3 class="text-xl font-extrabold mt-3">স্বেচ্ছায় রক্তদান ক্যাম্পেইন ২০২৬</h3>
+                    <p class="text-xs sm:text-sm text-amber-50 mt-2">আগামী শুক্রবার সকাল ৯টা থেকে বিকাল ৪টা পর্যন্ত টাউন হল চত্বরে বিনামূল্যে রক্তের গ্রুপ নির্ণয় ও স্বেচ্ছায় রক্তদান কর্মসূচি অনুষ্ঠিত হবে।</p>
+                </div>
+                <div class="bento-3d rounded-3xl p-6 bg-gradient-to-br from-sky-600 to-blue-700 text-white">
+                    <span class="text-xs font-extrabold bg-slate-950/30 px-3 py-1 rounded-full">🚀 সিস্টেম আপডেট</span>
+                    <h3 class="text-xl font-extrabold mt-3">ভার্চুয়াল মাস্কড কলিং ও জিপিএস ট্র্যাকিং চালু</h3>
+                    <p class="text-xs sm:text-sm text-sky-100 mt-2">নারী রক্তদাতাদের নিরাপত্তার জন্য এখন আসল ফোন নম্বর গোপন রেখে ভার্চুয়াল কলিং সিস্টেম যুক্ত করা হয়েছে।</p>
+                </div>
+            </div>
+
+            <!-- ==================== TAB: AMBULANCE SERVICE (3D BENTO GRID) ==================== -->
+            <div id="dash-tab-ambulance" class="hidden grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="bento-3d rounded-3xl p-5 bg-gradient-to-br from-red-600 to-rose-700 text-white">
+                    <h3 class="text-lg font-extrabold">🚑 ICU ও লাইফ সাপোর্ট অ্যাম্বুলেন্স</h3>
+                    <p class="text-xs text-rose-100 mt-1">২৪/৭ অক্সিজেন ও ভেন্টিলেটর সুবিধা (সারাদেশ)</p>
+                    <p class="text-xl font-extrabold mt-3">📞 999 / 01711-000111</p>
+                    <button onclick="showToast('ICU অ্যাম্বুলেন্সে কল সংযোগ করা হচ্ছে...')" class="mt-3 w-full py-2 rounded-xl bg-white text-rose-700 font-extrabold text-xs">ওয়ান-ক্লিক কল করুন</button>
+                </div>
+                <div class="bento-3d rounded-3xl p-5 bg-gradient-to-br from-indigo-600 to-blue-700 text-white">
+                    <h3 class="text-lg font-extrabold">❄️ ফ্রিজিং অ্যাম্বুলেন্স সেবা</h3>
+                    <p class="text-xs text-blue-100 mt-1">দ্রুততম সময়ে জেলা ও বিভাগীয় শহরে সার্ভিস</p>
+                    <p class="text-xl font-extrabold mt-3">📞 01819-222333</p>
+                    <button onclick="showToast('ফ্রিজিং অ্যাম্বুলেন্সে কল সংযোগ করা হচ্ছে...')" class="mt-3 w-full py-2 rounded-xl bg-white text-indigo-700 font-extrabold text-xs">ওয়ান-ক্লিক কল করুন</button>
+                </div>
+                <div class="bento-3d rounded-3xl p-5 bg-gradient-to-br from-teal-600 to-emerald-700 text-white">
+                    <h3 class="text-lg font-extrabold">🩺 ফ্রি দরিদ্র রোগী অ্যাম্বুলেন্স</h3>
+                    <p class="text-xs text-teal-100 mt-1">MB Blood Bank ভলান্টিয়ার তত্ত্বাবধানে পরিচালিত</p>
+                    <p class="text-xl font-extrabold mt-3">📞 01911-444555</p>
+                    <button onclick="showToast('ভলান্টিয়ার অ্যাম্বুলেন্স ডেস্কে কল যাচ্ছে...')" class="mt-3 w-full py-2 rounded-xl bg-white text-teal-800 font-extrabold text-xs">ওয়ান-ক্লিক কল করুন</button>
+                </div>
+            </div>
+
+            <!-- ==================== TAB: DONATION HISTORY (3D BENTO GRID) ==================== -->
+            <div id="dash-tab-history" class="hidden grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="bento-3d rounded-3xl p-5 bg-gradient-to-br from-violet-600 to-purple-700 text-white">
+                    <p class="text-xs font-bold uppercase text-purple-200">মোট সফল রক্তদান (সিস্টেম)</p>
+                    <h3 class="text-4xl font-extrabold mt-2">১৪,৮২০ ব্যাগ</h3>
+                    <p class="text-xs text-purple-100 mt-2">গত মাসে যুক্ত হয়েছেন ৪২০ জন নতুন দাতা</p>
+                </div>
+                <div class="bento-3d rounded-3xl p-5 bg-gradient-to-br from-rose-600 to-pink-600 text-white">
+                    <p class="text-xs font-bold uppercase text-rose-100">সর্বোচ্চ রক্তদাতা (রংপুর বিভাগ)</p>
+                    <h3 class="text-2xl font-extrabold mt-2">মাহমুদুল হাসান (১৮ বার)</h3>
+                    <p class="text-xs text-rose-100 mt-2">রক্তের গ্রুপ: O- (সর্বজনীন দাতা)</p>
+                </div>
+                <div class="bento-3d rounded-3xl p-5 bg-gradient-to-br from-emerald-600 to-green-700 text-white">
+                    <p class="text-xs font-bold uppercase text-emerald-100">সফলতার হার</p>
+                    <h3 class="text-4xl font-extrabold mt-2">৯৮.৪%</h3>
+                    <p class="text-xs text-emerald-100 mt-2">গড় সাড়াদানের সময়: মাত্র ১১ মিনিট</p>
+                </div>
+            </div>
+
+            <!-- ==================== TAB: TOP DONOR LEADERBOARD (3D BENTO GRID) ==================== -->
+            <div id="dash-tab-leaderboard" class="hidden grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="bento-3d rounded-3xl p-5 bg-gradient-to-br from-amber-400 to-yellow-600 text-slate-950">
+                    <span class="text-2xl">🥇</span>
+                    <h3 class="text-lg font-extrabold mt-1">১ম স্থান: মাহমুদুল হাসান</h3>
+                    <p class="text-xs font-bold">১৮ বার রক্তদান • ১৮০০ পয়েন্ট • O-</p>
+                </div>
+                <div class="bento-3d rounded-3xl p-5 bg-gradient-to-br from-slate-300 to-slate-500 text-slate-950">
+                    <span class="text-2xl">🥈</span>
+                    <h3 class="text-lg font-extrabold mt-1">২য় স্থান: সাদিয়া আফরিন</h3>
+                    <p class="text-xs font-bold">১৫ বার রক্তদান • ১৫০০ পয়েন্ট • B+</p>
+                </div>
+                <div class="bento-3d rounded-3xl p-5 bg-gradient-to-br from-orange-400 to-amber-700 text-white">
+                    <span class="text-2xl">🥉</span>
+                    <h3 class="text-lg font-extrabold mt-1">৩য় স্থান: তানভীর আহমেদ</h3>
+                    <p class="text-xs font-bold">১২ বার রক্তদান • ১২০০ পয়েন্ট • A+</p>
+                </div>
+            </div>
+
+            <!-- ==================== TAB: BLOOD DONATION GUIDE (3D BENTO GRID) ==================== -->
+            <div id="dash-tab-guide" class="hidden grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="bento-3d rounded-3xl p-6 bg-gradient-to-br from-cyan-600 to-blue-700 text-white">
+                    <h3 class="text-lg font-extrabold">🥗 রক্তদানের পূর্বে করণীয়</h3>
+                    <ul class="text-xs sm:text-sm space-y-2 mt-3 text-cyan-50 list-disc pl-5">
+                        <li>রক্তদানের আগে পর্যাপ্ত পানি ও পুষ্টিকর খাবার গ্রহণ করুন।</li>
+                        <li>আগের রাতে কমপক্ষে ৬-৭ ঘণ্টা ভালো ঘুম নিশ্চিত করুন।</li>
+                        <li>খালি পেটে কখনোই রক্তদান করতে যাবেন না।</li>
+                    </ul>
+                </div>
+                <div class="bento-3d rounded-3xl p-6 bg-gradient-to-br from-emerald-600 to-teal-700 text-white">
+                    <h3 class="text-lg font-extrabold">🥤 রক্তদানের পর করণীয়</h3>
+                    <ul class="text-xs sm:text-sm space-y-2 mt-3 text-emerald-50 list-disc pl-5">
+                        <li>রক্তদানের পর অন্তত ১৫-২০ মিনিট বিশ্রাম নিন ও জুস/পানি পান করুন।</li>
+                        <li>আগামী ২৪ ঘণ্টা ভারী ব্যায়াম বা অতিরিক্ত পরিশ্রম এড়িয়ে চলুন।</li>
+                        <li>পরবর্তী ৪ মাস পর পুনরায় রক্তদানের জন্য প্রস্তুত হোন।</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- FLAT NON-3D BOTTOM ACTION BAR (Strictly flat as requested) -->
+            <div class="flat-bar rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 py-3 flex flex-wrap items-center justify-between gap-3 text-xs">
+                <span class="font-bold text-slate-600 dark:text-slate-300">MB Blood Bank দ্রুত অ্যাকশন বার:</span>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="openSosModal()" class="px-3 py-1.5 rounded-lg bg-red-600 text-white font-bold">🚨 জরুরি রক্তের আবেদন</button>
+                    <button onclick="navigateTo('donor-dir')" class="px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 font-bold">🔍 ডোনার খুঁজুন</button>
+                    <button onclick="navigateTo('profile')" class="px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 font-bold">👤 আমার প্রোফাইল</button>
+                </div>
             </div>
         </main>
     </div>
 
-    <!-- CUSTOM TOAST NOTIFICATION CONTAINER (No alert() used) -->
-    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+    <!-- ==================== VIEW 4: DONOR DIRECTORY (NAVBAR 'Donor' VIEW) ==================== -->
+    <section id="view-donor-dir" class="hidden max-w-6xl mx-auto px-4 py-6 w-full flex-1">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+            <div>
+                <h2 class="text-2xl font-extrabold text-rose-600">🩸 নিবন্ধিত রক্তদাতা তালিকা (Donor Directory)</h2>
+                <p class="text-xs text-slate-500">গোপনীয়তা সুরক্ষায় ভার্চুয়াল কল ও ডিরেক্ট হোয়াটসঅ্যাপ সুবিধা</p>
+            </div>
+            <select id="donor-filter-bg" onchange="renderDonorDirectory()" class="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm font-bold">
+                <option value="ALL">সব রক্তের গ্রুপ</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+            </select>
+        </div>
+        <div id="donor-dir-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </section>
+
+    <!-- ==================== VIEW 5: AMBULANCE VIEW (NAVBAR 'Ambulance' VIEW) ==================== -->
+    <section id="view-ambulance" class="hidden max-w-5xl mx-auto px-4 py-6 w-full flex-1">
+        <h2 class="text-2xl font-extrabold text-rose-600 mb-4">🚑 ২৪/৭ জরুরি অ্যাম্বুলেন্স ড্যাশবোর্ড</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div class="bento-3d rounded-3xl p-6 bg-gradient-to-br from-rose-600 to-red-800 text-white">
+                <h3 class="text-xl font-extrabold">জাতীয় জরুরি সেবা অ্যাম্বুলেন্স</h3>
+                <p class="text-sm text-rose-100 mt-1">যেকোনো জেলা থেকে তাৎক্ষণিক অ্যাম্বুলেন্স পেতে কল করুন</p>
+                <p class="text-3xl font-extrabold mt-4">📞 999</p>
+                <button onclick="showToast('999 জরুরি সেবায় কল সংযোগ হচ্ছে...')" class="mt-4 px-5 py-2.5 rounded-xl bg-white text-rose-700 font-extrabold text-xs">কল করুন</button>
+            </div>
+            <div class="bento-3d rounded-3xl p-6 bg-gradient-to-br from-blue-600 to-indigo-800 text-white">
+                <h3 class="text-xl font-extrabold">MB Blood Bank ফ্রি ট্রান্সপোর্ট অ্যাম্বুলেন্স</h3>
+                <p class="text-sm text-blue-100 mt-1">থ্যালাসেমিয়া ও জরুরি অপারেশন রোগীদের জন্য</p>
+                <p class="text-3xl font-extrabold mt-4">📞 01700-998877</p>
+                <button onclick="showToast('MB অ্যাম্বুলেন্স হটলাইনে কল যাচ্ছে...')" class="mt-4 px-5 py-2.5 rounded-xl bg-white text-blue-800 font-extrabold text-xs">কল করুন</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== VIEW 6: BLOOD REQUEST FORM VIEW (NAVBAR 'Request' VIEW) ==================== -->
+    <section id="view-request" class="hidden max-w-2xl mx-auto px-4 py-6 w-full flex-1">
+        <div class="bento-3d rounded-3xl p-6 sm:p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <h2 class="text-2xl font-extrabold text-rose-600 mb-1">🩸 জরুরি রক্তের অনুরোধ পোস্ট করুন</h2>
+            <p class="text-xs text-slate-500 mb-5">সাবমিট করার সাথে সাথে ওই এলাকার ডোনারদের কাছে SMS, WhatsApp অ্যালার্ট ও ডাইনামিক ব্যানার তৈরি হবে।</p>
+            <form onsubmit="submitNewBloodRequest(event)" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold mb-1">রোগীর সমস্যা / নাম *</label>
+                        <input type="text" id="req-patient" required placeholder="যেমন: সিজারিয়ান অপারেশন" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">রক্তের গ্রুপ *</label>
+                        <select id="req-bg" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm font-bold text-rose-600">
+                            <option value="B+">B+</option>
+                            <option value="O+">O+</option>
+                            <option value="A+">A+</option>
+                            <option value="AB+">AB+</option>
+                            <option value="O-">O-</option>
+                            <option value="A-">A-</option>
+                            <option value="B-">B-</option>
+                            <option value="AB-">AB-</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">হাসপাতালের নাম ও জেলা *</label>
+                        <input type="text" id="req-hosp" required placeholder="যেমন: রংপুর মেডিকেল কলেজ" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">যোগাযোগের মোবাইল নাম্বার *</label>
+                        <input type="tel" id="req-phone" required placeholder="017XXXXXXXX" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                    </div>
+                </div>
+                <button type="submit" class="w-full py-3 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-sm shadow-lg">
+                    🚨 অনুরোধ প্রকাশ করুন ও ডোনারদের অ্যালার্ট পাঠান
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ==================== VIEW 7: USER PROFILE PAGE (EXACT VERTICAL STRUCTURE) ==================== -->
+    <section id="view-profile" class="hidden max-w-2xl mx-auto px-4 py-6 w-full flex-1 space-y-5">
+        
+        <!-- TOP PROFILE CARD: Centered Picture + Edit Button Beside It + Employee ID + Name + Role -->
+        <div class="bento-3d rounded-3xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center relative">
+            
+            <!-- Centered Profile Picture with Edit Button Beside It -->
+            <div class="flex items-center justify-center gap-3 mb-3">
+                <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full ring-4 ring-rose-500/40 overflow-hidden shadow-xl bg-slate-200">
+                    <img id="prof-pic-img" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80" onerror="this.src='https://placehold.co/150x150/e11d48/ffffff?text=JPG'" alt="Profile JPG" class="w-full h-full object-cover">
+                </div>
+                <button onclick="toggleEditProfile()" class="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-md transition-all">
+                    <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                    <span>Edit</span>
+                </button>
+            </div>
+
+            <!-- Employee ID, Name, Role -->
+            <p id="prof-emp-id" class="text-xs font-mono font-extrabold text-rose-600 bg-rose-50 dark:bg-rose-950/60 inline-block px-3 py-1 rounded-full">
+                Employe ID: MB-2026-8492
+            </p>
+            <h2 id="prof-name" class="text-2xl font-extrabold mt-1">তানভীর আহমেদ</h2>
+            <p id="prof-role-badge" class="text-sm font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">রক্তদাতা</p>
+
+            <!-- 3 COLORED BOXES ROW: ১ম ঘর রক্তের গ্রুপ, ২য় ঘর জেলা, ৩য় ঘর অবস্থা -->
+            <div class="grid grid-cols-3 gap-3 mt-5">
+                <!-- Box 1: রক্তের গ্রুপ (Rose/Red) -->
+                <div class="rounded-2xl p-3 bg-gradient-to-br from-rose-500 to-red-600 text-white shadow">
+                    <p class="text-[11px] font-bold opacity-90">রক্তের গ্রুপ</p>
+                    <p id="prof-box-bg" class="text-xl sm:text-2xl font-extrabold mt-0.5">B+</p>
+                </div>
+                <!-- Box 2: জেলা (Indigo/Blue) -->
+                <div class="rounded-2xl p-3 bg-gradient-to-br from-indigo-500 to-blue-600 text-white shadow">
+                    <p class="text-[11px] font-bold opacity-90">জেলা</p>
+                    <p id="prof-box-district" class="text-base sm:text-lg font-extrabold mt-1 truncate">রংপুর</p>
+                </div>
+                <!-- Box 3: অবস্থা (Emerald/Green) -->
+                <div class="rounded-2xl p-3 bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow">
+                    <p class="text-[11px] font-bold opacity-90">অবস্থা</p>
+                    <p id="prof-box-status" class="text-sm sm:text-base font-extrabold mt-1">প্রস্তুত ✅</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- EDIT PROFILE MODAL / COLLAPSIBLE PANEL -->
+        <div id="edit-profile-panel" class="hidden bento-3d rounded-3xl p-5 bg-slate-50 dark:bg-slate-900 border-2 border-blue-500/40">
+            <div class="flex items-center justify-between mb-3">
+                <h3 class="text-base font-extrabold text-blue-600">✏️ প্রোফাইল তথ্য এডিট করুন</h3>
+                <button onclick="toggleEditProfile()" class="text-xs font-bold text-slate-500">✕ বন্ধ করুন</button>
+            </div>
+            <form onsubmit="saveProfileEdits(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div class="sm:col-span-2">
+                    <label class="block font-bold mb-1">পিকচার (.jpg / .png):</label>
+                    <input type="file" id="edit-pic" accept="image/jpeg,image/png,image/jpg" class="w-full p-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
+                </div>
+                <div>
+                    <label class="block font-bold mb-1">Number:</label>
+                    <input type="text" id="edit-number" class="w-full p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
+                </div>
+                <div>
+                    <label class="block font-bold mb-1">Gmail:</label>
+                    <input type="email" id="edit-gmail" class="w-full p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
+                </div>
+                <div>
+                    <label class="block font-bold mb-1">Blood Group:</label>
+                    <select id="edit-bg" class="w-full p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-bold">
+                        <option value="A+">A+</option><option value="A-">A-</option>
+                        <option value="B+">B+</option><option value="B-">B-</option>
+                        <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                        <option value="O+">O+</option><option value="O-">O-</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold mb-1">জেলা:</label>
+                    <input type="text" id="edit-district" class="w-full p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
+                </div>
+                <div>
+                    <label class="block font-bold mb-1">অঞ্চল:</label>
+                    <input type="text" id="edit-area" class="w-full p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
+                </div>
+                <div>
+                    <label class="block font-bold mb-1">শেষ রক্তদান:</label>
+                    <input type="date" id="edit-last-donation" class="w-full p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="block font-bold mb-1">ভুমিকা:</label>
+                    <select id="edit-role" class="w-full p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-bold">
+                        <option value="রক্তদাতা">রক্তদাতা</option>
+                        <option value="রক্ত গ্রহীতা">রক্ত গ্রহীতা</option>
+                    </select>
+                </div>
+                <div class="sm:col-span-2">
+                    <button type="submit" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-sm">
+                        💾 পরিবর্তন সংরক্ষণ করুন
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- POINT OPTION BOX ('পয়েন্ট' -> Clicking reveals Dashboard-style Red Leaderboard + 🔰 নতুন + Progress Line) -->
+        <div class="bento-3d rounded-3xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <button onclick="toggleProfileSection('point-dashboard-panel')" class="w-full p-4 flex items-center justify-between bg-gradient-to-r from-amber-500 to-orange-600 text-white font-extrabold text-base">
+                <span class="flex items-center gap-2">⭐ পয়েন্ট (Points & Leaderboard View)</span>
+                <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            </button>
+
+            <div id="point-dashboard-panel" class="p-5 space-y-4">
+                <!-- Top Red Card: 🏆 on top, larger 'লিডারবোর্ড' below, 'আপনার পয়েন্ট: নতুন' below -->
+                <div class="rounded-2xl p-6 bg-gradient-to-br from-red-600 to-rose-700 text-white text-center shadow-lg">
+                    <div class="text-4xl mb-1">🏆</div>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight">লিডারবোর্ড</h3>
+                    <p class="text-sm sm:text-base font-bold mt-1.5 text-rose-100">
+                        আপনার পয়েন্ট: <span id="user-points-label" class="underline decoration-amber-300">নতুন</span>
+                    </p>
+                </div>
+
+                <!-- Below Card: 🔰 নতুন, পয়েন্ট, পয়েন্ট লেভেল লাইন, Green Text -->
+                <div class="rounded-2xl p-5 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-lg font-extrabold">🔰 নতুন</h4>
+                        <span class="text-sm font-extrabold text-slate-700 dark:text-slate-200">পয়েন্ট: <span id="user-points-num">0</span></span>
+                    </div>
+
+                    <!-- পয়েন্ট লেভেল লাইন (Progress Line) -->
+                    <div>
+                        <div class="flex justify-between text-[11px] font-bold text-slate-400 mb-1">
+                            <span>পয়েন্ট লেভেল লাইন</span>
+                            <span>লেভেল ১ → সহায়ক</span>
+                        </div>
+                        <div class="w-full h-3.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden p-0.5">
+                            <div id="point-level-bar" class="h-full bg-gradient-to-r from-emerald-500 to-green-400 rounded-full transition-all duration-500" style="width: 100%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Green Text Below -->
+                    <p class="text-sm font-extrabold text-emerald-600 dark:text-emerald-400 pt-1">
+                        পরবর্তী লেভেল 'সহায়ক' পেতে আর: <span id="points-needed-num">০</span> পয়েন্ট প্রয়োজন
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- QUICK CHECK RESULT CARD (Hidden until answered; persists across reloads right below পয়েন্ট) -->
+        <div id="quick-check-result-card" class="hidden rounded-3xl p-5 border-2 shadow-lg transition-all">
+            <!-- Dynamically populated with Green Eligible or Red Not Eligible + Date/Time + Reasons -->
+        </div>
+
+        <!-- SMART DONOR QUICK CHECK PANEL (Revealed when clicking red 🛡️ Quick Check button above profile icon) -->
+        <div id="smart-quick-check-panel" class="hidden bento-3d rounded-3xl p-6 bg-white dark:bg-slate-900 border-2 border-red-500/50 space-y-4">
+            <div class="text-center border-b border-slate-200 dark:border-slate-800 pb-4">
+                <span class="inline-block px-3 py-1 rounded-full bg-red-100 dark:bg-red-950 text-red-600 text-xs font-extrabold mb-1">🛡️ Quick Check</span>
+                <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">স্মার্ট রক্তদাতা যাচাই</h3>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1">
+                    নিচে ৬টি প্রশ্নে Yes / No দিন সাথে সাথে আজ রক্ত দিতে পারবেন কি না দেখাবে
+                </p>
+            </div>
+
+            <!-- 6 Health Screening Questions with Green Yes & Red No Buttons -->
+            <div id="quick-check-questions" class="space-y-3">
+                <!-- Populated dynamically by JS -->
+            </div>
+        </div>
+
+        <!-- COLORED USER DETAILS CARD (Distinct Colors for each field) -->
+        <div class="bento-3d rounded-3xl p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2.5 text-sm">
+            <h3 class="text-base font-extrabold mb-3 text-slate-800 dark:text-slate-100">📋 ব্যক্তিগত ও রক্তদানের তথ্য</h3>
+            
+            <div class="p-3 rounded-2xl bg-blue-50 dark:bg-blue-950/50 text-blue-900 dark:text-blue-200 flex justify-between font-bold">
+                <span>নাম্বার:</span>
+                <span id="det-number">01711-223344</span>
+            </div>
+            <div class="p-3 rounded-2xl bg-purple-50 dark:bg-purple-950/50 text-purple-900 dark:text-purple-200 flex justify-between font-bold">
+                <span>জিমেইল:</span>
+                <span id="det-gmail">tanvir.mb@gmail.com</span>
+            </div>
+            <div class="p-3 rounded-2xl bg-rose-50 dark:bg-rose-950/50 text-rose-900 dark:text-rose-200 flex justify-between font-extrabold">
+                <span>রক্তের গ্রুপ:</span>
+                <span id="det-bg">B+</span>
+            </div>
+            <div class="p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-900 dark:text-emerald-200 flex justify-between font-bold">
+                <span>জেলা:</span>
+                <span id="det-district">রংপুর</span>
+            </div>
+            <div class="p-3 rounded-2xl bg-amber-50 dark:bg-amber-950/50 text-amber-900 dark:text-amber-200 flex justify-between font-bold">
+                <span>অঞ্চল:</span>
+                <span id="det-area">জাহাজ কোম্পানি মোড়</span>
+            </div>
+            <div class="p-3 rounded-2xl bg-cyan-50 dark:bg-cyan-950/50 text-cyan-900 dark:text-cyan-200 flex justify-between font-bold">
+                <span>শেষ রক্তদান :</span>
+                <span id="det-last-donation">2026-06-15</span>
+            </div>
+            <div class="p-3 rounded-2xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-900 dark:text-indigo-200 flex justify-between font-extrabold">
+                <span>ভুমিকা :</span>
+                <span id="det-role">রক্তদাতা</span>
+            </div>
+        </div>
+
+        <!-- 🪪 আমার ডোনার কার্ড (Red 3D Donor ID Card Arranged in Single Line + Download Button) -->
+        <div class="bento-3d rounded-3xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <button onclick="toggleProfileSection('donor-id-card-section')" class="w-full p-4 flex items-center justify-between bg-gradient-to-r from-red-600 to-rose-700 text-white font-extrabold text-base">
+                <span>🪪 আমার ডোনার কার্ড</span>
+                <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            </button>
+
+            <div id="donor-id-card-section" class="hidden p-5 space-y-4">
+                <div class="donor-id-3d-wrap">
+                    <div id="donor-3d-card" onmousemove="tiltDonorCard(event)" onmouseleave="resetDonorCard()" class="donor-id-3d-card rounded-2xl p-4 sm:p-5 text-white overflow-x-auto">
+                        <div class="flex items-center justify-between border-b border-white/25 pb-2 mb-3">
+                            <span class="text-xs font-extrabold tracking-wider uppercase">🩸 MB BLOOD BANK • DIGITAL DONOR ID</span>
+                            <span class="text-[11px] font-mono bg-white/20 px-2 py-0.5 rounded" id="card-id-badge">MB-2026-8492</span>
+                        </div>
+                        
+                        <!-- All Key Info Arranged Neatly in a Single Line -->
+                        <div class="flex items-center justify-between gap-3 min-w-[460px] bg-black/20 rounded-xl p-3 border border-white/15">
+                            <img id="card-pic" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80" onerror="this.src='https://placehold.co/80x80/ffffff/b91c1c?text=ID'" alt="ID Pic" class="w-12 h-12 rounded-xl object-cover ring-2 ring-white shrink-0">
+                            <div class="text-left">
+                                <p class="text-[10px] text-rose-200">নাম</p>
+                                <p id="card-name" class="text-xs font-extrabold whitespace-nowrap">তানভীর আহমেদ</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-[10px] text-rose-200">গ্রুপ</p>
+                                <p id="card-bg" class="text-sm font-extrabold bg-white text-red-700 px-2 py-0.5 rounded-lg">B+</p>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-[10px] text-rose-200">জেলা</p>
+                                <p id="card-district" class="text-xs font-bold whitespace-nowrap">রংপুর</p>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-[10px] text-rose-200">মোবাইল</p>
+                                <p id="card-phone" class="text-xs font-bold whitespace-nowrap">01711-223344</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-[10px] text-rose-200">ভুমিকা</p>
+                                <p id="card-role" class="text-xs font-extrabold text-amber-300 whitespace-nowrap">রক্তদাতা</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="downloadDonorCardImage()" class="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md">
+                    <i data-lucide="download" class="w-4 h-4"></i>
+                    <span>ডোনার আইডি কার্ড ডাউনলোড করুন (PNG)</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- রক্তদানের ইতিহাস (Dashboard-Style Personal Donation History) -->
+        <div class="bento-3d rounded-3xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <button onclick="toggleProfileSection('personal-history-section')" class="w-full p-4 flex items-center justify-between bg-gradient-to-r from-indigo-600 to-blue-700 text-white font-extrabold text-base">
+                <span>📊 রক্তদানের ইতিহাস</span>
+                <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            </button>
+
+            <div id="personal-history-section" class="hidden p-5 space-y-4">
+                <div class="grid grid-cols-3 gap-3 text-center">
+                    <div class="p-3 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60">
+                        <p class="text-[11px] text-slate-500 font-bold">মোট রক্তদান</p>
+                        <p class="text-xl font-extrabold text-indigo-600">০৩ বার</p>
+                    </div>
+                    <div class="p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60">
+                        <p class="text-[11px] text-slate-500 font-bold">জীবন রক্ষা</p>
+                        <p class="text-xl font-extrabold text-emerald-600">০৯ জন</p>
+                    </div>
+                    <div class="p-3 rounded-2xl bg-rose-50 dark:bg-rose-950/60">
+                        <p class="text-[11px] text-slate-500 font-bold">সর্বশেষ দান</p>
+                        <p id="hist-last-date" class="text-xs font-extrabold text-rose-600 mt-1">১৫ জুন ২০২৬</p>
+                    </div>
+                </div>
+                <div class="space-y-2 text-xs">
+                    <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 flex justify-between items-center">
+                        <div>
+                            <p class="font-extrabold">রংপুর মেডিকেল কলেজ হাসপাতাল</p>
+                            <p class="text-slate-500">রোগী: জরুরি সার্জারি • ১ ব্যাগ B+</p>
+                        </div>
+                        <span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 font-bold">সফল ✅</span>
+                    </div>
+                    <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 flex justify-between items-center">
+                        <div>
+                            <p class="font-extrabold">সদর হাসপাতাল ব্লাড ব্যাংক</p>
+                            <p class="text-slate-500">রোগী: থ্যালাসেমিয়া • ১ ব্যাগ B+</p>
+                        </div>
+                        <span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 font-bold">সফল ✅</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🔐 পাসওয়ার্ড পরিবর্তন করুন -->
+        <div class="bento-3d rounded-3xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <button onclick="toggleProfileSection('change-password-section')" class="w-full p-4 flex items-center justify-between bg-gradient-to-r from-slate-800 to-slate-900 text-white font-extrabold text-base">
+                <span>🔐 পাসওয়ার্ড পরিবর্তন করুন</span>
+                <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            </button>
+
+            <form id="change-password-section" onsubmit="handleChangePassword(event)" class="hidden p-5 space-y-3">
+                <div>
+                    <label class="block text-xs font-bold mb-1">🔐 বর্তমান পাসওয়ার্ড</label>
+                    <input type="password" id="cp-current" required placeholder="বর্তমান পাসওয়ার্ড লিখুন" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">★ নিউ পাসওয়ার্ড</label>
+                    <input type="password" id="cp-new1" required placeholder="নতুন পাসওয়ার্ড লিখুন" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">★ নিউ পাসওয়ার্ড</label>
+                    <input type="password" id="cp-new2" required placeholder="আবার নতুন পাসওয়ার্ড লিখুন" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                </div>
+                <button type="submit" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm">
+                    পাসওয়ার্ড আপডেট করুন
+                </button>
+            </form>
+        </div>
+
+        <!-- লগআউট (LOGOUT BUTTON AT BOTTOM) -->
+        <button onclick="handleLogout()" class="w-full py-3.5 rounded-2xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-sm shadow-lg flex items-center justify-center gap-2 transition-all">
+            <i data-lucide="log-out" class="w-4 h-4"></i>
+            <span>লগআউট (Logout)</span>
+        </button>
+    </section>
+
+    <!-- ==================== PERSISTENT FLOATING SOS / URGENT BLOOD BUTTON ==================== -->
+    <button onclick="openSosModal()" class="fixed bottom-5 right-5 z-40 px-4 py-3 rounded-full bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-700 hover:to-rose-800 text-white font-extrabold text-xs sm:text-sm shadow-2xl emergency-pulse flex items-center gap-2">
+        <span class="text-base">🆘</span>
+        <span>SOS / Urgent Blood</span>
+    </button>
+
+    <!-- SOS QUICK REQUEST MODAL (3-4 Fields, No Registration Needed) -->
+    <div id="sos-modal" class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 border-2 border-red-600 shadow-2xl">
+            <div class="flex items-center justify-between mb-3">
+                <h3 class="text-lg font-extrabold text-red-600">🆘 জরুরি SOS রক্তের আবেদন (রেজিস্ট্রেশন ছাড়াই)</h3>
+                <button onclick="closeSosModal()" class="text-slate-400 hover:text-slate-700 font-bold">✕</button>
+            </div>
+            <form onsubmit="submitSosQuickRequest(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold mb-1">রক্তের গ্রুপ *</label>
+                    <select id="sos-bg" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm font-extrabold text-red-600">
+                        <option value="O-">O-</option><option value="B+" selected>B+</option><option value="O+">O+</option>
+                        <option value="A+">A+</option><option value="AB+">AB+</option><option value="A-">A-</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">হাসপাতাল ও জেলা *</label>
+                    <input type="text" id="sos-hosp" required placeholder="যেমন: ঢাকা মেডিকেল কলেজ" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">জরুরি মোবাইল নাম্বার *</label>
+                    <input type="tel" id="sos-phone" required placeholder="017XXXXXXXX" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                </div>
+                <button type="submit" class="w-full py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-sm">
+                    🚨 তাৎক্ষণিক অ্যালার্ট পাঠান
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- CUSTOM TOAST NOTIFICATION CONTAINER (No alert() used anywhere) -->
+    <div id="toast-container" class="fixed top-20 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
     <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
+        // ==================== STATE MANAGEMENT & LOCALSTORAGE PERSISTENCE ====================
+        const DEFAULT_USER = {
+            id: 'MB-2026-8492',
+            name: 'তানভীর আহমেদ',
+            phone: '01711-223344',
+            gmail: 'tanvir.mb@gmail.com',
+            bloodGroup: 'B+',
+            district: 'রংপুর',
+            area: 'জাহাজ কোম্পানি মোড়',
+            lastDonation: '2026-06-15',
+            role: 'রক্তদাতা',
+            password: '123456',
+            pic: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
+            points: 0,
+            levelLabel: 'নতুন'
+        };
 
-        // 1. Animated Number Roll-Up Counter on Load
-        function animateCounters() {
-            const counters = document.querySelectorAll('.counter');
-            counters.forEach(counter => {
-                const target = parseInt(counter.getAttribute('data-target'), 10);
-                const duration = 1400; // ms
-                const startTime = performance.now();
+        // 6 Smart Donor Verification Questions (Expected healthy answers: Q1=Yes, Q2=Yes, Q3=No, Q4=No, Q5=No, Q6=Yes)
+        const QUICK_CHECK_QUESTIONS = [
+            {
+                id: 'q1',
+                text: '১. আপনার বয়স কি ১৮ থেকে ৬০ বছরের মধ্যে এবং ওজন ৫০ কেজি বা তার বেশি?',
+                expected: 'Yes',
+                failReason: 'বয়স ১৮-৬০ বছরের মধ্যে এবং ওজন কমপক্ষে ৫০ কেজি হতে হবে।'
+            },
+            {
+                id: 'q2',
+                text: '২. আপনার শেষ রক্তদানের পর কি ইতিমধ্যে ৪ মাস (১২০ দিন) পূর্ণ হয়েছে?',
+                expected: 'Yes',
+                failReason: 'দুইবার রক্তদানের মাঝে কমপক্ষে ৪ মাসের বিরতি প্রয়োজন।'
+            },
+            {
+                id: 'q3',
+                text: '৩. গত ৭ দিনের মধ্যে আপনার কি জ্বর, সর্দি-কাশি বা কোনো সংক্রমণ ছিল?',
+                expected: 'No',
+                failReason: 'সাম্প্রতিক জ্বর, সর্দি বা সংক্রমণ থাকলে রক্তদান করা নিরাপদ নয়।'
+            },
+            {
+                id: 'q4',
+                text: '৪. আপনি কি বর্তমানে কোনো অ্যান্টিবায়োটিক বা জটিল রোগের ওষুধ সেবন করছেন?',
+                expected: 'No',
+                failReason: 'অ্যান্টিবায়োটিক বা নিয়মিত জটিল ওষুধ সেবনকালীন রক্তদান নিষিদ্ধ।'
+            },
+            {
+                id: 'q5',
+                text: '৫. গত ৬ মাসের মধ্যে আপনার কি কোনো বড় অপারেশন, ট্যাটু বা রক্ত গ্রহণ হয়েছে?',
+                expected: 'No',
+                failReason: 'গত ৬ মাসে অপারেশন বা ট্যাটু করালে রক্তদান করা যাবে না।'
+            },
+            {
+                id: 'q6',
+                text: '৬. আপনি কি গত রাতে পর্যাপ্ত ঘুমিয়েছেন এবং আজ পুষ্টিকর খাবার গ্রহণ করেছেন?',
+                expected: 'Yes',
+                failReason: 'অপর্যাপ্ত ঘুম বা খালি পেটে রক্তদান করলে শারীরিক দুর্বলতা হতে পারে।'
+            }
+        ];
 
-                function updateCounter(currentTime) {
-                    const elapsed = currentTime - startTime;
-                    const progress = Math.min(elapsed / duration, 1);
-                    // Ease-out quartic curve
-                    const easeOut = 1 - Math.pow(1 - progress, 4);
-                    const currentVal = Math.floor(easeOut * target);
-                    counter.textContent = currentVal.toLocaleString();
+        let currentUser = JSON.parse(localStorage.getItem('mb_user')) || DEFAULT_USER;
+        let quickCheckAnswers = JSON.parse(localStorage.getItem('mb_qc_answers')) || {};
+        let quickCheckResult = JSON.parse(localStorage.getItem('mb_qc_result')) || null;
+        let currentLang = 'bn';
+        let journeyProgress = 35;
 
-                    if (progress < 1) {
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        counter.textContent = target.toLocaleString();
-                    }
-                }
-                requestAnimationFrame(updateCounter);
-            });
-        }
+        let liveRequests = JSON.parse(localStorage.getItem('mb_requests')) || [
+            { id: 1, patient: 'জরুরি সিজারিয়ান রোগী', bg: 'B+', hospital: 'রংপুর মেডিকেল কলেজ হাসপাতাল', district: 'রংপুর', distance: '১.৮ কি.মি.', phone: '01712-345678', bags: 2 },
+            { id: 2, patient: 'থ্যালাসেমিয়া শিশু (আরিয়ান)', bg: 'O-', hospital: 'ঢাকা মেডিকেল কলেজ হাসপাতাল', district: 'ঢাকা', distance: '৩.৪ কি.মি.', phone: '01819-876543', bags: 1 },
+            { id: 3, patient: 'সড়ক দুর্ঘটনায় আহত রোগী', bg: 'A+', hospital: 'খুলনা মেডিকেল কলেজ হাসপাতাল', district: 'খুলনা', distance: '২.৫ কি.মি.', phone: '01911-112233', bags: 3 }
+        ];
 
-        // 2. Interactive Sidebar Active State
-        const navButtons = document.querySelectorAll('.nav-btn');
-        navButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                navButtons.forEach(b => {
-                    b.classList.remove('nav-active-glow');
-                    b.classList.add('hover:bg-slate-800/80', 'hover:text-white');
-                });
-                btn.classList.add('nav-active-glow');
-                btn.classList.remove('hover:bg-slate-800/80', 'hover:text-white');
-                const sectionName = btn.getAttribute('data-nav');
-                showToast(`Switched to ${sectionName} view`);
-            });
+        const SAMPLE_DONORS = [
+            { name: 'তানভীর আহমেদ', bg: 'B+', district: 'রংপুর', area: 'জাহাজ কোম্পানি', status: 'প্রস্তুত ✅' },
+            { name: 'সাদিয়া আফরিন', bg: 'O+', district: 'ঢাকা', area: 'ধানমন্ডি', status: 'প্রস্তুত ✅' },
+            { name: 'মাহমুদুল হাসান', bg: 'O-', district: 'রংপুর', area: 'মেডিকেল মোড়', status: 'প্রস্তুত ✅' },
+            { name: 'নুসরাত জাহান', bg: 'A+', district: 'চট্টগ্রাম', area: 'জিইসি মোড়', status: 'প্রস্তুত ✅' },
+            { name: 'রাশেদুল ইসলাম', bg: 'AB+', district: 'খুলনা', area: 'সোনাডাঙ্গা', status: 'প্রস্তুত ✅' },
+            { name: 'তাহমিদ হাসান', bg: 'B-', district: 'রাজশাহী', area: 'সাহেব বাজার', status: 'প্রস্তুত ✅' }
+        ];
+
+        // ==================== INITIALIZATION ====================
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            updateLiveDateTime();
+            setInterval(updateLiveDateTime, 30000);
+            syncUserUI();
+            renderLiveRequests();
+            renderDonorDirectory();
+            renderQuickCheckQuestions();
+            if (quickCheckResult) {
+                renderQuickCheckResultCard(quickCheckResult);
+            }
+            // Default view: Donor Dashboard
+            navigateTo('dashboard');
         });
 
-        // 3. Operational Insights Chart Monthly / Weekly Toggle
-        function toggleInsightsChart(mode) {
-            const btnMonthly = document.getElementById('btn-monthly');
-            const btnWeekly = document.getElementById('btn-weekly');
-            const inflowLine = document.getElementById('inflow-line');
-            const inflowArea = document.getElementById('inflow-area');
-            const xLabels = document.getElementById('chart-x-labels');
+        // ==================== NAVIGATION & VIEW ROUTER ====================
+        function navigateTo(viewName) {
+            const views = ['landing', 'register', 'login', 'dashboard', 'donor-dir', 'ambulance', 'request', 'profile'];
+            views.forEach(v => {
+                const el = document.getElementById('view-' + v);
+                if (el) el.classList.add('hidden');
+            });
 
-            if (mode === 'monthly') {
-                btnMonthly.className = 'px-3.5 py-1 rounded-full bg-white text-slate-900 shadow-sm transition-all';
-                btnWeekly.className = 'px-3.5 py-1 rounded-full text-slate-500 hover:text-slate-800 transition-all';
-                inflowLine.setAttribute('d', 'M 10 125 C 75 95, 130 110, 195 70 C 260 30, 320 85, 385 45 C 415 28, 435 35, 450 30');
-                inflowArea.setAttribute('d', 'M 10 125 C 75 95, 130 110, 195 70 C 260 30, 320 85, 385 45 C 415 28, 435 35, 450 30 L 450 145 L 10 145 Z');
-                xLabels.innerHTML = '<span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span>';
-            } else {
-                btnWeekly.className = 'px-3.5 py-1 rounded-full bg-white text-slate-900 shadow-sm transition-all';
-                btnMonthly.className = 'px-3.5 py-1 rounded-full text-slate-500 hover:text-slate-800 transition-all';
-                inflowLine.setAttribute('d', 'M 10 110 C 80 65, 140 90, 210 50 C 280 20, 340 60, 400 35 C 425 25, 440 40, 450 22');
-                inflowArea.setAttribute('d', 'M 10 110 C 80 65, 140 90, 210 50 C 280 20, 340 60, 400 35 C 425 25, 440 40, 450 22 L 450 145 L 10 145 Z');
-                xLabels.innerHTML = '<span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>';
+            const target = document.getElementById('view-' + viewName);
+            if (target) target.classList.remove('hidden');
+
+            // Update Top Navbar Active Styling
+            document.querySelectorAll('.main-nav-btn').forEach(btn => {
+                btn.classList.remove('bg-rose-600', 'text-white', 'shadow-sm');
+                btn.classList.add('text-slate-700', 'dark:text-slate-200');
+            });
+            const activeNav = document.getElementById('nav-' + viewName);
+            if (activeNav) {
+                activeNav.classList.add('bg-rose-600', 'text-white', 'shadow-sm');
+                activeNav.classList.remove('text-slate-700', 'dark:text-slate-200');
+            }
+            lucide.createIcons();
+        }
+
+        function switchDashboardTab(tabName) {
+            const tabs = ['overview', 'hospitals', 'notices', 'ambulance', 'history', 'leaderboard', 'guide'];
+            tabs.forEach(t => {
+                const el = document.getElementById('dash-tab-' + t);
+                if (el) el.classList.add('hidden');
+            });
+            const selected = document.getElementById('dash-tab-' + tabName);
+            if (selected) selected.classList.remove('hidden');
+
+            document.querySelectorAll('.side-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-rose-600', 'text-white', 'shadow-md');
+                btn.classList.add('text-slate-700', 'dark:text-slate-200');
+            });
+            const activeBtn = document.querySelector(`.side-tab-btn[data-tab="${tabName}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-rose-600', 'text-white', 'shadow-md');
+                activeBtn.classList.remove('text-slate-700', 'dark:text-slate-200');
             }
         }
 
-        // 4. Period Filter Simulation
-        function updateDashboardPeriod(period) {
-            const counters = document.querySelectorAll('.counter');
-            const multipliers = { month: 1, week: 0.28, quarter: 2.9 };
-            const baseValues = [1240, 3860, 42, 860];
-            const mult = multipliers[period] || 1;
+        // Open Profile & Scroll Directly to Smart Quick Check Section
+        function openProfileQuickCheck() {
+            navigateTo('profile');
+            const qcPanel = document.getElementById('smart-quick-check-panel');
+            qcPanel.classList.remove('hidden');
+            qcPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
 
-            counters.forEach((counter, idx) => {
-                const newTarget = Math.max(1, Math.round(baseValues[idx] * mult));
-                counter.setAttribute('data-target', newTarget);
+        // ==================== TIME, DATE & DYNAMIC GREETING ====================
+        function updateLiveDateTime() {
+            const now = new Date();
+            const hour = now.getHours();
+            let greeting = 'Good Morning';
+            if (hour >= 12 && hour < 17) greeting = 'Good Afternoon';
+            else if (hour >= 17 || hour < 5) greeting = 'Good Evening';
+
+            const greetingEl = document.getElementById('time-greeting');
+            if (greetingEl) greetingEl.textContent = greeting;
+
+            const daysBn = ['রবিবার', 'সোমবার', 'মঙ্গলবার', 'বুধবার', 'বৃহস্পতিবার', 'শুক্রবার', 'শনিবার'];
+            const monthsBn = ['জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
+            const toBnNum = n => String(n).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+
+            const dateStr = `${daysBn[now.getDay()]}, ${toBnNum(now.getDate())} ${monthsBn[now.getMonth()]} ${toBnNum(now.getFullYear())}`;
+            const dateEl = document.getElementById('bangla-date-display');
+            if (dateEl) dateEl.textContent = dateStr;
+
+            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+            const clockEl = document.getElementById('live-clock-display');
+            if (clockEl) clockEl.textContent = timeStr;
+        }
+
+        // ==================== REGISTRATION, LOGIN & PROFILE SYNC ====================
+        function handleRegister(e) {
+            e.preventDefault();
+            const pass = document.getElementById('reg-pass').value;
+            const confirmPass = document.getElementById('reg-pass-confirm').value;
+            if (pass !== confirmPass) {
+                showToast('❌ পাসওয়ার্ড দুটি মিলছে না! আবার চেষ্টা করুন।', 'error');
+                return;
+            }
+
+            const uniqueId = 'MB-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
+            const fileInput = document.getElementById('reg-pic');
+
+            const finalizeReg = (picUrl) => {
+                currentUser = {
+                    id: uniqueId,
+                    name: document.getElementById('reg-name').value.trim(),
+                    phone: document.getElementById('reg-phone').value.trim(),
+                    gmail: document.getElementById('reg-gmail').value.trim(),
+                    bloodGroup: document.getElementById('reg-blood').value,
+                    district: document.getElementById('reg-district').value.trim(),
+                    area: document.getElementById('reg-area').value.trim(),
+                    lastDonation: document.getElementById('reg-last-donation').value || '2026-06-15',
+                    role: document.getElementById('reg-role').value,
+                    password: pass,
+                    pic: picUrl || DEFAULT_USER.pic,
+                    points: 0,
+                    levelLabel: 'নতুন'
+                };
+                localStorage.setItem('mb_user', JSON.stringify(currentUser));
+                syncUserUI();
+                showToast('✅ নিবন্ধন সফল! আপনার ইউনিক ID: ' + uniqueId + '। এখন লগইন করুন।');
+                document.getElementById('login-gmail').value = currentUser.gmail;
+                navigateTo('login');
+            };
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = ev => finalizeReg(ev.target.result);
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                finalizeReg(null);
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const gmail = document.getElementById('login-gmail').value.trim();
+            const pass1 = document.getElementById('login-pass').value;
+            const pass2 = document.getElementById('login-pass-confirm').value;
+
+            if (pass1 !== pass2) {
+                showToast('❌ পাসওয়ার্ড এবং আবার পাসওয়ার্ড লিখুন ঘর দুটি মিলছে না!', 'error');
+                return;
+            }
+
+            if (gmail && pass1) {
+                // If user logs in with a new email not matching stored, create unique profile for them
+                if (currentUser.gmail !== gmail) {
+                    currentUser.gmail = gmail;
+                    currentUser.name = gmail.split('@')[0];
+                    currentUser.id = 'MB-2026-' + Math.floor(1000 + Math.random() * 9000);
+                    currentUser.password = pass1;
+                    localStorage.setItem('mb_user', JSON.stringify(currentUser));
+                }
+                syncUserUI();
+                showToast('🎉 লগইন সফল! আপনার ইউনিক প্রোফাইল ও ইতিহাস তৈরি হয়েছে।');
+                navigateTo('profile');
+            }
+        }
+
+        function syncUserUI() {
+            // Navbar & Dashboard
+            document.getElementById('nav-profile-img').src = currentUser.pic;
+            document.getElementById('dash-user-pic').src = currentUser.pic;
+            document.getElementById('dash-user-name').textContent = currentUser.name;
+            document.getElementById('dash-user-id').textContent = 'ID: ' + currentUser.id;
+            document.getElementById('dash-user-role').textContent = currentUser.role;
+
+            // Profile Header & 3 Colored Boxes
+            document.getElementById('prof-pic-img').src = currentUser.pic;
+            document.getElementById('prof-emp-id').textContent = 'Employe ID: ' + currentUser.id;
+            document.getElementById('prof-name').textContent = currentUser.name;
+            document.getElementById('prof-role-badge').textContent = currentUser.role;
+            document.getElementById('prof-box-bg').textContent = currentUser.bloodGroup;
+            document.getElementById('prof-box-district').textContent = currentUser.district;
+
+            // Profile Colored Details Card
+            document.getElementById('det-number').textContent = currentUser.phone;
+            document.getElementById('det-gmail').textContent = currentUser.gmail;
+            document.getElementById('det-bg').textContent = currentUser.bloodGroup;
+            document.getElementById('det-district').textContent = currentUser.district;
+            document.getElementById('det-area').textContent = currentUser.area;
+            document.getElementById('det-last-donation').textContent = currentUser.lastDonation;
+            document.getElementById('det-role').textContent = currentUser.role;
+
+            // 3D Donor Card Sync
+            document.getElementById('card-id-badge').textContent = currentUser.id;
+            document.getElementById('card-pic').src = currentUser.pic;
+            document.getElementById('card-name').textContent = currentUser.name;
+            document.getElementById('card-bg').textContent = currentUser.bloodGroup;
+            document.getElementById('card-district').textContent = currentUser.district;
+            document.getElementById('card-phone').textContent = currentUser.phone;
+            document.getElementById('card-role').textContent = currentUser.role;
+
+            // Pre-fill Edit Form
+            document.getElementById('edit-number').value = currentUser.phone;
+            document.getElementById('edit-gmail').value = currentUser.gmail;
+            document.getElementById('edit-bg').value = currentUser.bloodGroup;
+            document.getElementById('edit-district').value = currentUser.district;
+            document.getElementById('edit-area').value = currentUser.area;
+            document.getElementById('edit-last-donation').value = currentUser.lastDonation;
+            document.getElementById('edit-role').value = currentUser.role;
+        }
+
+        function toggleEditProfile() {
+            document.getElementById('edit-profile-panel').classList.toggle('hidden');
+        }
+
+        function saveProfileEdits(e) {
+            e.preventDefault();
+            const fileInput = document.getElementById('edit-pic');
+            const applyChanges = (newPic) => {
+                if (newPic) currentUser.pic = newPic;
+                currentUser.phone = document.getElementById('edit-number').value.trim();
+                currentUser.gmail = document.getElementById('edit-gmail').value.trim();
+                currentUser.bloodGroup = document.getElementById('edit-bg').value;
+                currentUser.district = document.getElementById('edit-district').value.trim();
+                currentUser.area = document.getElementById('edit-area').value.trim();
+                currentUser.lastDonation = document.getElementById('edit-last-donation').value;
+                currentUser.role = document.getElementById('edit-role').value;
+
+                localStorage.setItem('mb_user', JSON.stringify(currentUser));
+                syncUserUI();
+                toggleEditProfile();
+                showToast('✅ প্রোফাইল তথ্য সফলভাবে আপডেট হয়েছে!');
+            };
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = ev => applyChanges(ev.target.result);
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                applyChanges(null);
+            }
+        }
+
+        function toggleProfileSection(id) {
+            document.getElementById(id).classList.toggle('hidden');
+        }
+
+        function handleChangePassword(e) {
+            e.preventDefault();
+            const cur = document.getElementById('cp-current').value;
+            const n1 = document.getElementById('cp-new1').value;
+            const n2 = document.getElementById('cp-new2').value;
+            if (n1 !== n2) {
+                showToast('❌ নতুন পাসওয়ার্ড দুটি মিলছে না!', 'error');
+                return;
+            }
+            currentUser.password = n1;
+            localStorage.setItem('mb_user', JSON.stringify(currentUser));
+            e.target.reset();
+            showToast('🔐 পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে!');
+        }
+
+        function handleLogout() {
+            showToast('👋 আপনি সফলভাবে লগআউট হয়েছেন।');
+            navigateTo('login');
+        }
+
+        // ==================== SMART DONOR QUICK CHECK (6 YES/NO QUESTIONS + PERSISTENCE) ====================
+        function renderQuickCheckQuestions() {
+            const container = document.getElementById('quick-check-questions');
+            container.innerHTML = QUICK_CHECK_QUESTIONS.map(q => {
+                const savedAns = quickCheckAnswers[q.id];
+                const yesSelected = savedAns === 'Yes' ? 'ring-4 ring-emerald-300 scale-105' : 'opacity-90';
+                const noSelected = savedAns === 'No' ? 'ring-4 ring-red-300 scale-105' : 'opacity-90';
+                return `
+                    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <p class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100">${q.text}</p>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <button type="button" onclick="answerQuickCheck('${q.id}', 'Yes')" class="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold transition-all ${yesSelected}">
+                                Yes
+                            </button>
+                            <button type="button" onclick="answerQuickCheck('${q.id}', 'No')" class="px-4 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-extrabold transition-all ${noSelected}">
+                                No
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function formatCheckTimestamp() {
+            const d = new Date();
+            const pad = n => String(n).padStart(2, '0');
+            const dd = pad(d.getDate());
+            const mm = pad(d.getMonth() + 1);
+            const yy = String(d.getFullYear()).slice(-2);
+            let hours = d.getHours();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12;
+            const mins = pad(d.getMinutes());
+            return {
+                eligibleFmt: `${dd}/${mm}/${yy}_${pad(hours)}:${mins} ${ampm}`,
+                notEligibleFmt: `${dd}/${mm}/${yy}-${pad(hours)}:${mins} ${ampm}`
+            };
+        }
+
+        function answerQuickCheck(qId, ans) {
+            quickCheckAnswers[qId] = ans;
+            localStorage.setItem('mb_qc_answers', JSON.stringify(quickCheckAnswers));
+            renderQuickCheckQuestions();
+
+            // Check if all 6 questions have been answered
+            const allAnswered = QUICK_CHECK_QUESTIONS.every(q => quickCheckAnswers[q.id]);
+            if (allAnswered) {
+                const failedReasons = [];
+                QUICK_CHECK_QUESTIONS.forEach(q => {
+                    if (quickCheckAnswers[q.id] !== q.expected) {
+                        failedReasons.push(q.failReason);
+                    }
+                });
+
+                const ts = formatCheckTimestamp();
+                quickCheckResult = {
+                    eligible: failedReasons.length === 0,
+                    timestampEligible: ts.eligibleFmt,
+                    timestampNotEligible: ts.notEligibleFmt,
+                    reasons: failedReasons
+                };
+                localStorage.setItem('mb_qc_result', JSON.stringify(quickCheckResult));
+                renderQuickCheckResultCard(quickCheckResult);
+            }
+        }
+
+        function renderQuickCheckResultCard(res) {
+            const card = document.getElementById('quick-check-result-card');
+            const statusBox = document.getElementById('prof-box-status');
+            card.classList.remove('hidden');
+
+            if (res.eligible) {
+                statusBox.textContent = 'Eligible ✅';
+                card.className = 'rounded-3xl p-5 border-2 border-emerald-500 bg-gradient-to-br from-emerald-50 to-green-100 dark:from-emerald-950 dark:to-slate-900 text-emerald-900 dark:text-emerald-200 shadow-lg';
+                card.innerHTML = `
+                    <div class="flex items-center gap-2 text-xs font-extrabold uppercase text-emerald-700 dark:text-emerald-400 mb-1">
+                        <span>Quick Check</span>
+                    </div>
+                    <p class="text-base sm:text-lg font-extrabold text-emerald-700 dark:text-emerald-300">
+                        🛡️ শেষ Quick Check: Eligible চেক করা হয়েছে : ${res.timestampEligible}
+                    </p>
+                    <p class="text-xs font-bold mt-1 text-emerald-800 dark:text-emerald-200">
+                        ✅ অভিনন্দন! আপনি আজ রক্তদানের জন্য সম্পূর্ণ সুস্থ ও উপযুক্ত।
+                    </p>
+                `;
+            } else {
+                statusBox.textContent = 'Not Eligible ❌';
+                card.className = 'rounded-3xl p-5 border-2 border-red-500 bg-gradient-to-br from-red-50 to-rose-100 dark:from-red-950 dark:to-slate-900 text-red-900 dark:text-red-200 shadow-lg';
+                const reasonsHtml = res.reasons.map(r => `<li>• ${r}</li>`).join('');
+                card.innerHTML = `
+                    <div class="flex items-center gap-2 text-xs font-extrabold uppercase text-red-700 dark:text-red-400 mb-1">
+                        <span>Quick Check</span>
+                    </div>
+                    <p class="text-sm sm:text-base font-extrabold text-red-700 dark:text-red-300">
+                        🚫 শেষ Quick Check Not Eligible চেক করা হয়েছে: ${res.timestampNotEligible}
+                    </p>
+                    <p class="text-base font-extrabold text-red-600 dark:text-red-400 mt-1">
+                        ❌ আপনি আজ রক্ত দান না করাই ভালো
+                    </p>
+                    <div class="mt-2.5 p-3 rounded-2xl bg-white/70 dark:bg-slate-950/50 text-xs font-bold text-red-800 dark:text-red-200 space-y-1">
+                        <p class="underline">যেসব কারণে আজ রক্ত দেওয়া যাবে না:</p>
+                        <ul class="space-y-1">${reasonsHtml}</ul>
+                    </div>
+                `;
+            }
+        }
+
+        // ==================== 3D DONOR ID CARD TILT & DOWNLOAD ====================
+        function tiltDonorCard(e) {
+            const card = document.getElementById('donor-3d-card');
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const rotateX = ((y / rect.height) - 0.5) * -14;
+            const rotateY = ((x / rect.width) - 0.5) * 14;
+            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        }
+
+        function resetDonorCard() {
+            const card = document.getElementById('donor-3d-card');
+            card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        }
+
+        function downloadDonorCardImage() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 900;
+            canvas.height = 360;
+            const ctx = canvas.getContext('2d');
+
+            // Red Gradient Background
+            const grad = ctx.createLinearGradient(0, 0, 900, 360);
+            grad.addColorStop(0, '#b91c1c');
+            grad.addColorStop(0.5, '#dc2626');
+            grad.addColorStop(1, '#7f1d1d');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 900, 360);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 24px sans-serif';
+            ctx.fillText('MB BLOOD BANK - OFFICIAL 3D DONOR ID CARD', 40, 55);
+
+            ctx.font = 'bold 20px monospace';
+            ctx.fillStyle = '#fde047';
+            ctx.fillText('ID: ' + currentUser.id, 660, 55);
+
+            // Single Line Info Box
+            ctx.fillStyle = 'rgba(0,0,0,0.28)';
+            ctx.fillRect(40, 110, 820, 150);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 24px sans-serif';
+            ctx.fillText(`${currentUser.name}  |  গ্রুপ: ${currentUser.bloodGroup}  |  জেলা: ${currentUser.district}  |  ${currentUser.phone}  |  ${currentUser.role}`, 65, 195);
+
+            const link = document.createElement('a');
+            link.download = `MB_Donor_Card_${currentUser.id}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            showToast('🪪 আপনার লাল থ্রিডি ডোনার আইডি কার্ড ডাউনলোড হয়েছে!');
+        }
+
+        // ==================== DASHBOARD INTERACTIVE FEATURES ====================
+        function renderLiveRequests() {
+            const list = document.getElementById('live-requests-list');
+            list.innerHTML = liveRequests.map(req => `
+                <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="px-2.5 py-0.5 rounded-lg bg-rose-600 text-white text-xs font-extrabold">${req.bg} (${req.bags} ব্যাগ)</span>
+                            <span class="text-sm font-extrabold">${req.patient}</span>
+                            <span class="text-[11px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950 px-2 py-0.5 rounded-full">📍 ${req.distance}</span>
+                        </div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">🏥 ${req.hospital} (${req.district})</p>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-1.5 shrink-0">
+                        <button onclick="selectBannerRequest('${req.bg}', '${req.hospital}')" class="px-2.5 py-1.5 rounded-xl bg-amber-100 text-amber-900 text-[11px] font-extrabold">🎨 ব্যানার</button>
+                        <button onclick="showToast('🔒 ভার্চুয়াল মাস্কড কল সংযোগ হচ্ছে (${req.hospital})...')" class="px-2.5 py-1.5 rounded-xl bg-blue-600 text-white text-[11px] font-extrabold">📞 Call Donor</button>
+                        <button onclick="showToast('💬 হোয়াটসঅ্যাপ ডিরেক্ট চ্যাট খোলা হচ্ছে...')" class="px-2.5 py-1.5 rounded-xl bg-emerald-600 text-white text-[11px] font-extrabold">💬 WhatsApp</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectBannerRequest(bg, hospital) {
+            document.getElementById('banner-title').textContent = `🩸 জরুরি ${bg} রক্ত প্রয়োজন`;
+            document.getElementById('banner-hospital').textContent = `📍 হাসপাতাল: ${hospital}`;
+            showToast(`🎨 ${bg} রক্তের জন্য ডাইনামিক ব্যানার আপডেট হয়েছে!`);
+        }
+
+        function detectGpsLocation() {
+            const bar = document.getElementById('gps-status-bar');
+            bar.classList.remove('hidden');
+            showToast('📍 GPS লোকেশন শনাক্ত হয়েছে: ৫-১০ কি.মি. ব্যাসার্ধের ডোনার তালিকা প্রস্তুত!');
+        }
+
+        function startDonorJourney() {
+            journeyProgress = Math.min(100, journeyProgress + 25);
+            const bar = document.getElementById('journey-progress-bar');
+            const pct = document.getElementById('journey-percent');
+            const status = document.getElementById('journey-status-text');
+            const eta = document.getElementById('eta-badge');
+
+            bar.style.width = journeyProgress + '%';
+            pct.textContent = journeyProgress + '%';
+
+            if (journeyProgress >= 100) {
+                status.textContent = '✅ ডোনার হাসপাতালে পৌঁছে গেছেন!';
+                eta.textContent = 'Arrived';
+                showToast('🎉 ডোনার হাসপাতালে পৌঁছে গেছেন! রোগীর স্বজনদের নোটিফিকেশন পাঠানো হয়েছে।');
+            } else {
+                const minsLeft = Math.max(2, Math.round((100 - journeyProgress) * 0.2));
+                status.textContent = `ডোনার পথে আছেন (${(minsLeft * 0.25).toFixed(1)} কি.মি. বাকি)`;
+                eta.textContent = `ETA: ${minsLeft} মিনিট`;
+                showToast(`🛵 লাইভ ট্র্যাকিং আপডেট: আনুমানিক ${minsLeft} মিনিটে পৌঁছাবেন।`);
+            }
+        }
+
+        function triggerPanicBroadcast() {
+            showToast('🚨 PANIC BROADCAST: সব অনলাইন ডোনারদের কাছে জরুরি অডিও ও পপ-আপ অ্যালার্ট পাঠানো হয়েছে!');
+        }
+
+        function triggerGeoFence() {
+            showToast('📡 Geo-Fencing Push: হাসপাতালের ১-৩ কি.মি. ব্যাসার্ধের ১৮ জন ডোনারকে পুশ অ্যালার্ট পাঠানো হয়েছে!');
+        }
+
+        function deployVolunteer() {
+            showToast('🦺 Rapid Volunteer Alert: স্থানীয় থানা ভলান্টিয়ার মোঃ রাফিকে হাসপাতালে পাঠানো হচ্ছে!');
+        }
+
+        function triggerSmsWhatsappAlert(bg, hospital) {
+            showToast(`📲 SMS Gateway & WhatsApp Bot: ${hospital} এর জন্য ${bg} ডোনারদের ফোনে অটো মেসেজ পাঠানো হয়েছে!`);
+        }
+
+        function enableWebPush() {
+            showToast('🔔 Web Push Notification সক্রিয় হয়েছে! এলাকার জরুরি রিকোয়েস্ট সাথে সাথে পাবেন।');
+        }
+
+        function simulateVoiceRequest() {
+            const box = document.getElementById('voice-transcript');
+            box.textContent = '🎙️ রেকর্ড হচ্ছে... "রংপুর মেডিকেলে জরুরি ২ ব্যাগ B+ রক্ত লাগবে" → রিকোয়েস্ট তৈরি সফল!';
+            showToast('🎙️ ভয়েস নোট টেক্সটে রূপান্তর হয়ে নতুন ব্লাড রিকোয়েস্ট তৈরি হয়েছে!');
+        }
+
+        function simulateVoiceSearch() {
+            const box = document.getElementById('voice-transcript');
+            box.textContent = '🔍 ভয়েস সার্চ: "নিকটস্থ O- রক্তদাতা" → ৩ জন সক্রিয় ডোনার পাওয়া গেছে!';
+            showToast('🔍 ভয়েস কমান্ড সার্চ সম্পন্ন!');
+        }
+
+        function socialShare(platform) {
+            showToast(`🚀 ডাইনামিক ব্যানার ও লিংকটি এক ক্লিকে ${platform}-এ শেয়ার করা হয়েছে!`);
+        }
+
+        function generateSocialBadge() {
+            showToast('🩸 "Today I Saved A Life 🩸" স্মার্ট প্রোফাইল ফ্রেম তৈরি হয়েছে! ফেসবুক/ইনস্টাগ্রামে শেয়ার করুন।');
+        }
+
+        function renderDonorDirectory() {
+            const filter = document.getElementById('donor-filter-bg').value;
+            const grid = document.getElementById('donor-dir-grid');
+            const filtered = filter === 'ALL' ? SAMPLE_DONORS : SAMPLE_DONORS.filter(d => d.bg === filter);
+            grid.innerHTML = filtered.map(d => `
+                <div class="bento-3d rounded-3xl p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="px-3 py-1 rounded-xl bg-rose-600 text-white font-extrabold text-sm">${d.bg}</span>
+                        <span class="text-xs font-bold text-emerald-600">${d.status}</span>
+                    </div>
+                    <h3 class="text-lg font-extrabold">${d.name}</h3>
+                    <p class="text-xs text-slate-500 mt-0.5">📍 ${d.area}, ${d.district}</p>
+                    <div class="grid grid-cols-2 gap-2 mt-4">
+                        <button onclick="showToast('🔒 Masked Virtual Call সংযোগ হচ্ছে...')" class="py-2 rounded-xl bg-blue-600 text-white text-xs font-bold">📞 Virtual Call</button>
+                        <button onclick="showToast('💬 WhatsApp চ্যাট শুরু হচ্ছে...')" class="py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold">💬 WhatsApp</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function submitNewBloodRequest(e) {
+            e.preventDefault();
+            const newReq = {
+                id: Date.now(),
+                patient: document.getElementById('req-patient').value,
+                bg: document.getElementById('req-bg').value,
+                hospital: document.getElementById('req-hosp').value,
+                district: 'বাংলাদেশ',
+                distance: '১.৫ কি.মি.',
+                phone: document.getElementById('req-phone').value,
+                bags: 1
+            };
+            liveRequests.unshift(newReq);
+            localStorage.setItem('mb_requests', JSON.stringify(liveRequests));
+            renderLiveRequests();
+            selectBannerRequest(newReq.bg, newReq.hospital);
+            e.target.reset();
+            showToast('🚨 আপনার অনুরোধ প্রকাশিত হয়েছে এবং ডোনারদের SMS/WhatsApp অ্যালার্ট পাঠানো হয়েছে!');
+            navigateTo('dashboard');
+        }
+
+        function openSosModal() { document.getElementById('sos-modal').classList.remove('hidden'); }
+        function closeSosModal() { document.getElementById('sos-modal').classList.add('hidden'); }
+
+        function submitSosQuickRequest(e) {
+            e.preventDefault();
+            const bg = document.getElementById('sos-bg').value;
+            const hosp = document.getElementById('sos-hosp').value;
+            const phone = document.getElementById('sos-phone').value;
+            liveRequests.unshift({
+                id: Date.now(),
+                patient: '🆘 SOS জরুরি রোগী',
+                bg, hospital: hosp, district: 'জরুরি', distance: '১.০ কি.মি.', phone, bags: 2
             });
-            animateCounters();
-            showToast(`Metrics updated for ${period === 'month' ? 'This Month' : period === 'week' ? 'This Week' : 'Last Quarter'}`);
+            localStorage.setItem('mb_requests', JSON.stringify(liveRequests));
+            renderLiveRequests();
+            document.getElementById('emergency-banner-text').textContent = `🚨 SOS অ্যালার্ট: ${hosp}-এ জরুরি ${bg} রক্ত প্রয়োজন! কল: ${phone}`;
+            closeSosModal();
+            e.target.reset();
+            showToast('🆘 জরুরি SOS রক্তের আবেদন সফলভাবে পাঠানো হয়েছে!');
         }
 
-        // 5. Working Download Report Toast Notification
-        function downloadReport() {
-            showToast('Generating Clinova_Executive_Report_V35.pdf...', 'success');
+        // ==================== THEME & LANGUAGE TOGGLES ====================
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            showToast(isDark ? '🌙 ডার্ক মোড চালু হয়েছে' : '☀️ লাইট মোড চালু হয়েছে');
         }
 
-        // Custom Toast Notification Helper
-        function showToast(message, type = 'info') {
+        function toggleLanguage() {
+            currentLang = currentLang === 'bn' ? 'en' : 'bn';
+            const btn = document.getElementById('lang-btn').querySelector('span');
+            btn.textContent = currentLang === 'bn' ? 'Language: বাংলা' : 'Language: English';
+            showToast(currentLang === 'bn' ? 'ভাষা বাংলায় পরিবর্তন করা হয়েছে' : 'Language switched to English');
+        }
+
+        // ==================== CUSTOM TOAST HELPER (NO alert() USED) ====================
+        function showToast(msg, type = 'info') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            toast.className = 'pointer-events-auto flex items-center gap-3 bg-[#0f172a] text-white text-xs sm:text-sm font-medium px-4 py-3 rounded-2xl shadow-2xl border border-slate-700/80 transform translate-y-4 opacity-0 transition-all duration-300';
-            
-            const iconColor = type === 'success' ? 'text-emerald-400' : 'text-cyan-400';
-            toast.innerHTML = `
-                <span class="w-2 h-2 rounded-full ${type === 'success' ? 'bg-emerald-400' : 'bg-cyan-400'}"></span>
-                <span>${message}</span>
-            `;
-
+            const bgClass = type === 'error' ? 'bg-red-700 border-red-400' : 'bg-slate-900 border-slate-700';
+            toast.className = `pointer-events-auto px-4 py-3 rounded-2xl ${bgClass} border text-white text-xs sm:text-sm font-bold shadow-2xl transition-all duration-300 max-w-sm`;
+            toast.textContent = msg;
             container.appendChild(toast);
-            requestAnimationFrame(() => {
-                toast.classList.remove('translate-y-4', 'opacity-0');
-            });
-
             setTimeout(() => {
-                toast.classList.add('translate-y-4', 'opacity-0');
+                toast.style.opacity = '0';
                 setTimeout(() => toast.remove(), 300);
-            }, 3000);
+            }, 3400);
         }
-
-        // Subtle live heart rate fluctuation (71 - 74 bpm) for realism
-        setInterval(() => {
-            const hrEl = document.getElementById('live-hr');
-            if (hrEl) {
-                const bpm = 71 + Math.floor(Math.random() * 4);
-                hrEl.textContent = bpm;
-            }
-        }, 2800);
-
-        // Keyboard shortcut Cmd/Ctrl + K for search focus
-        document.addEventListener('keydown', (e) => {
-            if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-                e.preventDefault();
-                document.getElementById('global-search').focus();
-            }
-        });
-
-        // Start animations on window load
-        window.addEventListener('load', () => {
-            animateCounters();
-        });
     </script>
 </body>
 </html>
