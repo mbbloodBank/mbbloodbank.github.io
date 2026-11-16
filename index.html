@@ -1,1705 +1,820 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>MB Blood Bank</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@500;700;800&family=Hind+Siliguri:wght@400;500;600&display=swap">
-<style>
-/* Layout: sticky header, tabbed views switched by the bottom bar (logged-in only). Logged-in Home is the donor dashboard; Profile holds the avatar card, colored stat boxes, accordions, Quick Check, 3D donor card. */
-:root {
-  --bg: #eaf1f8;
-  --surface: #ffffff;
-  --surface-2: #dfe9f3;
-  --fg: #17202b;
-  --muted: #4f6072;
-  --line: #cbd8e5;
-  --accent: #b3122b;
-  --accent-fg: #ffffff;
-  --accent-soft: #f9dfe3;
-  --ok: #1f7a4d;
-  --ok-soft: #dcf1e5;
-  --hfg: #ffffff; --h1: #1d4ed8; --h2: #b3122b; --h3: #0f766e; --h4: #b45309; --h5: #6d28d9; --h6: #15803d; --h7: #be185d;
-  --font-display: "Anek Bangla", "Hind Siliguri", "Noto Sans Bengali", system-ui, sans-serif;
-  --font-body: "Hind Siliguri", "Noto Sans Bengali", system-ui, sans-serif;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0e151d; --surface: #16202a; --surface-2: #1e2b37; --fg: #e8eef4; --muted: #9aabbb;
-    --line: #2b3a48; --accent: #ef4c63; --accent-fg: #1a0a0d; --accent-soft: #3a161d;
-    --ok: #5fd39a; --ok-soft: #153325;
-    --hfg: #0e151d; --h1: #7aa2ff; --h2: #ef4c63; --h3: #2dd4bf; --h4: #fbbf24; --h5: #b69cff; --h6: #4ade80; --h7: #f472b6;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0e151d; --surface: #16202a; --surface-2: #1e2b37; --fg: #e8eef4; --muted: #9aabbb;
-  --line: #2b3a48; --accent: #ef4c63; --accent-fg: #1a0a0d; --accent-soft: #3a161d;
-  --ok: #5fd39a; --ok-soft: #153325;
-  --hfg: #0e151d; --h1: #7aa2ff; --h2: #ef4c63; --h3: #2dd4bf; --h4: #fbbf24; --h5: #b69cff; --h6: #4ade80; --h7: #f472b6;
-  color-scheme: dark;
-}
-* { box-sizing: border-box; }
-[hidden] { display: none !important; }
-body {
-  background: var(--bg); color: var(--fg);
-  font-family: var(--font-body); font-size: 17px; line-height: 1.65;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 0 24px;
-}
-body.authed { padding-block-end: calc(120px + env(safe-area-inset-bottom, 0px)); }
-h1, h2, h3 { font-family: var(--font-display); line-height: 1.25; margin: 0; text-wrap: balance; }
-p { margin: 0; }
-a { color: var(--accent); }
-:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
-.wrap { max-width: 1060px; margin: 0 auto; }
-section { padding-block: 40px; }
-.eyebrow { font-size: 14px; letter-spacing: .04em; color: var(--accent); font-weight: 600; margin-bottom: 8px; }
-h2 { font-size: clamp(26px, 4.4vw, 36px); font-weight: 800; }
-.lede { color: var(--muted); max-width: 62ch; margin-top: 10px; }
-.muted { color: var(--muted); }
-.narrow { max-width: 720px; margin-inline: auto; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinova Dashboard V35 - Healthcare Bento UI</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter, Plus Jakarta Sans & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,500;1,600&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-/* header */
-body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
-header.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 12; background: var(--surface); border-bottom: 1px solid var(--line);
-  margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
-.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap; padding-block: 10px; }
-.brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 800; font-size: 20px; color: var(--fg); text-decoration: none; }
-.brand .drop { width: 30px; height: 36px; }
-.tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; justify-content: flex-end; }
-.tbtn { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: 15px; font-weight: 600; color: var(--fg); background: var(--surface-2); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; min-height: 40px; cursor: pointer; text-decoration: none; }
-.tbtn:hover { border-color: var(--accent); }
-.tbtn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
-.tbtn svg { width: 18px; height: 18px; flex: none; }
-.tbtn.icon { padding: 6px 10px; }
-.menuwrap { position: relative; }
-.menu { position: absolute; right: 0; top: calc(100% + 8px); min-width: 230px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 6px; box-shadow: 0 12px 32px rgba(0,0,0,.2); z-index: 20; }
-.menu a, .menu button { display: flex; gap: 10px; align-items: center; width: 100%; padding: 10px 12px; border-radius: 10px; color: var(--fg); text-decoration: none; background: none; border: 0; font: inherit; font-weight: 500; cursor: pointer; text-align: left; }
-.menu a:hover, .menu button:hover { background: var(--accent-soft); }
-.menu svg { width: 20px; height: 20px; flex: none; color: var(--accent); }
-.menu hr { border: 0; border-top: 1px solid var(--line); margin: 6px 0; }
+    <style>
+        body {
+            font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #eef2f9 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #0f172a;
+            overflow-x: hidden;
+        }
 
-/* hero */
-.hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; padding-block: 48px 40px; }
-.hero h1 { font-size: clamp(34px, 6.4vw, 56px); font-weight: 800; letter-spacing: -.01em; }
-.hero h1 em { font-style: normal; color: var(--accent); }
-.hero p.lede { font-size: 19px; }
-.cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
-.btn { font-family: var(--font-body); font-size: 17px; font-weight: 600; padding: 12px 22px; border-radius: 10px; border: 2px solid var(--accent); cursor: pointer; text-decoration: none; display: inline-block; }
-.btn.primary { background: var(--accent); color: var(--accent-fg); }
-.btn.ghost { background: transparent; color: var(--accent); }
-.btn:hover { filter: brightness(1.06); }
-.chart { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
-.chart h3 { font-size: 16px; font-weight: 700; color: var(--muted); margin-bottom: 14px; }
-.groups { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-.g { font-family: var(--font-display); font-weight: 800; font-size: 24px; aspect-ratio: 1.15; display: grid; place-items: center; border-radius: 12px;
-  background: var(--accent-soft); color: var(--accent); border: 2px solid transparent; cursor: pointer; }
-.g:hover, .g[aria-pressed="true"] { border-color: var(--accent); }
-.g[aria-pressed="true"] { background: var(--accent); color: var(--accent-fg); }
-.chart small { display: block; margin-top: 12px; color: var(--muted); font-size: 14px; }
+        .font-serif-italic {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
 
-/* panels & forms */
-.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 24px; margin-top: 24px; }
-.filters { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: end; }
-label { display: block; font-weight: 600; font-size: 15px; margin-bottom: 4px; }
-input, select, textarea { font: inherit; width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); min-height: 46px; }
-.field { min-width: 0; flex: 1 1 200px; }
-.hint { font-size: 13px; color: var(--muted); margin-top: 4px; }
-.check { display: flex; gap: 8px; align-items: center; font-weight: 500; min-height: 46px; }
-.check input { width: 20px; height: 20px; min-height: 0; accent-color: var(--accent); flex: none; }
-.pills { display: flex; flex-wrap: wrap; gap: 8px; }
-.pill { padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface-2); cursor: pointer; font: inherit; font-weight: 600; color: var(--fg); }
-.pill[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
-.results { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 22px; }
-.donor { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: center; background: var(--bg); min-width: 0; }
-.badge { grid-row: span 2; font-family: var(--font-display); font-weight: 800; font-size: 22px; width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--accent-fg); }
-.donor b { font-weight: 600; }
-.donor span { color: var(--muted); font-size: 15px; overflow-wrap: anywhere; }
-.tag { font-size: 12px; padding: 1px 8px; border-radius: 999px; background: var(--ok-soft); color: var(--ok); font-weight: 600; margin-left: 6px; }
-.tag.sample { background: var(--surface-2); color: var(--muted); }
-.empty { color: var(--muted); padding: 18px 0 2px; }
-.note { margin-top: 14px; font-size: 15px; color: var(--muted); }
-.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
-.grid2 > div { min-width: 0; }
-.out { margin-top: 18px; padding: 16px; border-radius: 12px; background: var(--ok-soft); color: var(--fg); white-space: pre-wrap; overflow-wrap: anywhere; }
-.out-head { font-weight: 700; color: var(--ok); margin-bottom: 6px; }
-.err { color: var(--accent); font-weight: 600; margin-top: 10px; min-height: 1.2em; }
-.okmsg { color: var(--ok); font-weight: 600; margin-top: 10px; }
-.alt { margin-top: 16px; color: var(--muted); font-size: 15px; }
+        /* Glassmorphism Card Styling */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.05), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+        }
 
-/* dashboard tiles (hue classes c1..c7 pick a token) */
-.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-top: 22px; }
-.tile { border-radius: 14px; padding: 14px 16px; background: var(--surface-2); background: color-mix(in srgb, var(--hc) 14%, var(--surface)); border: 1px solid color-mix(in srgb, var(--hc) 35%, var(--line)); display: grid; gap: 2px; min-width: 0; }
-.tile b { font-family: var(--font-display); font-size: 30px; font-weight: 800; line-height: 1.1; color: var(--hc); font-variant-numeric: tabular-nums; }
-.tile span { font-size: 14px; color: var(--muted); font-weight: 600; }
-.c1 { --hc: var(--h1); } .c2 { --hc: var(--h2); } .c3 { --hc: var(--h3); } .c4 { --hc: var(--h4); } .c5 { --hc: var(--h5); } .c6 { --hc: var(--h6); } .c7 { --hc: var(--h7); }
-.dash-hello { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-.qa-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 22px; }
-.qa { display: grid; gap: 4px; padding: 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); text-decoration: none; text-align: left; font: inherit; cursor: pointer; }
-.qa:hover { border-color: var(--accent); }
-.qa svg { width: 26px; height: 26px; color: var(--accent); }
-.qa b { font-family: var(--font-display); font-size: 18px; }
-.qa span { color: var(--muted); font-size: 14.5px; line-height: 1.45; }
-.qa.red { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
-.qa.red span, .qa.red svg { color: var(--accent-fg); opacity: .92; }
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 35px -8px rgba(15, 23, 42, 0.09), 0 8px 16px -4px rgba(15, 23, 42, 0.04);
+        }
 
-/* reference */
-.tablebox { overflow-x: auto; margin-top: 22px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
-table { border-collapse: collapse; width: 100%; min-width: 520px; }
-th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--line); }
-th { background: var(--surface-2); font-weight: 600; font-size: 15px; }
-tr:last-child td { border-bottom: 0; }
-td:first-child { font-family: var(--font-display); font-weight: 800; color: var(--accent); font-size: 20px; }
-.rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin-top: 24px; }
-.rule { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
-.rule .n { font-family: var(--font-display); font-size: 30px; font-weight: 800; color: var(--accent); line-height: 1.1; }
-.rule p { color: var(--muted); font-size: 15px; margin-top: 4px; }
-details { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; margin-top: 12px; }
-summary { cursor: pointer; font-weight: 600; }
-details p { color: var(--muted); margin-top: 8px; }
-.alert { margin-top: 28px; border-left: 4px solid var(--accent); background: var(--accent-soft); padding: 14px 18px; border-radius: 0 12px 12px 0; }
-footer { border-top: 1px solid var(--line); padding-block: 28px 40px; color: var(--muted); font-size: 15px; }
+        /* Dark Navy Patient Monitor Card */
+        .dark-glass-card {
+            background: linear-gradient(160deg, #162038 0%, #0d1424 100%);
+            border: 1px solid rgba(56, 189, 248, 0.18);
+            box-shadow: 0 20px 40px -10px rgba(13, 20, 36, 0.35);
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
 
-/* bottom navigation */
-.bnav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 9; background: var(--surface); border-top: 1px solid var(--line);
-  padding: 6px max(8px, env(safe-area-inset-right, 0px)) calc(6px + env(safe-area-inset-bottom, 0px)) max(8px, env(safe-area-inset-left, 0px)); }
-.bnav ul { list-style: none; margin: 0 auto; padding: 0; max-width: 640px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
-.bnav li { min-width: 0; position: relative; }
-.bnav ul { perspective: 600px; }
-.bnav li:nth-child(1) a { --nc: #2563eb; } .bnav li:nth-child(2) a { --nc: #0d9488; } .bnav li:nth-child(3) a { --nc: #d97706; } .bnav li:nth-child(4) a { --nc: #7c3aed; } .bnav li:nth-child(5) a { --nc: #db2777; }
-.bnav a svg { width: 40px; height: 40px; padding: 8px; border-radius: 13px; color: #fff; background: linear-gradient(145deg, color-mix(in srgb, var(--nc) 70%, #fff), var(--nc)); box-shadow: 0 4px 0 color-mix(in srgb, var(--nc) 55%, #000), 0 8px 12px rgba(0,0,0,.28); transition: transform .25s, box-shadow .25s; }
-.bnav a:hover { color: var(--fg); }
-.bnav a:hover svg { transform: translateY(-2px) rotateX(10deg); }
-.bnav a:active svg { transform: translateY(3px); box-shadow: 0 1px 0 color-mix(in srgb, var(--nc) 55%, #000), 0 3px 6px rgba(0,0,0,.25); }
-.bnav a[aria-current="page"] { color: var(--fg); }
-.bnav a[aria-current="page"] svg { transform: translateY(-4px) rotateX(-14deg) rotateY(12deg) scale(1.08); box-shadow: -4px 7px 0 color-mix(in srgb, var(--nc) 55%, #000), 0 12px 16px rgba(0,0,0,.3); }
-.bnav a.spin svg { animation: flip3d .6s ease; }
-@keyframes flip3d { 0% { transform: rotateY(0) scale(1); } 50% { transform: rotateY(180deg) translateY(-6px) scale(1.2); } 100% { transform: rotateY(360deg) scale(1); } }
-.bnav a { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 2px; border-radius: 12px; text-decoration: none; color: var(--muted); font-size: 12.5px; font-weight: 600; line-height: 1.2; text-align: center; }
-.qcpill { position: absolute; right: 0; bottom: calc(100% + 8px); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; background: var(--accent); color: var(--accent-fg); border: 2px solid var(--surface); border-radius: 999px; padding: 7px 14px; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 16px rgba(179,18,43,.4); }
-.qcpill:hover { filter: brightness(1.08); }
+        .dark-glass-card:hover {
+            transform: translateY(-4px);
+        }
 
-/* ambulance */
-.sos { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-top: 24px; padding: 18px 20px; border-radius: 16px; background: var(--accent); color: var(--accent-fg); }
-.sos-n { font-family: var(--font-display); font-size: 48px; font-weight: 800; line-height: 1; }
-.sos .t { flex: 1 1 220px; min-width: 0; }
-.sos .t b { font-family: var(--font-display); font-size: 19px; }
-.sos .t p { opacity: .92; }
-.sos .btn { background: var(--accent-fg); color: var(--accent); border-color: var(--accent-fg); }
+        .dark-metric-tile {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
 
-/* profile */
-.pcard { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 26px 20px 22px; display: grid; justify-items: center; text-align: center; gap: 4px; }
-.pcard .edit { position: absolute; top: 14px; right: 14px; }
-.avatar { width: 112px; height: 112px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); border: 4px solid var(--accent); display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; font-size: 44px; overflow: hidden; flex: none; }
-.avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.avatar.sm { width: 64px; height: 64px; font-size: 26px; border-width: 3px; }
-.did { margin-top: 10px; color: var(--muted); font-size: 15px; }
-.did b { color: var(--fg); letter-spacing: .04em; font-variant-numeric: tabular-nums; }
-.pname { font-size: clamp(24px, 5vw, 30px); }
-.rolechip { display: inline-block; font-size: 14px; font-weight: 700; padding: 2px 12px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
-.stats3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; margin-top: 16px; }
-.stat { font: inherit; cursor: pointer; text-decoration: none; display: grid; gap: 2px; justify-items: center; align-content: center; padding: 12px 6px; min-height: 84px; border-radius: 14px; border: 2px solid var(--hc); background: color-mix(in srgb, var(--hc) 16%, var(--surface)); color: var(--fg); min-width: 0; }
-.stat span { font-size: 13px; font-weight: 600; color: var(--muted); }
-.stat b { font-family: var(--font-display); font-size: 22px; font-weight: 800; color: var(--hc); line-height: 1.15; overflow-wrap: anywhere; }
-.stat:hover { filter: brightness(1.05); }
-.st-ready { --hc: var(--h6); } .st-rest { --hc: var(--h4); } .st-no { --hc: var(--muted); } .st-active { --hc: var(--h1); }
-.stack { display: grid; gap: 14px; margin-top: 14px; }
+        .dark-metric-tile:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(56, 189, 248, 0.3);
+        }
 
-.acc { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
-.acc-h { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 16px 18px; background: none; border: 0; color: var(--fg); font: inherit; font-weight: 700; font-size: 18px; cursor: pointer; text-align: left; }
-.acc-h::after { content: ""; width: 10px; height: 10px; border-right: 3px solid var(--muted); border-bottom: 3px solid var(--muted); transform: rotate(45deg); transition: transform .2s; flex: none; margin-right: 4px; }
-.acc.open .acc-h::after { transform: rotate(-135deg); }
-.acc-h:hover { background: var(--surface-2); }
-.acc-b { padding: 4px 18px 20px; border-top: 1px solid var(--line); }
-.acc.pts { border-color: var(--h4); }
-.acc.hist { border-color: var(--h5); }
-.acc.pw { border-color: var(--h1); }
+        /* Sidebar Active Glow */
+        .nav-active-glow {
+            background: #ffffff;
+            color: #0f172a;
+            box-shadow: 0 0 18px rgba(255, 255, 255, 0.75);
+        }
 
-.lb { display: grid; justify-items: center; gap: 10px; text-align: center; padding-top: 14px; }
-.trophy { font-size: 54px; line-height: 1; }
-.lb-t { font-size: clamp(26px, 6vw, 34px); font-weight: 800; }
-.lb-you { width: 100%; background: var(--accent); color: var(--accent-fg); border-radius: 12px; padding: 12px 14px; font-weight: 700; font-size: 18px; }
-.lb-lv { width: 100%; border-radius: 12px; padding: 10px 14px; background: var(--accent-soft); color: var(--accent); font-weight: 800; font-size: 20px; border: 2px solid var(--accent); }
-.lb-pts { font-weight: 700; font-size: 18px; }
-.pbar { width: 100%; height: 14px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); overflow: hidden; }
-.pbar i { display: block; height: 100%; background: var(--ok); border-radius: 999px; }
-.lb-next { color: var(--ok); font-weight: 700; }
+        /* Live ECG Pulse Animation */
+        @keyframes ecgDraw {
+            0% {
+                stroke-dashoffset: 600;
+            }
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
 
-.qcbox { border: 2px solid var(--line); border-radius: 16px; background: var(--surface); padding: 14px; display: grid; gap: 10px; }
-.qc-h { font-family: var(--font-display); font-weight: 800; font-size: 19px; }
-.qrow { border-radius: 12px; padding: 12px 14px; font-weight: 600; line-height: 1.5; }
-.qrow.ok { background: var(--ok-soft); color: var(--ok); border: 1px solid var(--ok); }
-.qrow.bad { background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent); }
-.qrow ul { margin: 8px 0 0; padding-left: 22px; font-weight: 500; color: var(--fg); }
-.qrow time { font-variant-numeric: tabular-nums; }
+        .ecg-line {
+            stroke-dasharray: 600;
+            stroke-dashoffset: 600;
+            animation: ecgDraw 3.2s linear infinite;
+        }
 
-.infogrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
-.itile { border-radius: 14px; padding: 12px 14px; background: var(--surface-2); background: color-mix(in srgb, var(--hc) 15%, var(--surface)); border: 1px solid color-mix(in srgb, var(--hc) 40%, var(--line)); border-left: 6px solid var(--hc); min-width: 0; }
-.itile small { display: block; font-size: 13px; font-weight: 600; color: var(--muted); }
-.itile b { font-size: 17px; font-weight: 600; overflow-wrap: anywhere; }
-.cardbtn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 16px; border: 0; border-radius: 16px; background: var(--accent); color: var(--accent-fg); font: inherit; font-weight: 800; font-size: 19px; cursor: pointer; }
-.cardbtn:hover { filter: brightness(1.08); }
-.logout { width: 100%; padding: 14px; border-radius: 16px; background: transparent; border: 2px solid var(--accent); color: var(--accent); font: inherit; font-weight: 700; font-size: 17px; cursor: pointer; }
-.hlist { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 8px; }
-.hlist li { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 12px; background: var(--surface-2); }
-.hlist li span { display: block; color: var(--muted); font-size: 14px; }
-.hlist .pp { color: var(--ok); font-weight: 700; font-size: 14px; }
-.iconx { border: 0; background: none; color: var(--accent); font-size: 22px; line-height: 1; cursor: pointer; padding: 4px 8px; border-radius: 8px; }
-.iconx:hover { background: var(--accent-soft); }
-.subform { margin-top: 14px; display: grid; gap: 12px; }
+        /* Smooth Staggered Entry Animation */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-/* quick check panel */
-.qcp { border: 2px solid var(--accent); border-radius: 20px; background: var(--surface); padding: 20px; margin-bottom: 16px; }
-.qcp-top { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
-.qcp-h { font-size: clamp(26px, 6vw, 34px); font-weight: 800; }
-.x { border: 0; background: var(--surface-2); color: var(--fg); width: 40px; height: 40px; border-radius: 50%; font-size: 22px; cursor: pointer; flex: none; }
-.x:hover { background: var(--accent-soft); }
-.qlist { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 12px; }
-.qlist li { padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px; display: grid; gap: 10px; }
-.yn { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.yn button { font: inherit; font-weight: 700; padding: 10px; min-height: 46px; border-radius: 12px; cursor: pointer; border: 2px solid; background: transparent; }
-.yn .yes { border-color: var(--ok); color: var(--ok); }
-.yn .no { border-color: var(--accent); color: var(--accent); }
-.yn .yes[aria-pressed="true"] { background: var(--ok); color: var(--bg); }
-.yn .no[aria-pressed="true"] { background: var(--accent); color: var(--accent-fg); }
-.qres { margin-top: 16px; padding: 14px 16px; border-radius: 14px; font-weight: 700; border: 2px solid var(--line); background: var(--surface-2); }
-.qres.ok { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); }
-.qres.bad { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
-.qres ul { margin: 8px 0 0; padding-left: 22px; font-weight: 500; color: var(--fg); }
+        .animate-entry {
+            opacity: 0;
+            animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
 
-/* modal */
-.modal { position: fixed; inset: 0; z-index: 40; background: rgba(8,12,18,.6); display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
-.sheet { background: var(--surface); border-radius: 20px; width: min(100%, 480px); max-height: calc(100% - 8px); overflow: auto; overscroll-behavior: contain; padding: 20px; border: 1px solid var(--line); }
-.sheet.wide { width: min(100%, 560px); }
-.sheet-h { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
-.sheet-h h3 { font-size: 22px; font-weight: 800; }
-.pop-big { font-family: var(--font-display); font-size: 48px; font-weight: 800; color: var(--hc, var(--accent)); line-height: 1.1; }
-.pop-p { margin-top: 10px; }
-.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
-.chips span { font-family: var(--font-display); font-weight: 800; padding: 3px 12px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
-.photo-row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
+        .delay-1 { animation-delay: 0.08s; }
+        .delay-2 { animation-delay: 0.16s; }
+        .delay-3 { animation-delay: 0.24s; }
+        .delay-4 { animation-delay: 0.32s; }
+        .delay-5 { animation-delay: 0.40s; }
+        .delay-6 { animation-delay: 0.48s; }
 
-/* 3D donor card */
-.stage { perspective: 1100px; display: grid; place-items: center; padding: 14px 0 6px; touch-action: pan-y; }
-.sway { animation: sway 7s ease-in-out infinite; transform-style: preserve-3d; }
-.stage.active .sway { animation: none; }
-@keyframes sway { 0%, 100% { transform: rotateY(-7deg) rotateX(3deg); } 50% { transform: rotateY(7deg) rotateX(-2deg); } }
-.card3d { --cw: min(78vw, 400px); width: var(--cw); height: calc(var(--cw) / 1.586); position: relative; font-size: calc(var(--cw) / 27); transform-style: preserve-3d; transform: rotateX(var(--rx, 0deg)) rotateY(calc(var(--ry, 0deg) + var(--flip, 0deg))); transition: transform .5s cubic-bezier(.2,.7,.2,1); filter: drop-shadow(0 22px 22px rgba(120,10,30,.45)); }
-.card3d.drag { transition: none; }
-.face { position: absolute; inset: 0; border-radius: 1.3em; overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden; color: #fff; padding: 1.5em 1.7em; display: grid; align-content: space-between; box-shadow: inset 0 0 0 1px rgba(255,255,255,.25), inset 0 2px 0 rgba(255,255,255,.35); }
-.face.front { background: linear-gradient(135deg, #e0243f 0%, #b3122b 55%, #7d0b1f 100%); }
-.face.back { transform: rotateY(180deg); background: linear-gradient(135deg, #8b0e22 0%, #4a0612 100%); }
-.face::before { content: ""; position: absolute; width: 22em; height: 22em; border-radius: 50%; right: -8em; top: -10em; background: rgba(255,255,255,.09); pointer-events: none; }
-.face::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.22) 48%, transparent 62%); transform: translateX(calc(var(--ry, 0deg) * 6)); pointer-events: none; }
-.cf-top { display: flex; justify-content: space-between; align-items: center; gap: .6em; position: relative; z-index: 1; }
-.cf-logo { display: inline-flex; align-items: center; gap: .5em; font-family: var(--font-display); font-weight: 800; font-size: 1.25em; }
-.cf-logo svg { width: 1.3em; height: 1.55em; }
-.cf-type { font-size: .78em; letter-spacing: .06em; opacity: .9; font-weight: 600; text-align: right; }
-.cf-mid { display: grid; grid-template-columns: auto 1fr auto; gap: 1em; align-items: center; position: relative; z-index: 1; }
-.cf-photo { width: 5.6em; height: 5.6em; border-radius: .9em; background: #fff; color: #b3122b; border: .18em solid #fff; overflow: hidden; display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; font-size: 2em; }
-.cf-photo img { width: 100%; height: 100%; object-fit: cover; }
-.cf-info { display: grid; gap: .15em; min-width: 0; }
-.cf-name { font-family: var(--font-display); font-size: 1.5em; font-weight: 800; line-height: 1.15; overflow-wrap: anywhere; }
-.cf-info span { font-size: .85em; opacity: .95; }
-.cf-id { font-weight: 700; letter-spacing: .06em; font-size: 1em !important; font-variant-numeric: tabular-nums; }
-.cf-bg { width: 4.4em; height: 4.4em; border-radius: 50%; background: #fff; color: #b3122b; display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; font-size: 1.9em; }
-.cf-bot { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; background: rgba(255,255,255,.16); border-radius: .8em; padding: .6em .9em; position: relative; z-index: 1; }
-.cf-bot small, .cf-row small { display: block; font-size: .7em; opacity: .85; letter-spacing: .04em; }
-.cf-bot b, .cf-row b { font-size: 1em; font-weight: 700; overflow-wrap: anywhere; }
-.cf-stripe { height: 2.4em; margin: 0 -1.7em; background: rgba(0,0,0,.5); position: relative; z-index: 1; }
-.cf-rows { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: .6em; font-size: .85em; position: relative; z-index: 1; }
-.cf-note { font-size: .72em; opacity: .85; position: relative; z-index: 1; line-height: 1.4; }
-.card-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
-.card-actions .btn { flex: 1 1 140px; text-align: center; }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.4);
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="p-3 sm:p-5 lg:p-6 flex flex-col lg:flex-row gap-4 lg:gap-6 max-w-[1600px] mx-auto">
 
-.wrap2 { max-width: 980px; margin-inline: auto; }
-.dhead { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-.dhead .avatar { width: 92px; height: 92px; font-size: 38px; }
-.dhead h2 { font-size: clamp(24px, 5vw, 32px); }
-.emerg { margin-top: 16px; display: grid; gap: 2px; padding: 12px 16px; border-radius: 14px; background: var(--accent); color: var(--accent-fg); }
-.dlay { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 16px; margin-top: 18px; align-items: start; }
-.dnav { display: grid; gap: 14px; perspective: 800px; padding-bottom: 8px; }
-.dnav button { font: inherit; cursor: pointer; display: flex; gap: 10px; align-items: center; text-align: left; font-weight: 700; font-size: 15px; line-height: 1.25; padding: 12px; min-height: 58px; border-radius: 16px; border: 0; color: var(--hfg);
-  background: linear-gradient(160deg, color-mix(in srgb, var(--hc) 80%, #fff), var(--hc));
-  box-shadow: 0 6px 0 color-mix(in srgb, var(--hc) 55%, #000), 0 12px 16px rgba(0,0,0,.25);
-  transform-style: preserve-3d; transition: transform .18s, box-shadow .18s; min-width: 0; overflow-wrap: anywhere; }
-.dnav button > span { font-size: 24px; transform: translateZ(18px); flex: none; }
-.dnav button:active, .dnav button[aria-current="true"] { transform: translateY(5px); box-shadow: 0 1px 0 color-mix(in srgb, var(--hc) 55%, #000), 0 4px 8px rgba(0,0,0,.25); }
-.dnav button[aria-current="true"] { outline: 3px solid var(--fg); outline-offset: 2px; }
-@keyframes rin { from { opacity: 0; transform: rotateY(-90deg) translateX(-20px); } }
-.dpanel { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px; min-width: 0; }
-.dpanel h3 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
-.lstack { display: grid; gap: 10px; margin-top: 12px; }
-.lcard { display: grid; grid-template-columns: auto 1fr; gap: 10px 14px; align-items: center; padding: 12px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg); margin-top: 10px; }
-.lcard > div { min-width: 0; }
-.lcard span { display: block; color: var(--muted); font-size: 14.5px; }
-.lcard .lact { grid-column: 1 / -1; display: flex; gap: 8px; flex-wrap: wrap; }
-.lcard .btn { padding: 8px 14px; font-size: 15px; }
-.hlist .btn { padding: 6px 12px; font-size: 14px; white-space: nowrap; }
+    <!-- 1. LEFT SLIM DARK NAVY SIDEBAR -->
+    <aside class="bg-[#0f172a] text-slate-400 rounded-3xl lg:rounded-[32px] p-3 lg:py-6 lg:px-3 flex lg:flex-col items-center justify-between shadow-xl shrink-0 z-20">
+        <!-- Top Brand Logo & Quick Add -->
+        <div class="flex lg:flex-col items-center gap-3 lg:gap-5">
+            <!-- Brand Emblem -->
+            <button onclick="showToast('Clinova OS v3.5 Active')" class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white shadow-lg shadow-blue-500/30 hover:scale-105 transition-transform" title="Clinova Medical">
+                <i data-lucide="activity" class="w-6 h-6"></i>
+            </button>
 
-/* 3D dashboard panels, one look per option */
-.dstage { perspective: 1400px; min-width: 0; }
-.dpanel { --hc: var(--accent); border: 2px solid var(--hc); transform-origin: left center; animation: in3d .8s cubic-bezier(.2,.8,.2,1) both; box-shadow: 8px 10px 0 color-mix(in srgb, var(--hc) 30%, transparent), 0 18px 28px rgba(0,0,0,.18); background: linear-gradient(160deg, color-mix(in srgb, var(--hc) 10%, var(--surface)), var(--surface) 55%); transform-style: preserve-3d; }
-@keyframes in3d { from { opacity: 0; transform: rotateY(-40deg) rotateX(10deg) translateZ(-140px); } to { opacity: 1; transform: none; } }
-.dpanel h3 { color: var(--hc); }
-.dpanel > * { animation: pop3 .6s cubic-bezier(.2,.8,.2,1) both .15s; }
-@keyframes pop3 { from { opacity: 0; transform: translateZ(-60px) rotateX(25deg) translateY(10px); } to { opacity: 1; transform: none; } }
-.dpanel .lcard, .dpanel .hlist li, .dpanel .tile { border-color: color-mix(in srgb, var(--hc) 45%, var(--line)); background: color-mix(in srgb, var(--hc) 8%, var(--surface)); box-shadow: 4px 5px 0 color-mix(in srgb, var(--hc) 20%, transparent); }
-.p-live .lcard { border-radius: 24px 6px 24px 6px; }
-.p-notice .hlist li { border: 2px dashed var(--hc); }
-.p-hosp .hlist li { border-left: 8px solid var(--hc); }
-.p-amb { border-top: 14px solid transparent; border-image: repeating-linear-gradient(45deg, var(--hc) 0 14px, var(--surface) 14px 28px) 14; border-image-slice: 14; }
-.p-hist .tile { border-radius: 4px 22px 4px 22px; }
-.p-top .hlist li:first-child { background: var(--hc); color: var(--surface); }
-.p-top .hlist li:first-child span { color: inherit; }
-.p-guide .gbox { border-radius: 6px 22px 6px 22px; border: 2px solid var(--hc); padding: 14px; background: color-mix(in srgb, var(--hc) 9%, var(--surface)); }
-.gcols { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-top: 12px; }
-.gbox b { color: var(--hc); font-size: 18px; }
-.gbox .tips { margin: 6px 0 0; padding-left: 20px; }
-.p-jr { border-radius: 40px 16px 40px 16px; }
-.p-alert { border-style: dashed; }
-/* header buttons: clear labels at every width */
-.tools .tbtn { font-weight: 700; border-width: 2px; border-color: var(--fg); min-height: 44px; box-shadow: 0 3px 0 var(--fg); }
-.tools .tbtn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--fg); }
-.tools .tbtn.primary { border-color: var(--accent); box-shadow: 0 3px 0 color-mix(in srgb, var(--accent) 60%, #000); }
-#hReg { background: var(--ok); border-color: var(--ok); color: var(--bg); box-shadow: 0 3px 0 color-mix(in srgb, var(--ok) 60%, #000); }
-@media (max-width: 700px) {
-  .dlay { grid-template-columns: 84px minmax(0, 1fr); gap: 10px; }
-  .dnav button { flex-direction: column; justify-content: center; text-align: center; font-size: 11.5px; padding: 8px 3px; gap: 2px; min-height: 72px; }
-  .dnav button > span { font-size: 22px; }
-}
-@media (max-width: 700px) {
-  .hero { grid-template-columns: 1fr; gap: 28px; }
-  section { padding-block: 32px; }
-  .tools { flex-basis: 100%; justify-content: flex-start; }
-  .tbtn { font-size: 14px; padding: 6px 12px; }
-  .tbtn .lbl { display: inline; }
-  .tbtn.lang, .tbtn.theme { padding: 6px 10px; }
-  .menu { right: auto; left: 0; }
-  .stat b { font-size: 19px; }
-}
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
-
-/* bottom bar: flat, not 3D */
-.bnav ul { perspective: none; }
-.bnav a svg { box-shadow: none !important; transform: none !important; animation: none !important; background: var(--nc); width: 38px; height: 38px; padding: 8px; border-radius: 12px; }
-.bnav a[aria-current="page"] svg { outline: 3px solid var(--fg); outline-offset: 1px; }
-</style>
-
-<header class="bar">
-  <div class="wrap">
-    <a class="brand" href="#home" aria-label="MB Blood Bank">
-      <svg class="drop" viewBox="0 0 30 36" aria-hidden="true"><path d="M15 2C15 2 3 16 3 23a12 12 0 0 0 24 0C27 16 15 2 15 2z" fill="var(--accent)"/><path d="M9 24a6 6 0 0 0 6 6" fill="none" stroke="var(--accent-fg)" stroke-width="2" stroke-linecap="round"/></svg>
-      MB Blood Bank
-    </a>
-    <div class="tools">
-      <a class="tbtn" id="hReg" href="#register" data-i18n="h_reg">রক্তদাতা নিবন্ধন</a>
-      <a class="tbtn primary" id="hLogin" href="#login" data-i18n="h_login">রক্তদাতা লগইন</a>
-      <a class="tbtn" id="hUser" href="#profile" hidden>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
-        <span id="hUserName"></span>
-      </a>
-      <button type="button" class="tbtn lang" id="langBtn" aria-label="Change language">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg>
-        <span id="langLabel" class="lbl">English</span>
-      </button>
-      <button type="button" class="tbtn theme" id="themeBtn">
-        <svg id="icoMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/></svg>
-        <svg id="icoSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-        <span id="themeLabel" class="lbl">ডার্ক মোড</span>
-      </button>
-      <div class="menuwrap">
-        <button type="button" class="tbtn icon" id="menuBtn" aria-haspopup="true" aria-expanded="false" aria-controls="menu" data-i18n-aria="menu_aria" aria-label="মেনু">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
-        </button>
-        <div class="menu" id="menu" hidden>
-          <a href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg><span data-i18n="nb_home">হোম</span></a>
-          <a href="#donors"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><span data-i18n="nb_search">ডোনার</span></a>
-          <a href="#ambulance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="13" height="10" rx="1"/><path d="M15 9h4l3 3v4h-7"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><path d="M8.5 8.5v5M6 11h5"/></svg><span data-i18n="nb_amb">অ্যাম্বুলেন্স</span></a>
-          <a href="#request"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s-6 7-6 11a6 6 0 0 0 12 0c0-4-6-11-6-11z"/><path d="M12 11v4M10 13h4"/></svg><span data-i18n="nb_req">রিকুয়েস্ট</span></a>
-          <a href="#profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><span data-i18n="nb_prof">প্রোফাইল</span></a>
-          <hr>
-          <a href="#register" id="mReg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="8" r="4"/><path d="M3 20a7 7 0 0 1 14 0M19 8v6M16 11h6"/></svg><span data-i18n="h_reg">রক্তদাতা নিবন্ধন</span></a>
-          <a href="#login" id="mLogin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h5v16h-5M10 8l4 4-4 4M14 12H3"/></svg><span data-i18n="h_login">রক্তদাতা লগইন</span></a>
-          <button type="button" id="mLogout" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4H5v16h5M16 8l4 4-4 4M20 12H9"/></svg><span data-i18n="prof_logout">লগআউট</span></button>
+            <!-- '+' Quick Add Button -->
+            <button onclick="showToast('New Patient Intake Form opened')" class="w-10 h-10 rounded-full bg-slate-800/90 hover:bg-blue-600 text-white border border-slate-700 flex items-center justify-center transition-all hover:scale-105 relative" title="Add New Record">
+                <i data-lucide="plus" class="w-5 h-5"></i>
+                <span class="w-2 h-2 rounded-full bg-rose-500 absolute -top-0.5 -right-0.5 ring-2 ring-[#0f172a]"></span>
+            </button>
         </div>
-      </div>
-    </div>
-  </div>
-</header>
 
-<main class="wrap" id="top">
-  <div class="hero" data-view="home" data-auth="out">
-    <div>
-      <p class="eyebrow" data-i18n="hero_eyebrow">স্বেচ্ছায় রক্তদাতাদের নেটওয়ার্ক</p>
-      <h1 data-i18n-html="hero_h1">প্রয়োজনের সময় <em>রক্ত</em>, দ্রুত খুঁজে নিন</h1>
-      <p class="lede" data-i18n="hero_lede">রক্তের গ্রুপ আর জেলা বেছে নিলেই মিলবে সম্ভাব্য দাতার তালিকা। আপনি সুস্থ হলে নিজেও দাতা হিসেবে নাম লেখাতে পারেন।</p>
-      <div class="cta">
-        <a class="btn primary" href="#donors" data-i18n="cta_find">দাতা খুঁজুন</a>
-        <a class="btn ghost" href="#register" data-i18n="cta_become">রক্তদাতা হোন</a>
-      </div>
-    </div>
-    <div class="chart">
-      <h3 data-i18n="chart_title">রক্তের গ্রুপ বেছে নিন</h3>
-      <div class="groups" id="heroGroups" role="group" data-i18n-aria="group_aria" aria-label="রক্তের গ্রুপ"></div>
-      <small data-i18n="chart_note">গ্রুপে চাপ দিলে নিচের দাতা তালিকা সেই গ্রুপ অনুযায়ী বদলে যাবে।</small>
-    </div>
-  </div>
+        <!-- Center Navigation Icons -->
+        <nav class="flex lg:flex-col items-center gap-2 sm:gap-3 lg:gap-4 my-0 lg:my-auto" id="sidebar-nav">
+            <button data-nav="Dashboard" class="nav-btn nav-active-glow w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200" title="Dashboard">
+                <i data-lucide="layout-grid" class="w-5 h-5"></i>
+            </button>
+            <button data-nav="Calendar" class="nav-btn w-11 h-11 rounded-full hover:bg-slate-800/80 hover:text-white flex items-center justify-center transition-all duration-200" title="Appointments Calendar">
+                <i data-lucide="calendar" class="w-5 h-5"></i>
+            </button>
+            <button data-nav="Patients" class="nav-btn w-11 h-11 rounded-full hover:bg-slate-800/80 hover:text-white flex items-center justify-center transition-all duration-200" title="Patient Directory">
+                <i data-lucide="users" class="w-5 h-5"></i>
+            </button>
+            <button data-nav="Reports" class="nav-btn w-11 h-11 rounded-full hover:bg-slate-800/80 hover:text-white flex items-center justify-center transition-all duration-200" title="Lab & Clinical Reports">
+                <i data-lucide="file-bar-chart-2" class="w-5 h-5"></i>
+            </button>
+            <button data-nav="Messages" class="nav-btn w-11 h-11 rounded-full hover:bg-slate-800/80 hover:text-white flex items-center justify-center transition-all duration-200 relative" title="Staff Messages">
+                <i data-lucide="message-square" class="w-5 h-5"></i>
+                <span class="w-2 h-2 rounded-full bg-cyan-400 absolute top-2.5 right-2.5"></span>
+            </button>
+        </nav>
 
-  <section data-view="home" data-auth="in" hidden>
-    <div class="wrap2" id="dashBox"></div>
-  </section>
-
-  <section data-view="donors" hidden>
-    <p class="eyebrow" data-i18n="nb_search">ডোনার</p>
-    <h2 data-i18n="dd_h2">ডোনার সার্চ ড্যাশবোর্ড</h2>
-    <p class="lede" data-i18n="donors_lede">নিচের তালিকায় শুরুতে কয়েকটি উদাহরণ দেখানো আছে। এই ডিভাইসে নিবন্ধন করলে আপনার নামও এখানে যুক্ত হবে।</p>
-    <div id="donTiles"></div>
-    <div class="panel">
-      <div class="filters">
-        <div class="field" style="flex-basis:100%">
-          <label data-i18n="f_group">রক্তের গ্রুপ</label>
-          <div class="pills" id="groupPills" role="group" data-i18n-aria="filter_aria" aria-label="গ্রুপ ফিল্টার"></div>
+        <!-- Bottom Settings & Logout -->
+        <div class="hidden sm:flex lg:flex-col items-center gap-3">
+            <button onclick="showToast('System Preferences')" class="w-10 h-10 rounded-full hover:bg-slate-800/80 hover:text-white flex items-center justify-center transition-colors" title="Settings">
+                <i data-lucide="settings" class="w-5 h-5"></i>
+            </button>
+            <button onclick="showToast('Session locked securely')" class="w-10 h-10 rounded-full hover:bg-rose-500/20 hover:text-rose-400 flex items-center justify-center transition-colors" title="Logout">
+                <i data-lucide="log-out" class="w-5 h-5"></i>
+            </button>
         </div>
-        <div class="field">
-          <label for="fDistrict" data-i18n="f_district">জেলা</label>
-          <select id="fDistrict"></select>
-        </div>
-        <div class="field">
-          <label class="check" for="fCompat"><input type="checkbox" id="fCompat"> <span data-i18n="f_compat">সামঞ্জস্যপূর্ণ গ্রুপও দেখাও</span></label>
-        </div>
-      </div>
-      <div class="results" id="results" aria-live="polite"></div>
-      <p class="note" id="resNote"></p>
+    </aside>
+
+    <!-- MAIN CONTENT SHELL -->
+    <div class="flex-1 flex flex-col gap-5 min-w-0">
+
+        <!-- 2. TOP HEADER BAR -->
+        <header class="flex flex-wrap items-center justify-between gap-4 animate-entry">
+            <!-- Brand Pill + Date Badge -->
+            <div class="flex items-center gap-3 flex-wrap">
+                <div class="glass-card px-4 py-2 rounded-full flex items-center gap-2.5">
+                    <span class="font-bold text-slate-900 tracking-tight text-sm sm:text-base">Clinova</span>
+                    <span class="text-slate-300">|</span>
+                    <span class="text-xs sm:text-sm font-medium text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-full">Dashboard</span>
+                </div>
+                <div class="hidden md:flex items-center gap-2 text-xs font-medium text-slate-500 bg-white/60 px-3.5 py-2 rounded-full border border-white/80">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span id="live-date-badge">Tue, Nov 17 • 12:17 AM</span>
+                </div>
+            </div>
+
+            <!-- Centered Search Bar -->
+            <div class="order-3 md:order-2 w-full md:w-80 lg:w-96 relative">
+                <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+                <input 
+                    type="text" 
+                    id="global-search"
+                    placeholder="Search patients, doctors, records..." 
+                    class="w-full pl-10 pr-12 py-2.5 rounded-full bg-white/80 backdrop-blur-md border border-white text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 shadow-sm transition-all"
+                >
+                <span class="hidden sm:inline-block text-[10px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md absolute right-3.5 top-1/2 -translate-y-1/2 border border-slate-200">⌘K</span>
+            </div>
+
+            <!-- Right Notification & Profile Avatar -->
+            <div class="order-2 md:order-3 flex items-center gap-3">
+                <button onclick="showToast('3 new lab results & 1 ICU alert')" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-slate-600 hover:text-slate-900 relative">
+                    <i data-lucide="bell" class="w-5 h-5"></i>
+                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500 border-2 border-white absolute top-2 right-2.5"></span>
+                </button>
+
+                <div class="glass-card pl-1.5 pr-4 py-1.5 rounded-full flex items-center gap-3 cursor-pointer" onclick="showToast('Logged in as Dr. Amara (CMO)')">
+                    <img 
+                        src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=120&q=80" 
+                        onerror="this.src='https://placehold.co/100x100/2563eb/ffffff?text=AM'"
+                        alt="Dr. Amara" 
+                        class="w-9 h-9 rounded-full object-cover ring-2 ring-blue-500/20"
+                    >
+                    <div class="hidden sm:block text-left leading-tight">
+                        <p class="text-xs font-bold text-slate-800">Amara</p>
+                        <p class="text-[11px] text-slate-500">Chief Medical Officer</p>
+                    </div>
+                    <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 hidden sm:block"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- 3. GREETING & ACTION CONTROLS -->
+        <section class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 animate-entry delay-1">
+            <div>
+                <div class="inline-flex items-center gap-2 text-xs font-medium text-blue-700 bg-blue-100/70 px-3 py-1 rounded-full mb-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                    <span>3 surgeries in progress • Good morning, here's your hospital pulse</span>
+                </div>
+                <h1 class="text-3xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-slate-900 leading-none">
+                    Welcome Back, <span class="font-serif-italic font-normal text-blue-600">Amara</span>
+                </h1>
+            </div>
+
+            <div class="flex items-center gap-3 self-start sm:self-end">
+                <!-- Period Filter Dropdown -->
+                <div class="relative">
+                    <select id="timeframe-select" onchange="updateDashboardPeriod(this.value)" class="appearance-none glass-card pl-4 pr-10 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-slate-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/30">
+                        <option value="month">This Month</option>
+                        <option value="week">This Week</option>
+                        <option value="quarter">Last Quarter</option>
+                    </select>
+                    <i data-lucide="chevron-down" class="w-4 h-4 text-slate-500 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                </div>
+
+                <!-- Download Report Button -->
+                <button onclick="downloadReport()" class="px-5 py-2.5 rounded-full bg-[#0f172a] hover:bg-blue-600 text-white text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-lg shadow-slate-900/15 transition-all active:scale-95">
+                    <i data-lucide="download" class="w-4 h-4"></i>
+                    <span>Download Report</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- 4. MAIN BENTO GRID LAYOUT (2/3 Left-Center + 1/3 Right Column) -->
+        <main class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
+
+            <!-- LEFT / CENTER AREA (8 of 12 cols = 2/3 width) -->
+            <div class="xl:col-span-8 flex flex-col gap-5">
+
+                <!-- TOP ROW: 3 KPI STAT CARDS -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+
+                    <!-- KPI Card 1: Appointments -->
+                    <div class="glass-card rounded-3xl p-5 flex flex-col justify-between animate-entry delay-2">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-9 h-9 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                                    <i data-lucide="calendar-check" class="w-4 h-4"></i>
+                                </div>
+                                <span class="text-sm font-semibold text-slate-700">Appointments</span>
+                            </div>
+                            <button class="text-slate-400 hover:text-slate-600"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
+                        </div>
+
+                        <div class="flex items-end justify-between gap-2 my-2">
+                            <div>
+                                <h2 class="text-3xl font-bold text-slate-900 tracking-tight counter" data-target="1240">0</h2>
+                            </div>
+                            <!-- Mini Smooth SVG Sparkline Wave -->
+                            <svg class="w-24 h-11 overflow-visible" viewBox="0 0 100 40">
+                                <defs>
+                                    <linearGradient id="sparkBlue" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.35"/>
+                                        <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.0"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M0,32 Q15,12 30,22 T60,14 T85,20 T100,6 L100,40 L0,40 Z" fill="url(#sparkBlue)"/>
+                                <path d="M0,32 Q15,12 30,22 T60,14 T85,20 T100,6" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+
+                        <div class="flex items-center gap-1.5 text-xs mt-2 pt-2 border-t border-slate-100">
+                            <span class="inline-flex items-center gap-0.5 font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                                <i data-lucide="trending-up" class="w-3 h-3"></i> +12%
+                            </span>
+                            <span class="text-slate-400">from last 30 days</span>
+                        </div>
+                    </div>
+
+                    <!-- KPI Card 2: Active Patients -->
+                    <div class="glass-card rounded-3xl p-5 flex flex-col justify-between animate-entry delay-3">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-9 h-9 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                                </div>
+                                <span class="text-sm font-semibold text-slate-700">Active Patients</span>
+                            </div>
+                            <button class="text-slate-400 hover:text-slate-600"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
+                        </div>
+
+                        <div class="flex items-end justify-between gap-2 my-2">
+                            <div>
+                                <h2 class="text-3xl font-bold text-slate-900 tracking-tight counter" data-target="3860">0</h2>
+                            </div>
+                            <!-- Mini Bar Chart Indicator -->
+                            <div class="flex items-end gap-1.5 h-11 pb-1">
+                                <span class="w-1.5 h-4 bg-indigo-200 rounded-full"></span>
+                                <span class="w-1.5 h-7 bg-indigo-300 rounded-full"></span>
+                                <span class="w-1.5 h-5 bg-indigo-200 rounded-full"></span>
+                                <span class="w-1.5 h-9 bg-indigo-500 rounded-full"></span>
+                                <span class="w-1.5 h-6 bg-indigo-300 rounded-full"></span>
+                                <span class="w-1.5 h-10 bg-indigo-600 rounded-full"></span>
+                                <span class="w-1.5 h-8 bg-indigo-400 rounded-full"></span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-1.5 text-xs mt-2 pt-2 border-t border-slate-100">
+                            <span class="inline-flex items-center gap-0.5 font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                                <i data-lucide="trending-up" class="w-3 h-3"></i> +8.4%
+                            </span>
+                            <span class="text-slate-400">from last 30 days</span>
+                        </div>
+                    </div>
+
+                    <!-- KPI Card 3: Critical Alerts -->
+                    <div class="glass-card rounded-3xl p-5 flex flex-col justify-between animate-entry delay-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-9 h-9 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center">
+                                    <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                                </div>
+                                <span class="text-sm font-semibold text-slate-700">Critical Alerts</span>
+                            </div>
+                            <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+                        </div>
+
+                        <div class="flex items-end justify-between gap-2 my-2">
+                            <div>
+                                <h2 class="text-3xl font-bold text-slate-900 tracking-tight counter" data-target="42">0</h2>
+                            </div>
+                            <!-- Mini Audio/Pulse Wave Graphic -->
+                            <div class="flex items-center gap-1 h-11">
+                                <span class="w-1 h-3 bg-rose-200 rounded-full"></span>
+                                <span class="w-1 h-6 bg-rose-300 rounded-full"></span>
+                                <span class="w-1 h-9 bg-rose-500 rounded-full"></span>
+                                <span class="w-1 h-4 bg-rose-300 rounded-full"></span>
+                                <span class="w-1 h-10 bg-rose-600 rounded-full"></span>
+                                <span class="w-1 h-5 bg-rose-400 rounded-full"></span>
+                                <span class="w-1 h-7 bg-rose-500 rounded-full"></span>
+                                <span class="w-1 h-3 bg-rose-200 rounded-full"></span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-1.5 text-xs mt-2 pt-2 border-t border-slate-100">
+                            <span class="inline-flex items-center gap-0.5 font-semibold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full">
+                                -5%
+                            </span>
+                            <span class="text-slate-500 truncate">requires immediate attention</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BOTTOM ROW: 2 ANALYTICS CARDS -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 flex-1">
+
+                    <!-- Bottom Card 1: Operational Insights (7 cols) -->
+                    <div class="lg:col-span-7 glass-card rounded-3xl p-6 flex flex-col justify-between animate-entry delay-4">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                            <div>
+                                <h3 class="text-base font-bold text-slate-900">Operational Insights</h3>
+                                <p class="text-xs text-slate-500">Patient inflow vs. hospital bed capacity</p>
+                            </div>
+
+                            <!-- Monthly / Weekly Toggle -->
+                            <div class="bg-slate-100/90 p-1 rounded-full flex items-center text-xs font-semibold">
+                                <button id="btn-monthly" onclick="toggleInsightsChart('monthly')" class="px-3.5 py-1 rounded-full bg-white text-slate-900 shadow-sm transition-all">Monthly</button>
+                                <button id="btn-weekly" onclick="toggleInsightsChart('weekly')" class="px-3.5 py-1 rounded-full text-slate-500 hover:text-slate-800 transition-all">Weekly</button>
+                            </div>
+                        </div>
+
+                        <!-- Legend -->
+                        <div class="flex items-center gap-5 text-xs mb-3">
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                                <span class="text-slate-600 font-medium">Patient Inflow</span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+                                <span class="text-slate-600 font-medium">Optimal Capacity</span>
+                            </div>
+                        </div>
+
+                        <!-- Smooth SVG Area/Line Chart -->
+                        <div class="relative w-full h-48 sm:h-52">
+                            <svg id="insights-svg" class="w-full h-full overflow-visible" viewBox="0 0 460 170" preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="inflowGrad" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#2563eb" stop-opacity="0.28"/>
+                                        <stop offset="100%" stop-color="#2563eb" stop-opacity="0.0"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Horizontal Grid Lines -->
+                                <line x1="0" y1="25" x2="460" y2="25" stroke="#e2e8f0" stroke-dasharray="4 4" stroke-width="1"/>
+                                <line x1="0" y1="65" x2="460" y2="65" stroke="#e2e8f0" stroke-dasharray="4 4" stroke-width="1"/>
+                                <line x1="0" y1="105" x2="460" y2="105" stroke="#e2e8f0" stroke-dasharray="4 4" stroke-width="1"/>
+                                <line x1="0" y1="145" x2="460" y2="145" stroke="#e2e8f0" stroke-width="1"/>
+
+                                <!-- Capacity Dashed Line -->
+                                <path id="capacity-path" d="M 10 75 C 90 70, 150 60, 230 65 C 310 70, 380 50, 450 55" fill="none" stroke="#22d3ee" stroke-width="2" stroke-dasharray="5 5"/>
+
+                                <!-- Inflow Area & Line -->
+                                <path id="inflow-area" d="M 10 125 C 75 95, 130 110, 195 70 C 260 30, 320 85, 385 45 C 415 28, 435 35, 450 30 L 450 145 L 10 145 Z" fill="url(#inflowGrad)"/>
+                                <path id="inflow-line" d="M 10 125 C 75 95, 130 110, 195 70 C 260 30, 320 85, 385 45 C 415 28, 435 35, 450 30" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round"/>
+
+                                <!-- Highlight Node -->
+                                <circle cx="385" cy="45" r="5" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+                            </svg>
+
+                            <!-- Floating Tooltip Pill -->
+                            <div class="absolute top-3 right-8 bg-[#0f172a] text-white text-[11px] font-semibold px-3 py-1 rounded-full shadow-md">
+                                Peak: 94% Efficiency
+                            </div>
+
+                            <!-- X-Axis Labels -->
+                            <div id="chart-x-labels" class="flex justify-between text-[11px] font-medium text-slate-400 mt-1 px-1">
+                                <span>Jun</span>
+                                <span>Jul</span>
+                                <span>Aug</span>
+                                <span>Sep</span>
+                                <span>Oct</span>
+                                <span>Nov</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Card 2: Patient Flow Radial Gauge (5 cols) -->
+                    <div class="lg:col-span-5 glass-card rounded-3xl p-6 flex flex-col justify-between animate-entry delay-5">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-base font-bold text-slate-900">Patient Flow</h3>
+                                <p class="text-xs text-slate-500">Department distribution</p>
+                            </div>
+                            <button class="w-8 h-8 rounded-full bg-slate-100/80 hover:bg-slate-200/70 flex items-center justify-center text-slate-500">
+                                <i data-lucide="info" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+
+                        <!-- Radial / Segmented Progress Gauge -->
+                        <div class="relative flex items-center justify-center my-3">
+                            <svg class="w-44 h-44 -rotate-90" viewBox="0 0 160 160">
+                                <!-- Background Segmented Track -->
+                                <circle cx="80" cy="80" r="62" fill="none" stroke="#e2e8f0" stroke-width="14" stroke-dasharray="6 4"/>
+                                <!-- Outpatient Segment (Blue) -->
+                                <circle cx="80" cy="80" r="62" fill="none" stroke="#2563eb" stroke-width="14" stroke-dasharray="210 390" stroke-linecap="round"/>
+                                <!-- Inpatient Segment (Indigo) -->
+                                <circle cx="80" cy="80" r="62" fill="none" stroke="#6366f1" stroke-width="14" stroke-dasharray="105 390" stroke-dashoffset="-220" stroke-linecap="round"/>
+                                <!-- Emergency Segment (Cyan) -->
+                                <circle cx="80" cy="80" r="62" fill="none" stroke="#06b6d4" stroke-width="14" stroke-dasharray="50 390" stroke-dashoffset="-335" stroke-linecap="round"/>
+                            </svg>
+
+                            <!-- Center Metric -->
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                                <span class="text-3xl font-bold text-slate-900 counter" data-target="860">0</span>
+                                <span class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Total Flow</span>
+                            </div>
+                        </div>
+
+                        <!-- Breakdown Tags -->
+                        <div class="grid grid-cols-3 gap-2 pt-2 border-t border-slate-100 text-center">
+                            <div class="bg-blue-50/80 rounded-2xl p-2">
+                                <div class="flex items-center justify-center gap-1 text-[11px] font-medium text-slate-600">
+                                    <span class="w-2 h-2 rounded-full bg-blue-600"></span> Outpatient
+                                </div>
+                                <p class="text-xs font-bold text-slate-900 mt-0.5">54%</p>
+                            </div>
+                            <div class="bg-indigo-50/80 rounded-2xl p-2">
+                                <div class="flex items-center justify-center gap-1 text-[11px] font-medium text-slate-600">
+                                    <span class="w-2 h-2 rounded-full bg-indigo-500"></span> Inpatient
+                                </div>
+                                <p class="text-xs font-bold text-slate-900 mt-0.5">28%</p>
+                            </div>
+                            <div class="bg-cyan-50/80 rounded-2xl p-2">
+                                <div class="flex items-center justify-center gap-1 text-[11px] font-medium text-slate-600">
+                                    <span class="w-2 h-2 rounded-full bg-cyan-500"></span> Emergency
+                                </div>
+                                <p class="text-xs font-bold text-slate-900 mt-0.5">18%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN (4 of 12 cols = 1/3 width) -->
+            <div class="xl:col-span-4 flex flex-col gap-5">
+
+                <!-- 1. PATIENT MONITOR CARD (DARK NAVY THEME #131c31) -->
+                <div class="dark-glass-card rounded-3xl p-6 text-white flex flex-col justify-between animate-entry delay-3">
+                    <!-- Header -->
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                            <h3 class="text-base font-bold tracking-tight">Patient Monitor</h3>
+                        </div>
+                        <span class="text-[11px] font-semibold bg-cyan-500/15 text-cyan-300 border border-cyan-400/30 px-3 py-1 rounded-full">
+                            ICU • Bed 04
+                        </span>
+                    </div>
+
+                    <!-- Patient Info Banner -->
+                    <div class="flex items-center justify-between bg-white/5 border border-white/10 rounded-2xl p-3 mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center font-bold text-sm text-white">
+                                MM
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-white">Marvin McKinney</p>
+                                <p class="text-xs text-slate-400">Male, 48 yrs • Post-Op Telemetry</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-semibold text-emerald-400 bg-emerald-400/10 px-2.5 py-1 rounded-full">Stable</span>
+                    </div>
+
+                    <!-- Live Animated ECG / Heartbeat Waveform -->
+                    <div class="relative bg-[#0a101d] rounded-2xl p-3.5 border border-cyan-500/20 mb-4 overflow-hidden">
+                        <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1">
+                            <span>ECG LEAD II • 25mm/s</span>
+                            <span class="text-emerald-400 font-mono">SINUS RHYTHM</span>
+                        </div>
+                        <svg class="w-full h-20" viewBox="0 0 320 70" preserveAspectRatio="none">
+                            <!-- Subtle Grid -->
+                            <path d="M0 17 H320 M0 35 H320 M0 52 H320" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                            <!-- Glowing Cyan/Emerald ECG Path -->
+                            <path 
+                                class="ecg-line"
+                                d="M0,38 L35,38 L45,30 L52,42 L60,10 L68,62 L76,28 L84,38 L125,38 L135,31 L142,41 L150,8 L158,64 L166,27 L174,38 L215,38 L225,30 L232,42 L240,10 L248,62 L256,28 L264,38 L320,38" 
+                                fill="none" 
+                                stroke="#34d399" 
+                                stroke-width="2.4" 
+                                stroke-linecap="round" 
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </div>
+
+                    <!-- 4 Dark Glass Metric Tiles -->
+                    <div class="grid grid-cols-2 gap-3 mb-4">
+                        <!-- Tile 1: Heart Rate -->
+                        <div class="dark-metric-tile rounded-2xl p-3.5">
+                            <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+                                <span>Heart Rate</span>
+                                <i data-lucide="heart-pulse" class="w-4 h-4 text-emerald-400"></i>
+                            </div>
+                            <div class="flex items-baseline gap-1">
+                                <span id="live-hr" class="text-2xl font-bold text-emerald-400">72</span>
+                                <span class="text-xs text-slate-400">bpm</span>
+                            </div>
+                        </div>
+
+                        <!-- Tile 2: SpO2 -->
+                        <div class="dark-metric-tile rounded-2xl p-3.5">
+                            <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+                                <span>SpO2</span>
+                                <i data-lucide="wind" class="w-4 h-4 text-cyan-400"></i>
+                            </div>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-2xl font-bold text-cyan-400">99</span>
+                                <span class="text-xs text-slate-400">%</span>
+                            </div>
+                        </div>
+
+                        <!-- Tile 3: Blood Pressure -->
+                        <div class="dark-metric-tile rounded-2xl p-3.5">
+                            <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+                                <span>Blood Pressure</span>
+                                <i data-lucide="activity" class="w-4 h-4 text-blue-400"></i>
+                            </div>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-xl font-bold text-white">121/78</span>
+                                <span class="text-[10px] text-slate-400">mmHg</span>
+                            </div>
+                        </div>
+
+                        <!-- Tile 4: Resp Rate -->
+                        <div class="dark-metric-tile rounded-2xl p-3.5">
+                            <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+                                <span>Resp Rate</span>
+                                <i data-lucide="waves" class="w-4 h-4 text-amber-400"></i>
+                            </div>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-2xl font-bold text-amber-300">15</span>
+                                <span class="text-xs text-slate-400">rpm</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notify Action Button -->
+                    <button onclick="showToast('Attending nurse & Dr. Pena notified')" class="w-full py-2.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-semibold tracking-wide shadow-lg shadow-cyan-500/20 transition-all active:scale-98 flex items-center justify-center gap-2">
+                        <i data-lucide="bell-ring" class="w-4 h-4"></i>
+                        <span>Notify Care Team</span>
+                    </button>
+                </div>
+
+                <!-- 2. CARE TEAM CARD (WHITE GLASS CARD) -->
+                <div class="glass-card rounded-3xl p-6 flex-1 flex flex-col justify-between animate-entry delay-5">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-base font-bold text-slate-900">Care Team</h3>
+                            <span class="text-xs font-semibold bg-emerald-50 text-emerald-600 px-2.5 py-0.5 rounded-full">6 On Duty</span>
+                        </div>
+                        <button onclick="showToast('Opening full medical roster...')" class="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1">
+                            <span>View All</span>
+                            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>
+
+                    <div class="space-y-3">
+                        <!-- Doctor 1: Dr. Eleanor Pena -->
+                        <div class="flex items-center justify-between p-3 rounded-2xl bg-white/70 hover:bg-white border border-slate-100 transition-all">
+                            <div class="flex items-center gap-3">
+                                <img 
+                                    src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=120&q=80" 
+                                    onerror="this.src='https://placehold.co/100x100/0d9488/ffffff?text=EP'"
+                                    alt="Dr. Eleanor Pena" 
+                                    class="w-11 h-11 rounded-2xl object-cover"
+                                >
+                                <div>
+                                    <p class="text-sm font-bold text-slate-900">Dr. Eleanor Pena</p>
+                                    <p class="text-xs text-slate-500">Cardiologist • Cath Lab 2</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2.5 py-1 rounded-full">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                Available
+                            </span>
+                        </div>
+
+                        <!-- Doctor 2: Dr. Albert Flores -->
+                        <div class="flex items-center justify-between p-3 rounded-2xl bg-white/70 hover:bg-white border border-slate-100 transition-all">
+                            <div class="flex items-center gap-3">
+                                <img 
+                                    src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=120&q=80" 
+                                    onerror="this.src='https://placehold.co/100x100/d97706/ffffff?text=AF'"
+                                    alt="Dr. Albert Flores" 
+                                    class="w-11 h-11 rounded-2xl object-cover"
+                                >
+                                <div>
+                                    <p class="text-sm font-bold text-slate-900">Dr. Albert Flores</p>
+                                    <p class="text-xs text-slate-500">Neurosurgeon • OR Suite 1</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-amber-700 bg-amber-50 border border-amber-200/60 px-2.5 py-1 rounded-full">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                                In Surgery
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
     </div>
-  </section>
 
-  <section data-view="ambulance" hidden>
-    <p class="eyebrow" data-i18n="nb_amb">অ্যাম্বুলেন্স</p>
-    <h2 data-i18n="amb_h2">অ্যাম্বুলেন্স ড্যাশবোর্ড</h2>
-    <p class="lede" data-i18n="amb_lede">জেলা ও ধরন বেছে অ্যাম্বুলেন্স সেবার তালিকা দেখুন। শুরুতে দেখানো এন্ট্রিগুলো উদাহরণ।</p>
-    <div id="ambTiles"></div>
-    <div class="sos">
-      <div class="sos-n">999</div>
-      <div class="t"><b data-i18n="sos_t">জাতীয় জরুরি সেবা</b><p data-i18n="sos_p">জরুরি অ্যাম্বুলেন্সের জন্য সরাসরি ৯৯৯ নম্বরে কল করুন।</p></div>
-      <a class="btn" href="tel:999" data-i18n="sos_call">৯৯৯-এ কল</a>
-    </div>
-    <div class="panel">
-      <div class="filters">
-        <div class="field"><label for="aDistrict" data-i18n="f_district">জেলা</label><select id="aDistrict"></select></div>
-        <div class="field"><label for="aType" data-i18n="a_type">অ্যাম্বুলেন্সের ধরন</label><select id="aType"></select></div>
-      </div>
-      <div class="results" id="ambResults" aria-live="polite"></div>
-      <p class="note" id="ambNote"></p>
-    </div>
-  </section>
+    <!-- CUSTOM TOAST NOTIFICATION CONTAINER (No alert() used) -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-  <section data-view="request" hidden>
-    <p class="eyebrow" data-i18n="nb_req">রিকুয়েস্ট</p>
-    <h2 data-i18n="req_h2">রিকুয়েস্ট ড্যাশবোর্ড</h2>
-    <p class="lede" data-i18n="req_lede">তথ্য দিলে শেয়ার করার মতো একটি বার্তা তৈরি হবে। সেটি কপি করে ফেসবুক, হোয়াটসঅ্যাপ বা এসএমএসে ছড়িয়ে দিন।</p>
-    <div id="reqTiles"></div>
-    <form class="panel" id="reqForm" novalidate>
-      <div class="grid2">
-        <div><label for="rGroup" data-i18n="f_group">রক্তের গ্রুপ</label><select id="rGroup"></select></div>
-        <div><label for="rUnits" data-i18n="r_units">কত ব্যাগ লাগবে</label><input id="rUnits" type="number" min="1" max="10" value="1"></div>
-        <div><label for="rDate" data-i18n="r_date">কবে লাগবে</label><input id="rDate" type="date"></div>
-        <div><label for="rDistrict" data-i18n="f_district">জেলা</label><select id="rDistrict"></select></div>
-        <div><label for="rHospital" data-i18n="r_hospital">হাসপাতালের নাম</label><input id="rHospital" type="text" data-i18n-ph="r_hospital_ph" placeholder="যেমন: ঢাকা মেডিকেল কলেজ হাসপাতাল"></div>
-        <div><label for="rPhone" data-i18n="r_phone">যোগাযোগের নম্বর</label><input id="rPhone" type="tel" inputmode="tel" placeholder="01XXXXXXXXX"></div>
-      </div>
-      <div style="margin-top:16px"><label for="rNote" data-i18n="r_note">অতিরিক্ত তথ্য (ঐচ্ছিক)</label><textarea id="rNote" rows="2" data-i18n-ph="r_note_ph" placeholder="রোগীর অবস্থা, কেবিন বা ওয়ার্ড নম্বর ইত্যাদি"></textarea></div>
-      <div class="cta"><button class="btn primary" type="submit" data-i18n="r_submit">বার্তা তৈরি করুন</button></div>
-      <p class="err" id="reqErr" role="alert"></p>
-      <div id="reqOut" hidden>
-        <div class="out"><div class="out-head" data-i18n="out_head">শেয়ার করার বার্তা</div><div id="reqText"></div></div>
-        <div class="cta"><button class="btn ghost" type="button" id="copyReq" data-i18n="copy">কপি করুন</button></div>
-        <p class="note" data-i18n="req_note">এই পেজ থেকে অনুরোধ কোথাও পাঠানো হয় না। বার্তাটি কপি করে নিজে শেয়ার করুন।</p>
-      </div>
-    </form>
-    <div class="panel" id="myReqs" hidden></div>
-  </section>
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
 
-  <section data-view="profile" hidden>
-    <div class="narrow">
-      <div id="qcSlot"></div>
-      <div id="profCard"></div>
-    </div>
-  </section>
+        // 1. Animated Number Roll-Up Counter on Load
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'), 10);
+                const duration = 1400; // ms
+                const startTime = performance.now();
 
-  <section data-view="register" hidden>
-    <div class="narrow">
-      <p class="eyebrow" data-i18n="h_reg">রক্তদাতা নিবন্ধন</p>
-      <h2 data-i18n="reg_h2">রক্তদাতা হিসেবে নিবন্ধন করুন</h2>
-      <p class="lede" data-i18n="reg_lede">নিবন্ধনের তথ্য এই ডিভাইসের ব্রাউজারে সংরক্ষিত থাকে। পরে জিমেইল ও পাসওয়ার্ড দিয়ে লগইন করে নিজের প্রোফাইল দেখুন।</p>
-      <p class="out" id="gateNote" hidden data-i18n="gate_note">ডোনার সার্চ ও যোগাযোগ নম্বর দেখতে আগে রক্তদাতা হিসেবে নিবন্ধন করুন, তারপর লগইন করুন।</p>
-      <form class="panel" id="regForm" novalidate>
-        <div class="grid2">
-          <div><label for="gName" data-i18n="g_name">পূর্ণ নাম</label><input id="gName" type="text" autocomplete="name"></div>
-          <div><label for="gRole" data-i18n="g_role">আপনি কে?</label><select id="gRole"><option value="donor" data-i18n="role_donor">রক্তদাতা</option><option value="recipient" data-i18n="role_recipient">রক্ত গ্রহীতা</option></select></div>
-          <div><label for="gGroup" data-i18n="f_group">রক্তের গ্রুপ</label><select id="gGroup"></select></div>
-          <div><label for="gDistrict" data-i18n="f_district">জেলা</label><select id="gDistrict"></select></div>
-          <div><label for="gRegion" data-i18n="g_region">অঞ্চল (এলাকা / উপজেলা)</label><input id="gRegion" type="text" autocomplete="address-level2"></div>
-          <div><label for="gAge" data-i18n="g_age">বয়স</label><input id="gAge" type="number" min="1" max="100"></div>
-          <div><label for="gLast" data-i18n="g_last">সর্বশেষ কবে রক্ত দিয়েছেন</label><input id="gLast" type="date"></div>
-          <div><label for="gEmail" data-i18n="g_email">জিমেইল (Gmail)</label><input id="gEmail" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" placeholder="name@gmail.com"></div>
-          <div><label for="gPhone" data-i18n="g_phone">মোবাইল নম্বর</label><input id="gPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="01XXXXXXXXX"><p class="hint" data-i18n="g_public">লগইন করা ব্যবহারকারীরা দাতা তালিকায় আপনার নম্বর দেখতে পাবেন।</p></div>
-          <div><label for="gPw" data-i18n="g_pw">পাসওয়ার্ড</label><input id="gPw" type="password" autocomplete="new-password"><p class="hint" data-i18n="g_pw_hint">কমপক্ষে ৬ অক্ষর</p></div>
-          <div><label for="gPw2" data-i18n="g_pw2">আবার পাসওয়ার্ড লিখুন</label><input id="gPw2" type="password" autocomplete="new-password"></div>
-        </div>
-        <label class="check" for="gOk" style="margin-top:14px"><input type="checkbox" id="gOk"> <span data-i18n="g_ok">আমি সুস্থ আছি এবং প্রয়োজনে রক্ত দিতে ইচ্ছুক (রক্তদাতাদের জন্য)</span></label>
-        <div class="cta"><button class="btn primary" type="submit" data-i18n="g_submit">নিবন্ধন করুন</button></div>
-        <p class="err" id="regErr" role="alert"></p>
-        <p class="alt"><span data-i18n="g_haveacc">আগে নিবন্ধন করেছেন?</span> <a href="#login" data-i18n="h_login">রক্তদাতা লগইন</a></p>
-      </form>
-    </div>
-  </section>
+                function updateCounter(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    // Ease-out quartic curve
+                    const easeOut = 1 - Math.pow(1 - progress, 4);
+                    const currentVal = Math.floor(easeOut * target);
+                    counter.textContent = currentVal.toLocaleString();
 
-  <section data-view="login" hidden>
-    <div class="narrow">
-      <p class="eyebrow" data-i18n="h_login">রক্তদাতা লগইন</p>
-      <h2 data-i18n="login_h2">আপনার অ্যাকাউন্টে ঢুকুন</h2>
-      <p class="lede" data-i18n="login_lede">নিবন্ধনের সময় দেওয়া জিমেইল (বা মোবাইল নম্বর) এবং পাসওয়ার্ড লিখুন।</p>
-      <form class="panel" id="loginForm" novalidate>
-        <p class="out" id="lNote" hidden style="margin-top:0;margin-bottom:16px"></p>
-        <div class="grid2">
-          <div><label for="lId" data-i18n="l_id">জিমেইল (বা মোবাইল নম্বর)</label><input id="lId" type="text" inputmode="email" autocomplete="username" autocapitalize="none" spellcheck="false"></div>
-          <div><label for="lPw" data-i18n="g_pw">পাসওয়ার্ড</label><input id="lPw" type="password" autocomplete="current-password"></div>
-        </div>
-        <div class="cta"><button class="btn primary" type="submit" data-i18n="l_submit">লগইন</button></div>
-        <p class="err" id="loginErr" role="alert"></p>
-        <p class="alt"><span data-i18n="l_noacc">অ্যাকাউন্ট নেই?</span> <a href="#register" data-i18n="h_reg">রক্তদাতা নিবন্ধন</a></p>
-      </form>
-    </div>
-  </section>
+                    if (progress < 1) {
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target.toLocaleString();
+                    }
+                }
+                requestAnimationFrame(updateCounter);
+            });
+        }
 
-</main>
-
-<footer>
-  <div class="wrap" data-i18n="footer">MB Blood Bank · রক্ত দিন, জীবন বাঁচান। জরুরি প্রয়োজনে আপনার নিকটস্থ হাসপাতাল বা সরকারি জরুরি সেবা নম্বরে যোগাযোগ করুন।</div>
-</footer>
-
-<nav class="bnav" data-i18n-aria="bnav_aria" aria-label="নিচের মেনু" hidden>
-  <ul>
-    <li><a href="#home" data-v="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg><span data-i18n="nb_home">হোম</span></a></li>
-    <li><a href="#donors" data-v="donors"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><span data-i18n="nb_search">ডোনার</span></a></li>
-    <li><a href="#ambulance" data-v="ambulance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="13" height="10" rx="1"/><path d="M15 9h4l3 3v4h-7"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><path d="M8.5 8.5v5M6 11h5"/></svg><span data-i18n="nb_amb">অ্যাম্বুলেন্স</span></a></li>
-    <li><a href="#request" data-v="request"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s-6 7-6 11a6 6 0 0 0 12 0c0-4-6-11-6-11z"/><path d="M12 11v4M10 13h4"/></svg><span data-i18n="nb_req">রিকুয়েস্ট</span></a></li>
-    <li>
-      <button type="button" class="qcpill" id="qcPill" data-act="open-qc">🛡️ Quick Check</button>
-      <a href="#profile" data-v="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg><span data-i18n="nb_prof">প্রোফাইল</span></a>
-    </li>
-  </ul>
-</nav>
-
-<div class="modal" id="modal" hidden>
-  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="mTitle">
-    <div class="sheet-h"><h3 id="mTitle"></h3><button type="button" class="x" id="mClose" data-i18n-aria="close" aria-label="বন্ধ করুন">×</button></div>
-    <div id="mBody"></div>
-  </div>
-</div>
-
-<script>
-(function () {
-  var GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
-  var CAN_RECEIVE = { "A+": ["A+","A-","O+","O-"], "A-": ["A-","O-"], "B+": ["B+","B-","O+","O-"], "B-": ["B-","O-"],
-    "AB+": ["A+","A-","B+","B-","AB+","AB-","O+","O-"], "AB-": ["A-","B-","AB-","O-"], "O+": ["O+","O-"], "O-": ["O-"] };
-  var DISTRICTS = [["Dhaka","ঢাকা"],["Gazipur","গাজীপুর"],["Narayanganj","নারায়ণগঞ্জ"],["Chattogram","চট্টগ্রাম"],["Cumilla","কুমিল্লা"],
-    ["Sylhet","সিলেট"],["Rajshahi","রাজশাহী"],["Bogura","বগুড়া"],["Khulna","খুলনা"],["Jashore","যশোর"],["Barishal","বরিশাল"],
-    ["Rangpur","রংপুর"],["Mymensingh","ময়মনসিংহ"],["Faridpur","ফরিদপুর"],["Cox's Bazar","কক্সবাজার"]];
-  var SAMPLE = [
-    { bn: "রাফি আহমেদ", en: "Rafi Ahmed", g: "O+", d: "Dhaka", p: "017××-××××12" },
-    { bn: "তানজিলা ইসলাম", en: "Tanzila Islam", g: "A+", d: "Dhaka", p: "018××-××××45" },
-    { bn: "মেহেদী হাসান", en: "Mehedi Hasan", g: "B+", d: "Chattogram", p: "019××-××××78" },
-    { bn: "সুমাইয়া আক্তার", en: "Sumaiya Akter", g: "AB+", d: "Sylhet", p: "016××-××××23" },
-    { bn: "ফাহিম রহমান", en: "Fahim Rahman", g: "O-", d: "Rajshahi", p: "015××-××××90" },
-    { bn: "নুসরাত জাহান", en: "Nusrat Jahan", g: "A-", d: "Khulna", p: "017××-××××56" },
-    { bn: "আরিফুল ইসলাম", en: "Ariful Islam", g: "B-", d: "Gazipur", p: "018××-××××34" },
-    { bn: "শারমিন সুলতানা", en: "Sharmin Sultana", g: "AB-", d: "Cumilla", p: "019××-××××81" },
-    { bn: "রাকিব হোসেন", en: "Rakib Hossain", g: "O+", d: "Bogura", p: "016××-××××62" },
-    { bn: "ইমরান খান", en: "Imran Khan", g: "B+", d: "Dhaka", p: "015××-××××19" }
-  ];
-  var AMB = [
-    { bn: "দ্রুত অ্যাম্বুলেন্স সেবা", en: "Druto Ambulance Service", d: "Dhaka", ty: "icu", p: "017××-××××21" },
-    { bn: "আলো অ্যাম্বুলেন্স", en: "Alo Ambulance", d: "Gazipur", ty: "icu", p: "018××-××××67" },
-    { bn: "জীবন রক্ষা অ্যাম্বুলেন্স", en: "Jibon Rokkha Ambulance", d: "Chattogram", ty: "ac", p: "019××-××××33" },
-    { bn: "আপন অ্যাম্বুলেন্স", en: "Apon Ambulance", d: "Khulna", ty: "ac", p: "016××-××××58" },
-    { bn: "সেবা অ্যাম্বুলেন্স", en: "Seba Ambulance", d: "Sylhet", ty: "basic", p: "015××-××××74" },
-    { bn: "মেঘনা অ্যাম্বুলেন্স", en: "Meghna Ambulance", d: "Cumilla", ty: "basic", p: "017××-××××09" },
-    { bn: "নিরাপদ অ্যাম্বুলেন্স", en: "Nirapod Ambulance", d: "Rajshahi", ty: "freezer", p: "018××-××××46" },
-    { bn: "শান্তি ফ্রিজার ভ্যান", en: "Shanti Freezer Van", d: "Dhaka", ty: "freezer", p: "019××-××××15" }
-  ];
-  var VIEWS = ["home", "donors", "ambulance", "request", "profile", "register", "login"];
-  var TYPES = ["icu", "ac", "basic", "freezer"];
-  var HOSP = [
-    ["ঢাকা মেডিকেল কলেজ হাসপাতাল", "Dhaka Medical College Hospital", "Dhaka", "Secretariat Rd, Dhaka"],
-    ["বঙ্গবন্ধু শেখ মুজিব মেডিকেল বিশ্ববিদ্যালয়", "Bangabandhu Sheikh Mujib Medical University", "Dhaka", "Shahbag, Dhaka"],
-    ["চট্টগ্রাম মেডিকেল কলেজ হাসপাতাল", "Chattogram Medical College Hospital", "Chattogram", "Panchlaish, Chattogram"],
-    ["রাজশাহী মেডিকেল কলেজ হাসপাতাল", "Rajshahi Medical College Hospital", "Rajshahi", "Laxmipur, Rajshahi"],
-    ["সিলেট এম এ জি ওসমানী মেডিকেল কলেজ হাসপাতাল", "Sylhet MAG Osmani Medical College Hospital", "Sylhet", "Medical Rd, Sylhet"],
-    ["খুলনা মেডিকেল কলেজ হাসপাতাল", "Khulna Medical College Hospital", "Khulna", "Khulna"]
-  ];
-  var NOTICES = [
-    { bn: "এই ডিভাইসে নিবন্ধন করলেই আপনার নাম দাতা তালিকায় যুক্ত হয়।", en: "Registering on this device adds your name to the donor list." },
-    { bn: "রক্ত দেওয়ার আগে প্রোফাইলের Quick Check করে নিন।", en: "Take the Profile Quick Check before you donate." },
-    { bn: "জরুরি প্রয়োজনে প্রথমে ৯৯৯ বা নিকটস্থ হাসপাতালে যোগাযোগ করুন।", en: "In an emergency, call 999 or your nearest hospital first." }
-  ];
-  var LIVE = [
-    { id: "s1", g: "B+", u: 2, d: "Dhaka", bn: "ঢাকা মেডিকেল কলেজ হাসপাতাল", en: "Dhaka Medical College Hospital", p: "017××-××××40" },
-    { id: "s2", g: "O-", u: 1, d: "Chattogram", bn: "চট্টগ্রাম মেডিকেল কলেজ হাসপাতাল", en: "Chattogram Medical College Hospital", p: "018××-××××72" },
-    { id: "s3", g: "A+", u: 3, d: "Rajshahi", bn: "রাজশাহী মেডিকেল কলেজ হাসপাতাল", en: "Rajshahi Medical College Hospital", p: "019××-××××05" }
-  ];
-  var BADV = [true, true, false, false, true, true];
-  var LEVELS = [0, 20, 50, 100, 200];
-  var PHONE = /^(\+?88)?01[3-9]\d{8}$/;
-  var EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  var FONT = '"Anek Bangla","Hind Siliguri","Noto Sans Bengali",system-ui,sans-serif';
-  var PEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>';
-  var DROP = '<svg viewBox="0 0 30 36" aria-hidden="true"><path d="M15 2C15 2 3 16 3 23a12 12 0 0 0 24 0C27 16 15 2 15 2z" fill="#fff"/><path d="M9 24a6 6 0 0 0 6 6" fill="none" stroke="#b3122b" stroke-width="2" stroke-linecap="round"/></svg>';
-
-  var D = {
-    bn: {
-      nav_guide: "নিয়ম ও তথ্য", bnav_aria: "নিচের মেনু", nb_home: "হোম", nb_search: "ডোনার", nb_amb: "অ্যাম্বুলেন্স", nb_req: "রিকুয়েস্ট", nb_prof: "প্রোফাইল",
-      menu_aria: "মেনু", close: "বন্ধ করুন", h_reg: "রক্তদাতা নিবন্ধন", h_login: "রক্তদাতা লগইন",
-      hero_eyebrow: "স্বেচ্ছায় রক্তদাতাদের নেটওয়ার্ক",
-      hero_h1: "প্রয়োজনের সময় <em>রক্ত</em>, দ্রুত খুঁজে নিন",
-      hero_lede: "রক্তের গ্রুপ আর জেলা বেছে নিলেই মিলবে সম্ভাব্য দাতার তালিকা। আপনি সুস্থ হলে নিজেও দাতা হিসেবে নাম লেখাতে পারেন।",
-      cta_find: "দাতা খুঁজুন", cta_become: "রক্তদাতা হোন",
-      chart_title: "রক্তের গ্রুপ বেছে নিন", chart_note: "গ্রুপে চাপ দিলে নিচের দাতা তালিকা সেই গ্রুপ অনুযায়ী বদলে যাবে।", group_aria: "রক্তের গ্রুপ", filter_aria: "গ্রুপ ফিল্টার",
-      gate_note: "ডোনার সার্চ ও যোগাযোগ নম্বর দেখতে আগে রক্তদাতা হিসেবে নিবন্ধন করুন, তারপর লগইন করুন।",
-      dd_h2: "ডোনার সার্চ ড্যাশবোর্ড",
-      donors_lede: "নিচের তালিকায় শুরুতে কয়েকটি উদাহরণ দেখানো আছে। এই ডিভাইসে নিবন্ধন করলে আপনার নামও এখানে যুক্ত হবে।",
-      ds_total: "মোট দাতা", ds_groups: "রক্তের গ্রুপ আছে", ds_districts: "জেলা",
-      f_group: "রক্তের গ্রুপ", f_district: "জেলা", f_compat: "সামঞ্জস্যপূর্ণ গ্রুপও দেখাও", all_groups: "সব গ্রুপ", all_districts: "সব জেলা",
-      count_msg: "{n} জন দাতা দেখানো হচ্ছে। উদাহরণ হিসেবে দেখানো নামগুলো বাস্তব ব্যক্তি নন।",
-      badge_reg: "নিবন্ধিত", badge_you: "আপনি", badge_sample: "উদাহরণ", contact_hidden: "নম্বর দেখতে লগইন করুন",
-      empty: "এই শর্তে কোনো দাতা পাওয়া যায়নি। অন্য জেলা বা সামঞ্জস্যপূর্ণ গ্রুপ দিয়ে খুঁজে দেখুন।",
-      amb_h2: "অ্যাম্বুলেন্স ড্যাশবোর্ড", amb_lede: "জেলা ও ধরন বেছে অ্যাম্বুলেন্স সেবার তালিকা দেখুন। শুরুতে দেখানো এন্ট্রিগুলো উদাহরণ।",
-      ds_amb_total: "মোট সেবা",
-      sos_t: "জাতীয় জরুরি সেবা", sos_p: "জরুরি অ্যাম্বুলেন্সের জন্য সরাসরি ৯৯৯ নম্বরে কল করুন।", sos_call: "৯৯৯-এ কল",
-      a_type: "অ্যাম্বুলেন্সের ধরন", all_types: "সব ধরন", t_icu: "আইসিইউ", t_ac: "এসি", t_basic: "সাধারণ", t_freezer: "ফ্রিজার",
-      amb_count: "{n}টি অ্যাম্বুলেন্স সেবা দেখানো হচ্ছে। উদাহরণ হিসেবে চিহ্নিত এন্ট্রিগুলো বাস্তব সেবা নয়, কল করার আগে নিজে যাচাই করুন।",
-      amb_empty: "এই শর্তে কোনো অ্যাম্বুলেন্স পাওয়া যায়নি। অন্য জেলা বা ধরন বেছে দেখুন।",
-      req_h2: "রিকুয়েস্ট ড্যাশবোর্ড",
-      req_lede: "তথ্য দিলে শেয়ার করার মতো একটি বার্তা তৈরি হবে। সেটি কপি করে ফেসবুক, হোয়াটসঅ্যাপ বা এসএমএসে ছড়িয়ে দিন।",
-      ds_myreq: "আমার অনুরোধ", ds_bags: "মোট ব্যাগ", ds_lastreq: "সর্বশেষ অনুরোধ",
-      reqs_h: "আমার অনুরোধসমূহ", reqs_empty: "এখনো কোনো অনুরোধ তৈরি করা হয়নি।", reqs_item: "{g} · {n} ব্যাগ · {h}, {d}",
-      r_units: "কত ব্যাগ লাগবে", r_date: "কবে লাগবে", r_hospital: "হাসপাতালের নাম", r_hospital_ph: "যেমন: ঢাকা মেডিকেল কলেজ হাসপাতাল",
-      r_phone: "যোগাযোগের নম্বর", r_note: "অতিরিক্ত তথ্য (ঐচ্ছিক)", r_note_ph: "রোগীর অবস্থা, কেবিন বা ওয়ার্ড নম্বর ইত্যাদি",
-      r_submit: "বার্তা তৈরি করুন", out_head: "শেয়ার করার বার্তা", copy: "কপি করুন", copied: "কপি হয়েছে", copy_sel: "লেখাটি নির্বাচিত, কপি করুন",
-      req_note: "এই পেজ থেকে অনুরোধ কোথাও পাঠানো হয় না। বার্তাটি কপি করে নিজে শেয়ার করুন।",
-      err_hosp: "হাসপাতালের নাম লিখুন।", err_phone: "সঠিক মোবাইল নম্বর দিন, যেমন 01712345678।",
-      m_title: "জরুরি রক্ত প্রয়োজন", m_group: "গ্রুপ", m_units: "পরিমাণ", m_bags: "{n} ব্যাগ", m_when: "কবে", m_asap: "যত দ্রুত সম্ভব",
-      m_place: "স্থান", m_contact: "যোগাযোগ", m_extra: "বিশেষ তথ্য", m_footer: "সাহায্য করতে পারলে সরাসরি ফোন করুন, অথবা শেয়ার করে অন্যদের জানান। #MBBloodBank",
-      /* dashboard */
-      dash_h2: "ডোনার ড্যাশবোর্ড",
-      dn_live: "সক্রিয় অনুরোধ (Live)", dn_notice: "Notice & News", dn_hosp: "Hospital Directory", dn_amb: "Ambulance Service", dn_hist: "Donation History", dn_top: "Top Donor / Leaderboard", dn_guide: "Blood Donation Guide", dn_jr: "Donor On The Way", dn_alert: "নোটিফিকেশন",
-      dp_live_d: "এখন কোথায় কোন গ্রুপের রক্ত জরুরি দরকার। আপনার তৈরি অনুরোধও এখানে যুক্ত হয়, উদাহরণ চিহ্নিত এন্ট্রিগুলো বাস্তব নয়।",
-      dp_call: "কল", dp_start: "যাত্রা শুরু (Start Journey)", dp_arrived: "পৌঁছে গেছি", dp_emerg: "জরুরি নোটিফিকেশন: আপনার এলাকার রক্তের অনুরোধ", dp_map: "ম্যাপ",
-      dp_hosp_d: "হাসপাতালের নাম ও এলাকা। ফোন নম্বরের জন্য হাসপাতালের অফিসিয়াল সূত্র দেখুন, Google Maps-এ লোকেশন খুলুন।", dp_open: "পুরো অ্যাম্বুলেন্স তালিকা", dp_open_prof: "প্রোফাইলে ইতিহাস দেখুন",
-      dp_mine: "আমার রক্তদান", dp_all: "এই ডিভাইসে মোট", dp_hist_d: "রক্তদানের রেকর্ড যোগ করতে প্রোফাইলের “রক্তদানের ইতিহাস” ব্যবহার করুন।",
-      dp_top_d: "এই ডিভাইসে নিবন্ধিত দাতাদের পয়েন্ট অনুযায়ী তালিকা।",
-      dp_jr_d: "রক্তদাতা হাসপাতালের পথে রওনা হলে “যাত্রা শুরু” চাপুন, আনুমানিক সময় দেখা যাবে।", dp_onway: "আপনি পথে আছেন", dp_eta: "আনুমানিক {n} মিনিট বাকি", dp_nojr: "এখন কোনো যাত্রা চলছে না। সক্রিয় অনুরোধ থেকে “যাত্রা শুরু” চাপুন।", dp_etasel: "আনুমানিক সময়", dp_min: "মিনিট",
-      dp_local: "এটি শুধু এই ব্রাউজারে চলে। রোগীর স্বজনের ম্যাপে লাইভ লোকেশন দেখাতে সার্ভার ও লোকেশন অনুমতি লাগবে, যা এই পেজে নেই।",
-      dp_alert_d: "কোন মাধ্যমে জরুরি অনুরোধের খবর চান তা বেছে রাখুন।", dp_alert: "অ্যালার্ট", dp_geo: "জিও-ফেন্সিং পুশ নোটিফিকেশন", dp_radius: "ব্যাসার্ধ (Radius)", dp_km: "কিমি",
-      dp_local2: "পছন্দ এই ডিভাইসে সংরক্ষিত হয়। SMS, WhatsApp বা পুশ পাঠাতে সার্ভার দরকার, এই পেজ নিজে থেকে মেসেজ পাঠাতে পারে না।", dash_hello: "স্বাগতম, {name}", did: "ডোনার আইডি",
-      qa_donors_d: "রক্তের গ্রুপ ও জেলা দিয়ে দাতা খুঁজুন", qa_amb_d: "জরুরি অ্যাম্বুলেন্স ও ৯৯৯ নম্বর", qa_req_d: "রক্তের অনুরোধের বার্তা বানান", qa_qc_d: "আজ রক্ত দিতে পারবেন কি না জানুন",
-      dash_next: "আবার রক্ত দিতে পারবেন {date} থেকে", dash_ready: "রক্ত দেওয়ার আগে Quick Check করে নিন।",
-      /* profile */
-      edit: "এডিট", t_group: "রক্তের গ্রুপ", t_district: "জেলা", t_status: "অবস্থা", t_points: "পয়েন্ট",
-      role_donor: "রক্তদাতা", role_recipient: "রক্ত গ্রহীতা",
-      st_ready: "প্রস্তুত", st_rest: "বিরতিতে", st_no: "আজ নয়", st_active: "সক্রিয়",
-      st_ready_t: "আপনি রক্ত দিতে প্রস্তুত। রক্ত দেওয়ার আগে Quick Check করে নিন।",
-      st_rest_t: "সর্বশেষ রক্তদানের পর ৪ মাস পার হয়নি। আবার দিতে পারবেন {date} থেকে।",
-      st_no_t: "আজকের Quick Check অনুযায়ী আজ রক্ত না দেওয়াই ভালো।",
-      st_active_t: "আপনি রক্ত গ্রহীতা হিসেবে নিবন্ধিত। ডোনার খুঁজুন বা রক্তের অনুরোধ লিখুন।",
-      gp_give: "যাদের রক্ত দিতে পারবেন", gp_take: "যাদের রক্ত নিতে পারবেন",
-      dp_area: "অঞ্চল", dp_count: "এই জেলার দাতা: {n} জন",
-      pts_title: "পয়েন্ট", pts_lb: "লিডারবোর্ড", pts_yours: "আপনার পয়েন্ট: {n}", pts_points: "পয়েন্ট: {n}",
-      pts_next: "পরবর্তী লেভেল '{lvl}' পেতে আর: {n} পয়েন্ট প্রয়োজন", pts_max: "আপনি সর্বোচ্চ লেভেলে পৌঁছেছেন",
-      pts_rule: "প্রতিটি রক্তদানের রেকর্ডে +১০ পয়েন্ট, যোগ্য Quick Check-এ দিনে +২ পয়েন্ট।",
-      lv0: "নতুন", lv1: "সহায়ক", lv2: "রক্তবন্ধু", lv3: "জীবনরক্ষক", lv4: "রক্তবীর",
-      qc_last_ok: "শেষ Quick Check: Eligible চেক করা হয়েছে:", qc_last_bad: "শেষ Quick Check Not Eligible চেক করা হয়েছে:",
-      qc_today_bad: "আপনি আজ রক্ত দান না করাই ভালো", qc_today_ok: "আজকের যাচাই অনুযায়ী আপনি রক্ত দিতে পারবেন",
-      i_number: "নাম্বার", i_gmail: "জিমেইল", i_group: "রক্তের গ্রুপ", i_district: "জেলা", i_region: "অঞ্চল", i_last: "শেষ রক্তদান", i_role: "ভূমিকা",
-      card_btn: "আমার ডোনার কার্ড", card_hint: "কার্ডের উপর আঙুল বা মাউস নাড়ান। উল্টে দেখতে নিচের বাটন চাপুন।",
-      card_flip: "উল্টে দেখুন", card_dl: "ডাউনলোড (PNG)", card_saved: "কার্ড সেভ করা হয়েছে।", card_err: "কার্ড তৈরি করা যায়নি।",
-      card_nodl: "এই ভিউতে ডাউনলোড চালু নেই। স্ক্রিনশট নিয়ে কার্ডটি সংরক্ষণ করুন।", card_type: "ডোনার আইডি কার্ড",
-      card_mobile: "মোবাইল", card_back_note: "জরুরি প্রয়োজনে রক্তদানের আগে হাসপাতালে রক্তের গ্রুপ আবার পরীক্ষা করান।",
-      hist_title: "রক্তদানের ইতিহাস", hist_empty: "এখনো কোনো রক্তদানের রেকর্ড নেই।", hist_total: "মোট রক্তদান: {n} বার",
-      hist_date: "রক্তদানের তারিখ", hist_place: "স্থান (ঐচ্ছিক)", hist_add: "রেকর্ড যোগ করুন", hist_pts: "+১০ পয়েন্ট", hist_del: "মুছুন",
-      err_hist_date: "সঠিক তারিখ দিন (আজ বা আগের)।",
-      pw_title: "পাসওয়ার্ড পরিবর্তন করুন", pw_cur: "বর্তমান পাসওয়ার্ড", pw_new: "নিউ পাসওয়ার্ড", pw_new2: "আবার নিউ পাসওয়ার্ড", pw_save: "পাসওয়ার্ড বদলান",
-      err_pwcur: "বর্তমান পাসওয়ার্ড ভুল।", pw_done: "পাসওয়ার্ড বদলানো হয়েছে।",
-      prof_need: "প্রোফাইল দেখতে আগে লগইন করুন। অ্যাকাউন্ট না থাকলে রক্তদাতা হিসেবে নিবন্ধন করুন।",
-      prof_logout: "লগআউট",
-      edit_title: "প্রোফাইল এডিট", edit_photo: "ছবি বদলান (JPG/PNG)", err_photo: "ছবি JPG বা PNG হতে হবে এবং ৮ এমবির কম।",
-      save: "সংরক্ষণ করুন", cancel: "বাতিল", saved: "প্রোফাইল সংরক্ষিত হয়েছে।", err_save: "সংরক্ষণ করা যায়নি, আবার চেষ্টা করুন।",
-      /* quick check */
-      qcp_h: "স্মার্ট রক্তদাতা যাচাই", qcp_sub: "নিচের ৬টি প্রশ্নে Yes/No দিন, সাথে সাথে দেখাবে আজ রক্ত দিতে পারবেন কি না।",
-      yes: "Yes", no: "No", qcp_pending: "আরও {n}টি প্রশ্নের উত্তর বাকি।", qcp_ok: "✅ আজ আপনি রক্ত দিতে পারবেন।", qcp_bad: "❌ আজ আপনি রক্ত না দেওয়াই ভালো।",
-      qcp_reasons: "কারণ:", qcp_reset: "আবার শুরু করুন",
-      qcp_note: "এটি সাধারণ নির্দেশিকা। রক্তদানের আগে চিকিৎসক বা ব্লাড ব্যাংকের যাচাই চূড়ান্ত।",
-      q_0: "আজ কি আপনার জ্বর, সর্দি-কাশি বা অন্য কোনো অসুস্থতা আছে?", r_0: "আজ আপনি অসুস্থ বোধ করছেন।",
-      q_1: "গত ৪ মাসের মধ্যে কি আপনি রক্ত দিয়েছেন?", r_1: "সর্বশেষ রক্তদানের পর ৪ মাস পার হয়নি।",
-      q_2: "আপনার ওজন কি কমপক্ষে ৫০ কেজি?", r_2: "ওজন ৫০ কেজির কম।",
-      q_3: "আপনার বয়স কি ১৮ থেকে ৬০ বছরের মধ্যে?", r_3: "বয়স ১৮ থেকে ৬০ বছরের বাইরে।",
-      q_4: "গত ৬ মাসে কি অস্ত্রোপচার, ট্যাটু বা রক্ত গ্রহণ করেছেন?", r_4: "সম্প্রতি অস্ত্রোপচার, ট্যাটু বা রক্ত গ্রহণ করেছেন।",
-      q_5: "আপনার কি হৃদরোগ, হেপাটাইটিস, এইচআইভি বা অনিয়ন্ত্রিত ডায়াবেটিসের মতো দীর্ঘমেয়াদি রোগ আছে, অথবা আপনি কি গর্ভবতী?", r_5: "দীর্ঘমেয়াদি রোগ বা গর্ভাবস্থার কারণে রক্ত দেওয়া ঠিক নয়।",
-      /* register & login */
-      reg_h2: "রক্তদাতা হিসেবে নিবন্ধন করুন",
-      reg_lede: "নিবন্ধনের তথ্য এই ডিভাইসের ব্রাউজারে সংরক্ষিত থাকে। পরে জিমেইল ও পাসওয়ার্ড দিয়ে লগইন করে নিজের প্রোফাইল দেখুন।",
-      g_name: "পূর্ণ নাম", g_role: "আপনি কে?", g_region: "অঞ্চল (এলাকা / উপজেলা)", g_age: "বয়স", g_last: "সর্বশেষ কবে রক্ত দিয়েছেন",
-      g_email: "জিমেইল (Gmail)", g_phone: "মোবাইল নম্বর", g_public: "লগইন করা ব্যবহারকারীরা দাতা তালিকায় আপনার নম্বর দেখতে পাবেন।",
-      g_pw: "পাসওয়ার্ড", g_pw_hint: "কমপক্ষে ৬ অক্ষর", g_pw2: "আবার পাসওয়ার্ড লিখুন",
-      g_ok: "আমি সুস্থ আছি এবং প্রয়োজনে রক্ত দিতে ইচ্ছুক (রক্তদাতাদের জন্য)", g_submit: "নিবন্ধন করুন", g_haveacc: "আগে নিবন্ধন করেছেন?",
-      err_name: "আপনার পূর্ণ নাম লিখুন।", err_email: "সঠিক জিমেইল ঠিকানা দিন।", err_pw: "পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে।",
-      err_pw2: "দুটি পাসওয়ার্ড মেলেনি।", err_age: "রক্তদাতার বয়স সাধারণত ১৮ থেকে ৬০ বছরের মধ্যে হতে হয়।",
-      err_ok: "চালিয়ে যেতে সুস্থতার ঘোষণায় টিক দিন।",
-      err_dup: "এই জিমেইল বা নম্বর দিয়ে আগেই নিবন্ধন করা আছে।",
-      err_crypto: "এই ব্রাউজারে পাসওয়ার্ড সুরক্ষিত করা যাচ্ছে না। অন্য ব্রাউজারে চেষ্টা করুন।",
-      reg_done: "নিবন্ধন সম্পন্ন হয়েছে। এবার জিমেইল ও পাসওয়ার্ড দিয়ে লগইন করুন।",
-      login_h2: "আপনার অ্যাকাউন্টে ঢুকুন", login_lede: "নিবন্ধনের সময় দেওয়া জিমেইল (বা মোবাইল নম্বর) এবং পাসওয়ার্ড লিখুন।",
-      l_id: "জিমেইল (বা মোবাইল নম্বর)", l_submit: "লগইন", l_noacc: "অ্যাকাউন্ট নেই?",
-      err_login: "জিমেইল/নম্বর বা পাসওয়ার্ড ভুল।", err_login_empty: "জিমেইল বা নম্বর এবং পাসওয়ার্ড দিন।", err_wait: "অনেকবার ভুল হয়েছে। ৩০ সেকেন্ড পরে আবার চেষ্টা করুন।",
-      guide_h2: "কে কাকে রক্ত দিতে পারে", guide_lede: "রোগীর গ্রুপ অনুযায়ী কোন কোন গ্রুপের রক্ত চলে, তার তালিকা নিচে।",
-      th_patient: "রোগীর গ্রুপ", th_receive: "যে গ্রুপের রক্ত নিতে পারেন",
-      rules_h2: "রক্তদানের সাধারণ শর্ত",
-      rule1_n: "১৮–৬০ বছর", rule1_p: "দাতার বয়স সাধারণত এই সীমার মধ্যে হতে হয়।",
-      rule2_n: "৫০ কেজি+", rule2_p: "ওজন কমপক্ষে ৫০ কেজি হওয়া প্রয়োজন।",
-      rule3_n: "৪ মাস", rule3_p: "দুইবার রক্তদানের মধ্যে অন্তত ৪ মাসের বিরতি দিন।",
-      rule4_n: "১২.৫ g/dL+", rule4_p: "হিমোগ্লোবিন সাধারণত এর নিচে নামলে রক্ত নেওয়া হয় না।",
-      q1: "রক্তদানের আগে কী করা উচিত?", a1: "আগের রাতে ভালো ঘুমান, পর্যাপ্ত পানি পান করুন এবং হালকা খাবার খেয়ে যান। খালি পেটে রক্ত দেবেন না।",
-      q2: "কখন রক্ত দেওয়া যাবে না?", a2: "জ্বর, সংক্রমণ, গর্ভাবস্থা, সাম্প্রতিক অস্ত্রোপচার বা ট্যাটু করালে এবং চিকিৎসক নিষেধ করলে রক্ত দেবেন না। সন্দেহ থাকলে আগে চিকিৎসকের পরামর্শ নিন।",
-      q3: "রক্তদানে কত সময় লাগে?", a3: "রক্ত নেওয়া হয় সাধারণত ১০ থেকে ১৫ মিনিটে। নিবন্ধন, পরীক্ষা ও বিশ্রামসহ মোট প্রায় এক ঘণ্টা সময় রাখুন।",
-      alert: "<b>গুরুত্বপূর্ণ:</b> রক্ত দেওয়ার আগে হাসপাতাল বা ব্লাড ব্যাংকে দাতার গ্রুপ আবার পরীক্ষা করিয়ে নিন। এই সাইটের তালিকা শুধু যোগাযোগ খোঁজার সহায়তা, কোনো চিকিৎসা পরামর্শ নয়।",
-      footer: "MB Blood Bank · রক্ত দিন, জীবন বাঁচান। জরুরি প্রয়োজনে আপনার নিকটস্থ হাসপাতাল বা সরকারি জরুরি সেবা নম্বরে যোগাযোগ করুন।",
-      lang_btn: "English", lang_aria: "ভাষা বদলান", theme_dark: "ডার্ক মোড", theme_light: "লাইট মোড"
-    },
-    en: {
-      nav_guide: "Rules & info", bnav_aria: "Bottom menu", nb_home: "Home", nb_search: "Donor", nb_amb: "Ambulance", nb_req: "Request", nb_prof: "Profile",
-      menu_aria: "Menu", close: "Close", h_reg: "Donor registration", h_login: "Donor login",
-      hero_eyebrow: "A network of voluntary blood donors",
-      hero_h1: "Find <em>blood</em> fast, when it matters most",
-      hero_lede: "Pick a blood group and a district to see possible donors. If you are healthy, you can register as a donor too.",
-      cta_find: "Find donors", cta_become: "Become a donor",
-      chart_title: "Choose a blood group", chart_note: "Tap a group and the donor list below filters to it.", group_aria: "Blood group", filter_aria: "Group filter",
-      gate_note: "To search donors and see contact numbers, first register as a donor, then log in.",
-      dd_h2: "Donor search dashboard",
-      donors_lede: "The list starts with a few example entries. When you register on this device, your name is added here too.",
-      ds_total: "Total donors", ds_groups: "Blood groups available", ds_districts: "Districts",
-      f_group: "Blood group", f_district: "District", f_compat: "Also show compatible groups", all_groups: "All groups", all_districts: "All districts",
-      count_msg: "Showing {n} donors. Names marked as examples are not real people.",
-      badge_reg: "Registered", badge_you: "You", badge_sample: "Example", contact_hidden: "Log in to see contact",
-      empty: "No donors match these filters. Try another district or include compatible groups.",
-      amb_h2: "Ambulance dashboard", amb_lede: "Choose a district and type to see ambulance services. The entries shown here are examples.",
-      ds_amb_total: "Total services",
-      sos_t: "National emergency service", sos_p: "For an emergency ambulance, call 999 directly.", sos_call: "Call 999",
-      a_type: "Ambulance type", all_types: "All types", t_icu: "ICU", t_ac: "AC", t_basic: "Basic", t_freezer: "Freezer",
-      amb_count: "Showing {n} ambulance services. Entries marked as examples are not real services; verify any number before relying on it.",
-      amb_empty: "No ambulances match these filters. Try another district or type.",
-      req_h2: "Request dashboard",
-      req_lede: "Fill in the details to get a message you can share. Copy it and post it on Facebook, WhatsApp or by SMS.",
-      ds_myreq: "My requests", ds_bags: "Total bags", ds_lastreq: "Latest request",
-      reqs_h: "My requests", reqs_empty: "You have not created any request yet.", reqs_item: "{g} · {n} bag(s) · {h}, {d}",
-      r_units: "Bags needed", r_date: "Needed on", r_hospital: "Hospital name", r_hospital_ph: "e.g. Dhaka Medical College Hospital",
-      r_phone: "Contact number", r_note: "Extra details (optional)", r_note_ph: "Patient condition, cabin or ward number, etc.",
-      r_submit: "Create message", out_head: "Message to share", copy: "Copy", copied: "Copied", copy_sel: "Text selected, press copy",
-      req_note: "This page does not send the request anywhere. Copy the message and share it yourself.",
-      err_hosp: "Enter the hospital name.", err_phone: "Enter a valid mobile number, such as 01712345678.",
-      m_title: "Urgent blood needed", m_group: "Group", m_units: "Quantity", m_bags: "{n} bag(s)", m_when: "When", m_asap: "As soon as possible",
-      m_place: "Place", m_contact: "Contact", m_extra: "Details", m_footer: "If you can help, call directly, or share this to let others know. #MBBloodBank",
-      dash_h2: "Donor dashboard",
-      dn_live: "Live requests", dn_notice: "Notice & News", dn_hosp: "Hospital Directory", dn_amb: "Ambulance Service", dn_hist: "Donation History", dn_top: "Top Donor / Leaderboard", dn_guide: "Blood Donation Guide", dn_jr: "Donor On The Way", dn_alert: "Notifications",
-      dp_live_d: "Which blood groups are urgently needed where. Requests you create are added here; entries marked as examples are not real.",
-      dp_call: "Call", dp_start: "Start Journey", dp_arrived: "I have arrived", dp_emerg: "Emergency notification: blood requests in your area", dp_map: "Map",
-      dp_hosp_d: "Hospital name and area. For phone numbers use the hospital's official source; open the location in Google Maps.", dp_open: "Full ambulance list", dp_open_prof: "See history in Profile",
-      dp_mine: "My donations", dp_all: "Total on this device", dp_hist_d: "To add donation records, use “Donation history” in your Profile.",
-      dp_top_d: "Donors registered on this device, ranked by points.",
-      dp_jr_d: "When a donor leaves for the hospital, press “Start Journey” to see an estimated time.", dp_onway: "You are on the way", dp_eta: "About {n} minute(s) left", dp_nojr: "No journey in progress. Press “Start Journey” on a live request.", dp_etasel: "Estimated time", dp_min: "min",
-      dp_local: "This runs only in this browser. Showing live location on the patient family's map needs a server and location permission, which this page does not have.",
-      dp_alert_d: "Choose how you want to hear about urgent requests.", dp_alert: "alerts", dp_geo: "Geo-fencing push notification", dp_radius: "Radius", dp_km: "km",
-      dp_local2: "Your choices are saved on this device. Sending SMS, WhatsApp or push needs a server; this page cannot send messages by itself.", dash_hello: "Welcome, {name}", did: "Donor ID",
-      qa_donors_d: "Find donors by blood group and district", qa_amb_d: "Emergency ambulances and 999", qa_req_d: "Write a blood request message", qa_qc_d: "Find out if you can donate today",
-      dash_next: "You can donate again from {date}", dash_ready: "Take the Quick Check before you donate.",
-      edit: "Edit", t_group: "Blood group", t_district: "District", t_status: "Status", t_points: "Points",
-      role_donor: "Blood donor", role_recipient: "Blood recipient",
-      st_ready: "Ready", st_rest: "Resting", st_no: "Not today", st_active: "Active",
-      st_ready_t: "You are ready to donate. Take the Quick Check before you give blood.",
-      st_rest_t: "Four months have not passed since your last donation. You can donate again from {date}.",
-      st_no_t: "According to today's Quick Check, it is better not to donate blood today.",
-      st_active_t: "You are registered as a blood recipient. Search donors or write a blood request.",
-      gp_give: "You can give blood to", gp_take: "You can receive blood from",
-      dp_area: "Area", dp_count: "Donors in this district: {n}",
-      pts_title: "Points", pts_lb: "Leaderboard", pts_yours: "Your points: {n}", pts_points: "Points: {n}",
-      pts_next: "To reach the next level '{lvl}' you need {n} more points", pts_max: "You have reached the top level",
-      pts_rule: "+10 points for every donation record, +2 points per day for an eligible Quick Check.",
-      lv0: "Newcomer", lv1: "Helper", lv2: "Blood Friend", lv3: "Life Saver", lv4: "Blood Hero",
-      qc_last_ok: "Last Quick Check: Eligible, checked on:", qc_last_bad: "Last Quick Check: Not Eligible, checked on:",
-      qc_today_bad: "It is better not to donate blood today", qc_today_ok: "According to today's check you can donate blood",
-      i_number: "Number", i_gmail: "Gmail", i_group: "Blood group", i_district: "District", i_region: "Area", i_last: "Last donation", i_role: "Role",
-      card_btn: "My donor card", card_hint: "Move your finger or mouse over the card. Press the button below to flip it.",
-      card_flip: "Flip card", card_dl: "Download (PNG)", card_saved: "Card saved.", card_err: "Could not create the card.",
-      card_nodl: "Downloads are not available in this view. Take a screenshot to keep the card.", card_type: "DONOR ID CARD",
-      card_mobile: "Mobile", card_back_note: "In an emergency, have your blood group tested again at the hospital before donating.",
-      hist_title: "Donation history", hist_empty: "No donation records yet.", hist_total: "Total donations: {n}",
-      hist_date: "Donation date", hist_place: "Place (optional)", hist_add: "Add record", hist_pts: "+10 points", hist_del: "Delete",
-      err_hist_date: "Enter a valid date (today or earlier).",
-      pw_title: "Change password", pw_cur: "Current password", pw_new: "New password", pw_new2: "New password again", pw_save: "Change password",
-      err_pwcur: "The current password is wrong.", pw_done: "Password changed.",
-      prof_need: "Log in to see your profile. If you do not have an account, register as a donor.",
-      prof_logout: "Log out",
-      edit_title: "Edit profile", edit_photo: "Change photo (JPG/PNG)", err_photo: "The photo must be a JPG or PNG under 8 MB.",
-      save: "Save", cancel: "Cancel", saved: "Profile saved.", err_save: "Could not save. Please try again.",
-      qcp_h: "Smart donor check", qcp_sub: "Answer the 6 questions below with Yes/No and see right away whether you can donate today.",
-      yes: "Yes", no: "No", qcp_pending: "{n} more question(s) to answer.", qcp_ok: "✅ You can donate blood today.", qcp_bad: "❌ It is better not to donate blood today.",
-      qcp_reasons: "Reasons:", qcp_reset: "Start again",
-      qcp_note: "This is a general guideline. The check by a doctor or the blood bank before donating is final.",
-      q_0: "Do you have a fever, cold, cough or any other illness today?", r_0: "You are feeling unwell today.",
-      q_1: "Have you donated blood in the last 4 months?", r_1: "Four months have not passed since your last donation.",
-      q_2: "Do you weigh at least 50 kg?", r_2: "Your weight is under 50 kg.",
-      q_3: "Are you between 18 and 60 years old?", r_3: "Your age is outside 18 to 60 years.",
-      q_4: "In the last 6 months, have you had surgery, a tattoo or a blood transfusion?", r_4: "You recently had surgery, a tattoo or a blood transfusion.",
-      q_5: "Do you have a long-term illness such as heart disease, hepatitis, HIV or uncontrolled diabetes, or are you pregnant?", r_5: "A long-term illness or pregnancy means you should not donate.",
-      reg_h2: "Register as a blood donor",
-      reg_lede: "Your details are saved in this device's browser. Later, log in with your Gmail and password to see your profile.",
-      g_name: "Full name", g_role: "I am a", g_region: "Area (locality / upazila)", g_age: "Age", g_last: "Last time you donated",
-      g_email: "Gmail", g_phone: "Mobile number", g_public: "Logged-in users can see your number in the donor list.",
-      g_pw: "Password", g_pw_hint: "At least 6 characters", g_pw2: "Re-enter password",
-      g_ok: "I am healthy and willing to donate blood when needed (for donors)", g_submit: "Register", g_haveacc: "Already registered?",
-      err_name: "Enter your full name.", err_email: "Enter a valid Gmail address.", err_pw: "The password must be at least 6 characters.",
-      err_pw2: "The two passwords do not match.", err_age: "Blood donors are usually between 18 and 60 years old.",
-      err_ok: "Tick the health declaration to continue.",
-      err_dup: "An account with this Gmail or number already exists.",
-      err_crypto: "This browser cannot protect passwords. Try another browser.",
-      reg_done: "Registration complete. Now log in with your Gmail and password.",
-      login_h2: "Log in to your account", login_lede: "Enter the Gmail (or mobile number) and the password you used when registering.",
-      l_id: "Gmail (or mobile number)", l_submit: "Log in", l_noacc: "No account yet?",
-      err_login: "The Gmail/number or password is wrong.", err_login_empty: "Enter your Gmail or number and your password.", err_wait: "Too many wrong attempts. Try again in 30 seconds.",
-      guide_h2: "Who can donate to whom", guide_lede: "For each patient blood group, the groups whose blood can be given.",
-      th_patient: "Patient's group", th_receive: "Can receive blood from",
-      rules_h2: "General donation rules",
-      rule1_n: "18–60 years", rule1_p: "Donors are usually within this age range.",
-      rule2_n: "50 kg+", rule2_p: "Body weight should be at least 50 kg.",
-      rule3_n: "4 months", rule3_p: "Leave at least 4 months between two donations.",
-      rule4_n: "12.5 g/dL+", rule4_p: "Blood is usually not taken if hemoglobin is below this level.",
-      q1: "What should I do before donating?", a1: "Sleep well the night before, drink enough water and eat a light meal. Do not donate on an empty stomach.",
-      q2: "When should I not donate?", a2: "Do not donate if you have a fever, an infection, are pregnant, had recent surgery or a new tattoo, or a doctor has advised against it. If in doubt, ask a doctor first.",
-      q3: "How long does donating take?", a3: "The donation itself usually takes 10 to 15 minutes. With registration, screening and rest, allow about an hour.",
-      alert: "<b>Important:</b> Have the donor's blood group tested again at the hospital or blood bank before giving blood. The list on this site only helps you find contacts and is not medical advice.",
-      footer: "MB Blood Bank · Give blood, save lives. In an emergency, contact your nearest hospital or the national emergency service.",
-      lang_btn: "বাংলা", lang_aria: "Change language", theme_dark: "Dark mode", theme_light: "Light mode"
-    }
-  };
-
-  var PREF = "mbbb_prefs_v1", AKEY = "mbbb_accounts_v3", OLDKEY = "mbbb_accounts_v2", SKEY = "mbbb_session_v2";
-  var state = { group: "", district: "", compat: false };
-  var lang = "bn", lastReq = null, copyTimer = 0, fails = 0, lockUntil = 0, afterLogin = "profile", qcOpen = false;
-  var root = document.documentElement;
-
-  function $(id) { return document.getElementById(id); }
-  function t(k, v) {
-    var s = (D[lang] && D[lang][k]) || D.bn[k] || k;
-    return s.replace(/\{(\w+)\}/g, function (m, n) { return v && v[n] != null ? v[n] : m; });
-  }
-  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
-  function toEn(s) { return String(s).replace(/[০-৯]/g, function (d) { return "০১২৩৪৫৬৭৮৯".indexOf(d); }); }
-  function num(s) { s = toEn(s); return lang === "bn" ? s.replace(/\d/g, function (d) { return "০১২৩৪৫৬৭৮৯"[d]; }) : s; }
-  function pad(n) { return (n < 10 ? "0" : "") + n; }
-  function getPrefs() { try { return JSON.parse(localStorage.getItem(PREF) || "{}"); } catch (e) { return {}; } }
-  function setPref(k, v) { var p = getPrefs(); p[k] = v; try { localStorage.setItem(PREF, JSON.stringify(p)); } catch (e) {} }
-  var ui = { open: getPrefs().open || {} };
-  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
-
-  /* ---------- dates ---------- */
-  function todayStr() { var d = new Date(); return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
-  function fmtDate(d) { return d.toLocaleDateString(lang === "bn" ? "bn-BD" : "en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }); }
-  function fmtDay(s) { return s ? fmtDate(new Date(s)) : "—"; }
-  function fmtStamp(ts) {
-    var d = new Date(ts), h = d.getHours(), ap = h >= 12 ? "PM" : "AM"; h = h % 12 || 12;
-    return num(pad(d.getDate()) + "/" + pad(d.getMonth() + 1) + "/" + pad(d.getFullYear() % 100) + " " + pad(h) + ":" + pad(d.getMinutes())) + " " + ap;
-  }
-
-  /* ---------- accounts (stored in this browser only) ---------- */
-  function blankQc() { return { a: [null, null, null, null, null, null], day: "", lastOk: 0, lastBad: 0, days: [] }; }
-  function fixAcc(a) {
-    if (a.key !== undefined && a.email === undefined) { a.email = a.type === "email" ? a.key : ""; a.phone = a.type === "phone" ? a.key : ""; }
-    a.email = a.email || ""; a.phone = a.phone || ""; a.region = a.region || ""; a.last = a.last || ""; a.photo = a.photo || "";
-    a.role = a.role === "recipient" ? "recipient" : "donor";
-    a.hist = Array.isArray(a.hist) ? a.hist : []; a.reqs = Array.isArray(a.reqs) ? a.reqs : [];
-    a.qc = a.qc && Array.isArray(a.qc.a) ? a.qc : blankQc(); a.qc.days = a.qc.days || [];
-    return a;
-  }
-  function loadAcc() {
-    var raw = null, arr = [];
-    try { raw = localStorage.getItem(AKEY); if (raw === null) raw = localStorage.getItem(OLDKEY); } catch (e) {}
-    try { arr = JSON.parse(raw || "[]"); } catch (e) {}
-    if (!Array.isArray(arr)) arr = [];
-    arr = arr.map(fixAcc);
-    var max = 10000;
-    arr.forEach(function (a) { var n = parseInt(String(a.did || "").replace(/\D/g, ""), 10); if (n > max) max = n; });
-    arr.forEach(function (a) { if (!a.did) a.did = "MB-" + (++max); });
-    return arr;
-  }
-  var accounts = loadAcc();
-  function saveAcc() { try { localStorage.setItem(AKEY, JSON.stringify(accounts)); return true; } catch (e) { return false; } }
-  function nextDid() { var max = 10000; accounts.forEach(function (a) { var n = parseInt(String(a.did).replace(/\D/g, ""), 10); if (n > max) max = n; }); return "MB-" + (max + 1); }
-  var sessionId = ""; try { sessionId = localStorage.getItem(SKEY) || ""; } catch (e) {}
-  function setSession(id) { sessionId = id || ""; try { if (id) localStorage.setItem(SKEY, id); else localStorage.removeItem(SKEY); } catch (e) {} }
-  function me() { for (var i = 0; i < accounts.length; i++) if (accounts[i].id === sessionId) return accounts[i]; return null; }
-
-  function normEmail(raw) { var s = toEn(raw).trim().toLowerCase(); return EMAIL.test(s) ? s : null; }
-  function normPhone(raw) { var p = toEn(raw).trim().replace(/[\s-]/g, ""); return PHONE.test(p) ? p.replace(/^\+?88/, "") : null; }
-  function contactOf(a) { return a.phone ? num(a.phone) : a.email; }
-  function roleLabel(r) { return t(r === "recipient" ? "role_recipient" : "role_donor"); }
-
-  function hasCrypto() { return !!(window.crypto && crypto.subtle && crypto.getRandomValues && window.TextEncoder); }
-  function rnd(n) { var a = new Uint8Array(n); crypto.getRandomValues(a); return a; }
-  function b64(u8) { var s = ""; for (var i = 0; i < u8.length; i++) s += String.fromCharCode(u8[i]); return btoa(s); }
-  function unb64(s) { var b = atob(s), u = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
-  function hashPw(pw, salt) {
-    return crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveBits"]).then(function (k) {
-      return crypto.subtle.deriveBits({ name: "PBKDF2", salt: salt, iterations: 150000, hash: "SHA-256" }, k, 256);
-    }).then(function (bits) { return b64(new Uint8Array(bits)); });
-  }
-
-  /* ---------- status, points, quick check ---------- */
-  function nextDate(a) { return a.last ? new Date(new Date(a.last).getTime() + 120 * 864e5) : null; }
-  function qcAnswers(a) { return a.qc.day === todayStr() ? a.qc.a : [null, null, null, null, null, null]; }
-  function qcVerdict(a) {
-    var an = qcAnswers(a), bad = [], n = 0;
-    for (var i = 0; i < 6; i++) { if (an[i] === null) continue; n++; if (an[i] === BADV[i]) bad.push(i); }
-    return bad.length ? { v: "bad", bad: bad } : (n === 6 ? { v: "ok" } : { v: "pending", left: 6 - n });
-  }
-  function qcAnswer(a, i, val) {
-    var q = a.qc, day = todayStr();
-    if (q.day !== day) { q.day = day; q.a = [null, null, null, null, null, null]; }
-    if (q.a[i] === val) return;
-    var before = qcVerdict(a).v; q.a[i] = val; var after = qcVerdict(a).v, now = Date.now();
-    if (after !== before) {
-      if (after === "bad") q.lastBad = now;
-      else if (after === "ok") { q.lastOk = now; if (q.days.indexOf(day) < 0) q.days.push(day); }
-    }
-    saveAcc();
-  }
-  function statusOf(a) {
-    if (a.role === "recipient") return { k: "active" };
-    var nx = nextDate(a);
-    if (nx && nx.getTime() > Date.now()) return { k: "rest", next: nx };
-    if (a.qc.day === todayStr() && qcVerdict(a).v === "bad") return { k: "no" };
-    return { k: "ready" };
-  }
-  function pointsOf(a) { return 10 * a.hist.length + 2 * a.qc.days.length; }
-  function levelOf(p) { var i = 0; for (var k = 0; k < LEVELS.length; k++) if (p >= LEVELS[k]) i = k; return i; }
-
-  /* ---------- helpers ---------- */
-  function dkey(d) { for (var i = 0; i < DISTRICTS.length; i++) if (DISTRICTS[i][0] === d || DISTRICTS[i][1] === d) return DISTRICTS[i][0]; return d; }
-  function dlabel(d) { for (var i = 0; i < DISTRICTS.length; i++) if (DISTRICTS[i][0] === d || DISTRICTS[i][1] === d) return DISTRICTS[i][lang === "bn" ? 1 : 0]; return d || "—"; }
-  function fillSelect(sel, withAll) {
-    var cur = sel.value;
-    sel.innerHTML = "";
-    if (withAll) { var a = document.createElement("option"); a.value = ""; a.textContent = t("all_districts"); sel.appendChild(a); }
-    DISTRICTS.forEach(function (d) { var o = document.createElement("option"); o.value = d[0]; o.textContent = d[lang === "bn" ? 1 : 0]; sel.appendChild(o); });
-    if (cur || withAll) sel.value = cur; else sel.selectedIndex = 0;
-  }
-  function fillGroups(sel) { GROUPS.forEach(function (g) { var o = document.createElement("option"); o.value = g; o.textContent = g; sel.appendChild(o); }); }
-  function fillTypes() {
-    var sel = $("aType"), cur = sel.value;
-    sel.innerHTML = "";
-    var a = document.createElement("option"); a.value = ""; a.textContent = t("all_types"); sel.appendChild(a);
-    TYPES.forEach(function (k) { var o = document.createElement("option"); o.value = k; o.textContent = t("t_" + k); sel.appendChild(o); });
-    sel.value = cur;
-  }
-  fillGroups($("rGroup")); fillGroups($("gGroup"));
-  function setMsg(node, key, vars) {
-    if (!key) { node.dataset.k = ""; node.dataset.v = ""; node.textContent = ""; return; }
-    node.dataset.k = key; node.dataset.v = JSON.stringify(vars || {}); node.textContent = t(key, vars);
-  }
-  function refreshMsg(node) { if (node && node.dataset.k) node.textContent = t(node.dataset.k, JSON.parse(node.dataset.v || "{}")); }
-  function avatarInner(a) { return a.photo ? '<img src="' + esc(a.photo) + '" alt="">' : esc(Array.from(a.name || "?")[0] || "?"); }
-  function tilesHTML(items) {
-    return '<div class="tiles">' + items.map(function (x) { return '<div class="tile c' + x[2] + '"><b>' + x[0] + '</b><span>' + x[1] + '</span></div>'; }).join("") + '</div>';
-  }
-
-  /* ---------- modal ---------- */
-  var modal = $("modal"), lastFocus = null, onModalClose = null;
-  function openModal(title, html, opts) {
-    $("mTitle").textContent = title; $("mBody").innerHTML = html;
-    $("sheet").className = "sheet" + (opts && opts.wide ? " wide" : "");
-    lastFocus = document.activeElement; onModalClose = opts && opts.onClose || null;
-    modal.hidden = false; try { $("mClose").focus({ preventScroll: true }); } catch (e) {}
-    return $("mBody");
-  }
-  function closeModal() {
-    if (modal.hidden) return;
-    modal.hidden = true; $("mBody").innerHTML = "";
-    if (onModalClose) { onModalClose(); onModalClose = null; }
-    if (lastFocus && lastFocus.focus) { try { lastFocus.focus({ preventScroll: true }); } catch (e) {} }
-  }
-  $("mClose").addEventListener("click", closeModal);
-  modal.addEventListener("click", function (e) { if (e.target === modal) closeModal(); });
-  document.addEventListener("keydown", function (e) {
-    if (modal.hidden) return;
-    if (e.key === "Escape") { closeModal(); return; }
-    if (e.key === "Tab") {
-      var f = $("sheet").querySelectorAll("button, input, select, textarea, a[href]");
-      if (!f.length) return;
-      var first = f[0], last = f[f.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    }
-  });
-
-  /* ---------- donor search ---------- */
-  function mkBtn(cls, group, key) {
-    var b = document.createElement("button");
-    b.type = "button"; b.className = cls; b.setAttribute("aria-pressed", "false"); b.dataset.g = group;
-    if (key) b.setAttribute("data-i18n", key); else b.textContent = group;
-    b.addEventListener("click", function () { setGroup(state.group === group ? "" : group); });
-    return b;
-  }
-  GROUPS.forEach(function (g) { $("heroGroups").appendChild(mkBtn("g", g)); });
-  $("groupPills").appendChild(mkBtn("pill", "", "all_groups"));
-  GROUPS.forEach(function (g) { $("groupPills").appendChild(mkBtn("pill", g)); });
-  function setGroup(g) {
-    state.group = g;
-    document.querySelectorAll("[data-g]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.g === g)); });
-    render();
-  }
-  function donorList() {
-    return accounts.filter(function (a) { return a.role === "donor"; }).map(function (a) {
-      return { n: a.name, g: a.g, d: dkey(a.d), r: a.region, p: contactOf(a), acc: true, you: a.id === sessionId };
-    }).concat(SAMPLE.map(function (s) { return { n: s[lang], g: s.g, d: s.d, r: "", p: num(s.p) }; }));
-  }
-  function render() {
-    var allowed = state.group ? (state.compat ? CAN_RECEIVE[state.group] : [state.group]) : GROUPS;
-    var list = donorList().filter(function (x) { return allowed.indexOf(x.g) > -1 && (!state.district || x.d === state.district); });
-    var box = $("results"); box.innerHTML = "";
-    list.forEach(function (x) {
-      var c = el("div", "donor");
-      var nm = el("b", "", x.n);
-      nm.appendChild(el("span", "tag" + (x.acc ? "" : " sample"), t(x.you ? "badge_you" : x.acc ? "badge_reg" : "badge_sample")));
-      c.appendChild(el("div", "badge", x.g)); c.appendChild(nm);
-      c.appendChild(el("span", "", dlabel(x.d) + (x.r ? ", " + x.r : "") + " · " + (me() ? x.p : t("contact_hidden")))); box.appendChild(c);
-    });
-    if (!list.length) { var e = el("p", "empty", t("empty")); e.style.gridColumn = "1/-1"; box.appendChild(e); }
-    $("resNote").textContent = t("count_msg", { n: num(list.length) });
-  }
-  $("fDistrict").addEventListener("change", function (e) { state.district = e.target.value; render(); });
-  $("fCompat").addEventListener("change", function (e) { state.compat = e.target.checked; render(); });
-
-  /* ---------- ambulance ---------- */
-  function renderAmb() {
-    var dd = $("aDistrict").value, ty = $("aType").value;
-    var list = AMB.filter(function (x) { return (!dd || x.d === dd) && (!ty || x.ty === ty); });
-    var box = $("ambResults"); box.innerHTML = "";
-    list.forEach(function (x) {
-      var c = el("div", "donor");
-      var nm = el("b", "", x[lang]); nm.appendChild(el("span", "tag sample", t("badge_sample")));
-      c.appendChild(el("div", "badge", "+")); c.appendChild(nm);
-      c.appendChild(el("span", "", t("t_" + x.ty) + " · " + dlabel(x.d) + " · " + num(x.p))); box.appendChild(c);
-    });
-    if (!list.length) { var e = el("p", "empty", t("amb_empty")); e.style.gridColumn = "1/-1"; box.appendChild(e); }
-    $("ambNote").textContent = t("amb_count", { n: num(list.length) });
-  }
-  $("aDistrict").addEventListener("change", renderAmb);
-  $("aType").addEventListener("change", renderAmb);
-
-  /* ---------- dashboards (stat tiles on Donor, Ambulance, Request) ---------- */
-  function renderTiles() {
-    var dl = donorList(), gs = {}, ds = {};
-    dl.forEach(function (x) { gs[x.g] = 1; ds[x.d] = 1; });
-    $("donTiles").innerHTML = tilesHTML([[num(dl.length), t("ds_total"), 2], [num(Object.keys(gs).length), t("ds_groups"), 1], [num(Object.keys(ds).length), t("ds_districts"), 3]]);
-    var icu = AMB.filter(function (x) { return x.ty === "icu"; }).length, fr = AMB.filter(function (x) { return x.ty === "freezer"; }).length;
-    $("ambTiles").innerHTML = tilesHTML([[num(AMB.length), t("ds_amb_total"), 2], [num(icu), t("t_icu"), 1], [num(fr), t("t_freezer"), 5]]);
-    var u = me();
-    if (!u) { $("reqTiles").innerHTML = ""; return; }
-    var bags = 0; u.reqs.forEach(function (r) { bags += parseInt(r.u, 10) || 0; });
-    $("reqTiles").innerHTML = tilesHTML([[num(u.reqs.length), t("ds_myreq"), 2], [num(bags), t("ds_bags"), 4], [u.reqs.length ? fmtStamp(u.reqs[0].at).split(" ")[0] : "—", t("ds_lastreq"), 1]]);
-  }
-  function renderMyReqs() {
-    var u = me(), box = $("myReqs");
-    box.hidden = !u; if (!u) return;
-    var h = '<h3 style="font-size:20px">' + t("reqs_h") + '</h3>';
-    if (!u.reqs.length) h += '<p class="empty" style="padding-bottom:0">' + t("reqs_empty") + '</p>';
-    else h += '<ul class="hlist">' + u.reqs.map(function (r) {
-      return '<li><div>' + esc(t("reqs_item", { g: r.g, n: num(r.u || 1), h: r.h, d: dlabel(r.d) })) + '<span>' + fmtStamp(r.at) + (r.note ? " · " + esc(r.note) : "") + '</span></div></li>';
-    }).join("") + '</ul>';
-    box.innerHTML = h;
-  }
-
-  /* ---------- blood request ---------- */
-  function buildReq(r) {
-    var d = r.date ? fmtDate(new Date(r.date)) : t("m_asap");
-    return t("m_title") + "\n" + t("m_group") + ": " + r.g + "\n" +
-      t("m_units") + ": " + t("m_bags", { n: num(r.u || 1) }) + "\n" + t("m_when") + ": " + d + "\n" +
-      t("m_place") + ": " + r.h + ", " + dlabel(r.d) + "\n" +
-      t("m_contact") + ": " + num(r.p) + (r.note ? "\n" + t("m_extra") + ": " + r.note : "") + "\n" + t("m_footer");
-  }
-  function showReq() { if (!lastReq) return; $("reqText").textContent = buildReq(lastReq); $("reqOut").hidden = false; }
-  $("copyReq").addEventListener("click", function () {
-    var btn = $("copyReq"), text = $("reqText").textContent;
-    function flash(key) { btn.setAttribute("data-i18n", key); btn.textContent = t(key); clearTimeout(copyTimer); copyTimer = setTimeout(function () { btn.setAttribute("data-i18n", "copy"); btn.textContent = t("copy"); }, 1800); }
-    function fallback() {
-      var r = document.createRange(); r.selectNodeContents($("reqText"));
-      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); flash("copy_sel");
-    }
-    try { navigator.clipboard.writeText(text).then(function () { flash("copied"); }, fallback); } catch (e) { fallback(); }
-  });
-  $("rDate").value = todayStr();
-  $("reqForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    var hosp = $("rHospital").value.trim(), ph = toEn($("rPhone").value.trim());
-    if (!hosp) { setMsg($("reqErr"), "err_hosp"); return; }
-    if (!PHONE.test(ph)) { setMsg($("reqErr"), "err_phone"); return; }
-    setMsg($("reqErr"), "");
-    lastReq = { g: $("rGroup").value, u: $("rUnits").value, date: $("rDate").value, d: $("rDistrict").value, h: hosp, p: ph, note: $("rNote").value.trim() };
-    var u = me();
-    if (u) { u.reqs.unshift({ id: Date.now().toString(36), p: lastReq.p, g: lastReq.g, u: lastReq.u, d: lastReq.d, h: hosp, note: lastReq.note, at: Date.now() }); u.reqs = u.reqs.slice(0, 20); saveAcc(); renderTiles(); renderMyReqs(); }
-    showReq();
-  });
-
-  /* ---------- routing ---------- */
-  function route() {
-    var h = (location.hash || "").slice(1), gated = false, u = me();
-    if (VIEWS.indexOf(h) < 0) h = "home";
-    if (h === "donors" && !u) { h = "register"; gated = true; afterLogin = "donors"; }
-    else if (h !== "register" && h !== "login") afterLogin = "profile";
-    if (u && (h === "register" || h === "login")) h = "profile";
-    $("gateNote").hidden = !gated;
-    document.querySelectorAll("[data-view]").forEach(function (s) {
-      var au = s.getAttribute("data-auth");
-      s.hidden = s.getAttribute("data-view") !== h || (au === "in" && !u) || (au === "out" && !!u);
-    });
-    document.querySelectorAll(".bnav a").forEach(function (a) {
-      if (a.getAttribute("data-v") === h) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
-    });
-    window.scrollTo(0, 0);
-  }
-  function go(h) { try { location.hash = h; } catch (x) {} route(); }
-  window.addEventListener("hashchange", route);
-  document.addEventListener("click", function (e) {
-    var a = e.target.closest ? e.target.closest("a[href^='#']") : null;
-    if (!a) return;
-    var h = a.getAttribute("href").slice(1);
-    if (VIEWS.indexOf(h) < 0) return;
-    e.preventDefault(); closeMenu(); go(h);
-  });
-
-  document.querySelector(".bnav").addEventListener("click", function (e) {
-    var a = e.target.closest("a[data-v]"); if (!a) return;
-    a.classList.remove("spin"); void a.offsetWidth; a.classList.add("spin");
-    setTimeout(function () { a.classList.remove("spin"); }, 700);
-  });
-  /* ---------- three-dot menu ---------- */
-  var menuBtn = $("menuBtn"), menu = $("menu");
-  function closeMenu() { menu.hidden = true; menuBtn.setAttribute("aria-expanded", "false"); }
-  menuBtn.addEventListener("click", function (e) {
-    e.stopPropagation();
-    var open = menu.hidden; menu.hidden = !open; menuBtn.setAttribute("aria-expanded", String(open));
-  });
-  document.addEventListener("click", function (e) { if (!menu.hidden && !menu.contains(e.target)) closeMenu(); });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !menu.hidden) { closeMenu(); menuBtn.focus(); } });
-
-  /* ---------- register / login ---------- */
-  $("regForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    var err = $("regErr"), name = $("gName").value.trim(), role = $("gRole").value, em = normEmail($("gEmail").value), ph = normPhone($("gPhone").value);
-    var pw = $("gPw").value, pw2 = $("gPw2").value, age = parseInt(toEn($("gAge").value), 10), last = $("gLast").value;
-    if (name.length < 2) { setMsg(err, "err_name"); return; }
-    if (!em) { setMsg(err, "err_email"); return; }
-    if (!ph) { setMsg(err, "err_phone"); return; }
-    if (pw.length < 6) { setMsg(err, "err_pw"); return; }
-    if (pw !== pw2) { setMsg(err, "err_pw2"); return; }
-    if (role === "donor") {
-      if (!(age >= 18 && age <= 60)) { setMsg(err, "err_age"); return; }
-      if (!$("gOk").checked) { setMsg(err, "err_ok"); return; }
-    }
-    if (accounts.some(function (a) { return a.email === em || a.phone === ph; })) { setMsg(err, "err_dup"); return; }
-    if (!hasCrypto()) { setMsg(err, "err_crypto"); return; }
-    setMsg(err, "");
-    var salt = rnd(16);
-    hashPw(pw, salt).then(function (h) {
-      var acc = fixAcc({ id: b64(rnd(9)).replace(/[^A-Za-z0-9]/g, "x"), did: nextDid(), name: name, email: em, phone: ph, g: $("gGroup").value, d: $("gDistrict").value,
-        region: $("gRegion").value.trim(), age: isNaN(age) ? 0 : age, last: last, role: role, salt: b64(salt), hash: h });
-      accounts.push(acc); saveAcc(); $("regForm").reset();
-      $("lId").value = em; $("lPw").value = "";
-      setMsg($("lNote"), "reg_done"); $("lNote").hidden = false;
-      render(); renderTiles(); go("login");
-    }, function () { setMsg(err, "err_crypto"); });
-  });
-  $("loginForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    var err = $("loginErr"), raw = $("lId").value.trim(), pw = $("lPw").value;
-    if (Date.now() < lockUntil) { setMsg(err, "err_wait"); return; }
-    if (!raw || !pw) { setMsg(err, "err_login_empty"); return; }
-    function bad() { fails++; if (fails >= 5) { fails = 0; lockUntil = Date.now() + 30000; setMsg(err, "err_wait"); } else setMsg(err, "err_login"); }
-    var em = raw.indexOf("@") > -1 ? normEmail(raw) : null, ph = raw.indexOf("@") > -1 ? null : normPhone(raw);
-    var acc = accounts.filter(function (a) { return (em && a.email === em) || (ph && a.phone === ph); })[0];
-    if (!acc) { bad(); return; }
-    if (!hasCrypto()) { setMsg(err, "err_crypto"); return; }
-    hashPw(pw, unb64(acc.salt)).then(function (h) {
-      if (h !== acc.hash) { bad(); return; }
-      fails = 0; setMsg(err, ""); setMsg($("lNote"), ""); $("lNote").hidden = true;
-      $("loginForm").reset();
-      var dest = afterLogin; afterLogin = "profile";
-      setSession(acc.id); updateAuth(); go(dest);
-    }, function () { setMsg(err, "err_crypto"); });
-  });
-  function logout() { setSession(""); qcOpen = false; closeMenu(); closeModal(); updateAuth(); go("home"); }
-  $("mLogout").addEventListener("click", logout);
-
-  /* ---------- profile ---------- */
-  function statBtn(act, cls, label, value) {
-    return '<button type="button" class="stat ' + cls + '" data-act="' + act + '" data-fk="' + act + '"><span>' + label + '</span><b>' + value + '</b></button>';
-  }
-  function acc(key, cls, title, body) {
-    var open = !!ui.open[key];
-    return '<div class="acc ' + cls + (open ? " open" : "") + '"><button type="button" class="acc-h" data-act="acc" data-key="' + key + '" data-fk="acc-' + key + '" aria-expanded="' + open + '"><span>' + title + '</span></button>' +
-      '<div class="acc-b"' + (open ? "" : " hidden") + '>' + body + '</div></div>';
-  }
-  function qcBoxHTML(a) {
-    var q = a.qc; if (!q.lastOk && !q.lastBad) return "";
-    var v = qcVerdict(a), h = '<div class="qcbox"><div class="qc-h">🛡️ Quick Check</div>';
-    if (q.lastOk && q.lastOk >= q.lastBad) h += '<div class="qrow ok">🛡️ ' + t("qc_last_ok") + ' <time>' + fmtStamp(q.lastOk) + '</time></div>';
-    if (q.lastBad && q.lastBad > q.lastOk) h += '<div class="qrow bad">🚫 ' + t("qc_last_bad") + ' <time>' + fmtStamp(q.lastBad) + '</time></div>';
-    if (a.qc.day === todayStr() && v.v === "bad") h += '<div class="qrow bad">❌ ' + t("qc_today_bad") + '<ul>' + v.bad.map(function (i) { return "<li>" + t("r_" + i) + "</li>"; }).join("") + '</ul></div>';
-    else if (a.qc.day === todayStr() && v.v === "ok") h += '<div class="qrow ok">✅ ' + t("qc_today_ok") + '</div>';
-    return h + '</div>';
-  }
-  function pointsBodyHTML(a) {
-    var p = pointsOf(a), li = levelOf(p), nx = li < LEVELS.length - 1 ? LEVELS[li + 1] : null;
-    var pct = nx === null ? 100 : Math.round((p - LEVELS[li]) / (nx - LEVELS[li]) * 100);
-    return '<div class="lb"><div class="trophy" aria-hidden="true">🏆</div><h3 class="lb-t">' + t("pts_lb") + '</h3>' +
-      '<div class="lb-you">' + t("pts_yours", { n: num(p) }) + ' । ' + t("lv" + li) + '</div>' +
-      '<div class="lb-lv">🔰 ' + t("lv" + li) + '</div>' +
-      '<div class="lb-pts">' + t("pts_points", { n: num(p) }) + '</div>' +
-      '<div class="pbar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '" aria-label="' + t("pts_title") + '"><i style="width:' + pct + '%"></i></div>' +
-      '<p class="lb-next">' + (nx === null ? t("pts_max") : t("pts_next", { lvl: t("lv" + (li + 1)), n: num(nx - p) })) + '</p>' +
-      '<p class="note" style="margin-top:0">' + t("pts_rule") + '</p></div>';
-  }
-  function histBodyHTML(a) {
-    var list = a.hist.slice().sort(function (x, y) { return x.date < y.date ? 1 : -1; });
-    var h = '<p class="note" style="margin-top:12px">' + t("hist_total", { n: num(list.length) }) + '</p>';
-    if (!list.length) h += '<p class="empty" style="padding-bottom:0">' + t("hist_empty") + '</p>';
-    else h += '<ul class="hlist">' + list.map(function (r) {
-      return '<li><div><b>' + fmtDay(r.date) + '</b>' + (r.place ? '<span>' + esc(r.place) + '</span>' : '') + '</div><span class="pp">' + t("hist_pts") + '</span>' +
-        '<button type="button" class="iconx" data-act="hist-del" data-id="' + esc(r.id) + '" aria-label="' + t("hist_del") + '">×</button></li>';
-    }).join("") + '</ul>';
-    h += '<form class="subform" id="histForm" novalidate><div class="grid2"><div><label for="hDate">' + t("hist_date") + '</label><input id="hDate" type="date" value="' + todayStr() + '" max="' + todayStr() + '"></div>' +
-      '<div><label for="hPlace">' + t("hist_place") + '</label><input id="hPlace" type="text"></div></div>' +
-      '<div><button class="btn primary" type="submit">' + t("hist_add") + '</button></div><p class="err" id="histErr" role="alert"></p></form>';
-    return h;
-  }
-  function pwBodyHTML() {
-    return '<form class="subform" id="pwForm" novalidate>' +
-      '<div><label for="pCur">🔐 ' + t("pw_cur") + '</label><input id="pCur" type="password" autocomplete="current-password"></div>' +
-      '<div><label for="pNew">🔐 ' + t("pw_new") + '</label><input id="pNew" type="password" autocomplete="new-password"></div>' +
-      '<div><label for="pNew2">🔐 ' + t("pw_new2") + '</label><input id="pNew2" type="password" autocomplete="new-password"></div>' +
-      '<div><button class="btn primary" type="submit">' + t("pw_save") + '</button></div><p class="err" id="pwErr" role="alert"></p><p class="okmsg" id="pwOk" hidden></p></form>';
-  }
-  function profileHTML(a) {
-    var st = statusOf(a), h = '';
-    h += '<div class="pcard"><button type="button" class="tbtn edit" data-act="edit" data-fk="edit">' + PEN + '<span>' + t("edit") + '</span></button>' +
-      '<div class="avatar">' + avatarInner(a) + '</div>' +
-      '<p class="did">' + t("did") + ': <b>' + esc(a.did) + '</b></p><h2 class="pname">' + esc(a.name) + '</h2><p><span class="rolechip">' + roleLabel(a.role) + '</span></p>' +
-      '<div class="stats3">' + statBtn("pop-group", "c2", t("t_group"), esc(a.g)) + statBtn("pop-dist", "c1", t("t_district"), esc(dlabel(a.d))) + statBtn("pop-status", "st-" + st.k, t("t_status"), t("st_" + st.k)) + '</div></div>';
-    h += '<div class="stack">' + acc("points", "pts", "🏆 " + t("pts_title"), pointsBodyHTML(a)) + qcBoxHTML(a);
-    var info = [[t("i_number"), a.phone ? num(a.phone) : "—", 1], [t("i_gmail"), a.email || "—", 2], [t("i_group"), a.g, 7], [t("i_district"), dlabel(a.d), 3],
-      [t("i_region"), a.region || "—", 4], [t("i_last"), fmtDay(a.last), 5], [t("i_role"), roleLabel(a.role), 6]];
-    h += '<div class="infogrid">' + info.map(function (x) { return '<div class="itile c' + x[2] + '"><small>' + x[0] + '</small><b>' + esc(x[1]) + '</b></div>'; }).join("") + '</div>';
-    h += '<button type="button" class="cardbtn" data-act="card" data-fk="card">🪪 <span>' + t("card_btn") + '</span></button>';
-    h += acc("hist", "hist", "🩸 " + t("hist_title"), histBodyHTML(a));
-    h += acc("pw", "pw", "🔐 " + t("pw_title"), pwBodyHTML());
-    h += '<button type="button" class="logout" data-act="logout">' + t("prof_logout") + '</button></div>';
-    return h;
-  }
-  function qcPanelHTML(a) {
-    var an = qcAnswers(a), v = qcVerdict(a);
-    var h = '<div class="qcp"><div class="qcp-top"><h2 class="qcp-h">🛡️ ' + t("qcp_h") + '</h2><button type="button" class="x" data-act="qc-close" data-fk="qcx" aria-label="' + t("close") + '">×</button></div>' +
-      '<p class="lede">' + t("qcp_sub") + '</p><ol class="qlist">';
-    for (var i = 0; i < 6; i++) {
-      h += '<li><p>' + t("q_" + i) + '</p><div class="yn">' +
-        '<button type="button" class="yes" data-act="qc" data-q="' + i + '" data-v="1" data-fk="q' + i + 'y" aria-pressed="' + (an[i] === true) + '">' + t("yes") + '</button>' +
-        '<button type="button" class="no" data-act="qc" data-q="' + i + '" data-v="0" data-fk="q' + i + 'n" aria-pressed="' + (an[i] === false) + '">' + t("no") + '</button></div></li>';
-    }
-    h += '</ol><div class="qres ' + (v.v === "ok" ? "ok" : v.v === "bad" ? "bad" : "") + '" role="status" aria-live="polite">';
-    if (v.v === "ok") h += t("qcp_ok");
-    else if (v.v === "bad") h += t("qcp_bad") + '<br>' + t("qcp_reasons") + '<ul>' + v.bad.map(function (i) { return "<li>" + t("r_" + i) + "</li>"; }).join("") + '</ul>';
-    else h += t("qcp_pending", { n: num(v.left) });
-    h += '</div><div class="cta" style="margin-top:14px"><button type="button" class="btn ghost" data-act="qc-reset" data-fk="qcr">' + t("qcp_reset") + '</button></div><p class="note">' + t("qcp_note") + '</p></div>';
-    return h;
-  }
-  function renderProfile() {
-    var u = me(), vis = !document.querySelector("[data-view=profile]").hidden;
-    var y = window.scrollY, ae = document.activeElement, fk = ae && ae.getAttribute ? ae.getAttribute("data-fk") : null;
-    var card = $("profCard"), slot = $("qcSlot");
-    if (!u) {
-      slot.innerHTML = "";
-      card.innerHTML = '<div class="panel" style="margin-top:0"><p>' + t("prof_need") + '</p><div class="cta"><a class="btn primary" href="#login">' + t("h_login") + '</a><a class="btn ghost" href="#register">' + t("h_reg") + '</a></div></div>';
-      return;
-    }
-    slot.innerHTML = qcOpen ? qcPanelHTML(u) : "";
-    card.innerHTML = profileHTML(u);
-    if (vis) {
-      window.scrollTo(0, y);
-      if (fk) { var n = document.querySelector('[data-fk="' + fk + '"]'); if (n) { try { n.focus({ preventScroll: true }); } catch (e) {} } }
-    }
-  }
-
-  /* ---------- dashboard (logged-in Home) ---------- */
-  var dpanel = "live";
-  var DNAV = [["live", "📡", "dn_live"], ["notice", "📢", "dn_notice"], ["hosp", "🏥", "dn_hosp"], ["amb", "🚑", "dn_amb"], ["hist", "📊", "dn_hist"], ["top", "🏆", "dn_top"], ["guide", "📚", "dn_guide"], ["jr", "🧭", "dn_jr"], ["alert", "🔔", "dn_alert"]];
-  function liveList() {
-    var out = [];
-    accounts.forEach(function (a) { a.reqs.forEach(function (r) { if (r.id) out.push({ id: a.id + ":" + r.id, g: r.g, u: r.u, d: dkey(r.d), h: r.h, p: r.p, at: r.at, own: a.id === sessionId, real: true }); }); });
-    out.sort(function (x, y) { return y.at - x.at; });
-    return out.concat(LIVE.map(function (x) { return { id: x.id, g: x.g, u: x.u, d: x.d, h: x[lang], p: x.p, real: false }; }));
-  }
-  function matchOf(u, r) { return u.role === "donor" && !r.own && CAN_RECEIVE[r.g].indexOf(u.g) > -1 && dkey(u.d) === r.d; }
-  function liveCard(u, r) {
-    var h = '<div class="lcard"><div class="badge">' + esc(r.g) + '</div><div><b>' + esc(r.h) + '</b>' + (r.real ? "" : ' <span class="tag sample">' + t("badge_sample") + '</span>') + '<span>' + dlabel(r.d) + ' · ' + t("m_bags", { n: num(r.u || 1) }) + (r.p && r.real ? ' · ' + num(r.p) : '') + '</span></div><div class="lact">';
-    if (r.real && r.p && !r.own) h += '<a class="btn ghost" href="tel:' + esc(r.p) + '">📞 ' + t("dp_call") + '</a><a class="btn ghost" target="_blank" rel="noopener" href="https://wa.me/88' + esc(r.p) + '">💬 WhatsApp</a>';
-    if (matchOf(u, r) || (!r.own && u.role === "donor")) {
-      if (u.jr && u.jr.id === r.id) h += '<button type="button" class="btn primary" data-act="jr-end">' + t("dp_arrived") + '</button>';
-      else h += '<button type="button" class="btn primary" data-act="jr-start" data-id="' + esc(r.id) + '">🧭 ' + t("dp_start") + '</button>';
-    }
-    return h + '</div></div>';
-  }
-  function dpanelHTML(u) {
-    var h = "";
-    if (dpanel === "live") {
-      var l = liveList();
-      h = '<h3>' + t("dn_live") + '</h3><p class="muted">' + t("dp_live_d") + '</p><div class="lstack">' + l.map(function (r) { return liveCard(u, r); }).join("") + '</div>';
-    } else if (dpanel === "notice") {
-      h = '<h3>' + t("dn_notice") + '</h3><ul class="hlist">' + NOTICES.map(function (n) { return '<li><div>' + esc(n[lang]) + '</div></li>'; }).join("") + '</ul>';
-    } else if (dpanel === "hosp") {
-      h = '<h3>' + t("dn_hosp") + '</h3><p class="muted">' + t("dp_hosp_d") + '</p><ul class="hlist">' + HOSP.map(function (x) {
-        var nm = x[lang === "bn" ? 0 : 1];
-        return '<li><div><b>' + esc(nm) + '</b><span>' + esc(x[3]) + ' · ' + dlabel(x[2]) + '</span></div><a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(x[1] + " " + x[3]) + '">📍 ' + t("dp_map") + '</a></li>';
-      }).join("") + '</ul>';
-    } else if (dpanel === "amb") {
-      h = '<h3>' + t("dn_amb") + '</h3><div class="sos" style="margin-top:12px"><div class="sos-n">999</div><div class="t"><b>' + t("sos_t") + '</b><p>' + t("sos_p") + '</p></div><a class="btn" href="tel:999">' + t("sos_call") + '</a></div>' +
-        '<ul class="hlist">' + AMB.map(function (x) { return '<li><div><b>' + esc(x[lang]) + '</b> <span class="tag sample">' + t("badge_sample") + '</span><span>' + t("t_" + x.ty) + ' · ' + dlabel(x.d) + ' · ' + num(x.p) + '</span></div></li>'; }).join("") + '</ul><div class="cta"><a class="btn ghost" href="#ambulance">' + t("dp_open") + '</a></div>';
-    } else if (dpanel === "hist") {
-      var tot = accounts.reduce(function (n, a) { return n + a.hist.length; }, 0);
-      h = '<h3>' + t("dn_hist") + '</h3>' + tilesHTML([[num(u.hist.length), t("dp_mine"), 2], [num(tot), t("dp_all"), 1], [num(pointsOf(u)), t("t_points"), 4]]) +
-        '<p class="note">' + t("dp_hist_d") + '</p><div class="cta"><a class="btn ghost" href="#profile">' + t("dp_open_prof") + '</a></div>';
-    } else if (dpanel === "top") {
-      var rk = accounts.filter(function (a) { return a.role === "donor"; }).map(function (a) { return { a: a, p: pointsOf(a) }; }).sort(function (x, y) { return y.p - x.p; }).slice(0, 10);
-      h = '<h3>🏆 ' + t("dn_top") + '</h3><p class="muted">' + t("dp_top_d") + '</p><ol class="hlist rank">' + rk.map(function (x, i) {
-        return '<li><div><b>' + num(i + 1) + '. ' + esc(x.a.name) + '</b><span>' + t("lv" + levelOf(x.p)) + '</span></div><span class="pp">' + t("pts_points", { n: num(x.p) }) + '</span></li>';
-      }).join("") + '</ol>';
-    } else if (dpanel === "guide") {
-      var tipl = function (arr) { return '<ul class="tips">' + arr.map(function (x) { return '<li>' + x + '</li>'; }).join("") + '</ul>'; };
-      h = '<h3>📚 ' + t("dn_guide") + '</h3><div class="gcols"><div class="gbox"><b>' + (lang === "bn" ? "রক্তদানের আগে" : "Before donating") + '</b>' + tipl(lang === "bn" ? ["আগের রাতে ভালো ঘুমান", "পর্যাপ্ত পানি পান করুন", "হালকা খাবার খেয়ে যান", "নিজেকে সুস্থ অনুভব করুন"] : ["Sleep well the night before", "Drink enough water", "Eat a light meal", "Make sure you feel well"]) + '</div>' +
-        '<div class="gbox"><b>' + (lang === "bn" ? "রক্তদানের পরে" : "After donating") + '</b>' + tipl(lang === "bn" ? ["১০–১৫ মিনিট বিশ্রাম নিন", "বেশি করে পানি ও তরল খান", "সেদিন ভারী কাজ এড়িয়ে চলুন", "মাথা ঘুরলে শুয়ে পড়ুন"] : ["Rest for 10–15 minutes", "Drink extra fluids", "Avoid heavy work that day", "If dizzy, lie down"]) + '</div></div>';
-    } else if (dpanel === "jr") {
-      h = '<h3>🧭 ' + t("dn_jr") + '</h3><p class="muted">' + t("dp_jr_d") + '</p>';
-      if (u.jr) {
-        var r = liveList().filter(function (x) { return x.id === u.jr.id; })[0], left = Math.max(0, u.jr.eta - Math.floor((Date.now() - u.jr.start) / 60000));
-        h += '<div class="lcard"><div class="badge">🧭</div><div><b>' + t("dp_onway") + '</b><span>' + (r ? esc(r.h) + ' · ' : '') + t("dp_eta", { n: num(left) }) + '</span></div><div class="lact"><button type="button" class="btn primary" data-act="jr-end">' + t("dp_arrived") + '</button></div></div>';
-      } else h += '<p class="empty">' + t("dp_nojr") + '</p>';
-      h += '<div class="field" style="margin-top:14px;max-width:260px"><label for="etaSel">' + t("dp_etasel") + '</label><select id="etaSel">' + [15, 30, 45, 60].map(function (m) { return '<option value="' + m + '"' + ((u.eta || 30) === m ? " selected" : "") + '>' + num(m) + ' ' + t("dp_min") + '</option>'; }).join("") + '</select></div><p class="note">' + t("dp_local") + '</p>';
-    } else if (dpanel === "alert") {
-      var n = u.notif || {};
-      var ck = function (k, lbl) { return '<label class="check" for="np_' + k + '"><input type="checkbox" id="np_' + k + '" data-act="np" data-k="' + k + '"' + (n[k] ? " checked" : "") + '> <span>' + lbl + '</span></label>'; };
-      h = '<h3>🔔 ' + t("dn_alert") + '</h3><p class="muted">' + t("dp_alert_d") + '</p>' + ck("sms", "SMS " + t("dp_alert")) + ck("wa", "WhatsApp " + t("dp_alert")) + ck("geo", t("dp_geo")) +
-        '<div class="field" style="margin-top:10px;max-width:260px"><label for="radSel">' + t("dp_radius") + '</label><select id="radSel">' + [1, 2, 3].map(function (k) { return '<option value="' + k + '"' + ((n.rad || 3) === k ? " selected" : "") + '>' + num(k) + ' ' + t("dp_km") + '</option>'; }).join("") + '</select></div><p class="note">' + t("dp_local2") + '</p>';
-    }
-    return h;
-  }
-  function renderDash() {
-    var u = me(), box = $("dashBox");
-    if (!u) { box.innerHTML = ""; return; }
-    var y = window.scrollY, ae = document.activeElement, fk = ae && ae.id;
-    var d = new Date().toLocaleDateString(lang === "bn" ? "bn-BD" : "en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
-    var em = liveList().filter(function (r) { return matchOf(u, r); });
-    var h = '<div class="dhead"><div class="avatar">' + avatarInner(u) + '</div><div><p class="eyebrow" style="margin:0">' + t("dash_hello", { name: "" }).replace(/\s+$/, "") + '</p><h2>' + esc(u.name) + '</h2>' +
-      '<p class="muted">' + t("did") + ': <b>' + esc(u.did) + '</b> · ' + roleLabel(u.role) + '</p><p class="muted">' + d + '</p></div></div>';
-    if (em.length) h += '<div class="emerg" role="alert"><b>🚨 ' + t("dp_emerg") + '</b><span>' + em.slice(0, 3).map(function (r) { return esc(r.g) + " · " + esc(r.h) + " (" + dlabel(r.d) + ")"; }).join(" / ") + '</span></div>';
-    h += '<div class="dlay"><nav class="dnav" aria-label="' + t("dash_h2") + '">' + DNAV.map(function (x, i) {
-      return '<button type="button" style="--i:' + i + ';--hc:var(--h' + ([2, 1, 3, 5, 4, 7, 6, 2, 3][i] || 1) + ')" data-act="dp" data-p="' + x[0] + '"' + (x[0] === dpanel ? ' aria-current="true"' : '') + '><span aria-hidden="true">' + x[1] + '</span> ' + t(x[2]) + '</button>';
-    }).join("") + '</nav><div class="dstage"><div class="dpanel p-' + dpanel + '" style="--hc:var(--h' + ([2, 1, 3, 5, 4, 7, 6, 2, 3][Math.max(0, DNAV.map(function (x) { return x[0]; }).indexOf(dpanel))] || 1) + ')">' + dpanelHTML(u) + '</div></div></div>';
-    box.innerHTML = h;
-    if (!$("dashBox").closest("[data-view]").hidden) { window.scrollTo(0, y); if (fk) { var n = document.getElementById(fk); if (n) { try { n.focus({ preventScroll: true }); } catch (e) {} } } }
-  }
-
-  /* ---------- popups ---------- */
-  function popGroup(a) {
-    var give = GROUPS.filter(function (x) { return CAN_RECEIVE[x].indexOf(a.g) > -1; });
-    var chips = function (l) { return '<div class="chips">' + l.map(function (x) { return "<span>" + x + "</span>"; }).join("") + '</div>'; };
-    openModal(t("t_group"), '<div class="pop-big c2">' + esc(a.g) + '</div><p class="pop-p"><b>' + t("gp_give") + '</b></p>' + chips(give) + '<p class="pop-p"><b>' + t("gp_take") + '</b></p>' + chips(CAN_RECEIVE[a.g]));
-  }
-  function popDist(a) {
-    var n = donorList().filter(function (x) { return x.d === dkey(a.d); }).length;
-    openModal(t("t_district"), '<div class="pop-big c1">' + esc(dlabel(a.d)) + '</div><p class="pop-p">' + t("dp_area") + ': <b>' + esc(a.region || "—") + '</b></p><p class="pop-p">' + t("dp_count", { n: num(n) }) + '</p>');
-  }
-  function popStatus(a) {
-    var st = statusOf(a), txt = t("st_" + st.k + "_t", { date: st.next ? fmtDate(st.next) : "" });
-    openModal(t("t_status"), '<div class="pop-big st-' + st.k + '">' + t("st_" + st.k) + '</div><p class="pop-p">' + txt + '</p>');
-  }
-
-  /* ---------- edit profile ---------- */
-  function readPhoto(file) {
-    return new Promise(function (res, rej) {
-      if (!/^image\/(jpeg|png)$/.test(file.type) || file.size > 8e6) { rej(new Error("type")); return; }
-      var fr = new FileReader();
-      fr.onload = function () {
-        var img = new Image();
-        img.onload = function () {
-          var s = Math.min(img.width, img.height), c = document.createElement("canvas"); c.width = c.height = 320;
-          c.getContext("2d").drawImage(img, (img.width - s) / 2, (img.height - s) / 2, s, s, 0, 0, 320, 320);
-          res(c.toDataURL("image/jpeg", 0.85));
-        };
-        img.onerror = function () { rej(new Error("img")); }; img.src = fr.result;
-      };
-      fr.onerror = function () { rej(new Error("read")); }; fr.readAsDataURL(file);
-    });
-  }
-  function openEdit(a) {
-    var newPhoto = null;
-    var opts = function (list, val, f) { return list.map(function (x) { var v = f(x)[0], l = f(x)[1]; return '<option value="' + esc(v) + '"' + (v === val ? " selected" : "") + '>' + esc(l) + '</option>'; }).join(""); };
-    var html = '<form id="editForm" novalidate><div class="photo-row"><div class="avatar" id="ePrev">' + avatarInner(a) + '</div>' +
-      '<div><label for="ePhoto">' + t("edit_photo") + '</label><input id="ePhoto" type="file" accept="image/jpeg,image/png"></div></div>' +
-      '<div class="grid2"><div><label for="eName">' + t("g_name") + '</label><input id="eName" type="text" value="' + esc(a.name) + '"></div>' +
-      '<div><label for="ePhone">' + t("i_number") + '</label><input id="ePhone" type="tel" inputmode="tel" value="' + esc(a.phone) + '"></div>' +
-      '<div><label for="eEmail">' + t("i_gmail") + '</label><input id="eEmail" type="email" inputmode="email" autocapitalize="none" value="' + esc(a.email) + '"></div>' +
-      '<div><label for="eGroup">' + t("i_group") + '</label><select id="eGroup">' + opts(GROUPS, a.g, function (x) { return [x, x]; }) + '</select></div>' +
-      '<div><label for="eDistrict">' + t("i_district") + '</label><select id="eDistrict">' + opts(DISTRICTS, dkey(a.d), function (x) { return [x[0], x[lang === "bn" ? 1 : 0]]; }) + '</select></div>' +
-      '<div><label for="eRegion">' + t("i_region") + '</label><input id="eRegion" type="text" value="' + esc(a.region) + '"></div>' +
-      '<div><label for="eLast">' + t("i_last") + '</label><input id="eLast" type="date" max="' + todayStr() + '" value="' + esc(a.last) + '"></div>' +
-      '<div><label for="eRole">' + t("i_role") + '</label><select id="eRole"><option value="donor"' + (a.role === "donor" ? " selected" : "") + '>' + t("role_donor") + '</option><option value="recipient"' + (a.role === "recipient" ? " selected" : "") + '>' + t("role_recipient") + '</option></select></div></div>' +
-      '<p class="err" id="eErr" role="alert"></p><div class="cta" style="margin-top:8px"><button class="btn primary" type="submit">' + t("save") + '</button><button class="btn ghost" type="button" id="eCancel">' + t("cancel") + '</button></div></form>';
-    var body = openModal(t("edit_title"), html, { wide: true });
-    var errEl = body.querySelector("#eErr");
-    body.querySelector("#eCancel").addEventListener("click", closeModal);
-    body.querySelector("#ePhoto").addEventListener("change", function (e) {
-      var f = e.target.files && e.target.files[0]; if (!f) return;
-      readPhoto(f).then(function (url) { newPhoto = url; body.querySelector("#ePrev").innerHTML = '<img src="' + url + '" alt="">'; setMsg(errEl, ""); },
-        function () { setMsg(errEl, "err_photo"); });
-    });
-    body.querySelector("#editForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      var name = body.querySelector("#eName").value.trim(), em = normEmail(body.querySelector("#eEmail").value), ph = normPhone(body.querySelector("#ePhone").value);
-      if (name.length < 2) { setMsg(errEl, "err_name"); return; }
-      if (!ph) { setMsg(errEl, "err_phone"); return; }
-      if (!em) { setMsg(errEl, "err_email"); return; }
-      if (accounts.some(function (x) { return x.id !== a.id && (x.email === em || x.phone === ph); })) { setMsg(errEl, "err_dup"); return; }
-      var last = body.querySelector("#eLast").value;
-      if (last && last > todayStr()) { setMsg(errEl, "err_hist_date"); return; }
-      a.name = name; a.phone = ph; a.email = em; a.g = body.querySelector("#eGroup").value; a.d = body.querySelector("#eDistrict").value;
-      a.region = body.querySelector("#eRegion").value.trim(); a.last = last; a.role = body.querySelector("#eRole").value;
-      if (newPhoto) a.photo = newPhoto;
-      if (!saveAcc()) { setMsg(errEl, "err_save"); return; }
-      closeModal(); updateAuth();
-    });
-  }
-
-  /* ---------- 3D donor card ---------- */
-  function cardFaces(a) {
-    return '<div class="face front"><div class="cf-top"><span class="cf-logo">' + DROP + 'MB Blood Bank</span><span class="cf-type">' + t("card_type") + '</span></div>' +
-      '<div class="cf-mid"><div class="cf-photo">' + avatarInner(a) + '</div><div class="cf-info"><b class="cf-name">' + esc(a.name) + '</b><span>' + roleLabel(a.role) + '</span><span class="cf-id">' + esc(a.did) + '</span></div><div class="cf-bg">' + esc(a.g) + '</div></div>' +
-      '<div class="cf-bot"><div><small>' + t("i_district") + '</small><b>' + esc(dlabel(a.d)) + '</b></div><div><small>' + t("card_mobile") + '</small><b>' + esc(a.phone ? num(a.phone) : "—") + '</b></div><div><small>' + t("i_last") + '</small><b>' + esc(fmtDay(a.last)) + '</b></div></div></div>' +
-      '<div class="face back"><div class="cf-top"><span class="cf-logo">' + DROP + 'MB Blood Bank</span></div><div class="cf-stripe"></div>' +
-      '<div class="cf-rows"><div class="cf-row"><small>' + t("i_gmail") + '</small><b>' + esc(a.email || "—") + '</b></div><div class="cf-row"><small>' + t("i_region") + '</small><b>' + esc(a.region || "—") + '</b></div><div class="cf-row"><small>' + t("i_last") + '</small><b>' + esc(fmtDay(a.last)) + '</b></div></div>' +
-      '<p class="cf-note">' + t("card_back_note") + '</p></div>';
-  }
-  function rr(c, x, y, w, h, r) { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
-  function fit(c, text, maxW, size, weight) { var s = size; for (; s > 16; s -= 2) { c.font = weight + " " + s + "px " + FONT; if (c.measureText(text).width <= maxW) break; } c.font = weight + " " + s + "px " + FONT; }
-  function wrap(c, text, x, y, maxW, lh) {
-    var words = text.split(" "), line = "";
-    words.forEach(function (w) { var test = line ? line + " " + w : w; if (c.measureText(test).width > maxW && line) { c.fillText(line, x, y); line = w; y += lh; } else line = test; });
-    if (line) c.fillText(line, x, y);
-  }
-  function drawCard(c, a, img, ox, oy, front) {
-    var W = 1012, H = 638;
-    c.save(); c.translate(ox, oy); rr(c, 0, 0, W, H, 40); c.clip();
-    var g = c.createLinearGradient(0, 0, W, H);
-    if (front) { g.addColorStop(0, "#e0243f"); g.addColorStop(.55, "#b3122b"); g.addColorStop(1, "#7d0b1f"); } else { g.addColorStop(0, "#8b0e22"); g.addColorStop(1, "#4a0612"); }
-    c.fillStyle = g; c.fillRect(0, 0, W, H);
-    c.fillStyle = "rgba(255,255,255,.09)"; c.beginPath(); c.arc(W - 60, 20, 330, 0, 7); c.fill();
-    c.fillStyle = "#fff"; c.textBaseline = "alphabetic";
-    c.save(); c.translate(48, 38); c.scale(1.5, 1.5); c.fill(new Path2D("M15 2C15 2 3 16 3 23a12 12 0 0 0 24 0C27 16 15 2 15 2z")); c.restore();
-    c.font = "800 40px " + FONT; c.fillText("MB Blood Bank", 108, 88);
-    if (front) {
-      c.font = "600 24px " + FONT; c.textAlign = "right"; c.fillStyle = "rgba(255,255,255,.9)"; c.fillText(t("card_type"), W - 48, 80); c.textAlign = "left";
-      rr(c, 48, 150, 240, 240, 30); c.fillStyle = "#fff"; c.fill();
-      c.save(); rr(c, 56, 158, 224, 224, 24); c.clip();
-      if (img) { var s = Math.min(img.width, img.height); c.drawImage(img, (img.width - s) / 2, (img.height - s) / 2, s, s, 56, 158, 224, 224); }
-      else { c.fillStyle = "#fde3e7"; c.fillRect(56, 158, 224, 224); c.fillStyle = "#b3122b"; c.font = "800 110px " + FONT; c.textAlign = "center"; c.fillText(Array.from(a.name || "?")[0], 168, 305); c.textAlign = "left"; }
-      c.restore();
-      c.fillStyle = "#fff"; fit(c, a.name, 400, 56, 800); c.fillText(a.name, 320, 215);
-      c.fillStyle = "rgba(255,255,255,.92)"; c.font = "600 30px " + FONT; c.fillText(roleLabel(a.role), 320, 262);
-      c.fillStyle = "rgba(255,255,255,.8)"; c.font = "500 24px " + FONT; c.fillText(t("did"), 320, 318);
-      c.fillStyle = "#fff"; c.font = "800 42px " + FONT; c.fillText(a.did, 320, 366);
-      c.beginPath(); c.arc(W - 120, 215, 92, 0, 7); c.fillStyle = "#fff"; c.fill();
-      c.fillStyle = "#b3122b"; c.textAlign = "center"; fit(c, a.g, 140, 84, 800); c.fillText(a.g, W - 120, 245); c.textAlign = "left";
-      rr(c, 48, 430, W - 96, 150, 26); c.fillStyle = "rgba(255,255,255,.16)"; c.fill();
-      c.fillStyle = "rgba(255,255,255,.85)"; c.font = "500 24px " + FONT; c.fillText(t("i_district"), 84, 482); c.fillText(t("card_mobile"), 380, 482); c.fillText(t("i_last"), 690, 482);
-      c.fillStyle = "#fff"; fit(c, dlabel(a.d), 270, 36, 700); c.fillText(dlabel(a.d), 84, 540);
-      fit(c, a.phone ? num(a.phone) : "—", 290, 36, 700); c.fillText(a.phone ? num(a.phone) : "—", 380, 540); fit(c, fmtDay(a.last), 280, 30, 700); c.fillText(fmtDay(a.last), 690, 540);
-    } else {
-      c.fillStyle = "rgba(0,0,0,.5)"; c.fillRect(0, 130, W, 90);
-      var rows = [[t("i_gmail"), a.email || "—"], [t("i_region"), a.region || "—"], [t("i_last"), fmtDay(a.last)]];
-      rows.forEach(function (r, i) {
-        var y = 290 + i * 84; c.fillStyle = "rgba(255,255,255,.8)"; c.font = "500 24px " + FONT; c.fillText(r[0], 60, y);
-        c.fillStyle = "#fff"; fit(c, r[1], W - 120, 36, 700); c.fillText(r[1], 60, y + 40);
-      });
-      c.fillStyle = "rgba(255,255,255,.85)"; c.font = "500 24px " + FONT; wrap(c, t("card_back_note"), 60, 560, W - 120, 32);
-    }
-    c.restore();
-  }
-  function makeCardPng(a) {
-    var wait = function (p, ms) { return Promise.race([p, new Promise(function (r) { setTimeout(r, ms); })]); };
-    var fonts = document.fonts && document.fonts.load ? wait(Promise.all([document.fonts.load("800 40px " + FONT), document.fonts.load("500 24px " + FONT), document.fonts.load("700 40px " + FONT)]), 2500) : Promise.resolve();
-    var imgP = a.photo ? new Promise(function (r) { var i = new Image(); i.onload = function () { r(i); }; i.onerror = function () { r(null); }; i.src = a.photo; }) : Promise.resolve(null);
-    return Promise.all([fonts, imgP]).then(function (res) {
-      var cv = document.createElement("canvas"); cv.width = 1092; cv.height = 1396;
-      var c = cv.getContext("2d"); c.fillStyle = "#eef2f7"; c.fillRect(0, 0, cv.width, cv.height);
-      drawCard(c, a, res[1], 40, 40, true); drawCard(c, a, res[1], 40, 718, false);
-      return new Promise(function (ok, fail) { cv.toBlob(function (b) { b ? ok(b) : fail(new Error("blob")); }, "image/png"); });
-    });
-  }
-  function saveBlob(blob, filename) {
-    var cl = window.claude;
-    if (cl && cl.use) {
-      return cl.use("downloads").then(function (d) {
-        if (!d) return "none";
-        return d.save({ filename: filename, data: blob }).then(function () { return "saved"; }, function (e) { return e && e.code === "declined" ? "declined" : "none"; });
-      }, function () { return "none"; });
-    }
-    try { var u = URL.createObjectURL(blob), l = document.createElement("a"); l.href = u; l.download = filename; document.body.appendChild(l); l.click(); l.remove(); setTimeout(function () { URL.revokeObjectURL(u); }, 4000); return Promise.resolve("saved"); }
-    catch (e) { return Promise.resolve("none"); }
-  }
-  function openCard(a) {
-    var html = '<p class="muted" style="font-size:15px">' + t("card_hint") + '</p><div class="stage" id="stage"><div class="sway"><div class="card3d" id="card3d">' + cardFaces(a) + '</div></div></div>' +
-      '<div class="card-actions"><button type="button" class="btn ghost" id="cFlip">' + t("card_flip") + '</button><button type="button" class="btn primary" id="cDl">' + t("card_dl") + '</button></div><p class="note" id="cMsg" role="status"></p>';
-    var body = openModal("🪪 " + t("card_btn"), html, { wide: true });
-    var stage = body.querySelector("#stage"), card = body.querySelector("#card3d"), flip = 0;
-    function tilt(e) {
-      var r = stage.getBoundingClientRect(), px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5;
-      card.classList.add("drag"); stage.classList.add("active");
-      card.style.setProperty("--ry", (px * 30).toFixed(1) + "deg"); card.style.setProperty("--rx", (-py * 24).toFixed(1) + "deg");
-    }
-    function rest() { card.classList.remove("drag"); stage.classList.remove("active"); card.style.setProperty("--ry", "0deg"); card.style.setProperty("--rx", "0deg"); }
-    stage.addEventListener("pointermove", tilt); stage.addEventListener("pointerleave", rest); stage.addEventListener("pointerup", function (e) { if (e.pointerType !== "mouse") rest(); });
-    body.querySelector("#cFlip").addEventListener("click", function () { flip = flip ? 0 : 180; card.style.setProperty("--flip", flip + "deg"); });
-    body.querySelector("#cDl").addEventListener("click", function () {
-      var msg = body.querySelector("#cMsg"); setMsg(msg, "");
-      makeCardPng(a).then(function (blob) { return saveBlob(blob, "MB-Donor-Card-" + a.did + ".png"); }).then(function (r) {
-        if (r === "saved") setMsg(msg, "card_saved"); else if (r === "none") setMsg(msg, "card_nodl");
-      }, function () { setMsg(msg, "card_err"); });
-    });
-  }
-
-  /* ---------- profile actions (delegated) ---------- */
-  function onAct(e) {
-    var b = e.target.closest ? e.target.closest("[data-act]") : null; if (!b) return;
-    var a = me(), act = b.dataset.act;
-    if (act === "open-qc") { if (!a) return; qcOpen = true; renderProfile(); go("profile"); return; }
-    if (!a) return;
-    if (act === "acc") {
-      var w = b.closest(".acc"), bd = w.querySelector(".acc-b"), open = bd.hidden;
-      bd.hidden = !open; w.classList.toggle("open", open); b.setAttribute("aria-expanded", String(open)); ui.open[b.dataset.key] = open; setPref("open", ui.open); return;
-    }
-    if (act === "dp") { dpanel = b.dataset.p; renderDash(); return; }
-    if (act === "jr-start") { var sel = $("etaSel"); a.eta = sel ? parseInt(sel.value, 10) : (a.eta || 30); a.jr = { id: b.dataset.id, start: Date.now(), eta: a.eta }; saveAcc(); dpanel = "jr"; renderDash(); return; }
-    if (act === "jr-end") { a.jr = null; saveAcc(); renderDash(); return; }
-    if (act === "np") { a.notif = a.notif || {}; a.notif[b.dataset.k] = b.checked; saveAcc(); return; }
-    if (act === "edit") openEdit(a);
-    else if (act === "pop-group") popGroup(a);
-    else if (act === "pop-dist") popDist(a);
-    else if (act === "pop-status") popStatus(a);
-    else if (act === "card") openCard(a);
-    else if (act === "logout") logout();
-    else if (act === "qc-close") { qcOpen = false; renderProfile(); }
-    else if (act === "qc-reset") { a.qc.a = [null, null, null, null, null, null]; a.qc.day = todayStr(); saveAcc(); refreshAll(); }
-    else if (act === "qc") { qcAnswer(a, parseInt(b.dataset.q, 10), b.dataset.v === "1"); refreshAll(); }
-    else if (act === "hist-del") { a.hist = a.hist.filter(function (r) { return r.id !== b.dataset.id; }); saveAcc(); refreshAll(); }
-  }
-  $("profCard").addEventListener("click", onAct); $("qcSlot").addEventListener("click", onAct);
-  $("dashBox").addEventListener("click", onAct);
-  $("dashBox").addEventListener("change", function (e) {
-    var a = me(); if (!a) return;
-    if (e.target.id === "radSel") { a.notif = a.notif || {}; a.notif.rad = parseInt(e.target.value, 10); saveAcc(); }
-    else if (e.target.id === "etaSel") { a.eta = parseInt(e.target.value, 10); saveAcc(); }
-  }); $("qcPill").addEventListener("click", onAct);
-  document.addEventListener("submit", function (e) {
-    var f = e.target, a = me(); if (!a) return;
-    if (f.id === "histForm") {
-      e.preventDefault();
-      var date = f.querySelector("#hDate").value, err = f.querySelector("#histErr");
-      if (!date || date > todayStr()) { setMsg(err, "err_hist_date"); return; }
-      a.hist.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), date: date, place: f.querySelector("#hPlace").value.trim() });
-      var mx = a.hist.reduce(function (m, r) { return r.date > m ? r.date : m; }, ""); if (mx > a.last) a.last = mx;
-      saveAcc(); refreshAll();
-    } else if (f.id === "pwForm") {
-      e.preventDefault();
-      var err2 = f.querySelector("#pwErr"), ok = f.querySelector("#pwOk"), cur = f.querySelector("#pCur").value, n1 = f.querySelector("#pNew").value, n2 = f.querySelector("#pNew2").value;
-      ok.hidden = true;
-      if (!hasCrypto()) { setMsg(err2, "err_crypto"); return; }
-      if (n1.length < 6) { setMsg(err2, "err_pw"); return; }
-      if (n1 !== n2) { setMsg(err2, "err_pw2"); return; }
-      hashPw(cur, unb64(a.salt)).then(function (h) {
-        if (h !== a.hash) { setMsg(err2, "err_pwcur"); return; }
-        var salt = rnd(16);
-        return hashPw(n1, salt).then(function (nh) {
-          a.salt = b64(salt); a.hash = nh; saveAcc(); setMsg(err2, ""); f.reset(); setMsg(ok, "pw_done"); ok.hidden = false;
+        // 2. Interactive Sidebar Active State
+        const navButtons = document.querySelectorAll('.nav-btn');
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                navButtons.forEach(b => {
+                    b.classList.remove('nav-active-glow');
+                    b.classList.add('hover:bg-slate-800/80', 'hover:text-white');
+                });
+                btn.classList.add('nav-active-glow');
+                btn.classList.remove('hover:bg-slate-800/80', 'hover:text-white');
+                const sectionName = btn.getAttribute('data-nav');
+                showToast(`Switched to ${sectionName} view`);
+            });
         });
-      }, function () { setMsg(err2, "err_crypto"); });
-    }
-  });
 
-  /* ---------- refresh and auth state ---------- */
-  function refreshAll() { renderProfile(); renderDash(); renderTiles(); renderMyReqs(); render(); }
-  function updateAuth() {
-    var u = me();
-    $("hReg").hidden = !!u; $("hLogin").hidden = !!u; $("hUser").hidden = !u;
-    $("mReg").hidden = !!u; $("mLogin").hidden = !!u; $("mLogout").hidden = !u;
-    if (u) {
-      $("hUserName").textContent = u.name.split(" ")[0].slice(0, 14);
-      if (!$("rPhone").value) $("rPhone").value = u.phone;
-      if (u.d) $("rDistrict").value = dkey(u.d);
-    }
-    document.querySelector(".bnav").hidden = !u; document.body.classList.toggle("authed", !!u);
-    if (!u) qcOpen = false;
-    refreshAll();
-  }
+        // 3. Operational Insights Chart Monthly / Weekly Toggle
+        function toggleInsightsChart(mode) {
+            const btnMonthly = document.getElementById('btn-monthly');
+            const btnWeekly = document.getElementById('btn-weekly');
+            const inflowLine = document.getElementById('inflow-line');
+            const inflowArea = document.getElementById('inflow-area');
+            const xLabels = document.getElementById('chart-x-labels');
 
-  /* ---------- language and theme ---------- */
-  function applyLang() {
-    root.lang = lang === "bn" ? "bn" : "en";
-    closeModal();
-    document.querySelectorAll("[data-i18n]").forEach(function (n) { n.textContent = t(n.getAttribute("data-i18n")); });
-    document.querySelectorAll("[data-i18n-html]").forEach(function (n) { n.innerHTML = t(n.getAttribute("data-i18n-html")); });
-    document.querySelectorAll("[data-i18n-ph]").forEach(function (n) { n.placeholder = t(n.getAttribute("data-i18n-ph")); });
-    document.querySelectorAll("[data-i18n-aria]").forEach(function (n) { n.setAttribute("aria-label", t(n.getAttribute("data-i18n-aria"))); });
-    fillSelect($("fDistrict"), true); fillSelect($("rDistrict")); fillSelect($("gDistrict")); fillSelect($("aDistrict"), true); fillTypes();
-    $("langLabel").textContent = t("lang_btn"); $("langBtn").setAttribute("aria-label", t("lang_aria"));
-    [$("reqErr"), $("regErr"), $("loginErr"), $("lNote")].forEach(refreshMsg);
-    showReq(); renderAmb(); updateAuth(); updateThemeBtn();
-  }
-  $("langBtn").addEventListener("click", function () { lang = lang === "bn" ? "en" : "bn"; setPref("lang", lang); applyLang(); });
-  var mq = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
-  function isDark() { var a = root.getAttribute("data-theme"); if (a) return a === "dark"; return !!(mq && mq.matches); }
-  function updateThemeBtn() {
-    var dark = isDark();
-    $("icoMoon").hidden = dark; $("icoSun").hidden = !dark;
-    $("themeLabel").textContent = t(dark ? "theme_light" : "theme_dark");
-    $("themeBtn").setAttribute("aria-label", t(dark ? "theme_light" : "theme_dark"));
-  }
-  $("themeBtn").addEventListener("click", function () {
-    var next = isDark() ? "light" : "dark";
-    root.setAttribute("data-theme", next); setPref("theme", next); updateThemeBtn();
-  });
-  if (mq && mq.addEventListener) mq.addEventListener("change", updateThemeBtn);
+            if (mode === 'monthly') {
+                btnMonthly.className = 'px-3.5 py-1 rounded-full bg-white text-slate-900 shadow-sm transition-all';
+                btnWeekly.className = 'px-3.5 py-1 rounded-full text-slate-500 hover:text-slate-800 transition-all';
+                inflowLine.setAttribute('d', 'M 10 125 C 75 95, 130 110, 195 70 C 260 30, 320 85, 385 45 C 415 28, 435 35, 450 30');
+                inflowArea.setAttribute('d', 'M 10 125 C 75 95, 130 110, 195 70 C 260 30, 320 85, 385 45 C 415 28, 435 35, 450 30 L 450 145 L 10 145 Z');
+                xLabels.innerHTML = '<span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span>';
+            } else {
+                btnWeekly.className = 'px-3.5 py-1 rounded-full bg-white text-slate-900 shadow-sm transition-all';
+                btnMonthly.className = 'px-3.5 py-1 rounded-full text-slate-500 hover:text-slate-800 transition-all';
+                inflowLine.setAttribute('d', 'M 10 110 C 80 65, 140 90, 210 50 C 280 20, 340 60, 400 35 C 425 25, 440 40, 450 22');
+                inflowArea.setAttribute('d', 'M 10 110 C 80 65, 140 90, 210 50 C 280 20, 340 60, 400 35 C 425 25, 440 40, 450 22 L 450 145 L 10 145 Z');
+                xLabels.innerHTML = '<span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>';
+            }
+        }
 
-  var p = getPrefs();
-  if (p.lang === "en" || p.lang === "bn") lang = p.lang;
-  if (p.theme === "light" || p.theme === "dark") root.setAttribute("data-theme", p.theme);
-  applyLang();
-  route();
-})();
-</script>
+        // 4. Period Filter Simulation
+        function updateDashboardPeriod(period) {
+            const counters = document.querySelectorAll('.counter');
+            const multipliers = { month: 1, week: 0.28, quarter: 2.9 };
+            const baseValues = [1240, 3860, 42, 860];
+            const mult = multipliers[period] || 1;
 
-</body></html>
+            counters.forEach((counter, idx) => {
+                const newTarget = Math.max(1, Math.round(baseValues[idx] * mult));
+                counter.setAttribute('data-target', newTarget);
+            });
+            animateCounters();
+            showToast(`Metrics updated for ${period === 'month' ? 'This Month' : period === 'week' ? 'This Week' : 'Last Quarter'}`);
+        }
+
+        // 5. Working Download Report Toast Notification
+        function downloadReport() {
+            showToast('Generating Clinova_Executive_Report_V35.pdf...', 'success');
+        }
+
+        // Custom Toast Notification Helper
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'pointer-events-auto flex items-center gap-3 bg-[#0f172a] text-white text-xs sm:text-sm font-medium px-4 py-3 rounded-2xl shadow-2xl border border-slate-700/80 transform translate-y-4 opacity-0 transition-all duration-300';
+            
+            const iconColor = type === 'success' ? 'text-emerald-400' : 'text-cyan-400';
+            toast.innerHTML = `
+                <span class="w-2 h-2 rounded-full ${type === 'success' ? 'bg-emerald-400' : 'bg-cyan-400'}"></span>
+                <span>${message}</span>
+            `;
+
+            container.appendChild(toast);
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-4', 'opacity-0');
+            });
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-4', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Subtle live heart rate fluctuation (71 - 74 bpm) for realism
+        setInterval(() => {
+            const hrEl = document.getElementById('live-hr');
+            if (hrEl) {
+                const bpm = 71 + Math.floor(Math.random() * 4);
+                hrEl.textContent = bpm;
+            }
+        }, 2800);
+
+        // Keyboard shortcut Cmd/Ctrl + K for search focus
+        document.addEventListener('keydown', (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+                e.preventDefault();
+                document.getElementById('global-search').focus();
+            }
+        });
+
+        // Start animations on window load
+        window.addEventListener('load', () => {
+            animateCounters();
+        });
+    </script>
+</body>
+</html>
